@@ -5,16 +5,12 @@ import java.util.HashMap;
 
 public class CrewMember {
     private int id;
-    private String username;
-    private String email;
-    private String passwordHash;
+    private UserCredentials credentials;
     private ArrayList<Enrolment> enrolledBookings;
 
-    public CrewMember(int id, String username, String email, String passwordHash, ArrayList<Enrolment> enrolledBookings) {
+    public CrewMember(int id, UserCredentials credentials, ArrayList<Enrolment> enrolledBookings) {
         this.id = id;
-        this.username = username;
-        this.email = email;
-        this.passwordHash = passwordHash;
+        this.credentials = credentials;
         this.enrolledBookings = enrolledBookings;
     }
 
@@ -29,28 +25,12 @@ public class CrewMember {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public UserCredentials getCredentials() {
+        return credentials;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setCredentials(UserCredentials credentials) {
+        this.credentials = credentials;
     }
 
     public ArrayList<Enrolment> getEnrolledBookings() {
