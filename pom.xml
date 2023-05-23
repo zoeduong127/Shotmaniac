@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>Shotmaniacs.Group2.du</groupId> <!-- maybe Change Later -->
+    <groupId>shotmaniacs.group2.di</groupId> <!-- maybe Change Later -->
     <artifactId>shotmaniacs2</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
