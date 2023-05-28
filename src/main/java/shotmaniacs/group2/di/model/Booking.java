@@ -9,19 +9,24 @@ public class Booking {
     private Date date;
     private String location;
     private int duration;
-    private int clientId;
     private String clientEmail;
+    private String clientName;
+    private String phoneNumber;
     private BookingType bookingType;
 
-    public Booking(int id, String name, EventType eventType, Date date, String location, int duration, int clientId, String clientEmail, BookingType bookingType) {
+    //todo: add enrolments
+
+
+    public Booking(int id, String name, EventType eventType, Date date, String location, int duration, String clientEmail, String clientName, String phoneNumber, BookingType bookingType) {
         this.id = id;
         this.name = name;
         this.eventType = eventType;
         this.date = date;
         this.location = location;
         this.duration = duration;
-        this.clientId = clientId;
         this.clientEmail = clientEmail;
+        this.clientName = clientName;
+        this.phoneNumber = phoneNumber;
         this.bookingType = bookingType;
     }
 
@@ -73,14 +78,6 @@ public class Booking {
         this.duration = duration;
     }
 
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
-
     public String getClientEmail() {
         return clientEmail;
     }
@@ -95,5 +92,13 @@ public class Booking {
 
     public void setBookingType(BookingType bookingType) {
         this.bookingType = bookingType;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

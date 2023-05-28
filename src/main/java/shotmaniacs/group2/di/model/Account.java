@@ -1,19 +1,34 @@
 package shotmaniacs.group2.di.model;
 
-import java.util.ArrayList;
-
-public class UserCredentials {
+public class Account {
+    private int id;
     private String username;
     private String email;
     private String passwordHash;
+    private String accountType;
 
-    public UserCredentials(String username, String email, String passwordHash) {
+    public Account(int id, String username, String email, String passwordHash, String accountType) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.accountType = accountType;
     }
 
-    public UserCredentials() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     public String getUsername() {

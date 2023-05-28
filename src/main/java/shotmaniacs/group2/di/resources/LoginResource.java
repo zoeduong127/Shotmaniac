@@ -7,7 +7,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.*;
-import shotmaniacs.group2.di.model.UserCredentials;
+import shotmaniacs.group2.di.model.Account;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -27,7 +27,7 @@ public class LoginResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response login(UserCredentials credentials) {
+    public Response login(Account credentials) {
         // Validate user credentials
         if (isValidCredentials(credentials)) {
             String token = generateToken(credentials.getUsername());
@@ -49,14 +49,9 @@ public class LoginResource {
 
     // TODO: Add log out api call that destroys the token
 
-    private boolean isValidCredentials(UserCredentials credentials) {
+    private boolean isValidCredentials(Account credentials) {
         // TODO: Validate the user credentials against the database
         return false;
-    }
-
-    private int getCrewMemberIdByCredential(UserCredentials credentials){
-        // Todo: Search database for crewMemberId using matching credentials
-        return 0;
     }
 
     private String generateToken(String username) {

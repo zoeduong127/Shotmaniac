@@ -12,14 +12,14 @@ public class RootElementWrapper {
     private List<Booking> bookings;
 
     @XmlElement
-    private List<CrewMember> crewMembers;
+    private List<Account> accounts;
 
     @XmlElement
     private List<Announcement> announcements;
 
     public RootElementWrapper() {
         bookings = new ArrayList<>();
-        crewMembers = new ArrayList<>();
+        accounts = new ArrayList<>();
         announcements = new ArrayList<>();
     }
 
@@ -29,8 +29,8 @@ public class RootElementWrapper {
         bookings.add(booking);
     }
 
-    public void addCrewMember(CrewMember crewMember) {
-        crewMembers.add(crewMember);
+    public void addAccount(Account account) {
+        accounts.add(account);
     }
 
     public void addAnnouncement(Announcement announcement) {
