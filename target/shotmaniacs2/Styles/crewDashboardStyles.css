@@ -1,0 +1,223 @@
+.container {
+    display: grid;
+    grid-template-columns: 20vw 1fr;
+    grid-template-rows: 8vh auto;
+    grid-template-areas:
+        "header header header"
+        "nav content sidebar";
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: hidden; /*try to hide any dumb overflow that happens */
+}
+
+
+header {
+    grid-area: header;
+    background-color: rgba(22,150,210,0.8);
+}
+
+nav {
+    grid-area: nav;
+    background-color: rgba(31,31,31,0.05);
+    border: 1px solid rgba(31,31,31,0.2);
+}
+
+main {
+    grid-area: content;
+    background-color: purple;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+    font-size: 62.5%;
+}
+
+
+body {
+    margin: 0;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+
+
+/*Dropdown*/
+.dropdown {
+    float: right;
+    overflow: hidden;
+    margin: 0 3vw 0 0;
+}
+
+.dropdown .dropdownBtn {
+    background-color: inherit;
+    color: white;
+    border: none;
+    outline: none;
+    margin: 0 0 0 0.5vw;
+    padding: 0 0 0 0.5vw;
+}
+
+.dropdown:hover .dropdownBtn{
+    background-color: deeppink;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    text-decoration: none;
+    background-color: #F1F1F1;
+    min-width: 5vw;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+/*End of DropDown*/
+
+
+#avatar {
+    height: 8vh;
+}
+
+
+/*Navigational Dashboard*/
+
+     /*Widths adjusted for a nav pane of 20vw*/
+.dash-box {
+    background-color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(82,82,82,0.75);
+    width: 15vw;
+    height: 52vh;
+    margin: 20vh 2.5vw 20vh 2.5vw;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    font-family: Kiona, "Franklin Gothic Demi Cond", monospace;
+}
+
+.box {
+    border-bottom: 1px solid rgba(82,82,82,0.75);
+    text-align: center;
+    padding: 5% 0 5% 0;
+}
+
+/*Currently active page, change depending on the CSS file used*/
+#calendar {
+    background-color: rgba(22,150,210,0.8);
+    border: 1px solid #1696D2;
+    color: white;
+}
+
+/*End of Navigational Dashboard*/
+
+
+/*Calendar template: "https://www.youtube.com/watch?v=o1yMqPyYeAo"*/
+
+.calendar-container{
+    width: 100%;
+    height: 100%;
+    background-color: #12121f;
+    color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar {
+    width: 28rem;
+    height: 32rem;
+    background-color: #222227;
+    box-shadow: 0.5rem 3rem rgba(0,0,0,0.4);
+}
+
+.month {
+    width: 100%;
+    height: 12rem;
+    background-color: #167e56;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    text-align: center;
+    text-shadow: 0 0.3rem 0.5rem rgba(0,0,0, 0.5);
+}
+
+.month i {
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.month h1 {
+    font-size: 3rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    margin-bottom: 1rem;
+}
+
+.month p {
+    font-size: 1.6rem;
+}
+
+
+.weekdays {
+    width: 100%;
+    height: 5rem;
+    padding: 0 0.4rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.weekdays div {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
+
+    width: calc(27.2rem/ 7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-shadow: 0.3rem 0.5rem rgba(0,0,0,0.5);
+}
+
+.days {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.2rem;
+}
+
+.days div {
+    font-size: 0.4rem;
+    margin: 0.3rem;
+
+    width: calc(23.2rem/ 7);
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-shadow: 0.3rem 0.5rem rgba(0,0,0,0.5);
+    transition: background-color 0.2s;
+}
+
+.days div:hover:not(.today) {
+    background-color: #262626;
+    border: 0.2rem solid #777;
+    cursor: pointer;
+}
+.prev-date, .next-date {
+    opacity: 0.5;
+}
+
+.today {
+    background-color: #167e56;
+}
