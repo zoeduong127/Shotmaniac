@@ -1,6 +1,7 @@
 package shotmaniacs.group2.di.dao;
 
 import shotmaniacs.group2.di.model.Booking;
+import shotmaniacs.group2.di.model.BookingState;
 import shotmaniacs.group2.di.model.BookingType;
 import shotmaniacs.group2.di.model.EventType;
 
@@ -23,7 +24,7 @@ public enum  BookingDao {
 
         try{
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO booking VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO booking VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,booking.getId());
             preparedStatement.setString(2,booking.getName());
@@ -36,6 +37,7 @@ public enum  BookingDao {
             preparedStatement.setString(9,booking.getClientEmail());
             preparedStatement.setString(10,booking.getPhoneNumber());
             preparedStatement.setString(11, String.valueOf(booking.getBookingType()));
+            preparedStatement.setString(12, String.valueOf(booking.getState()));
             int rowsInseted = preparedStatement.executeUpdate();
             while(rowsInseted > 0){
                 System.out.println("Successfully");
@@ -49,7 +51,7 @@ public enum  BookingDao {
     public static void main (String args[]) throws ParseException {
         long millis=System.currentTimeMillis();
         java.sql.Date sqldate=new java.sql.Date(millis);
-        Booking booking = new Booking(3, "F", "Blabla", EventType.COMPETITION, sqldate, "Enschede", 3, "hello@gmail.com","hello","034892749", BookingType.FILM );
+        Booking booking = new Booking(3, "F", "Blabla", EventType.COMPETITION, sqldate, "Enschede", 3, "hello@gmail.com","hello","034892749", BookingType.FILM, BookingState.PENDING );
         BookingDao.instance.addBooking(booking);
     }
 }

@@ -14,11 +14,14 @@ public class Booking {
     private String clientName;
     private String phoneNumber;
     private BookingType bookingType;
+    private BookingState state;
 
     //todo: add enrolments
 
 
-    public Booking(int id, String name, String description, EventType eventType, java.sql.Date date, String location, int duration, String clientEmail, String clientName, String phoneNumber, BookingType bookingType) {
+    public Booking(int id, String name, String description, EventType eventType, java.sql.Date date,
+                   String location, int duration, String clientEmail, String clientName, String phoneNumber,
+                   BookingType bookingType, BookingState state) {
         this.id = id;
         this.name = name;
         this.eventType = eventType;
@@ -29,6 +32,7 @@ public class Booking {
         this.clientName = clientName;
         this.phoneNumber = phoneNumber;
         this.bookingType = bookingType;
+        this.state = state;
     }
     public String getDescription(){return description;};
     public void setDescription(String description){ this.description = description;};
@@ -105,4 +109,6 @@ public class Booking {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    public BookingState getState(){return state;}
+    public void setState(BookingState state){this.state = state;}
 }
