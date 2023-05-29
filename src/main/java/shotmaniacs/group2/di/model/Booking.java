@@ -5,8 +5,9 @@ import java.util.Date;
 public class Booking {
     private int id;
     private String name;
+    private String description;
     private EventType eventType;
-    private Date date;
+    private java.sql.Date date;
     private String location;
     private int duration;
     private String clientEmail;
@@ -17,7 +18,7 @@ public class Booking {
     //todo: add enrolments
 
 
-    public Booking(int id, String name, EventType eventType, Date date, String location, int duration, String clientEmail, String clientName, String phoneNumber, BookingType bookingType) {
+    public Booking(int id, String name, String description, EventType eventType, java.sql.Date date, String location, int duration, String clientEmail, String clientName, String phoneNumber, BookingType bookingType) {
         this.id = id;
         this.name = name;
         this.eventType = eventType;
@@ -29,7 +30,10 @@ public class Booking {
         this.phoneNumber = phoneNumber;
         this.bookingType = bookingType;
     }
+    public String getDescription(){return description;};
+    public void setDescription(String description){ this.description = description;};
 
+    public String getClientname(){return clientName;}
     public int getId() {
         return id;
     }
@@ -54,11 +58,11 @@ public class Booking {
         this.eventType = eventType;
     }
 
-    public Date getDate() {
+    public java.sql.Date getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(java.sql.Date date) {
         this.date = date;
     }
 

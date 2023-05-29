@@ -5,9 +5,9 @@ public class Account {
     private String username;
     private String email;
     private String passwordHash;
-    private String accountType;
+    private AccountType accountType;
 
-    public Account(int id, String username, String email, String passwordHash, String accountType) {
+    public Account(int id, String username, String email, String passwordHash, AccountType accountType) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -23,11 +23,11 @@ public class Account {
         this.id = id;
     }
 
-    public String getAccountType() {
+    public AccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(String accountType) {
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 
@@ -55,3 +55,4 @@ public class Account {
         this.passwordHash = passwordHash;
     }
 }
+

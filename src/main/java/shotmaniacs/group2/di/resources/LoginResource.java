@@ -7,6 +7,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.*;
+import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.model.Account;
 
 import javax.json.Json;
@@ -51,7 +52,7 @@ public class LoginResource {
 
     private boolean isValidCredentials(Account credentials) {
         // TODO: Validate the user credentials against the database
-        return false;
+        return AccountDao.instance.logincheck(credentials);
     }
 
     private String generateToken(String username) {
