@@ -7,7 +7,7 @@ public class Booking {
     private String name;
     private String description;
     private EventType eventType;
-    private java.sql.Date date;
+    private java.sql.Timestamp date;
     private String location;
     private int duration;
     private String clientEmail;
@@ -19,7 +19,7 @@ public class Booking {
     //todo: add enrolments
 
 
-    public Booking(int id, String name, String description, EventType eventType, java.sql.Date date,
+    public Booking(int id, String name, String description, EventType eventType, java.sql.Timestamp date,
                    String location, int duration, String clientEmail, String clientName, String phoneNumber,
                    BookingType bookingType, BookingState state) {
         this.id = id;
@@ -62,11 +62,11 @@ public class Booking {
         this.eventType = eventType;
     }
 
-    public java.sql.Date getDate() {
+    public java.sql.Timestamp getDate() {
         return date;
     }
 
-    public void setDate(java.sql.Date date) {
+    public void setDate(java.sql.Timestamp date) {
         this.date = date;
     }
 

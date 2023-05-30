@@ -16,7 +16,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/client")
+@Path("/client/{clientid}")
 
 public class Clientsresource {
     @Context
@@ -30,7 +30,6 @@ public class Clientsresource {
     private static String password = "yummybanana";
 
     @GET
-    @Path("{clientid}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Booking> getallBooking(@PathParam("clientid")int id){
         List<Booking> listbooking = new ArrayList<>();
@@ -43,7 +42,7 @@ public class Clientsresource {
 
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        EventType.valueOf(rs.getString(4)),rs.getDate(5),rs.getString(6),
+                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
                         rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)));
                 listbooking.add(booking);
             }
@@ -54,13 +53,11 @@ public class Clientsresource {
     }
 
     @POST
-    @Path("{clientid}")
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_JSON)
     public void createBooking(@PathParam("clientid")int id ,Booking booking){
         booking.setState(BookingState.PENDING);
         BookingDao.instance.addBooking(booking);
-
 
         try{
             Connection connection = DriverManager.getConnection(url, dbName, password);
