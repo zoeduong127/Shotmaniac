@@ -1,13 +1,14 @@
 .container {
     display: grid;
-    grid-template-columns: 20vw 1fr 20vw;
+    grid-template-columns: 20vw 1fr 23vw;
     grid-template-rows: 8vh auto;
     grid-template-areas:
         "header header header"
         "nav content sidebar";
     min-height: 100vh;
     max-height: 100vh;
-    /*overflow-y: hidden; !*try to hide any dumb overflow that happens *!*/
+    overflow: hidden;
+
 }
 
 header {
@@ -19,12 +20,14 @@ nav {
     grid-area: nav;
     background-color: rgba(31,31,31,0.05);
     border: 1px solid rgba(31,31,31,0.2);
+    height: 92vh;
 }
 
 aside {
-    grid-area: nav;
-    background-color: rgba(31,31,31,0.05);
-    border: 1px solid rgba(31,31,31,0.2);
+    grid-area: sidebar;
+    background-color: rgba(255,255,255,0.8);
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+    height: 91vh;
 }
 
 main {
@@ -34,6 +37,10 @@ main {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Kiona', 'Quicksand', sans-serif;
+    height: 100%;
+    /*
+    overflow: scroll; !*try to hide any dumb overflow that happens *!*!
+    */
 }
 
 
@@ -111,12 +118,18 @@ body {
     height: 0;
 }
 /*Widths adjusted for a nav pane of 20vw*/
+
+.text img{
+    width: 95%;
+    margin: 10vh 2.5% 0 2.5%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
 .dash-box {
     background-color: rgba(255,255,255,0.75);
     border: 1px solid rgba(82,82,82,0.75);
     width: 15vw;
     height: 52vh;
-    margin: 20vh 2.5vw 20vh 2.5vw;
+    margin: 10vh 2.5vw 20vh 2.5vw;
     box-sizing: border-box;
     font-size: 1.15rem;
     font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
@@ -147,27 +160,59 @@ body {
 
 .page-title {
     height: 15vh;
-    background-color: purple;
-    width: 60vw;
+    width: 100%;
+    display: flex;
+    position: sticky;
+    top: 0;
+}
+
+.navigation {
+    width: 100%;
+    height: 3vh;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3vh;
+    position: sticky;
+    top: 15vh;
+    border-bottom: 2px solid black;
+}
+
+/*Title page thing*/
+.page-title .image img{
+    height: 85%;
+    margin: 1vh 3vw 0 3vw;
+}
+.text {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 5vh;
 }
 /*Filter Dropdown*/
 
 .filter {
     float: left;
-    margin: 3vh 0 0 3vw;
+    margin: 0 0 0 4vw;
 }
 
 .filter .filter-btn {
     background-color: inherit;
-    padding: 0.5vh 0.75vw 0.5vh 0.75vw;
+    padding: 0 0.75vw;
     width: 10vw;
     height: 3vh;
+    border-radius: 5px;
+    border: 2px solid black;
+    box-shadow: 0 3px 3px rgba(82,82,82,0.38);
+    font-family: 'Kiona', 'Quicksand', sans-serif;
 }
 
 .filter-icon {
+    margin-top: 0.15vh;
     float: left;
 }
 
+.filter-btn p {
+}
 .down-icon {
     float: right;
     scale: 1.6;
@@ -176,36 +221,228 @@ body {
 .filter:hover .filter-btn {
     cursor: pointer;
     background-color: rgba(81,81,81,0.2);
+    border-radius: 5px;
+
 }
 
 .filter-content {
     display: none;
     position: absolute;
     background-color: #F1F1F1;
+    border-radius: 5px;
     width: 10vw;
-    z-index: 1;
+
 }
 
 /*Change depending on what the actual content is to be able to filter*/
-.filter-content a {
+.filter-content p {
     float: none;
     color: black;
-    width: 10vw;
     padding: 12px 16px;
+    margin: 0;
     display: block;
-    text-align: left;
+    text-align: center;
     text-decoration: none;
 }
 
 .filter:hover .filter-content {
     display: block;
     width: 10vw;
+    border-radius: 5px;
+}
+
+.filter:hover .booking-container {
+    opacity: 0.2;
 }
 
 
-.item p{
+/*END of Filter Button*/
+/*TODO: When filter hover is on reduce main content page opacity*/
+
+/*
+    Searchbar - some cheating involved.
+    Button only looks like it is in the search bar,
+    it is however only next to it
+ */
+
+
+.search {
+    float: right;
+    margin: 0 7vw 0 0;
+
+    display: flex;
+    justify-content: right;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 20vw;
+    height: 3vh;
+}
+
+.search  input{
+    border-radius: 5px 0 0 5px;
+    border: none;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+    width: 17.5vw;
+    padding: 0 0 0 1vw;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+
+}
+
+.search-icon-btn {
+    background-color: #1696d2;
+    border: none;
+    border-right: 2px solid #000;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-radius: 0 5px 5px 0 ;
+    width: 2.5vw;
+    cursor: pointer;
+}
+
+.search-icon-btn .magnifying-glass {
+    width: 0.9vw;
+    padding: 1px;
+}
+.search input:focus {
+    color: black;
+    outline: none;
+    background-color: rgba(81,81,81,0.2);
+}
+
+.search input:focus::placeholder {
+    color: transparent;
+}
+
+
+/*End searchbar*/
+
+/*Bookings*/
+
+.booking-container {
+    width: 95%;
+    height: 71vh;
+    max-width: 57vw;
+    margin: 0 2.5% 0 2.5%;
+    min-height: 0;
+
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* hides scrollbar */
+    scrollbar-width: none;  /* hides scrollbar */
+}
+/*hides scrollbar*/
+.booking-container::-webkit-scrollbar {
+    display: none;
+}
+
+.booking {
+    width: 98%;
+    height: 70px;
+
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: 2.5% 0;
+}
+
+.booking p {
+    width: 70%;
+    float: left;
+    margin: 0;
+    padding-top: 25px;
+    text-align: center;
+}
+.innerBooking {
+    border-left: 1px solid black;
+    border-radius: 4px;
+
+    text-align: center;
+    width: 20%;
+    height: 70px;
+    float: right;
+}
+.innerBooking p {
+    margin: 0;
+    padding-top: 25px;
+    text-align: center;
+    width: 100%;
+}
+
+/*Aside*/
+
+.recent {
+    width: 18vw;
+    height: 25vh;
+
+    margin: 10vh 3.5vw 0 2.5vw;
+    border: 2px solid rgba(82, 82, 82, 0.5);;
+}
+
+.recent p {
+    height: 3vh;
+    margin: 0 0 2.7vh 0;
+    background-color: rgba(31, 31, 31, 0.35);
+    text-align: center;
+    padding: 3px;
+}
+
+.latestBooking {
+    margin: 0 1.5vw 0 1.5vw;
+    border: 1px solid rgba(22, 150, 210, 0.8);
+    height: 17vh;
+}
+
+.latestBooking a{
+    display: block;
+    height: 3vh;
+    background-color: rgba(22, 150, 210, 0.5);
     text-align: center;
 }
 
+.latestBooking p {
+background-color: inherit;
+    padding: 20px;
+}
 
-/*TODO: When filter hover is on reduce main content page opacity*/
+
+
+
+
+.stats {
+    width: 18vw;
+    height: 43vh;
+
+    margin: 8vh 3.5vw 0 2.5vw;
+    border: 2px solid rgba(82, 82, 82, 0.5);;
+}
+
+.stats p {
+    height: 3vh;
+    margin: 0 0 2vh 0;
+    background-color: rgba(31, 31, 31, 0.35);
+    text-align: center;
+}
+
+.graph {
+    margin: 0 0.5vw 1.5vh 0.5vw;
+    border: 1px solid rgba(22, 150, 210, 0.8);
+    height: 20vh;
+}
+
+.numbers {
+}
+
+.numbers p {
+    background-color: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+.numbers #total {
+    margin-top: 3px;
+    color: #FF0000;
+}
+
+/*End aside*/

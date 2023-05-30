@@ -5,7 +5,8 @@
     <title>Dashboard</title>
     <link href="./../../styles/crewDashboardStyles.css" rel="stylesheet">
 	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+	      rel="stylesheet" type='text/css'>
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -31,6 +32,9 @@
 	</header>
 
 	<nav>
+		<div class="text">
+			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
+		</div>
 		<div class="dash-box">
 			<div class="box" id="dashboard">
 				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
@@ -54,13 +58,19 @@
 			</div>
 		</div>
 	</nav>
+	
 	<main>
-		<div class="page-title"></div>
+		<div class="page-title">
+			<div class="image">
+				<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png">
+			</div>
+			<div class="text">My Bookings</div>
+		</div>
 		<div class="navigation">
 			<div class="filter">
 				<button class="filter-btn">
 					<i class="fas fa-filter filter-icon"></i>
-					Filter
+						Filter
 					<i class="fas fa-caret-down down-icon"></i>
 				</button>
 				
@@ -78,19 +88,103 @@
 					</div>
 				</div>
 			</div>
+			<div class="search">
+				<label for="search-input"></label>
+				<input type="text" class="input" id="search-input" placeholder="Booking name">
+				<button class="search-icon-btn">
+					<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png">
+				</button>
+			</div>
 		</div>
-		<div class="booking-container"></div>
+		<div class="booking-container">
+			<div class="booking" id="1">
+				<p> Event name </p>
+				<div class="innerBooking">
+					<p> 30 July, 2023 </p>
+				</div>
+			</div>
+			<div class="booking" id="2">
+				<p> Event name </p>
+				
+				<div class="innerBooking">
+					<p> 30 July, 2023 </p>
+				</div>
+			</div>
+			<div class="booking" id="3">
+				<p> Event name </p>
+				
+				<div class="innerBooking">
+					<p> 1 July, 2023 </p>
+				</div>
+			</div>
+			<div class="booking" id="4">
+				<p> Event name </p>
+				
+				<div class="innerBooking">
+					<p> 1 July, 2023 </p>
+				</div>
+			</div>
+			<div class="booking" id="5">
+				<p> Event name </p>
+				
+				<div class="innerBooking">
+					<p> 1 July, 2023 </p>
+				</div>
+			</div>
+			<div class="booking" id="6">
+				<p> Event name </p>
+				
+				<div class="innerBooking">
+					<p> 1 July, 2023 </p>
+				</div>
+			</div>
+			<div class="booking" id="7">
+				<p> Event name </p>
+				
+				<div class="innerBooking">
+					<p> 5 July, 2023 </p>
+				</div>
+			</div>
+			<div class="booking" id="8">
+				<p> Event name </p>
+				
+				<div class="innerBooking">
+					<p> 5 July, 2023 </p>
+				</div>
+			</div>
+			<div class="booking" id="9">
+				<p> Event name </p>
+				
+				<div class="innerBooking">
+					<p> 8 July, 2023 </p>
+				</div>
+			</div>
+		</div>
 	</main>
+	
 	<aside>
 		<div class="recent">
-			<div class="latestBooking"></div>
+			<p>Recently accessed booking</p>
+			
+			<div class="latestBooking">
+				<a href="">booking name</a>
+				<p>Short description</p>
+			</div>
 		</div>
 		
 		<div class="stats">
+			<p>Statistics</p>
 			<div class="graph"></div>
-			<div class="numbers"></div>
+			<div class="numbers">
+				<p>1st number: 28</p>
+				<p>2nd number: 30</p>
+				<p>3rd number: 18</p>
+				<p>4th number: 5</p>
+				<p id="total">Total number: 140</p>
+			</div>
 		</div>
 	</aside>
+	
 </div>
 
 </body>

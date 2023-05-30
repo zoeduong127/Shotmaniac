@@ -123,7 +123,7 @@ input {
     margin-right: 1.8vw;
     margin-bottom: 2vh;
     padding: 0 0 0 0.6vw;
-    box-shadow: 1px 3px 3px rgba(82,82,82,0.38);
+    box-shadow: 0 3px 3px rgba(82,82,82,0.38);
     border-radius: 5px;
     color: rgb(166, 166, 166);
     font-family: "Kiona", "Times New Roman", serif;
@@ -132,12 +132,13 @@ input {
 }
 
 .input:focus::placeholder {
-    background-color: rgba(162, 162, 162, 0.07);
     color: transparent;
 }
 
 .input:focus {
     color: black;
+    background-color: rgba(81,81,81,0.2);
+    outline: none;
 }
 
 #stay-Signed-In {
