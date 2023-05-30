@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="./../../styles/crewDashboardStyles.css" rel="stylesheet">
+	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<script src="" defer></script>
+<div class="container">
+	<header>
+		<div class="dropdown">
+			<button class="dropdownBtn">
+				<img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
+			</button>
+			
+			<div class="dropdown-content">
+				<div class="item">
+					<a href="profile.html">Profile</a>
+				</div>
+				
+				<div class="item">
+					<a>Log Out</a>  <!--missing HREF-->
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<nav>
+		<div class="dash-box">
+			<div class="box" id="dashboard">
+				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label> Dashboard</label>
+			</div>
+			<div class="box" id="apply">
+				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label> Bookings</label>
+			</div>
+			<div class="box" id="calendar">
+				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label> Calendar</label>
+			</div>
+			<div class="box" id="booking">
+				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label>My Bookings</label>
+			</div>
+			<div class="box" id="help">
+				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label>Help</label>
+			</div>
+		</div>
+	</nav>
+	<main>
+		<div class="page-title"></div>
+		<div class="navigation">
+			<div class="filter">
+				<button class="filter-btn">
+					<i class="fas fa-filter filter-icon"></i>
+					Filter
+					<i class="fas fa-caret-down down-icon"></i>
+				</button>
+				
+				<div class="filter-content">
+					<!--missing HREF-->
+					<div class="item">
+						<p>In Progress</p>
+					</div>
+					<div class="item">
+						<p>Future</p>
+					</div>
+					
+					<div class="item">
+						<p>Past</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="booking-container"></div>
+	</main>
+	<aside>
+		<div class="recent">
+			<div class="latestBooking"></div>
+		</div>
+		
+		<div class="stats">
+			<div class="graph"></div>
+			<div class="numbers"></div>
+		</div>
+	</aside>
+</div>
+
+</body>
+</html>
