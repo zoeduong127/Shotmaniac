@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Calendar</title>
+	<link href="crewCalendarStyles.css" rel="stylesheet"> <!--moves back 2 levels-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<!--google Fonts-->
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Signika:wght@600&display=swap" rel="stylesheet">
+	<!-- End of Google fonts -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	
+	
+</head>
+<body>
+<script defer src="calendar.js"></script>
+
+<div class="container">
+	<header>
+		<div class="dropdown">
+			<button class="dropdownBtn">
+				<img id="avatar" src="./../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
+			</button>
+			
+			<div class="dropdown-content">
+				<div class="item">
+					<a href=./../profile/profile.html>Profile</a>
+				</div>
+				
+				<div class="item">
+					<a>Log Out</a>  <!--missing HREF-->
+				</div>
+			</div>
+		</div>
+	</header>
+	<nav>
+		<div class="text">
+			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
+		</div>
+		<div class="dash-box">
+			<a href="./../dashboard.html" target="_self">
+				<div class="box" id="dashboard">
+					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label> Dashboard</label>
+				</div>
+			</a>
+			<a href="./../news/News.html" target="_self">
+				<div class="box" id="News">
+					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>News</label>
+				</div>
+			</a>
+			<a href="./../calendar/calendar.html" target="_self">
+				<div class="box" id="calendar">
+					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label> Calendar</label>
+				</div>
+			</a>
+			<a href="./../bookings/bookings.html" target="_self">
+				<div class="box" id="booking">
+					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Bookings</label>
+				</div>
+			</a>
+			<a href="../../help/help.html" target="_self">
+				<div class="box" id="help">
+					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Help</label>
+				</div>
+			</a>
+		</div>
+	</nav>
+	<main>
+		<div class="calendar-container">
+			<div class="calendar">
+				<div class="month">
+					<i class="fas fa-angle-left prev"> </i>
+					<div class="date">
+						<h1></h1>
+						<p></p>
+					</div>
+					<i class="fas fa-angle-right next"></i>
+				</div>
+				
+				<div class="weekdays">
+					<div>Sun</div>
+					<div>Mon</div>
+					<div>Tue</div>
+					<div>Wed</div>
+					<div>Thu</div>
+					<div>Fri</div>
+					<div>Sat</div>
+				</div>
+				
+				<div class="days"></div>
+			</div>
+		</div>
+	</main>
+</div>
+
+</body>
+</html>
