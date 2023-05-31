@@ -53,7 +53,7 @@ public class CrewsResourse {
      * Param "ongoing": filter ongoing event
      * Param "past":filter past event
      */
-    public List<Booking> getBookingWithFilter(@PathParam("crewid") int crewid, @QueryParam("filtertime") String ongoing) {
+    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @QueryParam("filtertime") String ongoing) {
         List<Booking> listbooking = new ArrayList<>();
         try {
             String query;
@@ -62,6 +62,41 @@ public class CrewsResourse {
                 query = "SELECT booking.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time >= GETDATE()";
             } else {
                 query = "SELECT booking.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time < GETDATE()";
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,crewid);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)));
+                listbooking.add(booking);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return listbooking;
+    }
+
+    @Path("/mybooking?label=<Todo/In progress/Review/Done>")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Filter my booking based on label
+     */
+    public List<Booking> getBookingWithLabelFilter(@PathParam("crewid") int crewid, @QueryParam("label") String label) {
+        List<Booking> listbooking = new ArrayList<>();
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query;
+            if(label.equals("Todo")) {
+                query = "SELECT booking.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Todo'";
+            } else if (label.equals("In progress")) {
+                query = "SELECT booking.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'In progress'";
+            } else if (label.equals("Review")) {
+                query = "SELECT booking.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Review'";
+            } else { //label.equals("Done")
+                query = "SELECT booking.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Done'";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,crewid);
