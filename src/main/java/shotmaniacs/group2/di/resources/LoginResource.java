@@ -1,4 +1,5 @@
 package shotmaniacs.group2.di.resources;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -52,7 +53,7 @@ public class LoginResource {
 
     private boolean isValidCredentials(Account credentials) {
         // TODO: Validate the user credentials against the database
-        return AccountDao.instance.logincheck(credentials);
+        return AccountDao.instance.loginCheck(credentials);
     }
 
     private String generateToken(String username) {

@@ -55,4 +55,3 @@ public class Account {
         this.passwordHash = passwordHash;
     }
 }
-

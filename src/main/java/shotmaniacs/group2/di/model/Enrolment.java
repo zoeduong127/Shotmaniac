@@ -19,6 +19,7 @@ public class Enrolment{
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -26,6 +27,7 @@ public class Enrolment{
     public int getBookingId() {
         return bookingId;
     }
+
     public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
     }
@@ -33,6 +35,7 @@ public class Enrolment{
     public int getCrewMemberId() {
         return crewMemberId;
     }
+
     public void setCrewMemberId(int crewMemberId) {
         this.crewMemberId = crewMemberId;
     }
@@ -40,6 +43,7 @@ public class Enrolment{
     public Role getRole() {
         return role;
     }
+
     public void setRole(Role role) {
         this.role = role;
     }

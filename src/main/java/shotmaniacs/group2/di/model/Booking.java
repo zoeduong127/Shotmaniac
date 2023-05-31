@@ -1,7 +1,5 @@
 package shotmaniacs.group2.di.model;
 
-import java.util.Date;
-
 public class Booking {
     private int id;
     private String name;
@@ -18,12 +16,12 @@ public class Booking {
 
     //todo: add enrolments
 
-
     public Booking(int id, String name, String description, EventType eventType, java.sql.Timestamp date,
                    String location, int duration, String clientEmail, String clientName, String phoneNumber,
                    BookingType bookingType, BookingState state) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.eventType = eventType;
         this.date = date;
         this.location = location;
@@ -34,10 +32,23 @@ public class Booking {
         this.bookingType = bookingType;
         this.state = state;
     }
-    public String getDescription(){return description;};
-    public void setDescription(String description){ this.description = description;};
 
-    public String getClientname(){return clientName;}
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
     public int getId() {
         return id;
     }
@@ -109,6 +120,12 @@ public class Booking {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public BookingState getState(){return state;}
-    public void setState(BookingState state){this.state = state;}
+
+    public BookingState getState() {
+        return state;
+    }
+
+    public void setState(BookingState state) {
+        this.state = state;
+    }
 }
