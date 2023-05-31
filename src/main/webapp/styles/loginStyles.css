@@ -109,13 +109,13 @@ body {
     padding: 2vh 0 0 1.8vw;
 }
 
-#login-info {
+.login-info {
     height: 14vh;
     width: 26vw;
 }
 
 
-input {
+.login-info input {
     float: left;
     width: 22vw;
     height: 4vh;
@@ -123,19 +123,19 @@ input {
     margin-right: 1.8vw;
     margin-bottom: 2vh;
     padding: 0 0 0 0.6vw;
-    box-shadow: 0 3px 3px rgba(82,82,82,0.38);
     border-radius: 5px;
     color: rgb(166, 166, 166);
     font-family: "Kiona", "Times New Roman", serif;
     font-size: 15px;
     border: 1px solid black;
+    box-shadow: 0 3px 3px rgba(82,82,82,0.38);
 }
 
-.input:focus::placeholder {
+.login-info .input:focus::placeholder {
     color: transparent;
 }
 
-.input:focus {
+.login-info .input:focus {
     color: black;
     background-color: rgba(81,81,81,0.2);
     outline: none;

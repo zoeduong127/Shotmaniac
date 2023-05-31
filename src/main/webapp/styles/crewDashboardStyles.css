@@ -124,6 +124,7 @@ body {
     margin: 10vh 2.5% 0 2.5%;
     font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
 }
+
 .dash-box {
     background-color: rgba(255,255,255,0.75);
     border: 1px solid rgba(82,82,82,0.75);
@@ -146,6 +147,10 @@ body {
     color: rgba(82,82,82,0.75);
 }
 
+.dash-box a {
+    text-decoration: none;
+    color: black;
+}
 /*Currently active page, change depending on the CSS file used*/
 #dashboard {
     background-color: rgba(22,150,210,0.8);

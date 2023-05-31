@@ -83,6 +83,7 @@ body {
     text-decoration: none;
     background-color: #F1F1F1;
     min-width: 5vw;
+    text-align: center;
     z-index: 1;
 }
 
@@ -97,8 +98,6 @@ body {
 
 .dropdown:hover .dropdown-content {
     display: block;
-    color: #000000;
-    background-color: rgba(81,81,81,0.5);
 }
 
 
@@ -116,7 +115,7 @@ body {
     border: 1px solid rgba(82,82,82,0.75);
     width: 15vw;
     height: 52vh;
-    margin: 20vh 2.5vw 20vh 2.5vw;
+    margin: 10vh 2.5vw 20vh 2.5vw;
     box-sizing: border-box;
     font-size: 1.15rem;
     font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
@@ -127,6 +126,25 @@ body {
     text-align: center;
     padding: 5% 0 5% 0;
 }
+
+
+.dash-box a {
+    text-decoration: none;
+    color: black;
+}
+
+.text img{
+    width: 95%;
+    margin: 10vh 2.5% 0 2.5%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+
+.box:hover {
+    cursor: pointer;
+    color: rgba(82,82,82,0.75);
+}
+
 
 /*Currently active page, change depending on the CSS file used*/
 #calendar {
