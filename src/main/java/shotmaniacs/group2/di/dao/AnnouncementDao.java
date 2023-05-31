@@ -43,7 +43,6 @@ public enum AnnouncementDao {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,announcementId);
             ResultSet rs = preparedStatement.executeQuery();
-
             if(rs.next()) {
                 System.out.println("Successful");
                 return new Announcement(rs.getInt(1), rs.getString(2), rs.getString(3),
@@ -62,7 +61,6 @@ public enum AnnouncementDao {
             String query = "SELECT announcement.* FROM announcement";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while(resultSet.next()) {
                 Announcement announcement = new Announcement(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
                         resultSet.getInt(4), Urgency.valueOf(resultSet.getString(5)), resultSet.getTimestamp(6));

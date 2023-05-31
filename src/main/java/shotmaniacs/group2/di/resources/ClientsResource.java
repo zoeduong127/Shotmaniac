@@ -75,4 +75,11 @@ public class ClientsResource {
         }
         System.out.println("Unsuccessfully");
     }
+    @Path("/delete/{booking_id}")
+    @Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public BookingResource cancelabooking(@PathParam("clientid") int clientid,@PathParam("booking_id") int id) {
+        return new BookingResource(uriInfo, request, clientid, id);
+    }
+
 }

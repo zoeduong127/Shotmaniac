@@ -10,10 +10,14 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.model.Account;
+import shotmaniacs.group2.di.model.AccountType;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.HashMap;
 
@@ -30,14 +34,16 @@ public class LoginResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(Account credentials) {
+        credentials.setPasswordHash(hash256(credentials.getPasswordHash()));
         // Validate user credentials
         if (isValidCredentials(credentials)) {
-            String token = generateToken(credentials.getUsername());
+            String token = generateToken(credentials.getId(),credentials.getUsername(),credentials.getAccountType());
 
             // Create a JSON response with the token
             JsonObject responseJson = Json.createObjectBuilder()
                     .add("token", token)
                     .build();
+            userTokens.put(credentials.getId(),token);
 
             // Todo: Get the crewMemberId and put it in userTokens with the token.
 
@@ -49,14 +55,35 @@ public class LoginResource {
         }
     }
 
-    // TODO: Add log out api call that destroys the token
+    public static String hash256(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+        // TODO: Add log out api call that destroys the token
 
     private boolean isValidCredentials(Account credentials) {
         // TODO: Validate the user credentials against the database
         return AccountDao.instance.loginCheck(credentials);
     }
 
-    private String generateToken(String username) {
+    private String generateToken(int id,String username, AccountType role) {
         // Generate a unique token for the user
         long expirationTimeInMillis = 24 * 60 * 60 * 1000; // 1 day
 
@@ -66,7 +93,9 @@ public class LoginResource {
         // Generate the JWT token
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         String token = Jwts.builder()
+                .setId(String.valueOf(id))
                 .setSubject(username)
+                .setSubject(String.valueOf(role))
                 .setExpiration(expirationDate)
                 .signWith(key)
                 .compact();

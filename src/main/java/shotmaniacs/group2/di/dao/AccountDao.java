@@ -58,6 +58,7 @@ public enum AccountDao {
         return false;
     }
 
+
     public static void main (String args[]) throws ParseException {
         Account account = new Account(2, "Duong Huyen","duongthuhuyen@student.utwente.nl","meomeo", AccountType.Administrator);
         AccountDao.instance.loginCheck(account);
