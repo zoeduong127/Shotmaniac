@@ -353,7 +353,7 @@ body {
 }
 
 .booking p {
-    width: 70%;
+    width: 30%;
     float: left;
     margin: 0;
     padding-top: 25px;
@@ -367,12 +367,26 @@ body {
     width: 20%;
     height: 70px;
     float: right;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.innerBooking .right {
+
 }
 .innerBooking p {
     margin: 0;
     padding-top: 25px;
     text-align: center;
     width: 100%;
+}
+
+.todo {
+    background-color: red;
+    height: 55px;
+    padding-top: 8px;
+    width: 20%;
 }
 
 /*Aside*/
