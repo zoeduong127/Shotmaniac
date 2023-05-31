@@ -9,6 +9,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
+import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
 
@@ -33,12 +34,12 @@ public class LoginResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response login(Account credentials) {
-        credentials.setPasswordHash(hash256(credentials.getPasswordHash()));
+    public Response login(LoginInfor account) {
+        account.setPassword(hash256(account.getPassword()));
+        Account credentials = isValidCredentials(account);
         // Validate user credentials
-        if (isValidCredentials(credentials)) {
-            String token = generateToken(credentials.getId(),credentials.getUsername(),credentials.getAccountType());
-
+        if (credentials != null) {
+            String token = generateToken(credentials);
             // Create a JSON response with the token
             JsonObject responseJson = Json.createObjectBuilder()
                     .add("token", token)
@@ -78,12 +79,12 @@ public class LoginResource {
 
         // TODO: Add log out api call that destroys the token
 
-    private boolean isValidCredentials(Account credentials) {
+    private Account isValidCredentials(LoginInfor credentials) {
         // TODO: Validate the user credentials against the database
         return AccountDao.instance.loginCheck(credentials);
     }
 
-    private String generateToken(int id,String username, AccountType role) {
+    private String generateToken(Account account) {
         // Generate a unique token for the user
         long expirationTimeInMillis = 24 * 60 * 60 * 1000; // 1 day
 
@@ -93,9 +94,7 @@ public class LoginResource {
         // Generate the JWT token
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         String token = Jwts.builder()
-                .setId(String.valueOf(id))
-                .setSubject(username)
-                .setSubject(String.valueOf(role))
+                .setSubject(String.valueOf(account))
                 .setExpiration(expirationDate)
                 .signWith(key)
                 .compact();
