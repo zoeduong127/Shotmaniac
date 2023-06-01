@@ -6,6 +6,7 @@ public class AssignRole {
     private int booking_id;
     private int crew_member_id;
     private Role role;
+    public AssignRole(){}
 
     public AssignRole(int booking_id, int crew_member_id, Role role) {
         this.booking_id = booking_id;

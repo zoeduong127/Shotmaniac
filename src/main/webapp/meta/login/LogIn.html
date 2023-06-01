@@ -6,42 +6,43 @@
     <link href="loginStyles.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        function login(){
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const url = 'http://localhost:8080/shotmaniacs2/api/login';
+            const account = {
+                email: email,
+                password: password,
+            };
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(account)
+            };
+            // console.log(options);
+            fetch(url, options)
+                .then(response =>{
+                    console.log(response);
+                    if (!response.ok) {
+                        alert("Submit unsuccessfully ! Try again please");
+                        return;
+                    }
+                    alert("Submit successfully a new bike");
+                })
+        }
+    </script>
 </head>
-<script>
-    function login(){
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const url = `http://localhost:8080/shotmaniacs2/meta/login/LogIn.html/api/login`;
-        const account = {
-            email: email,
-            password: password,
-        };
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(account)
-        };
-        console.log(options);
-        fetch(url, options)
-            .then(response =>{
-                console.log(response);
-                if (!response.ok) {
-                    alert("Submit unsuccessfully ! Try again please");
-                    return;
-                }
-                alert("Submit successfully a new bike");
-            })
-    }
-</script>
+
 <body>
 
     <div class="container">
         <div class="col-2 header">
-            <a href="./../../index.html" target="_self">
+            <a href="../../index.html" target="_self">
                 <img  class="logo-black-no_text"
-                                        src="./../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png"
+                                        src="../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png"
                                         alt="Shotmaniacs Logo Black">
             </a>
 
@@ -54,7 +55,7 @@
         </div>
 
         <div class="left col-6 body">
-            <img class="logo-white-text" src="./../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs Logo White">
+            <img class="logo-white-text" src="../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs Logo White">
         </div>
 
         <div class="right col-6 body">
@@ -80,7 +81,7 @@
 
 
                         <a href="" target="_self">
-                            <button class="ui-button" type="button" onclick = "login()">LOG IN</button>
+                            <button class="ui-button" type="button" onclick ="login()">LOG IN</button>
                         </a>
                         <p class="help-note"> <a href="" target="_self">Forgot Password?</a></p>
                     </div>

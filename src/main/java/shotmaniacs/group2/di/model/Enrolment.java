@@ -1,10 +1,19 @@
 package shotmaniacs.group2.di.model;
 
+import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Enrolment{
+    @XmlAnyElement
     private int id;
+    @XmlAnyElement
     private int bookingId;
-    int crewMemberId;
-    Role role;
+    @XmlAnyElement
+    private int crewMemberId;
+    @XmlAnyElement
+    private Role role;
+
 
     public Enrolment(int id, int bookingId, int crewMemberId, Role role) {
         this.id = id;

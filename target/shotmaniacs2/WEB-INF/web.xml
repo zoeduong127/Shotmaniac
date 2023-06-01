@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>org.glassfish.jersey.servlet.ServletContainer</servlet-name>
-        <servlet-class>org.glasshfish.jersey.servlet.ServletContainer</servlet-class>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>org.glassfish.jersey.servlet.ServletContainer</servlet-name>
