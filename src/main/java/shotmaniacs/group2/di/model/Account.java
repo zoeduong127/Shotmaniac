@@ -1,18 +1,23 @@
 package shotmaniacs.group2.di.model;
 
+import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Account {
     private int id;
     private String username;
     private String email;
     private String passwordHash;
     private AccountType accountType;
+    public Account(){}
 
     public Account(int id, String username, String email, String passwordHash, AccountType accountType) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.accountType = accountType;
+        setId(id);
+        setUsername(username);
+        setEmail(email);
+        setPasswordHash(passwordHash);
+        setAccountType(accountType);
     }
 
     public int getId() {

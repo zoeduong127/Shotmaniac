@@ -6,11 +6,10 @@ public class AssignRole {
     private int booking_id;
     private int crew_member_id;
     private Role role;
-
+    public AssignRole(){}
     public AssignRole(int booking_id, int crew_member_id, Role role) {
-        this.booking_id = booking_id;
-        this.role = role;
-        this.crew_member_id = crew_member_id;
+        setBookingId(booking_id);
+        setCrewMemberId(crew_member_id);
     }
 
     public void setCrewMemberId(int id) {

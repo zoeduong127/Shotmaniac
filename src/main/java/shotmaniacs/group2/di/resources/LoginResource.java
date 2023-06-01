@@ -19,7 +19,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
+import java.sql.*;
+import java.text.ParseException;
 import java.util.HashMap;
 
 @Path("/login")
@@ -32,28 +33,32 @@ public class LoginResource {
     private HashMap<Integer, String> userTokens = new HashMap<>();
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response login(LoginInfor account) {
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+    public Response loginCheck(LoginInfor account) {
+        String host = "bronto.ewi.utwente.nl";
+        String dbName ="dab_dsgnprj_50";
+        String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
+        String password = "yummybanana";
         account.setPassword(hash256(account.getPassword()));
-        Account credentials = isValidCredentials(account);
-        // Validate user credentials
-        if (credentials != null) {
-            String token = generateToken(credentials);
-            // Create a JSON response with the token
-            JsonObject responseJson = Json.createObjectBuilder()
-                    .add("token", token)
-                    .build();
-            userTokens.put(credentials.getId(),token);
+        try {
 
-            // Todo: Get the crewMemberId and put it in userTokens with the token.
-
-            // Return the response with HTTP status 200 OK
-            return Response.ok(responseJson).build();
-        } else {
-            // Return an error response with HTTP status 401 Unauthorized
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query = "SELECT * FROM account WHERE email = ? AND password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,account.getEmail());
+            preparedStatement.setString(2, account.getPassword());
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()) {
+                System.out.println("Login Successfully");
+                Account back =  new Account(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        rs.getString(4),AccountType.valueOf(rs.getString(5)));
+                return Response.ok(back).build();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
         }
+        return Response.noContent().build();
     }
 
     public static String hash256(String input) {
@@ -79,26 +84,31 @@ public class LoginResource {
 
         // TODO: Add log out api call that destroys the token
 
-    private Account isValidCredentials(LoginInfor credentials) {
-        // TODO: Validate the user credentials against the database
-        return AccountDao.instance.loginCheck(credentials);
-    }
-
-    private String generateToken(Account account) {
-        // Generate a unique token for the user
-        long expirationTimeInMillis = 24 * 60 * 60 * 1000; // 1 day
-
-        // Set the token expiration time
-        Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMillis);
-
-        // Generate the JWT token
-        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        String token = Jwts.builder()
-                .setSubject(String.valueOf(account))
-                .setExpiration(expirationDate)
-                .signWith(key)
-                .compact();
-
-        return token;
-    }
+//    private Account isValidCredentials(LoginInfor credentials) {
+//        // TODO: Validate the user credentials against the database
+//        return AccountDao.instance.loginCheck(credentials);
+//    }
+//
+//    private String generateToken(Account account) {
+//        // Generate a unique token for the user
+//        long expirationTimeInMillis = 24 * 60 * 60 * 1000; // 1 day
+//
+//        // Set the token expiration time
+//        Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMillis);
+//
+//        // Generate the JWT token
+//        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+//        String token = Jwts.builder()
+//                .setSubject(String.valueOf(account))
+//                .setExpiration(expirationDate)
+//                .signWith(key)
+//                .compact();
+//
+//        return token;
+//    }
+//public static void main (String args[]) throws ParseException {
+//    LoginInfor account = new LoginInfor("duongthuhuyen@student.utwente.nl","meome");
+//    LoginResource login = new LoginResource();
+//    System.out.println(login.loginCheck(account));
+//}
 }

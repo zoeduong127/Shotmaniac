@@ -1,11 +1,12 @@
 package shotmaniacs.group2.di.dto;
 
 public class LoginInfor {
-    String email;
-    String password;
+    private String email;
+    private String password;
+    public LoginInfor(){}
     public LoginInfor(String email, String password){
-        this.email = email;
-        this.password = password;
+        setEmail(email);
+        setPassword(password);
     }
 
     public String getEmail() {

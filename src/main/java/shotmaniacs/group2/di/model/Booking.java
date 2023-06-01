@@ -15,6 +15,7 @@ public class Booking {
     private BookingState state;
 
     //todo: add enrolments
+    public Booking(){}
 
     public Booking(int id, String name, String description, EventType eventType, java.sql.Timestamp date,
                    String location, int duration, String clientEmail, String clientName, String phoneNumber,
