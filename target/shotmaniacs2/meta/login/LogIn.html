@@ -7,6 +7,33 @@
 	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<script>
+    function login(){
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const url = 'http://localhost:8080/shotmaniacs2/api/login';
+        const account = {
+            email: email,
+            password: passwordfc
+        };
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(account)
+        };
+        fetch(url,options)
+            .then(response =>{
+                console.log(response);
+                if (!response.ok) {
+                    alert("Submit unsuccessfully ! Try again please");
+                    return;
+                }
+                alert("Submit successfully a new bike");
+            })
+    }
+</script>
 <body>
 
     <div class="container">
@@ -51,8 +78,8 @@
                         <label for="check-Box" id="check-Box-label"> Stay signed in </label>
 
 
-                        <a href="./../crew/dashboard/dashboard.html" target="_self">
-                            <button class="ui-button" type="button">LOG IN</button>
+                        <a href="" target="_self">
+                            <button class="ui-button" type="button" onclick = "login()">LOG IN</button>
                         </a>
                         <p class="help-note"> <a href="" target="_self">Forgot Password?</a></p>
                     </div>

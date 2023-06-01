@@ -1,5 +1,6 @@
 package shotmaniacs.group2.di.resources;
 
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.UriInfo;

@@ -3,8 +3,10 @@ package shotmaniacs.group2.di.model;
 public class Enrolment{
     private int id;
     private int bookingId;
-    int crewMemberId;
-    Role role;
+    private int crewMemberId;
+    private Role role;
+    public Enrolment() {}
+
 
     public Enrolment(int id, int bookingId, int crewMemberId, Role role) {
         this.id = id;
@@ -13,8 +15,7 @@ public class Enrolment{
         this.role = role;
     }
 
-    public Enrolment() {
-    }
+
 
     public int getId() {
         return id;

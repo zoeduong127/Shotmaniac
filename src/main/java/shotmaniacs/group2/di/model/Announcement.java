@@ -1,14 +1,24 @@
 package shotmaniacs.group2.di.model;
 
+import jakarta.xml.bind.annotation.XmlAnyAttribute;
+import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.sql.Date;
 import java.sql.Timestamp;
-
+@XmlRootElement
 public class Announcement {
+    @XmlAnyElement
     private int id;
+    @XmlAnyElement
     private String title;
+    @XmlAnyAttribute
     private String body;
+    @XmlAnyElement
     private int publisher;
+    @XmlAnyElement
     private Urgency urgency;
+    @XmlAnyElement
     private java.sql.Timestamp date;
     //private java.sql.Timestamp timestamp;
 
@@ -19,6 +29,9 @@ public class Announcement {
         this.publisher = publisher;
         this.urgency = urgency;
         this.date = date;
+    }
+    public Announcement(){
+
     }
 
     public int getId() {

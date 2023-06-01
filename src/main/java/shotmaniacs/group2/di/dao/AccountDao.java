@@ -1,19 +1,26 @@
 package shotmaniacs.group2.di.dao;
 
+import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
+import shotmaniacs.group2.di.model.Booking;
+import shotmaniacs.group2.di.model.EventType;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.ParseException;
 
 public enum AccountDao {
     instance;
+
+    private static String host = "bronto.ewi.utwente.nl";
+    private static  String dbName ="dab_dsgnprj_50";
+    private static  String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
+    private static String password = "yummybanana";
     // TODO: Hook this class up to the database
     public void addAccount(Account account) {
-        String host = "bronto.ewi.utwente.nl";
-        String dbName ="dab_dsgnprj_50";
-        String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
-        String password = "yummybanana";
 
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -33,34 +40,7 @@ public enum AccountDao {
             System.err.println("Error connecting: "+e);
         }
         System.out.println("Unsuccessfully");
+
     }
 
-    public boolean loginCheck(Account account) {
-        String host = "bronto.ewi.utwente.nl";
-        String dbName ="dab_dsgnprj_50";
-        String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
-        String password = "yummybanana";
-
-        try {
-            Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT * FROM account WHERE email = ? AND password = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,account.getEmail());
-            preparedStatement.setString(2, account.getPasswordHash());
-            ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()) {
-                System.out.println("Login Successfully");
-                return true;
-            }
-        } catch (SQLException e) {
-            System.err.println("Error connecting: "+e);
-        }
-        return false;
-    }
-
-
-    public static void main (String args[]) throws ParseException {
-        Account account = new Account(2, "Duong Huyen","duongthuhuyen@student.utwente.nl","meomeo", AccountType.Administrator);
-        AccountDao.instance.loginCheck(account);
-    }
 }
