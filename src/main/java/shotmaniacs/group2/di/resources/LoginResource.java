@@ -1,8 +1,6 @@
 package shotmaniacs.group2.di.resources;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -13,10 +11,8 @@ import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
 
-import javax.json.Json;
-import javax.json.JsonObject;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -81,9 +77,9 @@ public class LoginResource {
         }
     }
 
-        // TODO: Add log out api call that destroys the token
+    // TODO: Add log out api call that destroys the token
 
-//    private Account isValidCredentials(LoginInfor credentials) {
+    //    private Account isValidCredentials(LoginInfor credentials) {
 //        // TODO: Validate the user credentials against the database
 //        return AccountDao.instance.loginCheck(credentials);
 //    }
@@ -105,9 +101,9 @@ public class LoginResource {
 //
 //        return token;
 //    }
-//public static void main (String args[]) throws ParseException {
-//    LoginInfor account = new LoginInfor("duongthuhuyen@student.utwente.nl","meome");
-//    LoginResource login = new LoginResource();
-//    System.out.println(login.loginCheck(account));
-//}
+    public static void main (String args[]) throws ParseException {
+        LoginInfor account = new LoginInfor("duongthuhuyen@student.utwente.nl","meomeo");
+        LoginResource login = new LoginResource();
+        System.out.println(login.loginCheck(account));
+    }
 }
