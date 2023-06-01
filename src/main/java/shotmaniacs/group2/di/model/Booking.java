@@ -1,17 +1,33 @@
 package shotmaniacs.group2.di.model;
 
+import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Booking {
+    @XmlAnyElement
     private int id;
+    @XmlAnyElement
     private String name;
+    @XmlAnyElement
     private String description;
+    @XmlAnyElement
     private EventType eventType;
+    @XmlAnyElement
     private java.sql.Timestamp date;
+    @XmlAnyElement
     private String location;
+    @XmlAnyElement
     private int duration;
+    @XmlAnyElement
     private String clientEmail;
+    @XmlAnyElement
     private String clientName;
+    @XmlAnyElement
     private String phoneNumber;
+    @XmlAnyElement
     private BookingType bookingType;
+    @XmlAnyElement
     private BookingState state;
 
     //todo: add enrolments
