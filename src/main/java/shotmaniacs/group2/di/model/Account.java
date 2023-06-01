@@ -10,6 +10,7 @@ public class Account {
     private String email;
     private String passwordHash;
     private AccountType accountType;
+
     public Account(){}
 
     public Account(int id, String username, String email, String passwordHash, AccountType accountType) {

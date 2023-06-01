@@ -39,6 +39,7 @@ public enum  BookingDao {
                 System.out.println("Successfully");
                 return;
             }
+
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
         }

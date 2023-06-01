@@ -14,12 +14,12 @@ import java.text.ParseException;
 
 public enum AccountDao {
     instance;
+    private static String host = "bronto.ewi.utwente.nl";
+    private static  String dbName ="dab_dsgnprj_50";
+    private static  String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
+    private static String password = "yummybanana";
     // TODO: Hook this class up to the database
     public void addAccount(Account account) {
-        String host = "bronto.ewi.utwente.nl";
-        String dbName ="dab_dsgnprj_50";
-        String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
-        String password = "yummybanana";
 
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);

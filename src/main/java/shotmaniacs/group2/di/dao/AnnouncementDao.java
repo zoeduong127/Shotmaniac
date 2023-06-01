@@ -14,6 +14,7 @@ public enum AnnouncementDao {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
+
     public void addAnnouncement(Announcement announcement) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);

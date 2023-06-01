@@ -29,17 +29,16 @@ public class LoginResource {
     UriInfo uriInfo;
     @Context
     Request request;
-
+    private static String host = "bronto.ewi.utwente.nl";
+    private static String dbName ="dab_dsgnprj_50";
+    private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
+    private static String password = "yummybanana";
     private HashMap<Integer, String> userTokens = new HashMap<>();
 
     @POST
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
     public Response loginCheck(LoginInfor account) {
-        String host = "bronto.ewi.utwente.nl";
-        String dbName ="dab_dsgnprj_50";
-        String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
-        String password = "yummybanana";
         account.setPassword(hash256(account.getPassword()));
         try {
 
@@ -61,7 +60,7 @@ public class LoginResource {
         return Response.noContent().build();
     }
 
-    public static String hash256(String input) {
+    public String hash256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));

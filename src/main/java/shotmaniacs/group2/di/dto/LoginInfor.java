@@ -8,7 +8,6 @@ public class LoginInfor {
         setEmail(email);
         setPassword(password);
     }
-
     public String getEmail() {
         return email;
     }
@@ -26,10 +25,7 @@ public class LoginInfor {
     }
     @Override
     public String toString() {
-        return "{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "{" + "email='" + email + '\'' + ", password='" + password + '\'' + '}';
     }
 }
 
