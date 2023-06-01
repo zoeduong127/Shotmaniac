@@ -56,6 +56,7 @@ public class LoginResource {
         return Response.noContent().build();
     }
 
+
     public String hash256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

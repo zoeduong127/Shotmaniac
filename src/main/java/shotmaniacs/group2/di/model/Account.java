@@ -6,6 +6,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Account {
     private int id;
+
     private String username;
     private String email;
     private String passwordHash;

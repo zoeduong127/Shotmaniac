@@ -11,6 +11,7 @@ import java.util.List;
 
 public enum  BookingDao {
     instance;
+
     // TODO: Hook this class up to the database
     private static String host = "bronto.ewi.utwente.nl";
     private static String dbName ="dab_dsgnprj_50";

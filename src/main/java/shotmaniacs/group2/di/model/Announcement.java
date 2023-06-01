@@ -30,7 +30,9 @@ public class Announcement {
         this.urgency = urgency;
         this.date = date;
     }
-    public Announcement(){}
+    public Announcement(){
+
+    }
 
     public int getId() {
         return id;

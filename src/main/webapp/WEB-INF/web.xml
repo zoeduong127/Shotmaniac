@@ -12,4 +12,5 @@
         <servlet-name>org.glassfish.jersey.servlet.ServletContainer</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+
 </web-app>

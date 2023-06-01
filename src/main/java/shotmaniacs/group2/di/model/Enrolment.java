@@ -7,6 +7,7 @@ public class Enrolment{
     private Role role;
     public Enrolment() {}
 
+
     public Enrolment(int id, int bookingId, int crewMemberId, Role role) {
         this.id = id;
         this.bookingId = bookingId;

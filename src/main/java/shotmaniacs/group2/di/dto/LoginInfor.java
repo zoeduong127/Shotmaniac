@@ -7,6 +7,7 @@ public class LoginInfor {
     public LoginInfor(String email, String password){
         setEmail(email);
         setPassword(password);
+
     }
     public String getEmail() {
         return email;
