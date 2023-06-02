@@ -53,7 +53,7 @@ public class LoginResource {
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
         }
-        return Response.noContent().build();
+        return Response.serverError().build();
     }
 
 
