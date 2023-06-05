@@ -45,7 +45,7 @@ public class CrewsResourse {
         return listBooking;
     }
 
-    @Path("/mybooking?filtertime=<On going/Past>")
+    @Path("/mybooking/{filtertype}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -53,15 +53,15 @@ public class CrewsResourse {
      * Param "ongoing": filter ongoing event
      * Param "past":filter past event
      */
-    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @QueryParam("filtertime") String ongoing) {
+    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @PathParam("filtertype") String ongoing) {
         List<Booking> listbooking = new ArrayList<>();
         try {
             String query;
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            if(ongoing.equals("On going")) {
-                query = "SELECT booking.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time >= GETDATE()";
+            if(ongoing.equals("ongoing")) {
+                query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time >= NOW()";
             } else {
-                query = "SELECT booking.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time < GETDATE()";
+                query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time < NOW()";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,crewid);
@@ -90,13 +90,13 @@ public class CrewsResourse {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query;
             if(label.equals("Todo")) {
-                query = "SELECT booking.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Todo'";
+                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Todo'";
             } else if (label.equals("In progress")) {
-                query = "SELECT booking.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'In progress'";
+                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'In progress'";
             } else if (label.equals("Review")) {
-                query = "SELECT booking.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Review'";
+                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Review'";
             } else { //label.equals("Done")
-                query = "SELECT booking.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Done'";
+                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Done'";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,crewid);
@@ -158,7 +158,7 @@ public class CrewsResourse {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT announcement.* FROM announcement";
+            String query = "SELECT a.* FROM announcement";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -185,9 +185,9 @@ public class CrewsResourse {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query;
             if(status == 0) { //Unread announcement
-                query = "SELECT announcement.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 0";
+                query = "SELECT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 0";
             } else {
-                query = "SELECT announcement.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 1";
+                query = "SELECT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 1";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -213,7 +213,7 @@ public class CrewsResourse {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT announcement.* FROM announcement a, mark_announcement ma WHERE ma.booking_id = ? AND ma.announcement_id = a.announcement_id";
+            String query = "SELECT a.* FROM announcement a, mark_announcement ma WHERE ma.booking_id = ? AND ma.announcement_id = a.announcement_id";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, bookingId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -241,9 +241,9 @@ public class CrewsResourse {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query;
             if(status == 0) { //Unread announcement
-                query = "SELECT announcement.* FROM announcement a, mark_announcement ma WHERE ma.booking_id = ? AND a.announcement_id = ma.announcement_id AND read_status = 0";
+                query = "SELECT a.* FROM announcement a, mark_announcement ma WHERE ma.booking_id = ? AND a.announcement_id = ma.announcement_id AND read_status = 0";
             } else {
-                query = "SELECT announcement.* FROM announcement a, mark_announcement ma WHERE ma.booking_id = ? AND a.announcement_id = ma.announcement_id AND read_status = 1";
+                query = "SELECT a.* FROM announcement a, mark_announcement ma WHERE ma.booking_id = ? AND a.announcement_id = ma.announcement_id AND read_status = 1";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,bookingId);
