@@ -49,10 +49,19 @@ body {
     max-width: 100vw;
 }
 
-a:before {
-    color: black;
+a:visited {
+    color: rgba(31, 31, 31, 1);
 }
 
+a:hover {
+    color: rgba(22, 150, 210, 0.8);
+    font-weight: bolder;
+}
+
+a:active {
+    color: rebeccapurple;
+    font-weight: lighter;
+}
 
 .header {
     margin-top: 2rem;
@@ -157,6 +166,7 @@ a:before {
 
 
 #check-Box { /*w = 3.5, h = 3*/
+    cursor: pointer;
     float: left;
     width: 1vw;
     height: 3vh;
@@ -184,13 +194,34 @@ a:before {
     text-align: center;
     background-color: rgb(82, 82, 82);
     color: white;
+    font-family: Kiona, cursive;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .ui-button:hover {
     background-color: black;
 }
 
-
 h1, h2, h3, h4, h5, h6, p, label {
     font-family:  Kiona, cursive;
+}
+
+#Show-Pass {
+    cursor:pointer;
+    float: right;
+    width: 32px;
+    height: 27px;
+    margin-right: 2.5vw;
+    margin-top: -5.9vh;
+}
+
+#Hide-Pass {
+    cursor:pointer;
+    float: right;
+    width: 60px;
+    height: 29px;
+    margin-right: 1.82vw;
+    margin-top: -6vh;
 }

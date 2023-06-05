@@ -239,7 +239,7 @@ body {
 
 }
 
-/*Change depending on what the actual content is to be able to filter*/
+Change depending on what the actual content is to be able to filter
 .filter-content p {
     float: none;
     color: black;
@@ -253,7 +253,7 @@ body {
 .filter:hover .filter-content {
     display: block;
     width: 10vw;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 .filter:hover .booking-container {
