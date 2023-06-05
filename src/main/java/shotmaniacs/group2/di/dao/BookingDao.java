@@ -70,7 +70,7 @@ public enum  BookingDao {
         List<Booking> listbooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT booking.* FROM booking b";
+            String query = "SELECT b.* FROM booking b";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()) {
