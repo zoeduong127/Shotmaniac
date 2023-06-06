@@ -65,6 +65,7 @@ body {
     float: right;
     overflow: hidden;
     margin: 0 3vw 0 0;
+    height: 100%;
 }
 
 .dropdown .dropdownBtn {
@@ -84,9 +85,11 @@ body {
     position: absolute;
     text-decoration: none;
     background-color: #F1F1F1;
-    min-width: 5vw;
+    min-width: 7vw;
     text-align: center;
     z-index: 1;
+    right: 1.5vw;
+    top: 8vh;
 }
 
 .dropdown-content a {
@@ -96,7 +99,6 @@ body {
     display: block;
     text-align: center;
     text-decoration: none;
-
 }
 
 .dropdown:hover .dropdown-content {
@@ -352,6 +354,10 @@ body {
     margin: 2.5% 0;
 }
 
+.booking:hover {
+    cursor: pointer;
+}
+
 .booking p {
     width: 30%;
     float: left;
@@ -374,18 +380,20 @@ body {
     border-radius: 4px;
 }
 .innerBooking p {
-    margin: 0;
-    padding-top: 25px;
+    margin: 5px 0;
+    padding: 20px 0;
     text-align: center;
     width: 100%;
+
+    font-size: 16px;
 }
 
 .left p{
     background-color: rgba(255, 105, 98, 0.72);
 
-    margin: 2vh 1vw;
-    padding-top: 10px;
-
+    margin: 15px 1vw;
+    padding: 12px 0;
+    font-size: 16px;
 }
 .todo {
     background-color: red;

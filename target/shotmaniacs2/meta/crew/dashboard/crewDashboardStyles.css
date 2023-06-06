@@ -352,6 +352,10 @@ body {
     margin: 2.5% 0;
 }
 
+.booking:hover {
+    cursor: pointer;
+}
+
 .booking p {
     width: 30%;
     float: left;
@@ -360,9 +364,6 @@ body {
     text-align: center;
 }
 .innerBooking {
-    border-left: 1px solid black;
-    border-radius: 4px;
-
     text-align: center;
     width: 20%;
     height: 70px;
@@ -372,16 +373,26 @@ body {
     flex-direction: row;
 }
 
-.innerBooking .right {
-
+.right {
+    border-left: 1px solid black;
+    border-radius: 4px;
 }
 .innerBooking p {
-    margin: 0;
-    padding-top: 25px;
+    margin: 5px 0;
+    padding: 20px 0;
     text-align: center;
     width: 100%;
+
+    font-size: 16px;
 }
 
+.left p{
+    background-color: rgba(255, 105, 98, 0.72);
+
+    margin: 15px 1vw;
+    padding: 12px 0;
+    font-size: 16px;
+}
 .todo {
     background-color: red;
     height: 55px;
