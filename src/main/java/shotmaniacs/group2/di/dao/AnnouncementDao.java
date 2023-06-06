@@ -60,7 +60,7 @@ public enum AnnouncementDao {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT announcement.* FROM announcement";
+            String query = "SELECT * FROM announcement";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {

@@ -34,7 +34,7 @@ public class ClientsResource {
         List<Booking> listbooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT booking.* FROM booking b , client c WHERE c.client_id = ? AND c.booking_id = b.booking_id ";
+            String query = "SELECT b.* FROM booking b , client c WHERE c.client_id = ? AND c.booking_id = b.booking_id ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();

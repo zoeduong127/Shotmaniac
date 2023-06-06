@@ -207,3 +207,21 @@ a:active {
 h1, h2, h3, h4, h5, h6, p, label {
     font-family:  Kiona, cursive;
 }
+
+#Show-Pass {
+    cursor:pointer;
+    float: right;
+    width: 32px;
+    height: 27px;
+    margin-right: 2.5vw;
+    margin-top: -5.9vh;
+}
+
+#Hide-Pass {
+    cursor:pointer;
+    float: right;
+    width: 60px;
+    height: 29px;
+    margin-right: 1.82vw;
+    margin-top: -6vh;
+}
