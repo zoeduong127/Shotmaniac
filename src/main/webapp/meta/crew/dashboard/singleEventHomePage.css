@@ -365,38 +365,10 @@ body {
     cursor: none;
 }
 
-
-.pdf {
-    height: 30%;
-    display: flex;
+.files img {
+    height: 8vh;
 }
 
-.pdf span {
-    padding-left: 5%;
-}
-
-.doc {
-    height: 30%;
-    padding-top: 2vh;
-    display: flex;
-
-}
-.doc span {
-    padding-left: 5%;
-}
-.xlsx {
-    height: 30%;
-    padding-top: 2vh;
-    display: flex;
-}
-
-.xlsx span {
-    margin-left: 10%;
-}
-
-.xlsx img {
-    height: 10vh;
-}
 /*Things to hide*/
 
 .filter {
