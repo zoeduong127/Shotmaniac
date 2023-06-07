@@ -39,31 +39,31 @@
 		<div class="dash-box">
 			<a href="dashboard.html" target="_self">
 			<div class="box" id="dashboard">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label> Dashboard</label>
 			</div>
 			</a>
 			<a href="./../news/News.html" target="_self">
 			<div class="box" id="News">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>News</label>
 			</div>
 			</a>
 			<a href="./../calendar/calendar.html" target="_self">
 			<div class="box" id="calendar">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label> Calendar</label>
 			</div>
 			</a>
 			<a href="./../bookings/bookings.html" target="_self">
 			<div class="box" id="booking">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>Bookings</label>
 			</div>
 			</a>
 			<a href="../../help/help.html" target="_self">
 			<div class="box" id="help">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>Help</label>
 			</div>
 			</a>
@@ -82,61 +82,9 @@
 			<div class="filter">
 				<button class="filter-btn">
 					<i class="fas fa-filter filter-icon"></i>
-						Filter:
+						Filter
 					<i class="fas fa-caret-down down-icon"></i>
 				</button>
-
-				<script>
-
-					function parseCookie(cookieString) {
-						const cookies = {};
-						cookieString.split(';').forEach(cookie => {
-							const [name, value] = cookie.trim().split('=');
-							cookies[name] = decodeURIComponent(value);
-						});
-						return cookies;
-					}
-
-
-					function updateBookings(filterType) {
-
-						const bookingWidget = document.createElement("div");
-						bookingWidget.setAttribute("class","booking");
-						bookingWidget.setAttribute("id", "booking_");
-
-						var filter;
-
-						switch (filterType) {
-							case 'in_progress':
-								filter = "ongoing";
-								break;
-							case 'future':
-								filter = "ongoing";
-								break;
-							case 'past':
-								filter = "past";
-								break;
-							default:
-								filter = 'ongoing';
-						}
-
-						const cookies = parseCookie(document.cookie);
-						const id = cookies['account_id'];
-
-						const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking?filtertime=${filter}`;
-						fetch(url)
-								.then(response => response.json())
-								.then(data => {
-									data.forEach(booking => {
-										console.log(booking.name);
-									});
-								})
-								.catch(error => {
-									// Handle any errors
-									console.error(error);
-								});
-					}
-				</script>
 
 				<div class="filter-content">
 					<!--missing HREF-->

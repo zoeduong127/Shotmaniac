@@ -115,7 +115,7 @@ body {
 
 /*Navigational Dashboard*/
 
-#icon {
+.dash-box img {
     width: 0;
     height: 0;
 }
@@ -241,7 +241,9 @@ body {
 
 }
 
+/*
 Change depending on what the actual content is to be able to filter
+*/
 .filter-content p {
     float: none;
     color: black;
@@ -478,3 +480,10 @@ background-color: inherit;
 }
 
 /*End aside*/
+
+/*Things to hide*/
+
+.title-bar {
+    display: none;
+    visibility: hidden;
+}
