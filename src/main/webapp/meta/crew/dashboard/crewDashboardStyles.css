@@ -257,7 +257,7 @@ Change depending on what the actual content is to be able to filter
 .filter:hover .filter-content {
     display: block;
     width: 10vw;
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .filter:hover .booking-container {
