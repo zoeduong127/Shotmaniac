@@ -11,7 +11,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<script src="" defer></script>
+<script src="" defer>
+</script>
 <div class="container">
 	<header>
 		<div class="dropdown">
@@ -38,31 +39,31 @@
 		<div class="dash-box">
 			<a href="dashboard.html" target="_self">
 			<div class="box" id="dashboard">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="dashboard_icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label> Dashboard</label>
 			</div>
 			</a>
 			<a href="./../news/News.html" target="_self">
 			<div class="box" id="News">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="news_icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>News</label>
 			</div>
 			</a>
 			<a href="./../calendar/calendar.html" target="_self">
 			<div class="box" id="calendar">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="calendar_icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label> Calendar</label>
 			</div>
 			</a>
 			<a href="./../bookings/bookings.html" target="_self">
 			<div class="box" id="booking">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="booking_icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>Bookings</label>
 			</div>
 			</a>
 			<a href="../../help/help.html" target="_self">
 			<div class="box" id="help">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="help_icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>Help</label>
 			</div>
 			</a>
@@ -80,20 +81,72 @@
 			<div class="filter">
 				<button class="filter-btn">
 					<i class="fas fa-filter filter-icon"></i>
-						Filter
+						Filter:
 					<i class="fas fa-caret-down down-icon"></i>
 				</button>
-				
+
+				<script>
+
+					function parseCookie(cookieString) {
+						const cookies = {};
+						cookieString.split(';').forEach(cookie => {
+							const [name, value] = cookie.trim().split('=');
+							cookies[name] = decodeURIComponent(value);
+						});
+						return cookies;
+					}
+
+
+					function updateBookings(filterType) {
+
+						// const bookingWidget = document.createElement("div");
+						// bookingWidget.setAttribute("class","booking");
+						// bookingWidget.setAttribute("id", "booking_");
+
+						var filter;
+
+						switch (filterType) {
+							case 'in_progress':
+								filter = "ongoing";
+								break;
+							case 'future':
+								filter = "ongoing";
+								break;
+							case 'past':
+								filter = "past";
+								break;
+							default:
+								filter = 'ongoing';
+						}
+
+						const cookies = parseCookie(document.cookie);
+						const id = cookies['account_id'];
+
+						const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking/timefilter/${filter}`;
+						fetch(url)
+								.then(response => response.json())
+								.then(data => {
+									data.forEach(booking => {
+										console.log(booking.name);
+									});
+								})
+								.catch(error => {
+									// Handle any errors
+									console.error(error);
+								});
+					}
+				</script>
+
 				<div class="filter-content">
 					<!--missing HREF-->
-					<div class="item">
+					<div class="item" onclick="updateBookings('in_progress')">
 						<p>In Progress</p>
 					</div>
-					<div class="item">
+					<div class="item" onclick="updateBookings('future')">
 						<p>Future</p>
 					</div>
 					
-					<div class="item">
+					<div class="item" onclick="updateBookings('past')">
 						<p>Past</p>
 					</div>
 				</div>
@@ -114,7 +167,6 @@
 					<p> 30 July, 2023 </p>
 				</div>
 				<div class="innerBooking left"></div>
-			
 			</div>
 			<div class="booking" id="2">
 				<p> Event name </p>
