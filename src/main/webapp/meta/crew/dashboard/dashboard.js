@@ -29,7 +29,8 @@ function reloadEvent() {
 
 
 /*Filter*/
-
+const bookingContainer = document.getElementById("booking_container");
+const bookingElement = bookingContainer.firstElementChild.cloneNode(true);
 
 function parseCookie(cookieString) {
     const cookies = {};
@@ -42,22 +43,26 @@ function parseCookie(cookieString) {
 
 
 function updateBookings(filterType) {
+    while (bookingContainer.firstChild) {
+        bookingContainer.removeChild(bookingContainer.firstChild);
+    }
 
-    const bookingWidget = document.createElement("div");
-    bookingWidget.setAttribute("class","booking");
-    bookingWidget.setAttribute("id", "booking_");
+    filterButton = document.getElementById("filter_button_text");
 
     var filter;
 
     switch (filterType) {
         case 'in_progress':
             filter = "ongoing";
+            filterButton.textContent = "Filter: In progress";
             break;
         case 'future':
             filter = "ongoing";
+            filterButton.textContent = "Filter: On going";
             break;
         case 'past':
             filter = "past";
+            filterButton.textContent = "Filter: Past";
             break;
         default:
             filter = 'ongoing';
@@ -66,12 +71,35 @@ function updateBookings(filterType) {
     const cookies = parseCookie(document.cookie);
     const id = cookies['account_id'];
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking?filtertime=${filter}`;
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking/timefilter/${filter}`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
             data.forEach(booking => {
-                console.log(booking.name);
+
+                // const bookingWidget = document.createElement("div");
+                // bookingWidget.setAttribute("class","booking");
+                // bookingWidget.setAttribute("id", "booking_" + booking.id);
+                // const eventName = document.createElement("p");
+                // eventName.innerHTML = booking.name;
+                // bookingWidget.appendChild(eventName);
+                //
+                // rightInnerBooking = document.createElement("div");
+                // rightInnerBooking.setAttribute("class", "innerBooking right");
+                // const date = document.createElement("p");
+                // dateTime = new Date(booking.date);
+                // date.innerText = dateTime.toDateString() + ', ' + dateTime.getHours() + ':' + dateTime.getMinutes();
+                // rightInnerBooking.appendChild(date);
+                // bookingWidget.appendChild(rightInnerBooking);
+                //
+                // leftInnerBooking = document.createElement("div");
+                // leftInnerBooking.setAttribute("class", "innerBooking left");
+                // statusText = document.createElement("p");
+                // statusText.innerText = "TODO"
+                // leftInnerBooking.appendChild(statusText);
+                // bookingWidget.appendChild(leftInnerBooking);
+
+                bookingContainer.appendChild(bookingElement);
             });
         })
         .catch(error => {

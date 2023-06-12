@@ -359,19 +359,50 @@ Change depending on what the actual content is to be able to filter
     border: 1px solid black;
     border-radius: 4px;
     margin: 2.5% 0;
+
+}
+
+.booking .booking-info-grid {
+    display: inline-grid;
+    width: available;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    justify-content: start;
+    align-content: center;
+}
+
+.booking p {
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 .booking:hover {
     cursor: pointer;
 }
 
-.booking p {
-    width: 30%;
+.booking .booking-large-text {
+    margin: 0;
+    float: left;
+    text-align: left;
+    vertical-align: top;
+    padding: 5px 0px 0px 5px;
+}
+
+
+.booking .booking-small {
     float: left;
     margin: 0;
-    padding-top: 25px;
-    text-align: center;
+    text-align: left;
+    padding: 7px 0px 0px 5px;
+
 }
+
+.booking .booking-small p {
+    font-family: Arial;
+    font-size: smaller;
+}
+
+
 
 .innerBooking {
     text-align: center;
