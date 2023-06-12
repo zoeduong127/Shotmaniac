@@ -80,9 +80,9 @@
 		<div class="navigation">
 			<!-- On main page -->
 			<div class="filter">
-				<button class="filter-btn">
+				<button class="filter-btn" >
 					<i class="fas fa-filter filter-icon"></i>
-						Filter
+						<p id = "filter_button_text">Filter</p>
 					<i class="fas fa-caret-down down-icon"></i>
 				</button>
 
@@ -128,7 +128,7 @@
 						<button class="labelButton">Set Label
 							<i class="fas fa-caret-down label-arrow"></i>
 						</button>
-						
+
 						<div class="label-content">
 							<div class="item" id="todo">
 								<p>Todo</p>
@@ -150,9 +150,91 @@
 				</div>
 			</div>
 		</div>
-		
+
+		<script>
+
+			function parseCookie(cookieString) {
+				const cookies = {};
+				cookieString.split(';').forEach(cookie => {
+					const [name, value] = cookie.trim().split('=');
+					cookies[name] = decodeURIComponent(value);
+				});
+				return cookies;
+			}
+
+
+			function updateBookings(filterType) {
+				bookingContainer = document.getElementById("booking_container");
+				while (bookingContainer.firstChild) {
+					bookingContainer.removeChild(bookingContainer.firstChild);
+				}
+
+				filterButton = document.getElementById("filter_button_text");
+
+				var filter;
+
+				switch (filterType) {
+					case 'in_progress':
+						filter = "ongoing";
+						filterButton.textContent = "Filter: In progress";
+						break;
+					case 'future':
+						filter = "ongoing";
+						filterButton.textContent = "Filter: On going";
+						break;
+					case 'past':
+						filter = "past";
+						filterButton.textContent = "Filter: Past";
+						break;
+					default:
+						filter = 'ongoing';
+				}
+
+				const cookies = parseCookie(document.cookie);
+				const id = cookies['account_id'];
+
+				const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking/timefilter/${filter}`;
+				fetch(url)
+						.then(response => response.json())
+						.then(data => {
+							data.forEach(booking => {
+								console.log(booking.date.valueAsDate);
+								console.log(booking.date);
+
+								const bookingWidget = document.createElement("div");
+								bookingWidget.setAttribute("class","booking");
+								bookingWidget.setAttribute("id", "booking_" + booking.id);
+								const eventName = document.createElement("p");
+								eventName.innerHTML = booking.name;
+								bookingWidget.appendChild(eventName);
+
+								rightInnerBooking = document.createElement("div");
+								rightInnerBooking.setAttribute("class", "innerBooking right");
+								const date = document.createElement("p");
+								dateTime = new Date(booking.date);
+								date.innerText = dateTime.toDateString() + ', ' + dateTime.getHours() + ':' + dateTime.getMinutes();
+								rightInnerBooking.appendChild(date);
+								bookingWidget.appendChild(rightInnerBooking);
+
+								leftInnerBooking = document.createElement("div");
+								leftInnerBooking.setAttribute("class", "innerBooking left");
+								statusText = document.createElement("p");
+								statusText.innerText = "TODO"
+								leftInnerBooking.appendChild(statusText);
+								bookingWidget.appendChild(leftInnerBooking);
+
+								bookingContainer.appendChild(bookingWidget);
+							});
+						})
+						.catch(error => {
+							// Handle any errors
+							console.error(error);
+						});
+			}
+		</script>
+
 		<!-- On main page -->
-		<div class="booking-container">
+		<div class="booking-container" id="booking_container">
 				<div class="booking" id="1" onclick="toggleStyle()">
 					<p> Event name </p>
 					

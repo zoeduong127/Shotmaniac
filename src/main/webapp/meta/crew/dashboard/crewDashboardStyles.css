@@ -199,30 +199,35 @@ body {
 
 .filter {
     float: left;
+    display: inline-block;
     margin: 0 0 0 4vw;
 }
 
 .filter .filter-btn {
     background-color: inherit;
     padding: 0 0.75vw;
-    width: 10vw;
+    width: 35vh;
     height: 3vh;
-    border-radius: 5px;
+    border-radius: 0px;
     border: 2px solid black;
     box-shadow: 0 3px 3px rgba(82,82,82,0.38);
     font-family: 'Kiona', 'Quicksand', sans-serif;
+    display: inline-block;
 }
 
 .filter-icon {
-    margin-top: 0.15vh;
+    margin-top: 0.45vh;
     float: left;
+    display: inline-block;
 }
 
 .filter-btn p {
+    transform: translateY(-14px);
 }
 .down-icon {
     float: right;
     scale: 1.6;
+    transform: translateY(-25px);
 }
 
 .filter:hover .filter-btn {
@@ -257,7 +262,7 @@ Change depending on what the actual content is to be able to filter
 .filter:hover .filter-content {
     display: block;
     width: 10vw;
-    border-radius: 0;
+    border-radius: 0px;
 }
 
 .filter:hover .booking-container {
@@ -367,6 +372,7 @@ Change depending on what the actual content is to be able to filter
     padding-top: 25px;
     text-align: center;
 }
+
 .innerBooking {
     text-align: center;
     width: 20%;
@@ -389,6 +395,17 @@ Change depending on what the actual content is to be able to filter
 
     font-size: 16px;
 }
+
+.booking-description {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    padding: 0px 0px 0px 10px;
+    font-size: 12px;
+    font-family: Arial;
+    font-weight: normal;
+}
+
 
 .left p{
     background-color: rgba(255, 105, 98, 0.72);

@@ -21,7 +21,7 @@ public class CrewsResourse {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
-    @Path("/mybooking")
+    @Path("/mybookings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Booking> getBooking(@PathParam("crewid") int crewId) {
@@ -45,7 +45,7 @@ public class CrewsResourse {
         return listBooking;
     }
 
-    @Path("/mybooking?filtertime=<On going/Past>")
+    @Path("/mybooking/timefilter/{filtertime}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -53,15 +53,15 @@ public class CrewsResourse {
      * Param "ongoing": filter ongoing event
      * Param "past":filter past event
      */
-    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @QueryParam("filtertime") String ongoing) {
+    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @PathParam("filtertime") String ongoing) {
         List<Booking> listbooking = new ArrayList<>();
         try {
             String query;
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            if(ongoing.equals("On going")) {
-                query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time >= GETDATE()";
+            if(ongoing.equals("ongoing")) {
+                query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time >= NOW()";
             } else {
-                query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time < GETDATE()";
+                query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time < NOW()";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,crewid);
@@ -78,24 +78,25 @@ public class CrewsResourse {
         return listbooking;
     }
 
-    @Path("/mybooking?label=<Todo/In progress/Review/Done>")
+    @Path("/mybooking/labelfilter/{label}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
-     * Filter my booking based on label
+     * Filter my booking based on label:
+     *
      */
-    public List<Booking> getBookingWithLabelFilter(@PathParam("crewid") int crewid, @QueryParam("label") String label) {
+    public List<Booking> getBookingWithLabelFilter(@PathParam("crewid") int crewid, @PathParam("label") String label) {
         List<Booking> listbooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query;
-            if(label.equals("Todo")) {
+            if(label.equals("todo")) {
                 query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Todo'";
-            } else if (label.equals("In progress")) {
+            } else if (label.equals("in_progress")) {
                 query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'In progress'";
-            } else if (label.equals("Review")) {
+            } else if (label.equals("review")) {
                 query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Review'";
-            } else { //label.equals("Done")
+            } else { //label.equals("done")
                 query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Done'";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -113,7 +114,7 @@ public class CrewsResourse {
         return listbooking;
     }
 
-    @Path("/booking")
+    @Path("/allbookings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
