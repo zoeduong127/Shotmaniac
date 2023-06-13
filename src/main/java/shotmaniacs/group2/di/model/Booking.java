@@ -3,6 +3,8 @@ package shotmaniacs.group2.di.model;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.sql.Timestamp;
+
 @XmlRootElement
 public class Booking {
     @XmlAnyElement
@@ -20,9 +22,9 @@ public class Booking {
     @XmlAnyElement
     private int duration;
     @XmlAnyElement
-    private String clientEmail;
-    @XmlAnyElement
     private String clientName;
+    @XmlAnyElement
+    private String clientEmail;
     @XmlAnyElement
     private String phoneNumber;
     @XmlAnyElement
@@ -30,14 +32,15 @@ public class Booking {
     @XmlAnyElement
     private BookingState state;
 
-    //todo: add enrolments
+    @XmlAnyElement
+    private int slots;
 
 
     public Booking(){}
 
-    public Booking(int id, String name, String description, EventType eventType, java.sql.Timestamp date,
-                   String location, int duration, String clientEmail, String clientName, String phoneNumber,
-                   BookingType bookingType, BookingState state) {
+    public Booking(int id, String name, String description, EventType eventType, Timestamp date,
+                   String location, int duration, String clientName, String clientEmail, String phoneNumber,
+                   BookingType bookingType, BookingState state, int slots) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -45,11 +48,12 @@ public class Booking {
         this.date = date;
         this.location = location;
         this.duration = duration;
-        this.clientEmail = clientEmail;
         this.clientName = clientName;
+        this.clientEmail = clientEmail;
         this.phoneNumber = phoneNumber;
         this.bookingType = bookingType;
         this.state = state;
+        this.slots = slots;
     }
 
     public String getDescription() {
@@ -146,5 +150,13 @@ public class Booking {
 
     public void setState(BookingState state) {
         this.state = state;
+    }
+
+    public int getSlots() {
+        return slots;
+    }
+
+    public void setSlots(int slots) {
+        this.slots = slots;
     }
 }

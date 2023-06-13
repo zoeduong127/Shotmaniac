@@ -21,7 +21,7 @@ public enum  BookingDao {
     public void addBooking(Booking booking) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO booking VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO booking VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,booking.getId());
             preparedStatement.setString(2,booking.getName());
@@ -35,6 +35,7 @@ public enum  BookingDao {
             preparedStatement.setString(10,booking.getPhoneNumber());
             preparedStatement.setString(11, String.valueOf(booking.getBookingType()));
             preparedStatement.setString(12, String.valueOf(booking.getState()));
+            preparedStatement.setString(13, String.valueOf(booking.getSlots()));
             int rowsInserted = preparedStatement.executeUpdate();
             while(rowsInserted > 0) {
                 System.out.println("Successfully");
@@ -58,7 +59,7 @@ public enum  BookingDao {
                 System.out.println("Successful");
                 return new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
@@ -76,7 +77,7 @@ public enum  BookingDao {
             while(rs.next()) {
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {

@@ -32,6 +32,17 @@ function reloadEvent() {
 const bookingContainer = document.getElementById("booking_container");
 const bookingElement = bookingContainer.firstElementChild.cloneNode(true);
 
+function reloadCss()
+{
+    var links = document.getElementsByTagName("link");
+    for (var cl in links)
+    {
+        var link = links[cl];
+        if (link.rel === "stylesheet")
+            link.href += "";
+    }
+}
+
 function parseCookie(cookieString) {
     const cookies = {};
     cookieString.split(';').forEach(cookie => {
@@ -68,6 +79,8 @@ function updateBookings(filterType) {
             filter = 'ongoing';
     }
 
+
+
     const cookies = parseCookie(document.cookie);
     const id = cookies['account_id'];
 
@@ -99,7 +112,41 @@ function updateBookings(filterType) {
                 // leftInnerBooking.appendChild(statusText);
                 // bookingWidget.appendChild(leftInnerBooking);
 
-                bookingContainer.appendChild(bookingElement);
+                var bookingElementCopy = bookingElement.cloneNode(true);
+
+                //TODO: Calculate amount of slots already taken.
+                bookingElementCopy.querySelector("#event_name").innerHTML = booking.name + " <span class=\"bolded\">(" + booking.slots + ")</span>";
+                bookingElementCopy.querySelector("#booking_type").innerText = booking.bookingType;
+
+                bookingElementCopy.querySelector("#location").innerText = booking.location;
+                bookingElementCopy.querySelector("#client").innerText = booking.clientName;
+                bookingElementCopy.querySelector("#event_type").innerText = booking.eventType;
+                bookingElementCopy.querySelector("#duration").innerText = booking.duration;
+
+                let dateTime = new Date(booking.date);
+                const formattedDate = dateTime.toLocaleString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+                bookingElementCopy.querySelector("#date").innerText = dateTime.toDateString() + ', ' + formattedDate;
+
+                let bookingState = bookingElementCopy.querySelector("#state");
+
+                switch (booking.state) {
+                    case "PENDING":
+                        bookingState.classList.add("pending-state");
+                        break;
+                    case "APPROVED":
+                        bookingState.classList.add("approved-state");
+                        break;
+                    default:
+                        bookingState.classList.add("pending-state");
+                }
+
+                bookingState.innerText = booking.state;
+                bookingContainer.appendChild(bookingElementCopy);
+
             });
         })
         .catch(error => {

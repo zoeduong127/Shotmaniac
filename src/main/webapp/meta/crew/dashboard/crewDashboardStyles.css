@@ -43,6 +43,10 @@ main {
     */
 }
 
+.bolded {
+    font-weight: bold;
+    font-family: Arial, serif; !important;
+}
 
 body {
     margin: 0;
@@ -440,11 +444,19 @@ Change depending on what the actual content is to be able to filter
 
 .left p{
     background-color: rgba(255, 105, 98, 0.72);
-
     margin: 15px 1vw;
     padding: 12px 0;
     font-size: 16px;
 }
+
+.pending-state {
+    background-color: rgba(255, 105, 98, 0.72) !important;
+
+}
+.approved-state {
+    background-color: rgba(98, 105, 255, 0.72) !important;
+}
+
 .todo {
     background-color: red;
     height: 55px;
