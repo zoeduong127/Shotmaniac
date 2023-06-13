@@ -368,11 +368,15 @@ Change depending on what the actual content is to be able to filter
 
 .booking .booking-info-grid {
     display: inline-grid;
+    height: 100%;
     width: available;
     grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: 1fr 1fr;
     justify-content: start;
     align-content: center;
+    grid-row-gap: 1px;
+    grid-column-gap: 1px;
+    background-color: black;
 }
 
 .booking p {
@@ -389,7 +393,8 @@ Change depending on what the actual content is to be able to filter
     float: left;
     text-align: left;
     vertical-align: top;
-    padding: 5px 0px 0px 5px;
+    background-color: #FFFFFF;
+    padding: 5px 5px 0px 5px;
 }
 
 
@@ -397,7 +402,9 @@ Change depending on what the actual content is to be able to filter
     float: left;
     margin: 0;
     text-align: left;
-    padding: 7px 0px 0px 5px;
+    vertical-align: middle;
+    padding: 12px 5px 0px 5px;
+    background-color: #FFFFFF;
 
 }
 
