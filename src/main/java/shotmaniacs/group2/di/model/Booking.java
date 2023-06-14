@@ -55,6 +55,19 @@ public class Booking {
         this.state = state;
         this.slots = slots;
     }
+    public Booking(String name, String eventType, Timestamp date,
+                   String location,String bookingType, String duration, String description, String clientName, String clientEmail, String phoneNumber) {
+        this.name = name;
+        this.description = description;
+        this.eventType = EventType.valueOf(eventType);
+        this.date = date;
+        this.location = location;
+        this.duration = Integer.valueOf(duration);
+        this.clientName = clientName;
+        this.clientEmail = clientEmail;
+        this.phoneNumber = phoneNumber;
+        this.bookingType = BookingType.valueOf(bookingType);
+    }
 
     public String getDescription() {
         return description;

@@ -14,7 +14,7 @@ public class Account {
 
     public Account(){}
 
-    public Account(int id, String username, String email, String passwordHash, AccountType accountType) {
+    public Account(Integer id, String username, String email, String passwordHash, AccountType accountType) {
         setId(id);
         setUsername(username);
         setEmail(email);

@@ -1,21 +1,18 @@
 package shotmaniacs.group2.di.resources;
 
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Request;
-import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.*;
+import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dao.BookingDao;
-import shotmaniacs.group2.di.model.Booking;
-import shotmaniacs.group2.di.model.BookingState;
-import shotmaniacs.group2.di.model.BookingType;
-import shotmaniacs.group2.di.model.EventType;
+import shotmaniacs.group2.di.dto.LoginInfor;
+import shotmaniacs.group2.di.model.*;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/client/{clientid}")
+@Path("/client")
 
 public class ClientsResource {
     @Context
@@ -28,6 +25,18 @@ public class ClientsResource {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createBooking_noid(Booking booking) {
+       boolean response = BookingDao.instance.addBooking(booking);
+       if(response){
+            return Response.ok().build();
+        }else {
+           return Response.serverError().build();
+       }
+    }
+
+    @Path("/client/{clientid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Booking> getAllBookings(@PathParam("clientid")int id) {
@@ -51,6 +60,7 @@ public class ClientsResource {
         return listbooking;
     }
 
+    @Path("/client/{clientid}")
     @POST
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -75,7 +85,7 @@ public class ClientsResource {
         }
         System.out.println("Unsuccessfully");
     }
-    @Path("/delete/{booking_id}")
+    @Path("{clientid}/delete/{booking_id}")
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_JSON)
     public BookingResource cancelabooking(@PathParam("clientid") int clientid,@PathParam("booking_id") int id) {

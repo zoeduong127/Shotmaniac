@@ -18,34 +18,34 @@ public enum  BookingDao {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
-    public void addBooking(Booking booking) {
+    public boolean addBooking(Booking booking) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO booking VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO booking VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,booking.getId());
-            preparedStatement.setString(2,booking.getName());
-            preparedStatement.setString(3,booking.getDescription());
-            preparedStatement.setString(4, String.valueOf(booking.getEventType()));
-            preparedStatement.setTimestamp(5, booking.getDate());
-            preparedStatement.setString(6,booking.getLocation());
-            preparedStatement.setInt(7,booking.getDuration());
-            preparedStatement.setString(8,booking.getClientName());
-            preparedStatement.setString(9,booking.getClientEmail());
-            preparedStatement.setString(10,booking.getPhoneNumber());
-            preparedStatement.setString(11, String.valueOf(booking.getBookingType()));
-            preparedStatement.setString(12, String.valueOf(booking.getState()));
-            preparedStatement.setString(13, String.valueOf(booking.getSlots()));
+            preparedStatement.setString(1,booking.getName());
+            preparedStatement.setString(2,booking.getDescription());
+            preparedStatement.setString(3, String.valueOf(booking.getEventType()));
+            preparedStatement.setTimestamp(4, booking.getDate());
+            preparedStatement.setString(5,booking.getLocation());
+            preparedStatement.setInt(6,booking.getDuration());
+            preparedStatement.setString(7,booking.getClientName());
+            preparedStatement.setString(8,booking.getClientEmail());
+            preparedStatement.setString(9,booking.getPhoneNumber());
+            preparedStatement.setString(10, String.valueOf(booking.getBookingType()));
+            preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
+            preparedStatement.setString(12, String.valueOf(11));
             int rowsInserted = preparedStatement.executeUpdate();
             while(rowsInserted > 0) {
                 System.out.println("Successfully");
-                return;
+                return true;
             }
 
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
         }
         System.out.println("Unsuccessfully");
+        return false;
     }
 
     public Booking getABooking(int id) {

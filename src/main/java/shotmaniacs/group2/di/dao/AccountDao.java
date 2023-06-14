@@ -5,6 +5,7 @@ import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
 import shotmaniacs.group2.di.model.Booking;
 import shotmaniacs.group2.di.model.EventType;
+import shotmaniacs.group2.di.resources.LoginResource;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -24,13 +25,12 @@ public enum AccountDao {
 
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO account VALUES (?,?,?,?,?)";
+            String query = "INSERT INTO account VALUES (DEFAULT,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,account.getId());
-            preparedStatement.setString(2,account.getUsername());
-            preparedStatement.setString(3,account.getEmail());
-            preparedStatement.setString(4, account.getPasswordHash());
-            preparedStatement.setString(5, String.valueOf(account.getAccountType()));
+            preparedStatement.setString(1,account.getUsername());
+            preparedStatement.setString(2,account.getEmail());
+            preparedStatement.setString(3, account.getPasswordHash());
+            preparedStatement.setString(4, String.valueOf(account.getAccountType()));
             int rowsInserted = preparedStatement.executeUpdate();
             while(rowsInserted > 0) {
                 System.out.println("Successfully");
@@ -41,6 +41,10 @@ public enum AccountDao {
         }
         System.out.println("Unsuccessfully");
 
+    }
+    public static void main (String args[]) throws ParseException {
+        Account account = new Account(0,"helloae","duongthuhuyen@student.utwente.nl","meomeo", AccountType.Crew);
+       AccountDao.instance.addAccount(account);
     }
 
 }

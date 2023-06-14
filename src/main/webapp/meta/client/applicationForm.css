@@ -7,7 +7,7 @@
         "content sidebar";
     min-height: 100vh;
     max-height: 100vh;
-    overflow: hidden;
+    overflow: auto;
 }
 
 header {
@@ -117,17 +117,17 @@ h2 {
     font-style: oblique;
 }
 
-#check-Box-Club-Photography {
+#check-Box-eventtype-Club-Photography {
     cursor: pointer;
     margin: 1.8vh 0.4vw 2.5vh 3vw;
 }
 
-#check-Box-Festival {
+#check-Box-eventtype-Festival {
     cursor: pointer;
     margin: 1.8vh 0.4vw 2.5vh 2.75vw;
 }
 
-#check-Box-Product-Shoot {
+#check-Box-eventtype-Product-Shoot {
     cursor: pointer;
     margin: 1.8vh 0.4vw 2.5vh 2.5vw;
 }
@@ -161,7 +161,7 @@ h2 {
     margin: 1.8vh 0.4vw 2.5vh 2.2vw;
 }
 
-#check-Box-Other {
+#check-Box-booking-type-Other {
     cursor: pointer;
 }
 
@@ -170,7 +170,7 @@ h2 {
     margin: 1.8vh 0.4vw 2.5vh 10.35vw;
 }
 
-#other-For-Booking-Type {
+#other-For-booking-type-Booking-Type {
     margin-bottom: 2.3vh;
     margin-left: 2.5vw;
     width: 410px;
@@ -179,6 +179,12 @@ h2 {
 #duration-input {
     width: 291px;
     margin-left: 3.15vw;
+    margin-bottom: 2vh;
+}
+#description-input {
+    height:80px;
+    width: 699px;
+    margin-left: 1.4vw;
     margin-bottom: 2vh;
 }
 
@@ -200,17 +206,17 @@ h2 {
     margin-bottom: 2vh;
 }
 
-#check-Box-Photography {
+#check-Box-booking-type-Photography {
     cursor: pointer;
     margin: 1.8vh 0.4vw 2.5vh 2.5vw;
 }
 
-#check-Box-Film {
+#check-Box-booking-type-Film {
     cursor: pointer;
     margin: 1.8vh 0.4vw 2.5vh 2.5vw;
 }
 
-#check-Box-Marketing {
+#check-Box-booking-type-Marketing {
     cursor: pointer;
     margin: 1.8vh 0.4vw 2.5vh 2.5vw;
 }
@@ -250,7 +256,7 @@ h2 {
 
 .submit {
     float: right;
-    margin: -0.8vh 14.7vw 0 0vw;
+    margin: 5vh 17vw 15vw 0vw;
     width: 6vw;
     height: 5vh;
     text-align: center;

@@ -21,6 +21,8 @@ public class CrewsResourse {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
+
+
     @Path("/mybookings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
