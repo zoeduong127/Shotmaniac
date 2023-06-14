@@ -47,6 +47,32 @@ public class CrewsResourse {
         return listBooking;
     }
 
+    @Path("/mybooking/search")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public List<Booking> searchEnrolledBookings(@PathParam("crewid") int crewid, @QueryParam("searchtext") String searchText) {
+        List<Booking> listbooking = new ArrayList<>();
+        try {
+            String query;
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND to_tsvector(b.title) @@ phraseto_tsquery(?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,crewid);
+            preparedStatement.setString(2,searchText);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                listbooking.add(booking);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return listbooking;
+    }
+
     @Path("/mybooking/timefilter/{filtertime}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

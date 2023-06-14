@@ -341,12 +341,13 @@ Change depending on what the actual content is to be able to filter
 /*Bookings*/
 
 .booking-container {
-    width: 95%;
+    width: 102%;
     height: 71vh;
-    max-width: 57vw;
+    max-width: 70vw;
     margin: 0 2.5% 0 2.5%;
     min-height: 0;
 
+    overflow-x: scroll;
     overflow-y: scroll;
     -ms-overflow-style: none;  /* hides scrollbar */
     scrollbar-width: none;  /* hides scrollbar */
@@ -368,11 +369,15 @@ Change depending on what the actual content is to be able to filter
 
 .booking .booking-info-grid {
     display: inline-grid;
+    height: 100%;
     width: available;
     grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: 1fr 1fr;
     justify-content: start;
     align-content: center;
+    grid-row-gap: 1px;
+    grid-column-gap: 1px;
+    background-color: black;
 }
 
 .booking p {
@@ -389,7 +394,8 @@ Change depending on what the actual content is to be able to filter
     float: left;
     text-align: left;
     vertical-align: top;
-    padding: 5px 0px 0px 5px;
+    background-color: #FFFFFF;
+    padding: 5px 5px 0px 5px;
 }
 
 
@@ -397,7 +403,9 @@ Change depending on what the actual content is to be able to filter
     float: left;
     margin: 0;
     text-align: left;
-    padding: 7px 0px 0px 5px;
+    vertical-align: middle;
+    padding: 12px 5px 0px 5px;
+    background-color: #FFFFFF;
 
 }
 
@@ -410,7 +418,7 @@ Change depending on what the actual content is to be able to filter
 
 .innerBooking {
     text-align: center;
-    width: 20%;
+    width: 15%;
     height: 70px;
     float: right;
     display: flex;
@@ -424,7 +432,7 @@ Change depending on what the actual content is to be able to filter
 }
 .innerBooking p {
     margin: 5px 0;
-    padding: 20px 0;
+    padding: 6px 0;
     text-align: center;
     width: 100%;
 
@@ -444,8 +452,8 @@ Change depending on what the actual content is to be able to filter
 
 .left p{
     background-color: rgba(255, 105, 98, 0.72);
-    margin: 15px 1vw;
-    padding: 12px 0;
+    margin: 5px 1vw;
+    padding: 16px 0;
     font-size: 16px;
 }
 
