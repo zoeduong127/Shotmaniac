@@ -16,7 +16,6 @@ function toggleStyle() {
     }
 }
 
-
 function setTheme(href){
     currentTheme.setAttribute('href', href);
 }
@@ -54,13 +53,15 @@ function performQueryAndUpdateBookings(url) {
                 let bookingElementCopy = bookingElement.cloneNode(true);
 
                 //TODO: Calculate amount of slots already taken.
-                bookingElementCopy.querySelector("#event_name").innerHTML = booking.name + " <span class=\"bolded\">(" + booking.slots + ")</span>";
-                bookingElementCopy.querySelector("#booking_type").innerText = booking.bookingType;
 
-                bookingElementCopy.querySelector("#location").innerText = booking.location;
-                bookingElementCopy.querySelector("#client").innerText = booking.clientName;
-                bookingElementCopy.querySelector("#event_type").innerText = booking.eventType;
-                bookingElementCopy.querySelector("#duration").innerText = booking.duration;
+                //TODO: the line below probably allows stored code attacks. Needs fixing
+                bookingElementCopy.querySelector("#event_name").innerHTML = booking.name + " <span class=\"bolded\">(" + booking.slots + ")</span>";
+                bookingElementCopy.querySelector("#booking_type").innerHTML = "<b>Booking Type: </b>" + booking.bookingType;
+
+                bookingElementCopy.querySelector("#location").innerHTML =  "<b>Location: </b>" + booking.location;
+                bookingElementCopy.querySelector("#client").innerHTML =  "<b>Client: </b>" + booking.clientName;
+                bookingElementCopy.querySelector("#event_type").innerHTML =  "<b>Event Type: </b>" + booking.eventType;
+                bookingElementCopy.querySelector("#duration").innerHTML =  "<b>Duration: </b>" + booking.duration + " hours";
 
                 let dateTime = new Date(booking.date);
                 const formattedDate = dateTime.toLocaleString('en-US', {
@@ -141,3 +142,5 @@ searchbox.addEventListener("keydown", function (e) {
         searchBookings(searchbox.value);
     }
 });
+
+updateBookings("ongoing");
