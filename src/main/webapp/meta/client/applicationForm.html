@@ -29,7 +29,7 @@
             <form id="form1">
                 <div class="event-name">
                     <label class="name-label" for="event-name">Event Name</label>
-                    <input class="eventInput" id="event-name" placeholder="Input Event Name">
+                    <input type="text" class="eventInput" id="event-name" placeholder="Input Event Name">
                 </div>
                 <div class="event-type" >
                     <label>Event Type</label>
@@ -45,15 +45,20 @@
                     <label id="Product-Shoot">
                         <input type="checkbox" id="check-Box-eventtype-Product-Shoot">
                         Product Shoot
-                    </label>
+                    </label>>
                 </div>
                 <div class="event-date">
                     <label class="name-label" for="date-input">Event Date</label>
                     <input type ="date" class="eventInput" id="date-input" placeholder="Input Event Date (mm/dd/yyyy)">
                 </div>
+                <div class="event-time">
+                    <label class="name-label" for="time-input">Event Date</label>
+                    <input type ="time" class="eventInput" id="time-input" placeholder="Input Event Time">
+                </div>
+
                 <div class="location">
                     <label class="name-label" for="location-input">Location</label>
-                    <input class="eventInput" id="location-input" placeholder="Input Event Location">
+                    <input type ="string" class="eventInput" id="location-input" placeholder="Input Event Location">
                 </div>
                 <div class="booking-type">
                     <label>Booking Type</label>
@@ -79,23 +84,23 @@
                 </div>
                 <div class="duration">
                     <label class="name-label" for="duration-input">Duration</label>
-                    <input class="eventInput" id="duration-input" placeholder="Input Duration">
+                    <input type ="number" class="eventInput" id="duration-input" placeholder="Input Duration">
                 </div>
                 <div class="description">
                     <label class="name-label" for="description-input">description</label>
-                    <input class="eventInput" id="description-input" placeholder="Input Description">
+                    <input type ="text"  class="eventInput" id="description-input" placeholder="Input Description">
                 </div>
                 <div class="name">
                     <label class="name-label" for="name-input">Name</label>
-                    <input class="eventInput" id="name-input" placeholder="Input Client's Name">
+                    <input type = "text" class="eventInput" id="name-input" placeholder="Input Client's Name">
                 </div>
                 <div class="email">
                     <label class="name-label" for="email-input">Email</label>
-                    <input class="eventInput" id="email-input" placeholder="Input Client's Email">
+                    <input type ="text" class="eventInput" id="email-input" placeholder="Input Client's Email">
                 </div>
                 <div class="tel.">
                     <label class="name-label" for="tel-input">Tel.</label>
-                    <input class="eventInput" id="tel-input" placeholder="Input Client's Phone Number (Optional)">
+                    <input type = "text" class="eventInput" id="tel-input" placeholder="Input Client's Phone Number (Optional)">
                 </div>
                 <div class="submit-button">
                     <a href="./../crew/dashboard/dashboard.html" target="_self">
@@ -114,13 +119,13 @@
                 <div class="instruction-paragraph">
                     <p1>STEP 1:</p1>
                     <p2>Please download the given template<br></p2>
-                        <div class="step1-instruction">
-                            <a href="./../client/Application_Form.xlsx" download>
-                                <img src="./../Brand_Identity/images/icons/excel_Icon.png" alt="Excel Icon">
-                                <div class="break"></div>
-                                <p3 id="download-form">Application Template</p3>
-                            </a>
-                        </div>
+                    <div class="step1-instruction">
+                        <a href="./../client/Application_Form.xlsx" download>
+                            <img src="./../Brand_Identity/images/icons/excel_Icon.png" alt="Excel Icon">
+                            <div class="break"></div>
+                            <p3 id="download-form">Application Template</p3>
+                        </a>
+                    </div>
                     <div class="step2-instruction">
                         <p4>STEP 2:</p4>
                         <p5>Please fill in all event details given in the template<br></p5>

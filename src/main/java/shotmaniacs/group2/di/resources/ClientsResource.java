@@ -4,6 +4,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dao.BookingDao;
+import shotmaniacs.group2.di.dto.Bookingdto;
 import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.*;
 
@@ -27,12 +28,12 @@ public class ClientsResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createBooking_noid(Booking booking) {
-       boolean response = BookingDao.instance.addBooking(booking);
+    public Response createBooking_noid(Bookingdto booking) {
+       boolean response = BookingDao.instance.addBooking(booking.createBooking());
        if(response){
             return Response.ok().build();
         }else {
-           return Response.serverError().build();
+           return Response.ok(response).build();
        }
     }
 
@@ -90,6 +91,14 @@ public class ClientsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public BookingResource cancelabooking(@PathParam("clientid") int clientid,@PathParam("booking_id") int id) {
         return new BookingResource(uriInfo, request, clientid, id);
+    }
+
+    public static void main (String args[]) throws ParseException {
+        Bookingdto bookingdto = new Bookingdto( "Wedding Ceramony",
+        "Club Photography","2023-07-12","12:08",
+                "Amsterdam","Photography",2,"This is one of my most important event in my life","Duong Huyen","duonghuyen127@gmail.com","0687845896");
+        ClientsResource client = new ClientsResource();
+        client.createBooking_noid(bookingdto);
     }
 
 }

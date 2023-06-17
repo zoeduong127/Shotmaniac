@@ -1,12 +1,7 @@
 package shotmaniacs.group2.di.model;
 
 public enum EventType {
-    CONVENTION,
-    PARTY,
+    CLUBPHOTOGRAPHY,
     FESTIVAL,
-    CONCERT,
-    GRADUATION,
-    SPORTS,
-    COMPETITION,
-    OTHER
+    PRODUCTSHOOT,
 }
