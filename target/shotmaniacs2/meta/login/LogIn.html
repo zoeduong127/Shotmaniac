@@ -17,7 +17,6 @@
                   src="./../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png"
                   alt="Shotmaniacs Logo Black">
         </a>
-
     </div>
     <div class="col-2 header">
         <h1 id ="title">LOGIN</h1>
@@ -43,8 +42,8 @@
 
                     <label class="input-label">
                         <input class="input" id="password" placeholder="Password" type="password">
-                        <img src="./../Brand_Identity/images/icons/show_Password.png" id="Show-Pass" alt="Show Password Icon">
-                        <img src="./../Brand_Identity/images/icons/hide_Password.png" id="Hide-Pass" alt="Hide Password Icon" hidden>
+                        <img src="./../Brand_Identity/images/icons/hide_Password.png" id="Show-Pass" alt="Show Password Icon">
+                        <img src="./../Brand_Identity/images/icons/show_Password.png" id="Hide-Pass" alt="Hide Password Icon" hidden>
                         <script>
                             var text = document.getElementById('password');
 
@@ -107,10 +106,12 @@
                 if (response.ok) {
                     alert("Login successful!");
                     response.json()
-                        .then(account => {
-                            const element = account.element;
+                        .then(res => {
+                            var account = res.accounts[0];
+                            var token = res.tokens[0];
+
                             document.cookie = "account_id=" + account.id + "; path=/";
-                            console.log(element);
+                            document.cookie = "auth_token=" + token.id + "; path=/";
                             changesite(account.accountType);
                         })
                     // Perform any further actions or redirect to another page

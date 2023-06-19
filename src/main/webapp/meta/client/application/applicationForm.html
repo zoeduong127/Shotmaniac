@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Form</title>
+    <link href="applicationForm.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
+    <!--<script src="src/main/webapp/meta/client/applicationForm.js"></script>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class = "container">
+    <header>
+        <div class="logo">
+            <img src="./../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_ZT.png" alt="Shotmaniacs White Logo Without Text">
+        </div>
+        <div class="title-text">
+            <h1 id="title">APPLICATION FORM</h1>
+        </div>
+        <div class="help">
+            <p id="help" class="help-note"><a href="" target="_self">Need Help?</a></p>
+        </div>
+    </header>
+    <main>
+        <div class="heading">
+            <h2 id="smallHeader1">One Event</h2>
+        </div>
+        <div class="form-container1">
+            <form id="form1">
+                <div class="event-name">
+                    <label class="name-label" for="event-name">Event Name</label>
+                    <input class="eventInput" id="event-name" placeholder="Input Event Name">
+                </div>
+                <div class="event-type" >
+                    <label>Event Type</label>
+
+                    <label id="Club-Photography">
+                        <input type="checkbox" id="check-Box-eventtype-Club-Photography">
+                        Club Photography
+                    </label>
+                    <label id="Festival">
+                        <input type="checkbox" id="check-Box-eventtype-Festival">
+                        Festival
+                    </label>
+                    <label id="Product-Shoot">
+                        <input type="checkbox" id="check-Box-eventtype-Product-Shoot">
+                        Product Shoot
+                    </label>
+                </div>
+                <div class="event-date">
+                    <label class="name-label" for="date-input">Event Date</label>
+                    <input type ="date" class="eventInput" id="date-input" placeholder="Input Event Date (mm/dd/yyyy)">
+                </div>
+                <div class="location">
+                    <label class="name-label" for="location-input">Location</label>
+                    <input class="eventInput" id="location-input" placeholder="Input Event Location">
+                </div>
+                <div class="booking-type">
+                    <label>Booking Type</label>
+
+                    <label id="Photography">
+                        <input type="checkbox" id="check-Box-booking-type-Photography">
+                        Photography
+                    </label>
+                    <label id="Film">
+                        <input type="checkbox" id="check-Box-booking-type-Film">
+                        Film
+                    </label>
+                    <label id="Marketing">
+                        <input type="checkbox" id="check-Box-booking-type-Marketing">
+                        Marketing
+                    </label>
+                    <br>
+                    <label id="Other">
+                        <input type="checkbox" id="check-Box-booking-type-Other">
+                        Other
+                        <input class="eventInput" id="other-For-booking-type-Booking-Type" placeholder="Please specify the booking type">
+                    </label>
+                </div>
+                <div class="duration">
+                    <label class="name-label" for="duration-input">Duration</label>
+                    <input class="eventInput" id="duration-input" placeholder="Input Duration">
+                </div>
+                <div class="description">
+                    <label class="name-label" for="description-input">description</label>
+                    <input class="eventInput" id="description-input" placeholder="Input Description">
+                </div>
+                <div class="name">
+                    <label class="name-label" for="name-input">Name</label>
+                    <input class="eventInput" id="name-input" placeholder="Input Client's Name">
+                </div>
+                <div class="email">
+                    <label class="name-label" for="email-input">Email</label>
+                    <input class="eventInput" id="email-input" placeholder="Input Client's Email">
+                </div>
+                <div class="tel.">
+                    <label class="name-label" for="tel-input">Tel.</label>
+                    <input class="eventInput" id="tel-input" placeholder="Input Client's Phone Number (Optional)">
+                </div>
+                <div class="submit-button">
+                    <a href="./../crew/dashboard/dashboard.html" target="_self">
+                        <button class="submit" type="submit">SUBMIT</button>
+                    </a> <!-- TODO: change the link -->
+                </div>
+            </form>
+        </div>
+    </main>
+    <aside>
+        <div class="heading">
+            <h2 id="smallHeader2">Multiple Events</h2>
+        </div>
+        <div class="form-container2">
+            <form id="form2">
+                <div class="instruction-paragraph">
+                    <p1>STEP 1:</p1>
+                    <p2>Please download the given template<br></p2>
+                        <div class="step1-instruction">
+                            <a href="./../client/Application_Form.xlsx" download>
+                                <img src="./../Brand_Identity/images/icons/excel_Icon.png" alt="Excel Icon">
+                                <div class="break"></div>
+                                <p3 id="download-form">Application Template</p3>
+                            </a>
+                        </div>
+                    <div class="step2-instruction">
+                        <p4>STEP 2:</p4>
+                        <p5>Please fill in all event details given in the template<br></p5>
+                    </div>
+                    <div class="step3-instruction">
+                        <p6>STEP 3:</p6>
+                        <p7>Please upload the filled in template<br></p7>
+                        <div class="file-preparation">
+                            <input type="file" id="actual-btn" hidden/>
+                            <label for="actual-btn">Choose File</label>
+                            <span id="file-chosen">No file chosen</span>
+                            <script>
+                                const actualBtn = document.getElementById('actual-btn');
+                                const fileChosen = document.getElementById('file-chosen');
+                                actualBtn.addEventListener('change', function(){
+                                    fileChosen.textContent = this.files[0].name
+                                })
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="upload-file-button">
+                    <a href="./../crew/dashboard/dashboard.html" target="_self">
+                        <button class="upload-file" type="button">Upload this file</button>
+                    </a> <!-- TODO: change the link -->
+                </div>
+                <div class="logo-end">
+                    <img src="./../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_MT.png" alt="Shotmaniacs Black Logo With Text">
+                </div>
+            </form>
+        </div>
+    </aside>
+</div>
+<script>
+    const create = document.querySelector("#form1");
+    create.addEventListener('submit',createe);
+    function createe(event) {
+        event.preventDefault();
+        const url = 'http://localhost:8080/shotmaniacs2/api/client';
+        var form = document.getElementById('form1');
+        var elements = form.elements;
+        var booking = {};
+
+        for (var i = 0; i < elements.length-1; i++) {
+            var element = elements[i];
+            var id = element.id;
+            var value;
+            // Exclude buttons and checkboxes that are not checked
+            if (element.type !== 'button' && !(element.type === 'checkbox' && !element.checked)) {
+                // Handle checkboxes separately
+                if (element.type === 'checkbox') {
+                    value = element.checked;
+                    if(value === true){
+                        value = document.getElementById(id).nextSibling.nodeValue.trim();
+                    }
+                }else if (id !== "other-For-booking-type-Booking-Type"){
+                    value=element.value;
+                }
+                if(id ==='event-name'){id='name';}
+                if(id.includes('eventtype')){id='eventType';}
+                if(id ==='date-input' ){id='date';}
+                if(id ==='location-input'){id='location';}
+                if(id==='duration-input'){id='duration';}
+                if(id.includes('booking-type')){id='bookingType';}
+                if(id ==='name-input'){id='clientName';}
+                if(id==='email-input'){id='clientEmail';}
+                if(id==='tel-input'){id='phoneNumber';}
+                if(id==='description-input'){id='description';}
+
+                booking[id] = value;
+            }
+        }
+        var jsonBooking = JSON.stringify(booking);
+        console.log(jsonBooking);
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(booking)
+        };
+        fetch(url, options)
+            .then(response => {
+                if (response.ok) {
+                    alert("Create an event successful!");
+                    // Perform any further actions or redirect to another page
+                } else {
+                    alert("Create an event unsuccessful. Please try again.");
+                    // Clear the form inputs
+                }
+            })
+            .catch(error => {
+                console.error("Server error:", error);
+                alert("An error occurred while processing . Please try again later.");
+            });
+
+
+
+
+        // Perform further actions with the checked booking types, event types, and other booking type
+
+        // Perform additional actions with the collected data
+    }
+</script>
+</body>
+</html>
