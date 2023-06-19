@@ -1,6 +1,9 @@
 package shotmaniacs.group2.di.resources;
 
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -10,9 +13,11 @@ import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
+import shotmaniacs.group2.di.model.RootElementWrapper;
 
 import java.nio.charset.StandardCharsets;
 
+import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -29,7 +34,6 @@ public class LoginResource {
     private static String dbName ="dab_dsgnprj_50";
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
-    private HashMap<Integer, String> userTokens = new HashMap<>();
 
     @POST
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
@@ -45,11 +49,16 @@ public class LoginResource {
             preparedStatement.setString(2, account.getPassword());
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()) {
-
                 System.out.println("Login Successfully");
+
+                RootElementWrapper responseObject = new RootElementWrapper();
                 Account back =  new Account(rs.getInt(1), rs.getString(2),rs.getString(3),
                         rs.getString(4),AccountType.valueOf(rs.getString(5)));
-                return Response.ok(back).build();
+
+                responseObject.addAccount(back);
+                responseObject.addToken(generateToken(back));
+
+                return Response.ok(responseObject).build();
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
@@ -81,28 +90,23 @@ public class LoginResource {
 
     // TODO: Add log out api call that destroys the token
 
-    //    private Account isValidCredentials(LoginInfor credentials) {
-//        // TODO: Validate the user credentials against the database
-//        return AccountDao.instance.loginCheck(credentials);
-//    }
-//
-//    private String generateToken(Account account) {
-//        // Generate a unique token for the user
-//        long expirationTimeInMillis = 24 * 60 * 60 * 1000; // 1 day
-//
-//        // Set the token expiration time
-//        Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMillis);
-//
-//        // Generate the JWT token
-//        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//        String token = Jwts.builder()
-//                .setSubject(String.valueOf(account))
-//                .setExpiration(expirationDate)
-//                .signWith(key)
-//                .compact();
-//
-//        return token;
-//    }
+    private String generateToken(Account account) {
+        // Generate a unique token for the user
+        long expirationTimeInMillis = 24 * 60 * 60 * 1000; // 1 day
+
+        // Set the token expiration time
+        Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMillis);
+
+        // Generate the JWT token
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        String token = Jwts.builder()
+                .setSubject(String.valueOf(account))
+                .setExpiration(expirationDate)
+                .signWith(key)
+                .compact();
+
+        return token;
+    }
     public static void main (String args[]) throws ParseException {
         LoginInfor account = new LoginInfor("duongthuhuyen@student.utwente.nl","meomeo");
         LoginResource login = new LoginResource();
