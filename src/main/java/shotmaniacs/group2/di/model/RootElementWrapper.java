@@ -27,8 +27,6 @@ public class RootElementWrapper {
         tokens = new ArrayList<>();
     }
 
-    // TODO: More constructors, getters, setters
-
     public void addBooking(Booking booking) {
         bookings.add(booking);
     }
@@ -43,5 +41,21 @@ public class RootElementWrapper {
 
     public void addToken(String token) {
         tokens.add(token);
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public List<Announcement> getAnnouncements() {
+        return announcements;
+    }
+
+    public List<String> getTokens() {
+        return tokens;
     }
 }

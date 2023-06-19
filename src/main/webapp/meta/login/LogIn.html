@@ -107,10 +107,12 @@
                 if (response.ok) {
                     alert("Login successful!");
                     response.json()
-                        .then(account => {
-                            const element = account.element;
+                        .then(res => {
+                            var account = res.accounts[0];
+                            var token = res.tokens[0];
+
                             document.cookie = "account_id=" + account.id + "; path=/";
-                            console.log(element);
+                            document.cookie = "auth_token=" + token.id + "; path=/";
                             changesite(account.accountType);
                         })
                     // Perform any further actions or redirect to another page

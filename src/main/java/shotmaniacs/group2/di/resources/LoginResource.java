@@ -22,6 +22,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.HashMap;
 
 @Path("/login")
@@ -36,8 +37,8 @@ public class LoginResource {
     private static String password = "yummybanana";
 
     @POST
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response loginCheck(LoginInfor account) {
         account.setPassword(hash256(account.getPassword()));
         try {
@@ -52,13 +53,34 @@ public class LoginResource {
                 System.out.println("Login Successfully");
 
                 RootElementWrapper responseObject = new RootElementWrapper();
-                Account back =  new Account(rs.getInt(1), rs.getString(2),rs.getString(3),
+                Account responseAccount =  new Account(rs.getInt(1), rs.getString(2),rs.getString(3),
                         rs.getString(4),AccountType.valueOf(rs.getString(5)));
 
-                responseObject.addAccount(back);
-                responseObject.addToken(generateToken(back));
+                responseObject.addAccount(responseAccount);
 
-                return Response.ok(responseObject).build();
+                Timestamp expiration = addTime(new Timestamp(System.currentTimeMillis()), 24, Calendar.HOUR);
+                String token = generateToken(responseAccount, expiration);
+                responseObject.addToken(token);
+
+                String tokenQuery = "INSERT INTO token (account_id, token, expiration) VALUES (?, ?, ?)";
+                PreparedStatement tokenPS = connection.prepareStatement(tokenQuery);
+                tokenPS.setInt(1, responseAccount.getId());
+                tokenPS.setString(2, token);
+                tokenPS.setTimestamp(3, expiration);
+                int rowsAffected = tokenPS.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // Create a response builder object
+                    Response.ResponseBuilder responseBuilder = Response.ok(responseObject, MediaType.APPLICATION_JSON);
+
+                    // Set the Access-Control-Allow-Origin header to *
+                    responseBuilder.header("Access-Control-Allow-Origin", "http://localhost:8080/shotmaniacs2/meta/login");
+
+                    // Build the response
+                    return responseBuilder.build();
+                } else {
+                    return Response.serverError().build();
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
@@ -90,12 +112,9 @@ public class LoginResource {
 
     // TODO: Add log out api call that destroys the token
 
-    private String generateToken(Account account) {
-        // Generate a unique token for the user
-        long expirationTimeInMillis = 24 * 60 * 60 * 1000; // 1 day
-
+    private String generateToken(Account account, Timestamp expiration) {
         // Set the token expiration time
-        Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMillis);
+        Date expirationDate = new Date(expiration.getTime());
 
         // Generate the JWT token
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -107,6 +126,14 @@ public class LoginResource {
 
         return token;
     }
+
+    public static Timestamp addTime(Timestamp timestamp, int amount, int field) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(timestamp);
+        cal.add(field, amount);
+        return new Timestamp(cal.getTimeInMillis());
+    }
+
     public static void main (String args[]) throws ParseException {
         LoginInfor account = new LoginInfor("duongthuhuyen@student.utwente.nl","meomeo");
         LoginResource login = new LoginResource();
