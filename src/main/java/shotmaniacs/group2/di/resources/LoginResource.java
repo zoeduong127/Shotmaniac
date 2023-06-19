@@ -40,7 +40,8 @@ public class LoginResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response loginCheck(LoginInfor account) {
-        account.setPassword(hash256(account.getPassword())); // TODO: perform hashing on the client side instead of server side
+        String salt = getSaltByEmail(account.getEmail());
+        account.setPassword(hash256(account.getPassword() + salt));
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query = "SELECT * FROM account WHERE email = ? AND password = ?";
@@ -87,6 +88,25 @@ public class LoginResource {
         return Response.serverError().build();
     }
 
+    public String getSaltByEmail(String email) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT * FROM account WHERE account.email = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString(6);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return null;
+    }
 
     public String hash256(String input) {
         try {

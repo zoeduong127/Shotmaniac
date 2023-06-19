@@ -13,10 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.regex.Matcher;
@@ -40,7 +37,11 @@ public class AdministratorsResource {
     public Response addAccount(Account account) {
 
         // Performing input validation on the given account credentials.
-        if (account.getUsername() == null || account.getUsername().length() <= 3) {
+        if (accountExists(account)) {
+            return  Response.status(422)
+                    .entity("Username or email is already in use.")
+                    .build();
+        } else if (account.getUsername() == null || account.getUsername().length() <= 3) {
             return  Response.status(422)
                     .entity("Username is invalid or is less than 4 characters long.")
                     .build();
@@ -52,7 +53,7 @@ public class AdministratorsResource {
             return  Response.status(422)
                     .entity("Password is invalid or is less than 7 characters long.")
                     .build();
-        } else if (accountTypeContains(valueOf(account.getAccountType()))) {
+        } else if (!accountTypeContains(valueOf(account.getAccountType()))) {
             return  Response.status(422)
                     .entity("Account type is invalid.")
                     .build();
@@ -134,6 +135,31 @@ public class AdministratorsResource {
             }
         }
         return false;
+    }
+
+    /**
+     * Given an account object containing a username and email, it checks if an account with the same username or email already exists.
+     * @param account The account to test
+     * @return True of the account already exists, false otherwise.
+     */
+    public boolean accountExists(Account account) {
+        String sql = "SELECT * FROM account WHERE account.username = ? OR account.email = ?";
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, account.getUsername());
+            ps.setString(2, account.getEmail());
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
