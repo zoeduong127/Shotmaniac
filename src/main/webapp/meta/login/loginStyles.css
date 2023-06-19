@@ -225,9 +225,4 @@ h1, h2, h3, h4, h5, h6, p, label {
     margin-top: -6vh;
 }
 
-input[type = "submit"] {
-    font-family: "Font Awesome 5 Free";
-    font-size: 1.33em;
-    font-weight: 900;
-    width: 10vw;
-}
+
