@@ -8,7 +8,7 @@ import shotmaniacs.group2.di.model.BookingType;
 import shotmaniacs.group2.di.model.EventType;
 import shotmaniacs.group2.di.resources.LoginResource;
 
-import java.sql.Timestamp;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -33,28 +33,60 @@ public class Bookingdto {
 
     private String phoneNumber;
 
-
     private int slots;
+    private static String host = "bronto.ewi.utwente.nl";
+    private static String dbName ="dab_dsgnprj_50";
+    private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
+    private static String password = "yummybanana";
     public Bookingdto(){
     }
     public Bookingdto(String name,String eventType, String date, String time,
                    String location,String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber) {
-        this.name = name;
-        this.description = description;
-        this.eventType = eventType.replace(" ","").toUpperCase();
-        this.location = location;
-        this.duration = duration;
-        this.clientName = clientName;
-        this.clientEmail = clientEmail;
-        this.phoneNumber = phoneNumber;
-        this.bookingType = bookingType.toUpperCase();
-        this.date = date;
-        this.time = time;
+        setName(name);
+        setDescription(description);
+        setEventType(eventType.replace(" ","_").toUpperCase());
+        setLocation(location);
+        setDuration(duration);
+        setClientName(clientName);
+        setClientEmail(clientEmail);
+        setPhoneNumber(phoneNumber);
+        setBookingType(bookingType.toUpperCase());
+        setDate(date);
+        setTime(time);
     }
-    public Booking createBooking(){
-        return new Booking(getName(),getDescription(),EventType.valueOf(eventType),getTimestamp(getDate()+" "+getTime()) ,
-                location,getDuration(),getClientName(),getClientEmail(),getPhoneNumber(),BookingType.valueOf(getBookingType()),
-                BookingState.PENDING,10);
+//    public Booking createBooking(){
+//        return new Booking(getName(),getDescription(),EventType.valueOf(eventType),getTimestamp(getDate()+" "+getTime()) ,
+//                location,getDuration(),getClientName(),getClientEmail(),getPhoneNumber(),BookingType.valueOf(getBookingType()),
+//                BookingState.PENDING,10);
+//    }
+    public boolean addBooking(Bookingdto booking) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query = "INSERT INTO booking VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,booking.getName());
+            preparedStatement.setString(2,booking.getDescription());
+            preparedStatement.setString(3, String.valueOf(booking.getEventType()));
+            preparedStatement.setTimestamp(4, getTimestamp(booking.getDate()+" "+booking.getTime()));
+            preparedStatement.setString(5,booking.getLocation());
+            preparedStatement.setInt(6,booking.getDuration());
+            preparedStatement.setString(7,booking.getClientName());
+            preparedStatement.setString(8,booking.getClientEmail());
+            preparedStatement.setString(9,booking.getPhoneNumber());
+            preparedStatement.setString(10, String.valueOf(booking.getBookingType()));
+            preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
+            preparedStatement.setInt(12, 0);
+            int rowsInserted = preparedStatement.executeUpdate();
+            if(rowsInserted > 0) {
+                System.out.println("Successfully");
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        System.out.println("Unsuccessfully");
+        return false;
     }
     public Timestamp getTimestamp(String time){
         try {
@@ -66,6 +98,9 @@ public class Bookingdto {
             e.printStackTrace();
         }
             return null;
+    }
+    public void setTime(String time){
+        this.time = time;
     }
     public String getTime(){
         return this.time;
@@ -159,12 +194,12 @@ public class Bookingdto {
     public void setSlots(int slots) {
         this.slots = slots;
     }
-    public static void main (String args[]) throws ParseException {
-        Bookingdto bookingdto = new Bookingdto( "Wedding Ceramony","Club Photography",
-              "2023-07-12","12:08","Amsterdam",
-                "Photography",2,"This is one of my most important event in my life",
-                "Duong Huyen","duonghuyen127@gmail.com","0687845896");
-        BookingDao.instance.addBooking(bookingdto.createBooking());
-    }
+//    public static void main (String args[]) throws ParseException {
+//        Bookingdto bookingdto = new Bookingdto( "Wedding Ceramony","Club Photography",
+//              "2023-07-12","12:08","Amsterdam",
+//                "Photography",2,"This is one of my most important event in my life",
+//                "Duong Huyen","duonghuyen127@gmail.com","0687845896");
+//        BookingDao.instance.addBooking(bookingdto.createBooking());
+//    }
 
 }

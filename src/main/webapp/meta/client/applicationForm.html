@@ -7,6 +7,9 @@
     <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
     <!--<script src="src/main/webapp/meta/client/applicationForm.js"></script>-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 </head>
 <body>
 <div class = "container">
@@ -115,7 +118,7 @@
             <h2 id="smallHeader2">Multiple Events</h2>
         </div>
         <div class="form-container2">
-            <form id="form2">
+            <form id="form2" enctype="multipart/form-data">
                 <div class="instruction-paragraph">
                     <p1>STEP 1:</p1>
                     <p2>Please download the given template<br></p2>
@@ -134,7 +137,7 @@
                         <p6>STEP 3:</p6>
                         <p7>Please upload the filled in template<br></p7>
                         <div class="file-preparation">
-                            <input type="file" id="actual-btn" hidden/>
+                            <input type=file name="files[]" type="file" id="actual-btn" hidden/>
                             <label for="actual-btn">Choose File</label>
                             <span id="file-chosen">No file chosen</span>
                             <script>
@@ -148,20 +151,22 @@
                     </div>
                 </div>
                 <div class="upload-file-button">
-                    <a href="./../crew/dashboard/dashboard.html" target="_self">
-                        <button class="upload-file" type="button">Upload this file</button>
+                    <a>
+                        <button class="upload-file" type="submit">Upload this file</button>
                     </a> <!-- TODO: change the link -->
                 </div>
                 <div class="logo-end">
                     <img src="./../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_MT.png" alt="Shotmaniacs Black Logo With Text">
                 </div>
             </form>
+
         </div>
     </aside>
 </div>
 <script>
     const create = document.querySelector("#form1");
     create.addEventListener('submit',createe);
+    document.querySelector("#form2").addEventListener('submit',handleFileParsing);
     function createe(event) {
         event.preventDefault();
         const url = 'http://localhost:8080/shotmaniacs2/api/client';
@@ -185,15 +190,16 @@
                     value=element.value;
                 }
                 if(id ==='event-name'){id='name';}
-                if(id.includes('eventtype')){id='eventType';}
-                if(id ==='date-input' ){id='date';}
-                if(id ==='location-input'){id='location';}
-                if(id==='duration-input'){id='duration';}
-                if(id.includes('booking-type')){id='bookingType';}
-                if(id ==='name-input'){id='clientName';}
-                if(id==='email-input'){id='clientEmail';}
-                if(id==='tel-input'){id='phoneNumber';}
-                if(id==='description-input'){id='description';}
+                else if(id.includes('eventtype')){id='eventType';}
+                else if(id ==='date-input' ){id='date';}
+                else if(id ==='time-input' ){id='time';}
+                else if(id ==='location-input'){id='location';}
+                else if(id==='duration-input'){id='duration';}
+                else if(id.includes('booking-type')){id='bookingType';}
+                else if(id ==='name-input'){id='clientName';}
+                else if(id==='email-input'){id='clientEmail';}
+                else if(id==='tel-input'){id='phoneNumber';}
+                else if(id==='description-input'){id='description';}
 
                 booking[id] = value;
             }
@@ -209,8 +215,10 @@
         };
         fetch(url, options)
             .then(response => {
+                console.log(response)
                 if (response.ok) {
                     alert("Create an event successful!");
+                    document.getElementById('form1').reset();
                     // Perform any further actions or redirect to another page
                 } else {
                     alert("Create an event unsuccessful. Please try again.");
@@ -222,12 +230,101 @@
                 alert("An error occurred while processing . Please try again later.");
             });
 
+    }
+    var ExcelToJSON = function() {
+        this.parseExcel = function(file) {
+            var reader = new FileReader();
 
+            reader.onload = function(e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+                workbook.SheetNames.forEach(function(sheetName) {
+                    // Here is your object
+                    var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    console.log(XL_row_object);
+                    jQuery('#xlx_json').val(XL_row_object);
+                    sendJsonObjects(XL_row_object)
+                })
+            };
 
+            reader.onerror = function(ex) {
+                console.log(ex);
+            };
+            reader.readAsBinaryString(file);
+        };
+    };
+    function renameKey ( obj, oldKey, newKey ) {
+        if(oldKey === "NO."){
+            delete obj[oldKey];
+            return;
+        }
+        obj[newKey] = obj[oldKey];
+        console.log(obj[newKey]);
+        console.log(obj[oldKey])
+        delete obj[oldKey];
+    }
+    function sendJsonObjects(XL_row_object) {
+        const url = 'http://localhost:8080/shotmaniacs2/api/client/list';
+        var promises = [];
+        for (let i = 0; i < XL_row_object.length; i++) {
+            var jsonOb = JSON.stringify(XL_row_object[i]);
+            const jsonObj = JSON.parse(jsonOb);
+            console.log(jsonObj)
+            renameKey( jsonObj, 'NO.', ' ' );
+            renameKey( jsonObj, 'EVENT NAME', 'name' );
+            renameKey( jsonObj, 'EVENT TYPE', 'eventType');
+            renameKey( jsonObj, 'EVENT DATE', 'date');
+            renameKey( jsonObj, 'EVENT TIME', 'time');
+            renameKey( jsonObj, 'EVENT LOCATION', 'location');
+            renameKey( jsonObj, 'BOOKING TYPE', 'bookingType');
+            renameKey( jsonObj, 'DURATION', 'duration');
+            renameKey( jsonObj, 'DESCRIPTION', 'description');
+            renameKey( jsonObj, "CLIENT'S NAME", 'clientName');
+            renameKey( jsonObj, "CLIENT'S EMAIL ADDRESS", 'clientEmail');
+            renameKey( jsonObj, 'TEL. (optional)', 'phoneNumber');
+            promises.push(jsonObj)
+        }
+        console.log(promises)
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(promises)
+        };
+        fetch(url, options)
+            .then(response => {
+                console.log(response)
+                if (response.ok) {
+                    alert("Create list of events successful!");
+                    resetFileUpload();
+                    // Perform any further actions or redirect to another page
+                } else {
+                    alert("Unsuccessful. Please try again.");
+                    // Clear the form inputs
+                }
+            })
+            .catch(error => {
+                console.error("Server error:", error);
+                alert("An error occurred while processing . Please try again later.");
+            });
 
-        // Perform further actions with the checked booking types, event types, and other booking type
+    }
+    function handleFileParsing(event) {
+        event.preventDefault();
+        var fileInput = document.getElementById('actual-btn');
+        var files = fileInput.files;
+        var xl2json = new ExcelToJSON();
+        xl2json.parseExcel(files[0]);
+    }
+    function resetFileUpload() {
+        // Clear the selected file
+        actualBtn.value = null;
 
-        // Perform additional actions with the collected data
+        // Reset the displayed file name
+        fileChosen.textContent = 'No file chosen';
     }
 </script>
 </body>

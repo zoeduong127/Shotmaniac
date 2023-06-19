@@ -58,18 +58,18 @@ public class Booking {
     public Booking(String name, String description, EventType eventType, Timestamp date,
                    String location, int duration, String clientName, String clientEmail, String phoneNumber,
                    BookingType bookingType, BookingState state, int slots) {
-        this.name = name;
-        this.description = description;
-        this.eventType = eventType;
-        this.date = date;
-        this.location = location;
-        this.duration = duration;
-        this.clientName = clientName;
-        this.clientEmail = clientEmail;
-        this.phoneNumber = phoneNumber;
-        this.bookingType = bookingType;
-        this.state = state;
-        this.slots = slots;
+        setName(name);
+        setDescription(description);
+        setEventType(eventType);
+        setDate(date);
+        setLocation(location);
+        setDuration(duration);
+        setClientName(clientName);
+        setClientEmail(clientEmail);
+        setPhoneNumber(phoneNumber);
+        setBookingType(bookingType);
+        setState(state);
+        setSlots(slots);
     }
 
     public String getDescription() {
