@@ -39,31 +39,31 @@
 		<div class="dash-box">
 			<a href="dashboard.html" target="_self">
 			<div class="box" id="dashboard">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label> Dashboard</label>
 			</div>
 			</a>
-			<a href="./../news/News.html" target="_self">
+			<a href="./../news/notifications.html" target="_self">
 			<div class="box" id="News">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>News</label>
 			</div>
 			</a>
 			<a href="./../calendar/calendar.html" target="_self">
 			<div class="box" id="calendar">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label> Calendar</label>
 			</div>
 			</a>
 			<a href="./../bookings/bookings.html" target="_self">
 			<div class="box" id="booking">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>Bookings</label>
 			</div>
 			</a>
 			<a href="../../help/help.html" target="_self">
 			<div class="box" id="help">
-				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>Help</label>
 			</div>
 			</a>
@@ -78,23 +78,24 @@
 			<div class="text">My Bookings</div>
 		</div>
 		<div class="navigation">
+			<!-- On main page -->
 			<div class="filter">
-				<button class="filter-btn">
+				<button class="filter-btn" >
 					<i class="fas fa-filter filter-icon"></i>
-						Filter
+						<p id = "filter_button_text">Filter: On Going</p>
 					<i class="fas fa-caret-down down-icon"></i>
 				</button>
-				
+
 				<div class="filter-content">
 					<!--missing HREF-->
-					<div class="item">
+					<div class="item" onclick="updateBookings('in_progress')">
 						<p>In Progress</p>
 					</div>
-					<div class="item">
+					<div class="item" onclick="updateBookings('future')">
 						<p>Future</p>
 					</div>
 					
-					<div class="item">
+					<div class="item" onclick="updateBookings('past')">
 						<p>Past</p>
 					</div>
 				</div>
@@ -106,25 +107,99 @@
 					<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt="search">
 				</button>
 			</div>
+			
+			<!-- On single Event -->
+			<div class="title-bar">
+				<div class="left-heading">
+					<div class="heading">
+						<h1>Booking Name</h1>
+					</div>
+					
+					<div class="navigation-pane">
+						<p>
+							<a onclick="toggleStyle()">My Booking</a>
+							/
+							<a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
+						</p>
+					</div>
+				</div>
+				<div class="right-heading">
+					<div class="label-dropdown">
+						<button class="labelButton">Set Label
+							<i class="fas fa-caret-down label-arrow"></i>
+						</button>
+
+						<div class="label-content">
+							<div class="item" id="todo">
+								<p>Todo</p>
+							</div>
+							
+							<div class="item" id="in-progress">
+								<p>In Progress</p>
+							</div>
+							
+							<div class="item" id="review">
+								<p>Review</p>
+							</div>
+							
+							<div class="item" id="done">
+								<p>Done</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="booking-container">
-				<div class="booking" id="1" onclick="toggleStyle()">
-					<p> Event name </p>
+
+		<!-- On main page -->
+		<div class="booking-container" id="booking_container">
+				<div class="booking" onclick="toggleStyle()">
+					<div class="booking-info-grid">
+						<div class="booking-large-text">
+							<p id="event_name">Event name</p>
+						</div>
+
+<!--
+						<div class="booking-small">
+							<p id="booking_type">Booking type</p>
+						</div>
+-->
+
+
+						<div class="booking-small">
+							<p id="location">Location</p>
+						</div>
+
+<!--
+						<div class="booking-small">
+							<p id="client">Client</p>
+						</div>
+-->
+						<div class="booking-small">
+							<p id="event_type">Event type</p>
+						</div>
+
+
+<!--
+						<div class="booking-small">
+							<p id="duration">Duration</p>
+						</div>
+-->
+					</div>
+					
 					
 					<div class="innerBooking right">
-						<p> 30 July, 2023 </p>
+						<p id="date"> 30 July, 2023 </p>
 					</div>
 					<div class="innerBooking left">
-						<p>Todo</p>
+						<p id="state">Todo</p>
+					</div>
 				</div>
 			
 			
-			</div>
-			
-			
 			<div class="booking" id="2" onclick="toggleStyle()">
-				<p> Event name </p>
-				
+
+
 				<div class="innerBooking right">
 					<p> 30 July, 2023 </p>
 				</div>
@@ -222,6 +297,58 @@
 				</div>
 			
 			</div>
+		</div>
+		
+		<!-- On single Event -->
+		
+		<div class="event-container">
+			<div class="event-nav">
+				<div class="announcement">
+					<i class="fas fa-duotone fa-bullhorn"></i>
+					<p>Announcement</p>
+				</div>
+				
+				<div class="discussion">
+					<i class="fas fa-duotone fa-comments"></i>
+					<p>Discussion Forum</p>
+				</div>
+			</div>
+			
+			<div class="resources">
+				<div class="heading">
+					<h1> RESOURCES </h1>
+				</div>
+				<div class="files">
+					<div class="pdf">
+						<a href="" download>
+							<img src="./../../Brand_Identity/images/icons/pdf.png" alt="pdf">
+							<span id="pdf-download">Event Details</span>
+						</a>
+					</div>
+					
+					<div class="doc">
+						<a href="" download>
+							<img src="./../../Brand_Identity/images/icons/doc.png" alt="doc">
+							<span id="doc-download">Plan</span>
+						</a>
+					</div>
+					
+					<div class="xlsx">
+						<a href="" download>
+							<img src="./../../Brand_Identity/images/icons/excel_Icon.png" alt="xlsx">
+							<span id="xlsx-download">Event Details</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="admins">
+			<div id="head">
+				Administrators
+			</div>
+			
+<!-- 			<div -->
 		</div>
 	</main>
 	

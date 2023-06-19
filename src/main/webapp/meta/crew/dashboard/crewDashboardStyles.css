@@ -266,7 +266,7 @@ Change depending on what the actual content is to be able to filter
 .filter:hover .filter-content {
     display: block;
     width: 10vw;
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .filter:hover .booking-container {
@@ -341,7 +341,7 @@ Change depending on what the actual content is to be able to filter
 /*Bookings*/
 
 .booking-container {
-    width: 102%;
+    width: 100%;
     height: 71vh;
     max-width: 70vw;
     margin: 0 2.5% 0 2.5%;
@@ -351,6 +351,11 @@ Change depending on what the actual content is to be able to filter
     overflow-y: scroll;
     -ms-overflow-style: none;  /* hides scrollbar */
     scrollbar-width: none;  /* hides scrollbar */
+
+
+
+
+
 }
 /*hides scrollbar*/
 .booking-container::-webkit-scrollbar {
@@ -365,19 +370,22 @@ Change depending on what the actual content is to be able to filter
     border-radius: 4px;
     margin: 2.5% 0;
 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .booking .booking-info-grid {
-    display: inline-grid;
     height: 100%;
-    width: available;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: 1fr 1fr;
-    justify-content: start;
-    align-content: center;
-    grid-row-gap: 1px;
-    grid-column-gap: 1px;
-    background-color: black;
+    width: 60%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .booking p {
@@ -391,11 +399,14 @@ Change depending on what the actual content is to be able to filter
 
 .booking .booking-large-text {
     margin: 0;
+    width: 100%;
     float: left;
     text-align: left;
     vertical-align: top;
     background-color: #FFFFFF;
-    padding: 5px 5px 0px 5px;
+    padding: 5px 5px 0 5px;
+
+
 }
 
 
@@ -404,13 +415,13 @@ Change depending on what the actual content is to be able to filter
     margin: 0;
     text-align: left;
     vertical-align: middle;
-    padding: 12px 5px 0px 5px;
+    padding: 12px 5px 0 5px;
     background-color: #FFFFFF;
 
 }
 
 .booking .booking-small p {
-    font-family: Arial;
+    font-family: Arial, serif;
     font-size: smaller;
 }
 
@@ -427,6 +438,7 @@ Change depending on what the actual content is to be able to filter
 }
 
 .right {
+    float: right;
     border-left: 1px solid black;
     border-radius: 4px;
 }
@@ -443,14 +455,15 @@ Change depending on what the actual content is to be able to filter
     margin: 0;
     text-align: left;
     width: 100%;
-    padding: 0px 0px 0px 10px;
+    padding: 0 0 0 10px;
     font-size: 12px;
-    font-family: Arial;
+    font-family: Arial, serif;
     font-weight: normal;
 }
 
 
 .left p{
+    float: left;
     background-color: rgba(255, 105, 98, 0.72);
     margin: 5px 1vw;
     padding: 16px 0;
@@ -552,6 +565,16 @@ background-color: inherit;
 /*Things to hide*/
 
 .title-bar {
+    display: none;
+    visibility: hidden;
+}
+
+.event-container {
+    display: none;
+    visibility: hidden;
+}
+
+.admins {
     display: none;
     visibility: hidden;
 }
