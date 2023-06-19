@@ -34,9 +34,9 @@ public enum  BookingDao {
             preparedStatement.setString(9,booking.getPhoneNumber());
             preparedStatement.setString(10, String.valueOf(booking.getBookingType()));
             preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
-            preparedStatement.setString(12, String.valueOf(11));
+            preparedStatement.setInt(12, booking.getSlots());
             int rowsInserted = preparedStatement.executeUpdate();
-            while(rowsInserted > 0) {
+            if(rowsInserted > 0) {
                 System.out.println("Successfully");
                 return true;
             }

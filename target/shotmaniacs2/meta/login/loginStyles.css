@@ -211,7 +211,6 @@ h1, h2, h3, h4, h5, h6, p, label {
 #Show-Pass {
     cursor:pointer;
     float: right;
-    width: 32px;
     height: 27px;
     margin-right: 2.5vw;
     margin-top: -5.9vh;
@@ -220,8 +219,10 @@ h1, h2, h3, h4, h5, h6, p, label {
 #Hide-Pass {
     cursor:pointer;
     float: right;
-    width: 60px;
     height: 29px;
     margin-right: 1.82vw;
+    padding-right: 1.7vw;
     margin-top: -6vh;
 }
+
+
