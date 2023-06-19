@@ -43,7 +43,7 @@
 				<label> Dashboard</label>
 			</div>
 			</a>
-			<a href="./../news/News.html" target="_self">
+			<a href="./../news/notifications.html" target="_self">
 			<div class="box" id="News">
 				<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>News</label>
@@ -81,9 +81,11 @@
 			<!-- On main page -->
 			<div class="filter">
 				<button class="filter-btn" >
-					<i class="fas fa-filter filter-icon"></i>
-						<p id = "filter_button_text">Filter: On Going</p>
-					<i class="fas fa-caret-down down-icon"></i>
+					<span id="button-text">
+						<i class="fas fa-filter filter-icon"></i>
+							<span id = "filter_button_text">Filter: On Going</span>
+						<i class="fas fa-caret-down down-icon"></i>
+					</span>
 				</button>
 
 				<div class="filter-content">
@@ -156,193 +158,113 @@
 				<div class="booking" onclick="toggleStyle()">
 					<div class="booking-info-grid">
 						<div class="booking-large-text">
-							<p id="event_name">Event name</p>
+							<p id="event_name">
+								Event Name
+<!--
+								<span id="slots">(Available Slots: 0)</span>
+-->
+							</p>
 						</div>
 
+<!--
 						<div class="booking-small">
 							<p id="booking_type">Booking type</p>
 						</div>
+-->
 
 
 						<div class="booking-small">
 							<p id="location">Location</p>
 						</div>
 
+<!--
 						<div class="booking-small">
 							<p id="client">Client</p>
 						</div>
-
+-->
 						<div class="booking-small">
 							<p id="event_type">Event type</p>
 						</div>
 
 
-
+<!--
 						<div class="booking-small">
 							<p id="duration">Duration</p>
 						</div>
+-->
+					</div>
+					
+					<div class="innerBooking left">
+						<p id="state">Todo</p>
 					</div>
 					<div class="innerBooking right">
 						<p id="date"> 30 July, 2023 </p>
 					</div>
-					<div class="innerBooking left">
-						<p id="state">Todo</p>
-					</div>
 				</div>
-			
-			
-			<div class="booking" id="2" onclick="toggleStyle()">
-
-
-				<div class="innerBooking right">
-					<p> 30 July, 2023 </p>
-				</div>
-				<div class="innerBooking left">
-					<p>Todo</p>
-				</div>
-			
-			</div>
-			
-			
-			<div class="booking" id="3" onclick="toggleStyle()">
-				<p> Event name </p>
-				
-				<div class="innerBooking right">
-					<p> 1 July, 2023 </p>
-				</div>
-				<div class="innerBooking left">
-					<p>Todo</p>
-				</div>
-			
-			</div>
-			
-			
-			<div class="booking" id="4" onclick="toggleStyle()">
-				<p> Event name </p>
-				
-				<div class="innerBooking right">
-					<p> 1 July, 2023 </p>
-				</div>
-				<div class="innerBooking left">
-					<p>Todo</p>
-				</div>
-			
-			</div>
-			
-			
-			<div class="booking" id="5" onclick="toggleStyle()">
-				<p> Event name </p>
-				<div class="innerBooking right">
-					<p> 1 July, 2023 </p>
-				</div>
-				<div class="innerBooking left">
-					<p>Todo</p>
-				</div>
-			
-			</div>
-			
-			
-			<div class="booking" id="6" onclick="toggleStyle()">
-				<p> Event name </p>
-				
-				<div class="innerBooking right">
-					<p> 1 July, 2023 </p>
-				</div>
-				<div class="innerBooking left">
-					<p>Todo</p>
-				</div>
-			</div>
-			
-			
-			<div class="booking" id="7" onclick="toggleStyle()">
-				<p> Event name </p>
-				
-				<div class="innerBooking right">
-					<p> 5 July, 2023 </p>
-				</div>
-				<div class="innerBooking left">
-					<p>Todo</p>
-				</div>
-			
-			</div>
-			
-			
-			<div class="booking" id="8" onclick="toggleStyle()">
-				<p> Event name </p>
-				
-				<div class="innerBooking right">
-					<p> 5 July, 2023 </p>
-				</div>
-				<div class="innerBooking left">
-					<p>Todo</p>
-				</div>
-			
-			</div>
-			
-			
-			<div class="booking" id="9" onclick="toggleStyle()">
-				<p> Event name </p>
-				
-				<div class="innerBooking right">
-					<p> 8 July, 2023 </p>
-				</div>
-				<div class="innerBooking left">
-					<p>Todo</p>
-				</div>
-			
-			</div>
 		</div>
 		
 		<!-- On single Event -->
-		
-		<div class="event-container">
-			<div class="event-nav">
-				<div class="announcement">
-					<i class="fas fa-duotone fa-bullhorn"></i>
-					<p>Announcement</p>
+		<div class="main_area">
+			<div class="event-container">
+				<div class="event-nav">
+					<div class="announcement">
+						<i class="fas fa-duotone fa-bullhorn"></i>
+						<p>Announcement</p>
+					</div>
+					
+					<div class="discussion">
+						<i class="fas fa-duotone fa-comments"></i>
+						<p>Discussion Forum</p>
+					</div>
 				</div>
 				
-				<div class="discussion">
-					<i class="fas fa-duotone fa-comments"></i>
-					<p>Discussion Forum</p>
+				<div class="resources">
+					<div class="heading">
+						<h1> RESOURCES </h1>
+					</div>
+					<div class="files">
+						<div class="pdf element">
+							<a href="" download>
+								<img src="./../../Brand_Identity/images/icons/pdf.png" alt="pdf">
+								<p id="pdf-download">Event Details</p>
+							</a>
+						</div>
+						
+						<div class="doc element">
+							<a href="" download>
+								<img src="./../../Brand_Identity/images/icons/doc.png" alt="doc">
+								<p id="doc-download">Plan</p>
+							</a>
+						</div>
+						
+						<div class="xlsx element">
+							<a href="" download>
+								<img src="./../../Brand_Identity/images/icons/excel_Icon.png" alt="xlsx">
+								<p id="xlsx-download">Event Details</p>
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 			
-			<div class="resources">
-				<div class="heading">
-					<h1> RESOURCES </h1>
-				</div>
-				<div class="files">
-					<div class="pdf">
-						<a href="" download>
-							<img src="./../../Brand_Identity/images/icons/pdf.png" alt="pdf">
-							<span id="pdf-download">Event Details</span>
-						</a>
-					</div>
-					
-					<div class="doc">
-						<a href="" download>
-							<img src="./../../Brand_Identity/images/icons/doc.png" alt="doc">
-							<span id="doc-download">Plan</span>
-						</a>
-					</div>
-					
-					<div class="xlsx">
-						<a href="" download>
-							<img src="./../../Brand_Identity/images/icons/excel_Icon.png" alt="xlsx">
-							<span id="xlsx-download">Event Details</span>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="admins">
-			<div id="head">
-				Administrators
-			</div>
 			
-<!-- 			<div -->
+			<!-- Admins -->
+			<div class="admins">
+				<div id="head">
+					Administrators
+				</div>
+				
+				<div class="users">
+					<i class="fas fa-user user-icon" style="color: #000000;"></i>
+					<div class="user-box" id="user1">
+						<span>Name 1</span>
+					</div>
+					<i class="fas fa-user user-icon" style="color: #000000;"></i>
+					<div class="user-box" id="user2">
+						<span>Obscenely long name 2 h file fresh ehfhefhef</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</main>
 	
@@ -367,6 +289,7 @@
 				<p id="total">Total number: 140</p>
 			</div>
 		</div>
+		
 	</aside>
 	
 </div>

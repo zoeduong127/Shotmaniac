@@ -1,6 +1,6 @@
 .container {
     display: grid;
-    grid-template-columns: 20vw 1fr 23vw;
+    grid-template-columns: 20vw 57vw 23vw;
     grid-template-rows: 8vh auto;
     grid-template-areas:
         "header header header"
@@ -310,7 +310,9 @@ body {
 
 /*Main*/
 
-
+.main_area {
+    display: flex;
+}
 /*Event box total possible height 65vh*/
 
 .event-container {
@@ -329,12 +331,26 @@ body {
     width: 90%;
     margin: 5px 5%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 
 .event-nav p, .event-nav i {
     margin: 0;
     padding-left: 5px;
+}
+
+.event-nav p {
+    float: right;
+}
+
+.event-nav i {
+    float: left;
 }
 
 .resources {
@@ -355,20 +371,102 @@ body {
 .files {
     height: 83%;
     width: 95%;
-    margin-left: 5%;
-    margin-top: 2vh;
+    margin-left: 3%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-around;
+
+
 }
 
-.files a {
+.files .element {
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    text-decoration: none;
-    cursor: none;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .files img {
     height: 8vh;
+    float: left;
 }
 
+.files p {
+    margin: 3vh 0;
+    float: right;
+}
+
+/*Admin users assigned*/
+
+.admins {
+    height: auto;
+    max-height: 55vh;
+    min-height: 200px;
+    width: 30%;
+    align-self: center;
+    border: 1px solid rgba(82, 82, 82, 0.5);
+    background-color: rgba(255, 255, 255, 0.98);
+}
+
+
+.admins #head {
+    height: 30px;
+    background-color: rgba(31, 31, 31, 0.35);
+    text-align: center;
+    padding-top: 20px;
+}
+
+
+.users {
+    min-height: 170px;
+    display: flex;
+    width: 100%;
+
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.users .user-box {
+    height: 50px;
+    width: 70%;
+    line-height: 50px;
+
+    float: right;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+
+}
+
+.user-box span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.users .user-icon {
+    width: 20%;
+    height: auto;
+    scale: 2;
+    transform: translate(30px, 17px);
+}
+.user-box:hover {
+    overflow: visible;
+    white-space: normal;
+    display: block;
+    background-color: white;
+    z-index: 2;
+
+}
 /*Things to hide*/
 
 .filter {
@@ -384,4 +482,8 @@ body {
     display: none;
 }
 
+aside {
+    display: none;
+    visibility: hidden;
+}
 

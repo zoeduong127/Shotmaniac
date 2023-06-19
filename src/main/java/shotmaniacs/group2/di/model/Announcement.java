@@ -12,7 +12,7 @@ public class Announcement {
     private int id;
     @XmlAnyElement
     private String title;
-    @XmlAnyAttribute
+    @XmlAnyElement
     private String body;
     @XmlAnyElement
     private int publisher;

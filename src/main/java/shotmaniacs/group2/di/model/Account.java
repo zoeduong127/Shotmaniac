@@ -1,16 +1,23 @@
 package shotmaniacs.group2.di.model;
 
 import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Account {
+    @XmlAnyElement
     private int id;
-
+    @XmlAnyElement
     private String username;
+    @XmlAnyElement
     private String email;
+    @XmlAnyElement
     private String passwordHash;
+    @XmlAnyElement
     private AccountType accountType;
+    @XmlAnyElement
+    private String salt;
 
     public Account(){}
 
@@ -60,5 +67,13 @@ public class Account {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

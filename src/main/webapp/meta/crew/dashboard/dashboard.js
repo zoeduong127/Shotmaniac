@@ -40,6 +40,7 @@ function parseCookie(cookieString) {
     return cookies;
 }
 
+
 function performQueryAndUpdateBookings(url) {
 
     while (bookingContainer.firstChild) {
@@ -55,13 +56,13 @@ function performQueryAndUpdateBookings(url) {
                 //TODO: Calculate amount of slots already taken.
 
                 //TODO: the line below probably allows stored code attacks. Needs fixing
-                bookingElementCopy.querySelector("#event_name").innerHTML = booking.name + " <span class=\"bolded\">(" + booking.slots + ")</span>";
-                bookingElementCopy.querySelector("#booking_type").innerHTML = "<b>Booking Type: </b>" + booking.bookingType;
+                bookingElementCopy.querySelector("#event_name").innerHTML = booking.name /*+ " <span class=\"bolded\">(Available Slots: " + booking.slots + ")</span>"*/;
+                // * bookingElementCopy.querySelector("#booking_type").innerHTML = "<b>Booking Type: </b>" + booking.bookingType;
 
                 bookingElementCopy.querySelector("#location").innerHTML =  "<b>Location: </b>" + booking.location;
-                bookingElementCopy.querySelector("#client").innerHTML =  "<b>Client: </b>" + booking.clientName;
+//                bookingElementCopy.querySelector("#client").innerHTML =  "<b>Client: </b>" + booking.clientName;
                 bookingElementCopy.querySelector("#event_type").innerHTML =  "<b>Event Type: </b>" + booking.eventType;
-                bookingElementCopy.querySelector("#duration").innerHTML =  "<b>Duration: </b>" + booking.duration + " hours";
+//                bookingElementCopy.querySelector("#duration").innerHTML =  "<b>Duration: </b>" + booking.duration + " hours";
 
                 let dateTime = new Date(booking.date);
                 const formattedDate = dateTime.toLocaleString('en-US', {
