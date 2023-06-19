@@ -1,6 +1,6 @@
 .container {
     display: grid;
-    grid-template-columns: 20vw 1fr 23vw;
+    grid-template-columns: 20vw 57vw 23vw;
     grid-template-rows: 8vh auto;
     grid-template-areas:
         "header header header"
@@ -310,7 +310,9 @@ body {
 
 /*Main*/
 
-
+.main_area {
+    display: flex;
+}
 /*Event box total possible height 65vh*/
 
 .event-container {
@@ -367,6 +369,19 @@ body {
 
 .files img {
     height: 8vh;
+}
+
+
+
+/*Admin users assigned*/
+
+.admins {
+    min-height: 150px;
+    height: auto;
+    width: 100%;
+
+    border: 1px solid rgba(82, 82, 82, 0.5);
+    background-color: rgba(255, 255, 255, 0.98);
 }
 
 /*Things to hide*/
