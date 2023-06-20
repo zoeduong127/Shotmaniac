@@ -11,6 +11,7 @@ import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
 import shotmaniacs.group2.di.model.RootElementWrapper;
+import shotmaniacs.group2.di.security.TokenManager;
 
 import java.nio.charset.StandardCharsets;
 
@@ -60,7 +61,7 @@ public class LoginResource {
                 responseObject.addAccount(responseAccount);
 
                 Timestamp expiration = addTime(new Timestamp(System.currentTimeMillis()), 24, Calendar.HOUR);
-                String token = generateToken(responseAccount, expiration);
+                String token = TokenManager.generateToken(responseAccount.getEmail(), responseAccount.getId(), responseAccount.getAccountType(), expiration);
                 responseObject.addToken(token);
 
                 // Delete existing tokens associated with the same account (log other devices/browsers out)
@@ -142,22 +143,7 @@ public class LoginResource {
 
     // TODO: Add log out api call that destroys the token
 
-    private String generateToken(Account account, Timestamp expiration) {
-        // Set the token expiration time
-        Date expirationDate = new Date(expiration.getTime());
 
-        // Generate the JWT token
-        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        String token = Jwts.builder()
-                .setSubject(account.getEmail())
-                .claim("account_type", account.getAccountType())
-                .claim("account_id", account.getId())
-                .setExpiration(expirationDate)
-                .signWith(key)
-                .compact();
-
-        return token;
-    }
 
     public static Timestamp addTime(Timestamp timestamp, int amount, int field) {
         Calendar cal = Calendar.getInstance();
