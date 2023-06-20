@@ -7,3 +7,4 @@ public enum Role {
     PRODUCER,
     OTHER
 }
+
