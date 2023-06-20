@@ -4,6 +4,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.*;
+import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
@@ -59,31 +60,17 @@ public class AdministratorsResource {
                     .build();
         }
 
-        try {
-            Connection connection = DriverManager.getConnection(url, dbName, password);
+        String salt = generateSalt();
+        account.setPasswordHash(hash256(account.getPasswordHash() + salt));
+        account.setSalt(salt);
 
-            String sql = "INSERT INTO account(username, email, password, account_type, salt) VALUES (?,?,?,?,?)";
-            PreparedStatement ps = connection.prepareStatement(sql);
+        int rowsAffected = AccountDao.instance.addAccount(account);
 
-            String salt = generateSalt();
-
-            ps.setString(1, account.getUsername());
-            ps.setString(2, account.getEmail());
-            ps.setString(3, hash256(account.getPasswordHash() + salt));
-            ps.setString(4, valueOf(account.getAccountType()));
-            ps.setString(5, salt);
-
-            int rowsAffected = ps.executeUpdate();
-
-            if (rowsAffected > 0) {
-                return Response.ok().build();
-            } else {
-                return Response.serverError().build();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error connecting: "+e);
+        if (rowsAffected > 0) {
+            return Response.ok().build();
+        } else {
+            return Response.serverError().build();
         }
-        return Response.serverError().build();
     }
 
     public String hash256(String input) {
@@ -130,7 +117,7 @@ public class AdministratorsResource {
 
     public static boolean accountTypeContains(String value) {
         for (AccountType type : AccountType.values()) {
-            if (type.equals(value)) {
+            if (valueOf(type).equals(value)) {
                 return true;
             }
         }
