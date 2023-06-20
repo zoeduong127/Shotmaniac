@@ -4,10 +4,7 @@ package shotmaniacs.group2.di.resources;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dto.LoginInfor;
@@ -41,6 +38,10 @@ public class LoginResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response loginCheck(LoginInfor account) {
         String salt = getSaltByEmail(account.getEmail());
+        if (salt == null) {
+            return Response.serverError().build();
+        }
+
         account.setPassword(hash256(account.getPassword() + salt));
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -62,8 +63,13 @@ public class LoginResource {
                 String token = generateToken(responseAccount, expiration);
                 responseObject.addToken(token);
 
-                String tokenQuery = "INSERT INTO token (account_id, token, expiration) VALUES (?, ?, ?)";
-                PreparedStatement tokenPS = connection.prepareStatement(tokenQuery);
+                // Delete existing tokens associated with the same account (log other devices/browsers out)
+                PreparedStatement tokenPS = connection.prepareStatement("DELETE FROM token WHERE token.account_id = ?");
+                tokenPS.setInt(1, responseAccount.getId());
+                tokenPS.executeUpdate();
+
+                // Add token into the database
+                tokenPS = connection.prepareStatement("INSERT INTO token (account_id, token, expiration) VALUES (?, ?, ?)");
                 tokenPS.setInt(1, responseAccount.getId());
                 tokenPS.setString(2, token);
                 tokenPS.setTimestamp(3, expiration);
@@ -74,7 +80,7 @@ public class LoginResource {
                     Response.ResponseBuilder responseBuilder = Response.ok(responseObject, MediaType.APPLICATION_JSON);
 
                     // Set the Access-Control-Allow-Origin header to *
-                    responseBuilder.header("Access-Control-Allow-Origin", "http://localhost:8080/shotmaniacs2/meta/login");
+                    responseBuilder.header("Access-Control-Allow-Origin", "*");
 
                     // Build the response
                     return responseBuilder.build();
@@ -88,7 +94,14 @@ public class LoginResource {
         return Response.serverError().build();
     }
 
+    @DELETE
+    public Response logOut() {
+        return null;
+    }
+
+
     public String getSaltByEmail(String email) {
+        String result = null;
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String sql = "SELECT * FROM account WHERE account.email = ?";
@@ -98,14 +111,12 @@ public class LoginResource {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return rs.getString(6);
-            } else {
-                return null;
+                result = rs.getString(6);
             }
         } catch (SQLException e) {
-            System.err.println("Error connecting: "+e);
+            System.err.println("Error connecting: " + e);
         }
-        return null;
+        return result;
     }
 
     public String hash256(String input) {
@@ -138,7 +149,9 @@ public class LoginResource {
         // Generate the JWT token
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         String token = Jwts.builder()
-                .setSubject(String.valueOf(account))
+                .setSubject(account.getEmail())
+                .claim("account_type", account.getAccountType())
+                .claim("account_id", account.getId())
                 .setExpiration(expirationDate)
                 .signWith(key)
                 .compact();
