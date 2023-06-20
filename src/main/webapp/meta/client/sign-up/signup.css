@@ -124,6 +124,11 @@ body {
     margin: 4vh 0;
 }
 
+.input:focus {
+    color: black;
+    background-color: rgba(81,81,81,0.2);
+    outline: none;
+}
 .signup-form .email-label {
 
 }
@@ -171,7 +176,7 @@ body {
 .bottom {
     height: 10vh;
     width: 90%;
-    margin: 2vh 0;
+    margin: 5vh 3vh;
 }
 
 .submission {
@@ -179,7 +184,7 @@ body {
     height: 5vh;
     text-align: center;
 
-    margin: 0 4vw;
+    margin: 0 3.4vw;
     border: none;
 
     color: white;
@@ -203,6 +208,7 @@ body {
     font-size: 15px;
     color: #1696D2;
     text-decoration: 1px #1696D2 underline;
+    cursor: pointer;
 }
 
 
