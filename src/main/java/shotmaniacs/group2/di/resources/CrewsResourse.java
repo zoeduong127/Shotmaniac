@@ -23,7 +23,7 @@ public class CrewsResourse {
     private static String password = "yummybanana";
 
 
-
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybookings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -48,6 +48,7 @@ public class CrewsResourse {
         return listBooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/search")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,6 +75,7 @@ public class CrewsResourse {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/timefilter/{filtertime}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -107,6 +109,7 @@ public class CrewsResourse {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/labelfilter/{label}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -143,6 +146,7 @@ public class CrewsResourse {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/allbookings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -168,6 +172,7 @@ public class CrewsResourse {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/booking/{booking_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     /**
@@ -178,6 +183,7 @@ public class CrewsResourse {
     }
     //TODO: U - assign a specific role to the booking
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/news")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -203,6 +209,7 @@ public class CrewsResourse {
         return announcementList;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/news?filter=<Read/Unread>")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -233,6 +240,7 @@ public class CrewsResourse {
         return announcementList;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/{booking_id}/announcements")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -259,6 +267,7 @@ public class CrewsResourse {
         return announcementList;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/{booking_id}/announcements?filter=<Read/Unread>")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

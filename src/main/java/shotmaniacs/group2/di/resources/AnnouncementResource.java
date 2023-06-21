@@ -1,5 +1,6 @@
 package shotmaniacs.group2.di.resources;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.*;
@@ -27,6 +28,7 @@ public class AnnouncementResource {
         this.announcementId = announcementId;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     /**

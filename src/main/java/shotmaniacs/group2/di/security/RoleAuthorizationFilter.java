@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
 import java.util.Arrays;
+import java.util.Date;
 
 @Provider
 @Priority(1)
@@ -47,12 +48,19 @@ public class RoleAuthorizationFilter implements ContainerRequestFilter {
         }
     }
     private String verifyTokenAndGetRole(String token) {
+
         Claims claims = TokenManager.decodeTokens(token);
-        String role = null;
+        String role;
+        Date expiration;
         if (claims == null) {
             return null;
+        }
+        role = claims.get("role", String.class);
+        expiration = claims.getExpiration();
+
+        if (expiration.before(new Date())) {
+            return null;
         } else {
-            role = claims.get("role", String.class);
             return role;
         }
     }

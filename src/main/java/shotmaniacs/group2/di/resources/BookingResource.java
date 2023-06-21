@@ -1,5 +1,6 @@
 package shotmaniacs.group2.di.resources;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
@@ -36,6 +37,7 @@ public class BookingResource {
         this.bookingId = id;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     /**
@@ -49,11 +51,13 @@ public class BookingResource {
       return booking;
     }
 
+
     /**
      * Assign a role to the booking
      * @param role
      * @return
      */
+    @RolesAllowed({"Administrator","Crew"})
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response putRole(JAXBElement<AssignRole> role){

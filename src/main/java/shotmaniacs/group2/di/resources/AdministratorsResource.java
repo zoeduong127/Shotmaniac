@@ -1,5 +1,6 @@
 package shotmaniacs.group2.di.resources;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -33,6 +34,7 @@ public class AdministratorsResource {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
+    @RolesAllowed({"Administrator"})
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public Response addAccount(Account account) {

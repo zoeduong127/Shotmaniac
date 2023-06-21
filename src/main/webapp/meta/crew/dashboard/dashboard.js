@@ -47,7 +47,15 @@ function performQueryAndUpdateBookings(url) {
         bookingContainer.removeChild(bookingContainer.firstChild);
     }
 
-    fetch(url)
+    const cookies = parseCookie(document.cookie);
+    const token = cookies['auth_token'];
+    console.log(token);
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
         .then(response => response.json())
         .then(data => {
             data.forEach(booking => {

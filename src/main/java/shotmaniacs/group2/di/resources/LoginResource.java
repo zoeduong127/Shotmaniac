@@ -4,6 +4,7 @@ package shotmaniacs.group2.di.resources;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
@@ -34,6 +35,7 @@ public class LoginResource {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
+    @RolesAllowed({"Administrator","Crew", "Client"})
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
@@ -95,9 +97,25 @@ public class LoginResource {
         return Response.serverError().build();
     }
 
+    @RolesAllowed({"Administrator","Crew", "Client"})
     @DELETE
-    public Response logOut() {
-        return null;
+    public Response logOut(@HeaderParam("Authorization") String authorizationHeader) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+
+            PreparedStatement tokenPS = connection.prepareStatement("DELETE FROM token WHERE token = ?");
+            tokenPS.setString(1, authorizationHeader);
+            int rowsAffected = tokenPS.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().entity("Logged out successfully").build();
+            } else {
+                return Response.ok().entity("The given account was not logged in.").build();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return Response.serverError().build();
     }
 
 
@@ -140,11 +158,6 @@ public class LoginResource {
             return null;
         }
     }
-
-    // TODO: Add log out api call that destroys the token
-
-
-
     public static Timestamp addTime(Timestamp timestamp, int amount, int field) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(timestamp);
