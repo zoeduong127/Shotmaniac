@@ -4,6 +4,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dao.BookingDao;
+import shotmaniacs.group2.di.dto.Accountdto;
 import shotmaniacs.group2.di.dto.Bookingdto;
 import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.*;
@@ -21,10 +22,16 @@ public class ClientsResource {
     @Context
     Request request;
 
-    private static String host = "bronto.ewi.utwente.nl";
-    private static String dbName ="dab_dsgnprj_50";
-    private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
-    private static String password = "yummybanana";
+
+    @POST
+    @Path("new_account")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createAccount(Accountdto accountdto) {
+        AdministratorsResource admin = new AdministratorsResource();
+        Response response = admin.addAccount(new Account(-1, "@User", accountdto.getEmail(), accountdto.getPassword(), AccountType.Client));
+        return response;
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -36,17 +43,7 @@ public class ClientsResource {
        }
         return Response.serverError().build();
     }
-//    @Path("/account")
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
-//    public Response createAccount(Account booking) {
-//        boolean response = booking.addBooking(booking);
-//        if(response){
-//            return Response.ok().build();
-//        }
-//        return Response.serverError().build();
-//    }
+
     @Path("/list")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -122,11 +119,9 @@ public class ClientsResource {
 //    }
 //
     public static void main (String args[]) throws ParseException {
-        Bookingdto bookingdto = new Bookingdto( "Wedding Ceramony",
-        "Club Photography","2023-07-12","12:08",
-                "Amsterdam","Photography",2,"This is one of my most important event in my life","Duong Huyen","duonghuyen127@gmail.com","0687845896");
-        ClientsResource client = new ClientsResource();
-        client.createBooking_noid(bookingdto);
+        Accountdto accountdto = new Accountdto("teaccount@student.utwente.nl","hellohello",null);
+        ClientsResource test = new ClientsResource();
+        System.out.println(test.createAccount(accountdto));
     }
 
 }

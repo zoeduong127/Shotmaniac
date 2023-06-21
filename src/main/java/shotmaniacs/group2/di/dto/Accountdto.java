@@ -5,27 +5,23 @@ import shotmaniacs.group2.di.model.AccountType;
 
 public class Accountdto {
 
-    private String username;
-
     private String email;
-
-    private String passwordHash;
+    private String password;
+    private String tel;
 
 
     public Accountdto(){}
 
-    public Accountdto(String username, String email, String passwordHash, String phoe) {
-        setUsername(username);
+    public Accountdto(String email, String password, String tel) {
+        settel(tel);
         setEmail(email);
-        setPasswordHash(passwordHash);
+        setPassword(password);
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void settel(String phone){
+        this.tel = phone;
+    };
+    public String gettel(){
+        return this.tel;
     }
 
     public String getEmail() {
@@ -36,11 +32,11 @@ public class Accountdto {
         this.email = email;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
