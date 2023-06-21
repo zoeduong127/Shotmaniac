@@ -5,7 +5,7 @@
     grid-template-columns: 20vw 1fr 20vw;
     grid-template-rows: 8vh auto;
     grid-template-areas:
-        "header header header"
+        "a b b"
         "nav content sidebar";
     min-height: 100vh;
     max-height: 100vh;

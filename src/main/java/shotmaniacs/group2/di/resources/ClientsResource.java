@@ -36,6 +36,17 @@ public class ClientsResource {
        }
         return Response.serverError().build();
     }
+//    @Path("/account")
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+//    public Response createAccount(Account booking) {
+//        boolean response = booking.addBooking(booking);
+//        if(response){
+//            return Response.ok().build();
+//        }
+//        return Response.serverError().build();
+//    }
     @Path("/list")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
