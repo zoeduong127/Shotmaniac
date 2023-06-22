@@ -30,14 +30,16 @@
 				</div>
 			</div>
 			
-			<div class="right">
-				<input type="search" name="Search" id="searchbar_nav" placeholder="Search...">
-				
-				<i class="fas fa-magnifying-glass"></i> <!-- TODO: fix icon, worst case use Dashboard -->
+			<div class="search">
+				<label for="search"></label>
+				<input type="text" class="input" id="search" placeholder="Search...">
+				<button class="search-icon-btn">
+				</button>
 			</div>
 		</div>
+		
 		<div class="navigation">
-			<i class="fas fa-house"></i>
+			<div class="box" id="img"></div>
 			<div class="box"><p>Announcement</p></div>
 			<div class="box"><p>Bookings</p></div>
 			<div class="box"><p>Crews</p></div>
@@ -48,7 +50,247 @@
 	
 	
 	<main>
-	
+		<div class="main-container">
+			<div class="heading">
+				<h1><strong><em> Dashboard </em></strong></h1>
+			</div>
+			
+			<div class="left-side" id="container1">
+				<div class="event-container">
+					<div class="event" onclick="toggleStyle()">
+						<div class="booking-info-grid">
+							<div class="booking-large-text">
+								<p class="event_name">
+									Event Name
+								</p>
+							</div>
+							
+							<div class="booking-small">
+								<p class="location">Location</p>
+							</div>
+							
+							<div class="booking-small">
+								<p class="event_type">Event type</p>
+							</div>
+						</div>
+						
+						<div class="innerBooking left">
+							<p class="state approved-state">Approved</p>
+						</div>
+						<div class="innerBooking right">
+							<p class="date"> 30 July, 2023 </p>
+						</div>
+					</div>
+					<div class="event" onclick="toggleStyle()">
+						
+						<div class="booking-info-grid">
+							<div class="booking-large-text">
+								<p class="event_name">
+									Event Name
+								</p>
+							</div>
+							
+							<div class="booking-small">
+								<p class="location">Location</p>
+							</div>
+							
+							<div class="booking-small">
+								<p class="event_type">Event type</p>
+							</div>
+						</div>
+						
+						<div class="innerBooking left">
+							<p class="state pending-state">Pending</p>
+						</div>
+						<div class="innerBooking right">
+							<p class="date"> 30 July, 2023 </p>
+						</div>
+					</div>
+					<div class="event" onclick="toggleStyle()">
+						<div class="booking-info-grid">
+							<div class="booking-large-text">
+								<p class="event_name">
+									Event Name
+								</p>
+							</div>
+							
+							<div class="booking-small">
+								<p class="location">Location</p>
+							</div>
+							
+							<div class="booking-small">
+								<p class="event_type">Event type</p>
+							</div>
+						</div>
+						
+						<div class="innerBooking left">
+							<p class="state pending-state">Pending</p>
+						</div>
+						<div class="innerBooking right">
+							<p class="date"> 30 July, 2023 </p>
+						</div>
+					</div>
+				</div>
+				<div class="statistics">
+					<div class="title">
+						<h3 id="stats">Statistics</h3>
+					</div>
+					<div class="graph"></div>
+					<div class="numbers">
+						<p id="1">1st number: 28</p>
+						<p id="2">2nd number: 30</p>
+						<p id="3">3rd number: 18</p>
+						<p id="4">4th number: 5</p>
+						<p id="total">Total number: 140</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="information" id="information">
+				<div class="search">
+					<label for="search-input"></label>
+					<input type="text" class="input" id="search-input" placeholder="Search...">
+					<button class="search-icon-btn">
+					</button>
+				</div>
+				<div class="announcement-container">
+					<h1>Latest News</h1>
+					<div id="L1" class="announcement">Title 1</div>
+					<div id="L2" class="announcement">Title 2</div>
+					<div id="L3" class="announcement">Title 3</div>
+				</div>
+				<div class="upcoming-container">
+					<h1>Upcoming Events</h1>
+					<div class="booking" id="B1">
+						Booking name
+						<span>21 Jun 2023</span>
+					</div>
+					<div class="booking" id="B2">
+						Booking name
+						<span>21 Jun 2023</span>
+					</div>
+					<div class="booking" id="B3">
+						Booking name
+						<span>21 Jun 2023</span>
+					</div>
+					<div class="booking" id="B4">
+						Booking name
+						<span>21 Jun 2023</span>
+					</div>
+					<div class="booking" id="B5">
+						Booking name
+						<span>21 Jun 2023</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- Popup -->
+		
+		<div class="popup-container" id="popup-container">
+			<div class="title-area">
+				<span>
+					<img onclick="toggleOff()" src="./../../Brand_Identity/images/icons/X-icon.png" alt="exit">
+				</span>
+				<p>Booking Name</p>
+			</div>
+			<div class="scroll-area">
+				<div class="info">
+					<div class="section" id="date">
+						Sunday, 21 May 2023, 23:59
+					</div>
+					
+					<div class="section" id="Event-Type">
+						Event Type: Photography
+					</div>
+					<div class="section" id="location">
+						Drienerlolaan 5, 7522 NB Enschede
+					</div>
+					<div class="section" id="Extra">
+						<span>Booking Type: Film</span>
+						<span>Duration: 2 Hours</span>
+						<span>Description: </span>
+					</div>
+					<div class="section" id="Client">
+						<span>Name: </span>
+						<span>Email: </span>
+						<span>Phone: </span>
+					</div>
+				</div>
+				
+				<div class="input-area">
+					<h4>Number of crews needed</h4>
+					
+					<div class="input-section">
+						<label for="photographer">Photographer</label>
+						<input id="photographer" type="number">
+					</div>
+					
+					<div class="input-section">
+						<label for="videographer">Videographer</label>
+						<input id="videographer" type="number">
+					</div>
+					
+					<div class="input-section">
+						<label for="producer">Producer</label>
+						<input id="producer" type="number">
+					</div>
+					
+					<div class="input-section">
+						<label for="assistant">Assistant</label>
+						<input id="assistant" type="number">
+					</div>
+					
+					<div class="input-section">
+						<label for="data-handler">Data Handler
+						</label><input id="data-handler" type="number">
+					</div>
+					
+					<div class="input-section">
+						<label for="planner">Planner</label>
+						<input id="planner" type="number">
+					</div>
+					
+					<div class="input-section">
+						<label for="editor">Editor</label>
+						<input id="editor" type="number">
+					</div>
+				</div>
+				
+				<div class="footer">
+					<p onclick="callCancel()" class="link" id="cancel">Cancel Booking</p>
+					<p class="link" id="accept">Accept booking</p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Cancel popup -->
+		
+		<form class="cancel-container">
+			<div class="top_heading">
+				<span id="image">
+					<img src="./../../Brand_Identity/images/icons/X-icon.png" alt="exit">
+				</span>
+				<h1>Cancel Booking</h1>
+				
+			</div>
+			
+			<div class="def">
+				<p id="message">Are you sure you want ot cancel the <span id="booking_name">[Booking Name]</span>
+					booking?</p>
+			</div>
+			
+			<div class="input_section">
+				<label for="text_box">Reason for cancellation:</label>
+				<textarea id="text_box" type="text" wrap="soft" ></textarea>
+			</div>
+			
+			<div class="foot_note">
+				<button onclick="toggleCancel()" id="return">Return</button>
+				<button id="cancel_booking" type="submit">Cancel Booking</button>
+			</div>
+		</form>
 	</main>
 </div>
 </body>
