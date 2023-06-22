@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Client website</title>
+  <link href="clientStyle.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="container">
+  <nav>
+    <div class="logo">
+      <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs White Logo Without Text">
+      </div>
+    <div class="dash-box">
+      <a href="./../news/notifications.html" target="_self">
+        <div class="box" id="dashboard">
+          <img id="icon-1" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>News</label>
+        </div>
+      </a>
+      <a href="./../bookings/bookings.html" target="_self">
+        <div class="box" id="News">
+          <img id="icon-2" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>My Bookings</label>
+        </div>
+      </a>
+      <a href="./../profole/profile.html" target="_self">
+        <div class="box" id="calendar">
+          <img id="icon-3" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>Account</label>
+        </div>
+      </a>
+      <a href="../../help/help.html" target="_self">
+        <div class="box" id="booking">
+          <img id="icon-4" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>Help</label>
+        </div>
+      </a>
+    </div>
+  </nav>
+  <main>
+    <div class="page-title">
+      <div class="text">My Bookings</div>
+      <div class="logout">
+        <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="logout">
+      </div>
+    </div>
+    <div class="navigation">
+      <!-- On single Event -->
+      <div class="title-bar">
+        <div class="left-heading">
+          <div class="heading">
+            <h1>Booking Name</h1>
+          </div>
+
+          <div class="navigation-pane">
+            <p>
+              <a onclick="toggleStyle()">My Booking</a>
+              /
+              <a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
+            </p>
+          </div>
+        </div>
+        <div class="right-heading">
+          <div class="label-dropdown">
+            <button class="labelButton">Cancel
+              <i class="fas fa-caret-down label-arrow"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- On single Event -->
+    <div class="main_area">
+      <div class="event-container">
+        <div class="event-nav">
+          <div class="announcement">
+            <i class="fas fa-duotone fa-bullhorn"></i>
+            <p>Announcement</p>
+          </div>
+
+          <div class="discussion">
+            <i class="fas fa-duotone fa-comments"></i>
+            <p>Discussion Forum</p>
+          </div>
+        </div>
+
+        <div class="resources">
+          <div class="heading">
+            <h1> RESOURCES </h1>
+          </div>
+          <div class="files">
+            <div class="pdf element">
+              <a href="" download>
+                <img src="./../../Brand_Identity/images/icons/pdf.png" alt="pdf">
+                <p id="pdf-download">Event Details</p>
+              </a>
+            </div>
+
+            <div class="doc element">
+              <a href="" download>
+                <img src="./../../Brand_Identity/images/icons/doc.png" alt="doc">
+                <p id="doc-download">Plan</p>
+              </a>
+            </div>
+
+            <div class="xlsx element">
+              <a href="" download>
+                <img src="./../../Brand_Identity/images/icons/excel_Icon.png" alt="xlsx">
+                <p id="xlsx-download">Event Details</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admins -->
+      <div class = "members">
+        <div class="admins">
+          <div class="head">
+            Administrators
+          </div>
+
+          <div class="users">
+            <i class="fas fa-user user-icon" style="color: #000000;"></i>
+            <div class="user-box" id="user1">
+              <span>Name 1</span>
+            </div>
+            <i class="fas fa-user user-icon" style="color: #000000;"></i>
+            <div class="user-box" id="user2">
+              <span>Obscenely long name 2 h file fresh ehfhefhef</span>
+            </div>
+          </div>
+        </div>
+        <div class="crews">
+          <div class="head">
+            Crews
+          </div>
+          <div class="users">
+            <i class="fas fa-user user-icon" style="color: #000000;"></i>
+            <div class="user-box" id="crew1">
+              <span>Name 1</span>
+            </div>
+            <i class="fas fa-user user-icon" style="color: #000000;"></i>
+            <div class="user-box" id="crew2">
+              <span>Name 2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+  </main>
+</div>
+</body>
+</html>
