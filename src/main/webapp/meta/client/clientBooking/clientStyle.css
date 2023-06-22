@@ -1,10 +1,10 @@
 .container {
     display: grid;
-    grid-template-columns: 20vw 57vw 23vw;
-    grid-template-rows: 2.5vh auto;
+    grid-template-columns: 20vw 50vw 30vw;
+    grid-template-rows: 4vh auto;
     grid-template-areas:
         "nav header header"
-        "nav content content";
+        "nav content sidebar";
     min-height: 100vh;
     max-height: 100vh;
     overflow: hidden;
@@ -17,17 +17,18 @@ header {
 }
 
 nav {
+    grid-area: nav;
     display: grid;
     align-content: center;
-    grid-area:nav;
     background: #232121;
     border: 1px solid rgb(9, 16, 18);
 }
 
 main {
+    margin-top: 35%;
+    margin-left:20%;
     grid-area: content;
     background-color: white;
-    margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Kiona', 'Quicksand', sans-serif;
@@ -35,6 +36,12 @@ main {
     /*
     overflow: scroll; !*try to hide any dumb overflow that happens *!*!
     */
+}
+aside{
+    display: block;
+    grid-area: sidebar;
+    margin-top: 55%;
+    margin-right: 20%
 }
 
 
@@ -251,13 +258,6 @@ nav .logo img {
     padding-left: 3vw;
 }
 
-.label-dropdown{
-    height: 4.5vh;
-    border-radius: 5px;
-    text-align: center;
-    box-shadow: 0 3px 3px rgba(82,82,82,0.38);
-    font-family: 'Kiona', 'Quicksand', sans-serif;
-}
 .labelButton {
     background-color: white;
     color: #1F1F1F;
@@ -276,48 +276,18 @@ nav .logo img {
     border-radius: 5px;
 }
 
-.label-content {
-    display: none;
-    position: absolute;
-    background-color: #F1F1F1;
-    text-align: center;
-    z-index: 1;
-}
 
-.label-content p{
-    float: none;
-    color: black;
-    padding: 0;
-    margin: 0;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    font-weight: 555;
-}
-
-.label-content .item {
-    padding: 12px 15px ;
-}
-
-.label-dropdown:hover .label-content {
-    display: block;
-    min-width: 3vw;
-}
 
 /*End Navigation*/
 
 /*Main*/
 
-.main_area {
-    display: flex;
-}
 /*Event box total possible height 65vh*/
 
 .event-container {
-    margin: 0 3vw;
-    width: 50%;
+    display: block;
+    width: 70%;
     height: 55vh;
-
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(82, 82, 82, 0.5);
 
