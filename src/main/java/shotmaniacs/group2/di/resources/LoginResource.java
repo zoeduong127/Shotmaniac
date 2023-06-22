@@ -57,7 +57,7 @@ public class LoginResource {
 
                 RootElementWrapper responseObject = new RootElementWrapper();
                 Account responseAccount =  new Account(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        rs.getString(4),AccountType.valueOf(rs.getString(5)));
+                        rs.getString(4),AccountType.valueOf(rs.getString(5)), rs.getString(6));
 
                 responseObject.addAccount(responseAccount);
 
@@ -68,7 +68,7 @@ public class LoginResource {
                 // Delete existing tokens associated with the same account (log other devices/browsers out)
                 PreparedStatement tokenPS = connection.prepareStatement("DELETE FROM token WHERE token.account_id = ?");
                 tokenPS.setInt(1, responseAccount.getId());
-                tokenPS.executeUpdate();
+                 tokenPS.executeUpdate();
 
                 // Add token into the database
                 tokenPS = connection.prepareStatement("INSERT INTO token (account_id, token, expiration) VALUES (?, ?, ?)");

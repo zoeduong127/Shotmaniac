@@ -210,13 +210,13 @@ public class CrewsResourse {
     }
 
     @RolesAllowed({"Administrator","Crew"})
-    @Path("/news?filter=<Read/Unread>")
+    @Path("/news/filter")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
      * Filter based on read or unread announcements
      */
-    public List<Announcement> getNewsWithFilter(@QueryParam("filter") int status) {
+    public List<Announcement> getNewsWithFilter(@QueryParam("status") int status) {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -268,13 +268,13 @@ public class CrewsResourse {
     }
 
     @RolesAllowed({"Administrator","Crew"})
-    @Path("/mybooking/{booking_id}/announcements?filter=<Read/Unread>")
+    @Path("/mybooking/{booking_id}/announcements/filter")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
-     * Returns all announcements of a specific booking
+     * Returns all announcements of a specific booking with a status filter
      */
-    public List<Announcement> getAnnouncementOfBookingWithFilter(@PathParam("booking_id") int bookingId, @QueryParam("filter") int status) {
+    public List<Announcement> getAnnouncementOfBookingWithFilter(@PathParam("booking_id") int bookingId, @QueryParam("status") int status) {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);

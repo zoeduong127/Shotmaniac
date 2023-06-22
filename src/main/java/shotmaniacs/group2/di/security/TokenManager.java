@@ -20,8 +20,11 @@ public class TokenManager {
     static {
         try {
             tokenKey = loadKeyFromFile(new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\security\\tokenKey.key");
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
+        }
+        try {
+            tokenKey = loadKeyFromFile(new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\security\\tokenKey.key");
+        } catch (IOException ignored) {
         }
     }
 

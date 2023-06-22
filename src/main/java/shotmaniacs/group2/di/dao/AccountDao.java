@@ -32,7 +32,6 @@ public enum AccountDao {
     private static String password = "yummybanana";
 
     public int addAccount(Account account) {
-
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query = "INSERT INTO account VALUES (DEFAULT,?,?,?,?,?)";

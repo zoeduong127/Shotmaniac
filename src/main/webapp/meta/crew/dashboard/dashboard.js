@@ -49,7 +49,6 @@ function performQueryAndUpdateBookings(url) {
 
     const cookies = parseCookie(document.cookie);
     const token = cookies['auth_token'];
-    console.log(token);
 
     fetch(url, {
         headers: {

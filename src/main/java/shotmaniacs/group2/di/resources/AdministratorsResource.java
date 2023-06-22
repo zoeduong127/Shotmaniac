@@ -1,9 +1,7 @@
 package shotmaniacs.group2.di.resources;
 
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dto.LoginInfor;
@@ -37,6 +35,7 @@ public class AdministratorsResource {
     @RolesAllowed({"Administrator"})
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/accounts")
     public Response addAccount(Account account) {
 
         // Performing input validation on the given account credentials.
@@ -73,6 +72,52 @@ public class AdministratorsResource {
         } else {
             return Response.serverError().build();
         }
+    }
+
+    @RolesAllowed({"Administrator"})
+    @DELETE
+    @Path("/accounts")
+    public Response deleteAccountByUsername(@QueryParam("username") String username) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "DELETE FROM account WHERE account.username = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().entity("Account was deleted.").build();
+            } else {
+                return Response.ok().entity("Account with that username could not be found.").build();
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error connecting: " + e);
+        }
+        return Response.serverError().build();
+    }
+
+    @RolesAllowed({"Administrator"})
+    @DELETE
+    @Path("/accounts/{id}")
+    public Response deleteAccountById(@PathParam("id") int id) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "DELETE FROM account WHERE account.id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().entity("Account was deleted.").build();
+            } else {
+                return Response.ok().entity("Account with that id could not be found.").build();
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error connecting: " + e);
+        }
+        return Response.serverError().build();
     }
 
     public String hash256(String input) {

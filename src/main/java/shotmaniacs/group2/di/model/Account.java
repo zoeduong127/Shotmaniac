@@ -21,12 +21,13 @@ public class Account {
 
     public Account(){}
 
-    public Account(Integer id, String username, String email, String passwordHash, AccountType accountType) {
+    public Account(Integer id, String username, String email, String passwordHash, AccountType accountType, String salt) {
         setId(id);
         setUsername(username);
         setEmail(email);
         setPasswordHash(passwordHash);
         setAccountType(accountType);
+        setSalt(salt);
     }
 
     public int getId() {
