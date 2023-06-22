@@ -41,7 +41,7 @@ function parseCookie(cookieString) {
 }
 
 
-function performQueryAndUpdateBookings(url) {
+function    performQueryAndUpdateBookings(url) {
 
     while (bookingContainer.firstChild) {
         bookingContainer.removeChild(bookingContainer.firstChild);
