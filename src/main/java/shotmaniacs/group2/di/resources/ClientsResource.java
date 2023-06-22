@@ -22,15 +22,12 @@ public class ClientsResource {
     @Context
     Request request;
 
-
     @POST
-    @Path("new_account")
+    @Path("/new_account")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(Accountdto accountdto) {
         AdministratorsResource admin = new AdministratorsResource();
-        Response response = admin.addAccount(new Account(-1, "@User", accountdto.getEmail(), accountdto.getPassword(), AccountType.Client));
-        return response;
+        return admin.addAccount(new Account(-1, "@User", accountdto.getEmail(), accountdto.getPassword(), AccountType.Client));
     }
 
     @POST
@@ -117,11 +114,6 @@ public class ClientsResource {
 //    public BookingResource cancelabooking(@PathParam("clientid") int clientid,@PathParam("booking_id") int id) {
 //        return new BookingResource(uriInfo, request, clientid, id);
 //    }
-//
-    public static void main (String args[]) throws ParseException {
-        Accountdto accountdto = new Accountdto("teaccount@student.utwente.nl","hellohello",null);
-        ClientsResource test = new ClientsResource();
-        System.out.println(test.createAccount(accountdto));
-    }
+
 
 }

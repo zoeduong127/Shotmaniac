@@ -45,7 +45,7 @@
 				<p id="slogan">One Account for every qualified service</p>
 			</div>
 			
-			<form id="signup-form" class="signup-form" action="" method="post">
+			<form id="signup-form" class="signup-form">
 				
 				<div class="input-section">
 					<label class="email-label" for="email">Email</label>
@@ -107,7 +107,8 @@
 		const options = {
 			method: "POST",
 			headers: {
-				"Content-Type" : "application/json",
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
 			},
 			body: account
 		};
@@ -118,11 +119,15 @@
 					if (response.ok) {
 						alert("Your account is created successfully");
 						document.getElementById("signup-form").reset();
-						window.location.href="login/login.html";
+						window.location.href="dashboard.html";
 					} else {
-						alert(response.formData());
-					}
-				})
+						return  response.text();
+					}})
+				.then(data => {
+						// Process the response data if the request is successful
+						console.log(data);
+						alert(data)
+					})
 				.catch(error => {
 					console.error("Server error: ", error);
 					alert("An error occurred while processing your information. " +
