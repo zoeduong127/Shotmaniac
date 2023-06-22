@@ -33,7 +33,9 @@ public class RoleAuthorizationFilter implements ContainerRequestFilter {
         String token = requestContext.getHeaderString("Authorization");
 
         if (token == null || token.equals("")) {
+            System.out.println("Access denied");
             requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
+            return;
         }
 
         // Retrieve the authenticated user's roles from session or security context
@@ -43,12 +45,11 @@ public class RoleAuthorizationFilter implements ContainerRequestFilter {
         boolean hasRole = Arrays.asList(requiredRoles).contains(userRoles);
 
         if (!hasRole) {
-            System.out.println("Access denied");
+           System.out.println("Access denied");
             requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
         }
     }
     private String verifyTokenAndGetRole(String token) {
-
         Claims claims = TokenManager.decodeTokens(token);
         String role;
         Date expiration;

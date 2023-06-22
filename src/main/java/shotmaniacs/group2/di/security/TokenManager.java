@@ -19,7 +19,7 @@ public class TokenManager {
 
     static {
         try {
-            tokenKey = loadKeyFromFile("\\security\\tokenKey.key");
+            tokenKey = loadKeyFromFile(new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\security\\tokenKey.key");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,7 +30,7 @@ public class TokenManager {
     }
 
     private static SecretKey loadKeyFromFile(String filePath) throws IOException {
-        String realPath = new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2" + filePath;
+        String realPath =  filePath;
         byte[] keyBytes = Files.readAllBytes(Paths.get(realPath));
         return new SecretKeySpec(keyBytes, "HmacSHA256");
     }
@@ -59,6 +59,10 @@ public class TokenManager {
                 .compact();
 
         return token;
+    }
+
+    public static void setTokenKey(SecretKey key) {
+        tokenKey = key;
     }
 }
 
