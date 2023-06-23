@@ -27,7 +27,7 @@ public class ClientsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAccount(Accountdto accountdto) {
         AdministratorsResource admin = new AdministratorsResource();
-        return admin.addAccount(new Account(-1, "@User", accountdto.getEmail(), accountdto.getPassword(), AccountType.Client));
+        return admin.addAccount(new Account(-1, accountdto.getUsername(), accountdto.getEmail(), accountdto.getPassword(), AccountType.Client));
     }
 
     @POST

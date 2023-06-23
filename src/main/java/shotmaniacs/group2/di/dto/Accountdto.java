@@ -8,11 +8,13 @@ public class Accountdto {
     private String email;
     private String password;
     private String tel;
+    private String username;
 
 
     public Accountdto(){}
 
-    public Accountdto(String email, String password, String tel) {
+    public Accountdto(String email, String username, String password, String tel) {
+
         settel(tel);
         setEmail(email);
         setPassword(password);
@@ -23,7 +25,12 @@ public class Accountdto {
     public String gettel(){
         return this.tel;
     }
-
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public String getUsername(){
+        return username;
+    }
     public String getEmail() {
         return email;
     }
