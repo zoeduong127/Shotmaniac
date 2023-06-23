@@ -58,3 +58,23 @@ commentSubmitButton.addEventListener("click", function() {
     }
 });
 
+
+const addCommentButton = document.getElementById("add-comment");
+const commentBox = document.getElementById("comment-box");
+const commentInput = document.getElementById("comment-input");
+const commentSubmitButton = document.getElementById("comment-submit");
+
+addCommentButton.addEventListener("click", function() {
+    commentBox.style.display = "block";
+});
+
+commentSubmitButton.addEventListener("click", function() {
+    const comment = commentInput.value.trim();
+    if (comment !== "") {
+        // Logic to handle the submitted comment
+        console.log("Submitted comment:", comment);
+        commentInput.value = "";
+        commentBox.style.display = "none";
+    }
+});
+
