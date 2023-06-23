@@ -8,20 +8,37 @@
     <title>Shotmaniacs</title>
 </head>
 <body>
-
-    <h1> Landing Page </h1>
-
-    <div id = "index-button-division">
-        <a href="meta/login/LogIn.html">
-            <button class="ui-button" id="login"> Staff Log In </button>
-        </a>
-
-        <a href = "meta/client/application/applicationForm.html">
-            <button class="ui-button" id="client"> Client page </button>
-        </a>
-	    <a href = "meta/client/sign-up/signup.html">
-		    <button class="ui-button" id="signup"> Signup page </button>
-	    </a>
+    <header>
+        <div class ="login">
+            <a href="meta/login/LogIn.html">
+                <button class="ui-button" id="login"> LOG IN</button>
+            </a>
+        </div>
+        <div class="sign-up">
+            <a href = "meta/client/sign-up/signup.html">
+                <button class="ui-button" id="signup"> SIGN UP </button>
+            </a>
+        </div>
+    </header>
+<div class = "content">
+    <div class="logo">
+        <img src="meta/Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png"
+             alt="Shotmaniacs White Logo Without Text">
     </div>
+    <div class="client">
+        <a href = "meta/client/application/applicationForm.html">
+            <button class="ui-button" id="client"> START</button>
+        </a>
+    </div>
+</div>
+<script>
+    var image = new Image();
+    // Image for transition
+    image.src = "meta/Brand_Identity/images/Event/pexels-wendy-wei-1306791.jpg";
+    image.onload = function () {
+        $(".element").css("background-image",
+            "url('" + image.src + "')");
+    };
+</script>
 </body>
 </html>

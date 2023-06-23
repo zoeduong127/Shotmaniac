@@ -133,9 +133,11 @@
         const admin = 'Administrator';
         const crew = 'Crew';
         const client = 'client';
-        // if(data === admin){
+        if(data === crew){
             window.location.href = "./../crew/dashboard/dashboard.html";
-        // }
+        } else if (data === admin) {
+			window.location.href = "./../Admin/dashboard/A_Dashboard.html"
+        }
     }
 </script>
 </body>
