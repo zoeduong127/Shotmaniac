@@ -1,4 +1,4 @@
-const date = new Date();
+let date = new Date();
 const event_info = document.getElementById("event_container");
 const calendar = document.getElementById("calendar_container");
 
@@ -44,7 +44,7 @@ function renderCalendar(){
 
 
     let days = "";
-    for (let offset = fistDayIndex; offset > 0; offset--) { //days of previous month
+    for (let offset = fistDayIndex; offset > 0; offset--) { //days of the previous month
         days += `<div class = "prev-date" onclick="performQueryAndUpdateBookings(this)">${prevLastDay - offset + 1} </div>`
     }
 
@@ -77,9 +77,9 @@ document.querySelector('.next').addEventListener('click', () => {
     renderCalendar();
 });
 
-function returnToDay(element) {
-    date.setMonth(element.innerHTML);
-    console.log(element.innerHTML)
+function returnToDay() {
+    date = new Date();
+    console.log()
     renderCalendar();
 }
 function back() {
