@@ -16,8 +16,8 @@
 <div class="container">
 	<header>
 		<div class="dropdown">
-			<button class="dropdownBtn">
-				<img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
+			<button class="dropdownBtn" onclick="logout()">
+				<img id="avatar" src="../../Brand_Identity/images/icons/logOut-Black.png" alt="dropdown">
 			</button>
 		</div>
 	</header>
@@ -180,6 +180,9 @@
 <script>
 	function toggleStyle(){
 		window.location.href="http://localhost:8080/shotmaniacs2/meta/client/clientBooking/client.html"
+	}
+	function logout(){
+		window.location.href="http://localhost:8080/shotmaniacs2/";
 	}
 </script>
 </body>
