@@ -51,7 +51,18 @@
 					<label class="email-label" for="email">Email</label>
 					<input type="email" class="input" id="email" name="email" required>
 				</div>
-
+				
+				<div class="input-section">
+					<label class="user-label" for="username">Username</label>
+					<input type="text" class="input" id="username" name="username" required>
+				</div>
+				
+				<div class="input-section">
+					<label class="phone-label" for="tel">Phone number (recommended)</label>
+					<input type="tel" class="input" id="tel" name="tel" pattern="[0-9]">
+					<p id="subtext">Standard call or message may apply.</p>
+				</div>
+				
 				<div class="input-section">
 					<label class="pass-label" for="password">Password</label>
 					<input type="Password" class="input" id="password" name="Password" required>
@@ -60,14 +71,9 @@
 					<img src="./../../Brand_Identity/images/icons/hide_Password.png" id="Show-Pass"
 					     alt="Displayed Password Icon">
 				</div>
-
-				<div class="input-section">
-					<label class="phone-label" for="tel">Phone number (recommended)</label>
-					<input type="tel" class="input" id="tel" name="tel" pattern="[0-9]">
-					<p id="subtext">Standard call or message may apply.</p>
-				</div>
 				
-				<div class="bottom">
+				
+				<div class="button">
 					<button class="submission" id="submission" type="submit">
 						<i class="fas fa-lock lock"></i>
 						Create Account
