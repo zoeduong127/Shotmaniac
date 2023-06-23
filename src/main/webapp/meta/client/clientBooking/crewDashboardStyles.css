@@ -87,37 +87,44 @@ body {
 /*Navigational Dashboard*/
 
 .dash-box img {
-    width: 0;
-    height: 0;
+    width: 20%;
+    height: 100%;
 }
 /*Widths adjusted for a nav pane of 20vw*/
 
 .text img{
-    width: 95%;
-    margin: 10vh 2.5% 0 2.5%;
+    width: 90%;
     font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
 }
 
 .dash-box {
-    background-color: white;
-    border: 1px solid rgba(82,82,82,0.75);
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgba(82,82,82,0.75);
     width: 15vw;
     height: 52vh;
-    margin: 3vh 2.5vw 20vh 2.5vw;
+    margin: 20px 2.5vw 20vh 2.5vw;
     box-sizing: border-box;
     font-size: 1.15rem;
     font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
 }
 
 .box {
+    display: flex;
+    align-content: center;
+    border: 2px solid rgba(82, 82, 82, 0.75);
+    height: 50px;
     border-bottom: 1px solid rgba(82,82,82,0.75);
     text-align: center;
     padding: 5% 0 5% 0;
 }
-
+.box label{
+    margin-left: 10%;
+    margin-top: 5%;
+}
 .box:hover {
     cursor: pointer;
-    color: rgba(82,82,82,0.75);
+    color: white;
+    background-color: #1696D2;
 }
 
 .dash-box a {
