@@ -13,7 +13,7 @@
 <div class="container">
 	<header>
 		<div class="header">
-			<a href="./../../../index.html" target="_self">
+			<a href="./../../../index.html" target="_self" id="homepage">
 				<img class="logo-black-no_text"
 				     src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png"
 				     alt="Shotmaniacs Logo Black">
@@ -36,8 +36,7 @@
 			     alt="Shotmaniacs">
 		</div>
 	</aside>
-	
-	
+
 	<main>
 		<div class="signup" id="signup">
 			<div class="title-section">
@@ -125,7 +124,7 @@
 					if (response.ok) {
 						alert("Your account is created successfully");
 						document.getElementById("signup-form").reset();
-						window.location.href="dashboard.html";
+						window.location.href ="http://localhost:8080/shotmaniacs2/index.html";
 					} else {
 						return  response.text();
 					}})

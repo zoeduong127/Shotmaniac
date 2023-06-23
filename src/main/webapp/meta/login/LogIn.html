@@ -100,7 +100,6 @@
             },
             body: JSON.stringify(account)
         };
-
         fetch(url, options)
             .then(response => {
                 if (response.ok) {
@@ -132,11 +131,13 @@
     function changesite(data){
         const admin = 'Administrator';
         const crew = 'Crew';
-        const client = 'client';
+        const client = 'Client';
         if(data === crew){
             window.location.href = "./../crew/dashboard/dashboard.html";
         } else if (data === admin) {
 			window.location.href = "./../Admin/dashboard/A_Dashboard.html"
+        }else if(data === client){
+            window.location.href = "./../client/clientBooking/dashboard.html";
         }
     }
 </script>

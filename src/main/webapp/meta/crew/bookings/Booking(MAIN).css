@@ -1,0 +1,613 @@
+.container {
+    display: grid;
+    grid-template-columns: 20vw 1fr 20vw;
+    grid-template-rows: 8vh auto;
+    grid-template-areas:
+        "header header header"
+        "nav content sidebar";
+    min-height: 100vh;
+    max-height: 100vh;
+    /*overflow-y: hidden; !*try to hide any dumb overflow that happens *!*/
+}
+
+header {
+    grid-area: header;
+    background-color: rgba(22,150,210,0.8);
+}
+
+nav {
+    grid-area: nav;
+    background-color: rgba(31,31,31,0.05);
+    border: 1px solid rgba(31,31,31,0.2);
+}
+
+aside {
+    grid-area: nav;
+    background-color: rgba(31,31,31,0.05);
+    border: 1px solid rgba(31,31,31,0.2);
+}
+
+main {
+    grid-area: content;
+    background-color: rgba(255,255,255,0.8);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+}
+
+
+body {
+    margin: 0;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+
+/*Content inside dropdowns*/
+.item:hover{
+    color: #000000;
+    background-color: rgba(81,81,81,0.5);
+}
+
+
+
+/*Dropdown  todo: Fix, maybe add delay or something
+                    change icons*/
+
+.dropdown {
+    float: right;
+    overflow: hidden;
+    margin: 0 3vw 0 0;
+}
+
+.dropdown .dropdownBtn {
+    background-color: inherit;
+    color: white;
+    border: none;
+    outline: none;
+    margin: 0 0 0 0.5vw;
+    padding: 0 0 0 0.5vw;
+}
+
+.dropdown:hover .dropdownBtn{
+    cursor: pointer;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    text-decoration: none;
+    background-color: #F1F1F1;
+    min-width: 5vw;
+    text-align: center;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/*End of DropDown*/
+
+
+#avatar {
+    height: 8vh;
+}
+
+
+/*Navigational Bookings*/
+
+#icon {
+    width: 0;
+    height: 0;
+}
+/*Widths adjusted for a nav pane of 20vw*/
+.dash-box {
+    background-color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(82,82,82,0.75);
+    width: 15vw;
+    height: 52vh;
+    margin: 20vh 2.5vw 20vh 2.5vw;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.box {
+    border-bottom: 1px solid rgba(82,82,82,0.75);
+    text-align: center;
+    padding: 5% 0 5% 0;
+}
+
+.box:hover {
+    cursor: pointer;
+    color: rgba(82,82,82,0.75);
+}
+
+/*Currently active page, change depending on the CSS file used*/
+#apply {
+    background-color: rgba(22,150,210,0.8);
+    border: 1px solid #1696D2;
+    color: white;
+}
+
+.title-container{
+    height:100%;
+    width:100%;
+}
+
+.logo-title-page{
+    position: absolute;
+    width: 85px;
+    height: 83px;
+    padding-top: 13px;
+    padding-left: 17px;
+}
+
+.title{
+    position: absolute;
+    width: 330px;
+    height: 28px;
+}
+
+.title-letter{
+    position: absolute;
+    width: 330px;
+    height: 28px;
+    padding-left: 102px;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 52px;
+}
+
+.text img{
+    width: 95%;
+    margin: 10vh 2.5% 0 2.5%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.logo-title-page .image{
+    margin: 1vh 3vw 0 3vw;
+}
+
+.search-container{
+    width: 100%;
+    height: 3vh;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 2vh;
+    position: absolute;
+    top: 8vh;
+}
+
+.search-container .searchbox .role-filter .checkbox .complete-search{
+    margin: 5px;
+}
+
+.searchbox{
+    position: absolute;
+    width: 222px;
+    height: 32px;
+
+    margin-left: 26px;
+    margin-top: 117px;
+
+    padding: 0% 10% 10% 0%;
+
+}
+.textbox{
+    position: absolute;
+    width: 222px;
+    height: 32px;
+    background: #FFFFFF;
+    border: 2px solid rgba(82, 82, 82, 0.9);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 23px;
+
+    padding: 0% 5% 0% 0%;
+}
+
+.role-filter{
+    box-sizing: border-box;
+    width: 200px;
+    height: 32px;
+    position: absolute;
+
+    margin-left: 305px;
+    padding: 0% 10% 10% 0%;
+    margin-top: 117px;
+
+}
+
+.role-option{
+    box-sizing: border-box;
+    width: 120px;
+    height: 32px;
+
+    width: 120px;
+    height: 32px;
+
+    background-color: #FFFEFE;
+    background: #FFFFFF;
+    border: 2px solid rgba(82, 82, 82, 0.9);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+.role-button{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 120px;
+    height: 32px;
+    left: -2px;
+    top: -2px;
+
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+    background-color: #FFFEFE;
+}
+
+.filter-content{
+    display : none;
+    position : absolute;
+
+    box-sizing: border-box;
+    width: 120px;
+    height: 32px;
+    position: absolute;
+
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 25px;
+;
+}
+
+.filter-content a{
+    display : block;
+    background-color: rgba(241, 241, 241);
+    text-decoration : none;
+    font-size: 12px;
+    padding : 8px 20px;
+}
+
+.filter-content a:hover{
+    background-color : rgba(22, 150, 210);
+}
+
+.role-button:hover .filter-content{
+    display: block;
+}
+
+.icon1{
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    left: 1px;
+    top: 1px;
+}
+.icon2{
+    position: absolute;
+    width: 16px;
+    height: 13px;
+    left: 92px;
+    top: 8px;
+}
+
+.checkbox{
+    position: absolute;
+    width: 210px;
+    height: 23px;
+
+    margin-left: 451px;
+    margin-top: 125px;
+
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+
+    color: rgba(0, 0, 0, 0.8);
+}
+.fmso{
+    margin-top: 109px;
+    pass-left: 485px;
+}
+
+.button-search{
+    position: absolute;
+    width: 35px;
+    height: 32px;
+
+    margin-left: 689px;
+    margin-top: 114px;
+
+    background-color: rgba(22,150,210,0.8);
+    border-radius: 5px;
+}
+
+.search-button{
+    width: 25px;
+    height: 25px;
+
+    margin-left: -3px;
+}
+
+.bookings-container{
+    width: 100%;
+    height: 3vh;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 2vh;
+    position: absolute;
+    top: 10vh;
+}
+
+.booking1{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 186px;
+    margin-left: 26px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.booking2{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 186px;
+    margin-left: 296px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.booking3{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 186px;
+    margin-left: 567px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.booking4{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 360px;
+    margin-left: 26px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.booking5{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 360px;
+    margin-left: 296px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.booking6{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 360px;
+    margin-left: 567px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.booking7{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 531px;
+    margin-left: 26px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.booking8{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 531px;
+    margin-left: 296px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.booking9{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 227px;
+    height: 133px;
+
+    margin-top: 531px;
+    margin-left: 567px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+}
+
+.bookings-name{
+    position: absolute;
+    width: 227px;
+    height: 44px;
+
+    text-align: center;
+
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 25px;
+
+    color: #1F1F1F;
+
+    background: rgba(22, 150, 210, 0.5);
+}
+
+.bookings-name p{
+    margin-top: 8px;
+}
+
+.short-descri{
+    position: absolute;
+    width: 165px;
+    height: 27px;
+
+}
+
+.short-descri p{
+    text-align: center;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+
+    margin-top: 60px;
+    margin-left: 50px;
+}
+
+.hiddenpop{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.bookinginfo{
+    ox-sizing: border-box;
+
+    position: absolute;
+    width: 371px;
+    height: 503px;
+
+    margin-left: 463px;
+    margin-top: 223px;
+
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(82, 82, 82, 0.5);
+}
+
+.closetab{
+    position: absolute;
+    width: 371px;
+    height: 50px;
+
+    background: rgba(31, 31, 31, 0.35);
+}
+
+.close{
+    position: absolute;
+    width: 43px;
+    height: 27px;
+
+    margin-left: 321px;
+    margin-top: 13px;
+
+}
+
+.main-content{
+    position:absolute;
+    width: 371px;
+    height: 453px;
+
+    margin-top: 50px;
+
+}
+
+.enrolevent{
+    position: absolute;
+    width: 371px;
+    height: 50px;
+
+    margin-top: 453px;
+
+
+    background: rgba(31, 31, 31, 0.35);
+}
+
+.enrol{
+    position: absolute;
+    width: 108px;
+    height: 31px;
+
+    margin-left: 248px;
+    margin-top: 9px;
+
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 25px;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+
+    background: rgba(31, 31, 31, 0.35);
+}

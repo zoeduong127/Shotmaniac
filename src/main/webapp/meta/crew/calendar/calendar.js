@@ -1,6 +1,23 @@
 let date = new Date();
 const event_info = document.getElementById("event_container");
 const calendar = document.getElementById("calendar_container");
+let correctDay= [];
+let blob = "";
+
+const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
 
 
 function renderCalendar(){
@@ -21,29 +38,16 @@ function renderCalendar(){
 
     const nextDays = 7 - lastDayIndex - 1;
 
-    const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ];
 
     document.querySelector(".date h1").innerHTML
-        = `${months[date.getMonth()]}`;
+        = `${months[date.getMonth()]}` + " " + date.getFullYear();
 
         document.querySelector(".date p").innerHTML
             = new Date().toDateString();
 
 
     let days = "";
+
     for (let offset = fistDayIndex; offset > 0; offset--) { //days of the previous month
         days += `<div class = "prev-date" onclick="performQueryAndUpdateBookings(this)">${prevLastDay - offset + 1} </div>`
     }
@@ -55,7 +59,7 @@ function renderCalendar(){
             if (i < 10) {
                 days += `<div class="day" onclick="performQueryAndUpdateBookings(this)">0${i}</div>`
             } else {
-                days += `<div onclick="performQueryAndUpdateBookings(this)">${i}</div>`;
+                days += `<div class = "day" onclick="performQueryAndUpdateBookings(this)">${i}</div>`;
             }
         }
     }
@@ -87,6 +91,10 @@ function back() {
 
     calendar.style.opacity = "1";
     calendar.style.zIndex = "auto";
+
+
+    correctDay = [];
+    blob = "";
 }
 /*Fetching backend information*/
 function parseCookie(cookieString) {
@@ -116,6 +124,7 @@ function performQueryAndUpdateBookings(element) {
         .then(response => response.json())
         .then(data => {
             data.forEach(booking => {
+                console.log("inner loop started")
                 let list = [booking];
                 console.log(list);
 
@@ -124,10 +133,16 @@ function performQueryAndUpdateBookings(element) {
                 let BackMonth = new Date(booking.date).getMonth();
                 let BackYear = new Date(booking.date).getFullYear();
 
-                let CalDay = Array.from(element.innerHTML).slice(0,2).join("");  //returns the date of the clicked event,
+                let CalDay = Array.from(element.innerHTML).slice(0, 2).join("");  //returns the date of the clicked event,
                 // complicated, due to the do icons added later.
                 let CalMonth = date.getMonth();
                 let CalYear = date.getFullYear();
+
+
+                if (BackDay == CalDay && BackMonth == CalMonth && BackYear == CalYear) {
+                    correctDay.push(booking);
+                    console.log(booking + " added to the correct day list")
+                }
 
 
                 /*
@@ -139,47 +154,27 @@ function performQueryAndUpdateBookings(element) {
                 }*/
 
 
-             });
-            /*let bookingElementCopy = bookingElement.cloneNode(true);
-
-            //TODO: Calculate amount of slots already taken.
-
-            //TODO: the line below probably allows stored code attacks. Needs fixing
-
-
-            bookingElementCopy.querySelector("#event_name").innerHTML = booking.name /!*+ " <span class=\"bolded\">(Available Slots: " + booking.slots + ")</span>"*!/;
-            // * bookingElementCopy.querySelector("#booking_type").innerHTML = "<b>Booking Type: </b>" + booking.bookingType;
-
-            bookingElementCopy.querySelector("#location").innerHTML =  "<b>Location: </b>" + booking.location;
-//                bookingElementCopy.querySelector("#client").innerHTML =  "<b>Client: </b>" + booking.clientName;
-            bookingElementCopy.querySelector("#event_type").innerHTML =  "<b>Event Type: </b>" + booking.eventType;
-//                bookingElementCopy.querySelector("#duration").innerHTML =  "<b>Duration: </b>" + booking.duration + " hours";
-
-            let dateTime = new Date(booking.date);
-            const formattedDate = dateTime.toLocaleString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
             });
-            bookingElementCopy.querySelector("#date").innerText = dateTime.toDateString() + ', ' + formattedDate;
+            console.log("outer loop started")
+            if (correctDay.length === 0) {
+                console.log("list empty")
+                document.getElementById("blob-nav").innerHTML =
+                    `<span id="back" onclick="back()"> <img id="back-img" src="./../../Brand_Identity/images/icons/X-icon.png" alt="back">
+                        </span>`
+                    +
+                    `<span> No events available for this day</span>`;
 
-            let bookingState = bookingElementCopy.querySelector("#state");
+                document.getElementById("enroll-button").style.backgroundColor = "gray";
 
-            switch (booking.state) {
-                case "PENDING":
-                    bookingState.classList.add("pending-state");
-                    break;
-                case "APPROVED":
-                    bookingState.classList.add("approved-state");
-                    break;
-                default:
-                    bookingState.classList.add("pending-state");
+            } else {
+                for (let i = 0; i < correctDay.length; i++) {
+                    blob += `<span class = "dots" onclick="displayInformation(correctDay.at(${i}))">${i + 1}</span>`
+                    console.log("blob added (" + i + ")")
+                }
+                document.getElementById("blob-nav").innerHTML = `<span id="back" onclick="back()"> 
+                         <img id="back-img" src="./../../Brand_Identity/images/icons/X-icon.png" alt="back">
+                                </span>` + blob;
             }
-
-            bookingState.innerText = booking.state;
-            CalendarContainer.appendChild(bookingElementCopy);
-
-        });*/
         })
         .catch(error => {
             // Handle any errors
@@ -187,6 +182,49 @@ function performQueryAndUpdateBookings(element) {
         });
 }
 
+function displayInformation(booking) {
+    console.log(booking);
+
+    document.getElementById("event-name").innerHTML =
+        `<p>Name: <span>${booking.name}</span></p>`;
+
+    document.getElementById("event-type").innerHTML =
+        `<p>Event Type: <span>${booking.eventType}</span></p>`;
+
+    document.getElementById("date").innerHTML =
+        `<p>Date: <span>${
+                new Date(booking.date).getDate() + " " +
+                months[new Date(booking.date).getMonth()] + " " +
+                new Date(booking.date).getFullYear()
+    }</span></p>`;
+
+    document.getElementById("location").innerHTML =
+        `<p>Location: <span>${booking.location}</span></p>
+`;
+    document.getElementById("duration").innerHTML =
+        `<p>Duration: <span>${booking.duration}</span></p>`;
+
+    document.getElementById("booking-type").innerHTML =
+        `<p>Booking Type: <span>${booking.bookingType}</span></p>`;
+
+    document.getElementById("product-Manager").innerHTML =
+        `<p>Product Manager: <span>PRODUCT MANAGER FIELD NEEDED??</span></p>`;
+
+    document.getElementById("crew").innerHTML =
+        `<p>Crew: <span><ul>
+            <li>Name 1</li>
+            <li>Name 2</li>
+            <li>Name 3</li>
+            <li>Obscenely long name for testing purposes</li>
+            <li>Name 5</li>
+            </ul>
+            </span>
+          </p>`;
+}
+
+function enroll() {
+
+}
 
 
 /*Calls the functions that need to be loaded on their own*/

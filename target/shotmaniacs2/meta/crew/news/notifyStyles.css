@@ -4,11 +4,10 @@
     grid-template-rows: 8vh auto;
     grid-template-areas:
         "header header header"
-        "nav content content";
+        "nav content sidebar";
 
     min-height: 100vh;
     max-height: 100vh;
-    overflow-y: hidden;
 
 }
 
@@ -17,28 +16,22 @@ header {
     background-color: rgba(22,150,210,0.8);
 }
 
-
-.notification-label {
-    grid-area: notification;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #000000;
-    text-align: left;
-    padding: 10px;
-    font-size: 36px;
-    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
-}
-
-
 nav {
     grid-area: nav;
     background-color: rgba(31,31,31,0.05);
     border: 1px solid rgba(31,31,31,0.2);
 }
 
+aside {
+    grid-area: sidebar;
+    background-color: rgba(31,31,31,0.05);
+    border: 1px solid rgba(31,31,31,0.2);
+}
 
 main {
     grid-area: content;
     background-color: rgba(255,255,255,0.8);
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Kiona', 'Quicksand', sans-serif;
@@ -50,9 +43,6 @@ body {
     max-height: 100vh;
     max-width: 100vw;
 }
-
-
-
 
 
 
@@ -78,7 +68,7 @@ body {
     margin: 10vh 2.5vw 20vh 2.5vw;
     box-sizing: border-box;
     font-size: 1.15rem;
-    font-family: 'Kiwi Maru', monospace;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
 }
 
 .box {
@@ -117,8 +107,8 @@ body {
 
     margin: 5% 2%;
 
-    width: 90%;
-    height: 60%;
+    width: 96%;
+    height: 70%;
 /*    margin-left: 228px;
     margin-top: 151px;*/
 
@@ -188,7 +178,7 @@ body {
     position: absolute;
     z-index: 1;
     background-color: #fff;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     min-width: 120px;
 }
 
@@ -209,33 +199,4 @@ body {
 
 
 
-.filter-dropdown:hover .announcement-container {
-    opacity: 0.2;
-}
 
-.add-comment {
-    position: fixed;
-    float: right;
-    top: 94%;
-    right: 7.2vw;
-    color: #007bff;
-    cursor: pointer;
-}
-
-.comment-box {
-    display: none;
-}
-
-.comment-box textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 10px;
-}
-
-.comment-box button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-}
