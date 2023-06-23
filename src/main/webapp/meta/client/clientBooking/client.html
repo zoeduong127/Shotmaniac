@@ -35,7 +35,7 @@
         </div>
         <div class="right-heading">
           <div class="label-dropdown">
-            <button class="labelButton">Cancel
+            <button class="labelButton" onclick="cancel()">Cancel
               <i class="fas fa-caret-down label-arrow"></i>
             </button>
           </div>
@@ -119,7 +119,7 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
   </main>
   <aside>
     <div class = "members">
@@ -156,6 +156,68 @@
       </div>
     </div>
   </aside>
+  <div id="cancel-box" class="hidden" >
+    <div class="cancel-header">
+      <label>CANCEL BOOKING</label>
+    </div>
+    <div class="cancel-question">
+      <label>Are you sure you want to cancel the"Booking's name" booking?</label>
+    </div>
+    <div class="cancel-reason">
+      <label>Reason for cancellation(if applicable)</label>
+      <div class="reason-input">
+        <input type="text" id="reason-input"  name="id" >
+      </div>
+    </div>
+    <div clas="confirm">
+      <button class="cancel-booking" onclick="changetoterm()"> Cancel booking</button>
+      <button class="cancel-request" onclick="cancelrequest()">Cancel</button>
+    </div>
+  </div>
+  <div id="cancellation" class="hidden">
+    <div class ="cancel-form-title">
+      <div class ="logo-for-cancelform">
+        <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png"
+               alt="Shotmaniacs White Logo Without Text">
+      </div>
+      <label>CANCELLATION CONFIRMATION</label>
+    </div>
+    <div class="term">
+      <label id ="label 1">Hi Client Shotmaniacs Group 2,</label>
+      <br><br><label id ="label 2">Your cancellation request has been sent on June 20, 2023. We’re really sorry when this booking doesn’t work out for you anymore, but thank you so much for giving us a try.</label>
+      <br><br><label id ="label 3">Make a mistake? Having second thoughts?<br>
+      If you believe this cancellation is in error, please visit: <span>SHOTMANIACS.support</span> for more details.</label>
+      <br><br><label id="label 4">You want to upload other new booking(s)?</label>
+      <br><br><label id="label 5">Once again, thank you so much for being our customer.</label>
+      <div class ="text-logo">
+        <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png"
+             alt="Shotmaniacs White Logo Without Text">
+      </div>
+
+    </div>
+  </div>
 </div>
+<div id="overlay" class="hidden"></div>
+<script>
+  function cancel(){
+    var cancel = document.getElementById('cancel-box');
+    var overlay = document.getElementById('overlay');
+    cancel.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+  }
+  function changetoterm(){
+    var cancellation = document.getElementById("cancellation");
+    var cancel = document.getElementById('cancel-box');
+    cancel.classList.add('hidden');
+    cancellation.classList.remove('hidden');
+
+  }
+  function cancelrequest(){
+    var cancel = document.getElementById('cancel-box');
+    var overlay = document.getElementById('overlay');
+    cancel.classList.add('hidden');
+    overlay.classList.add('hidden');
+  }
+</script>
 </body>
 </html>
