@@ -132,11 +132,10 @@
         const admin = 'Administrator';
         const crew = 'Crew';
         const client = 'client';
-        if(data === admin){
-            window.location.href = "./../admin/dashboard/A_Dashboard.html";
-        }
-		else if (data === crew) {
-			window.location.href = "./../crew/dashboard/dashboard.html"
+        if(data === crew){
+            window.location.href = "./../crew/dashboard/dashboard.html";
+        } else if (data === admin) {
+			window.location.href = "./../Admin/dashboard/A_Dashboard.html"
         }
     }
 </script>
