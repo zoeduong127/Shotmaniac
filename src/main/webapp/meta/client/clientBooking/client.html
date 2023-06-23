@@ -9,6 +9,41 @@
 </head>
 <body>
 <div class="container">
+  <header>
+    <div class="page-title">
+      <div class="text">My Bookings</div>
+      <div class="logout">
+        <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="logout">
+      </div>
+    </div>
+
+    <div class="navigation">
+      <!-- On single Event -->
+      <div class="title-bar">
+        <div class="left-heading">
+          <div class="heading">
+            <h1>Booking Name</h1>
+          </div>
+
+          <div class="navigation-pane">
+            <p>
+              <a onclick="toggleStyle()">My Booking</a>
+              /
+              <a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
+            </p>
+          </div>
+        </div>
+        <div class="right-heading">
+          <div class="label-dropdown">
+            <button class="labelButton">Cancel
+              <i class="fas fa-caret-down label-arrow"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
   <nav>
     <div class="logo">
       <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs White Logo Without Text">
@@ -41,38 +76,6 @@
     </div>
   </nav>
   <main>
-    <div class="page-title">
-      <div class="text">My Bookings</div>
-      <div class="logout">
-        <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="logout">
-      </div>
-    </div>
-    <div class="navigation">
-      <!-- On single Event -->
-      <div class="title-bar">
-        <div class="left-heading">
-          <div class="heading">
-            <h1>Booking Name</h1>
-          </div>
-
-          <div class="navigation-pane">
-            <p>
-              <a onclick="toggleStyle()">My Booking</a>
-              /
-              <a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
-            </p>
-          </div>
-        </div>
-        <div class="right-heading">
-          <div class="label-dropdown">
-            <button class="labelButton">Cancel
-              <i class="fas fa-caret-down label-arrow"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- On single Event -->
     <div class="main_area">
       <div class="event-container">
@@ -116,44 +119,43 @@
           </div>
         </div>
       </div>
-
-      <!-- Admins -->
-      <div class = "members">
-        <div class="admins">
-          <div class="head">
-            Administrators
-          </div>
-
-          <div class="users">
-            <i class="fas fa-user user-icon" style="color: #000000;"></i>
-            <div class="user-box" id="user1">
-              <span>Name 1</span>
-            </div>
-            <i class="fas fa-user user-icon" style="color: #000000;"></i>
-            <div class="user-box" id="user2">
-              <span>Obscenely long name 2 h file fresh ehfhefhef</span>
-            </div>
-          </div>
-        </div>
-        <div class="crews">
-          <div class="head">
-            Crews
-          </div>
-          <div class="users">
-            <i class="fas fa-user user-icon" style="color: #000000;"></i>
-            <div class="user-box" id="crew1">
-              <span>Name 1</span>
-            </div>
-            <i class="fas fa-user user-icon" style="color: #000000;"></i>
-            <div class="user-box" id="crew2">
-              <span>Name 2</span>
-            </div>
-          </div>
-        </div>
       </div>
-      </div>
-
   </main>
+  <aside>
+    <div class = "members">
+      <div class="admins">
+        <div class="head">
+          Administrators
+        </div>
+
+        <div class="users">
+          <i class="fas fa-user user-icon" style="color: #000000;"></i>
+          <div class="user-box" id="user1">
+            <span>Name 1</span>
+          </div>
+          <i class="fas fa-user user-icon" style="color: #000000;"></i>
+          <div class="user-box" id="user2">
+            <span>Obscenely long name 2 h file fresh ehfhefhef</span>
+          </div>
+        </div>
+      </div>
+      <div class="crews">
+        <div class="head">
+          Crews
+        </div>
+        <div class="users">
+          <i class="fas fa-user user-icon" style="color: #000000;"></i>
+          <div class="user-box" id="crew1">
+            <span>Name 1</span>
+          </div>
+          <i class="fas fa-user user-icon" style="color: #000000;"></i>
+          <div class="user-box" id="crew2">
+            <span>Name 2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
 </div>
 </body>
 </html>

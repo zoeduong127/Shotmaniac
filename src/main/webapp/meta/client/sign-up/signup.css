@@ -121,7 +121,7 @@ body {
 }
 
 .input-section {
-    margin: 4vh 0;
+    margin: 2.8vh 0;
 }
 
 .input:focus {
@@ -129,6 +129,7 @@ body {
     background-color: rgba(81,81,81,0.2);
     outline: none;
 }
+
 .signup-form .email-label {
 
 }
@@ -173,10 +174,10 @@ body {
 }
 
 
-.bottom {
+.button {
     height: 10vh;
     width: 90%;
-    margin: 5vh 3vh;
+    margin: 4vh 3vh;
 }
 
 .submission {

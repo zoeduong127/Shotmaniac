@@ -2,37 +2,37 @@
 
 .container {
     display: grid;
-    grid-template-columns: 20vw 1fr 20vw;
-    grid-template-rows: 8vh auto;
+    grid-template-columns: 20vw 1fr;
+    grid-template-rows: 8vh 1fr;
     grid-template-areas:
-        "a b b"
-        "nav content sidebar";
+        "header header"
+        "nav content";
     min-height: 100vh;
     max-height: 100vh;
-    /*overflow-y: hidden; !*try to hide any dumb overflow that happens *!*/
+    overflow-y: hidden;
 }
 
 
 header {
     grid-area: header;
-    background-color: rgba(22,150,210,0.8);
+    background-color: rgba(22, 150, 210, 0.8);
 }
 
 nav {
     grid-area: nav;
-    background-color: rgba(31,31,31,0.05);
-    border: 1px solid rgba(31,31,31,0.2);
+    background-color: rgba(31, 31, 31, 0.05);
+    border: 1px solid rgba(31, 31, 31, 0.2);
 }
 
 aside {
     grid-area: nav;
-    background-color: rgba(31,31,31,0.05);
-    border: 1px solid rgba(31,31,31,0.2);
+    background-color: rgba(31, 31, 31, 0.05);
+    border: 1px solid rgba(31, 31, 31, 0.2);
 }
 
 main {
     grid-area: content;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -47,9 +47,9 @@ body {
 }
 
 
-.item:hover{
+.item:hover {
     color: #000000;
-    background-color: rgba(81,81,81,0.5);
+    background-color: rgba(81, 81, 81, 0.5);
 }
 
 /*Dropdown  todo: Fix, maybe add delay or something
@@ -59,10 +59,12 @@ body {
     width: 0;
     height: 0;
 }
+
 .dropdown {
     float: right;
     overflow: hidden;
     margin: 0 3vw 0 0;
+    height: 100%;
 }
 
 .dropdown .dropdownBtn {
@@ -82,9 +84,11 @@ body {
     position: absolute;
     text-decoration: none;
     background-color: #F1F1F1;
-    min-width: 5vw;
+    min-width: 7vw;
     text-align: center;
     z-index: 1;
+    right: 1.5vw;
+    top: 8vh;
 }
 
 .dropdown-content a {
@@ -92,7 +96,7 @@ body {
     color: black;
     padding: 12px 16px;
     display: block;
-    text-align: left;
+    text-align: center;
     text-decoration: none;
 }
 
@@ -101,18 +105,18 @@ body {
 }
 
 
-
 #avatar {
     height: 8vh;
 }
+
 /*End of DropDown*/
 
 /*Navigational Dashboard*/
 
-     /*Widths adjusted for a nav pane of 20vw*/
+/*Widths adjusted for a nav pane of 20vw*/
 .dash-box {
-    background-color: rgba(255,255,255,0.75);
-    border: 1px solid rgba(82,82,82,0.75);
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(82, 82, 82, 0.75);
     width: 15vw;
     height: 52vh;
     margin: 10vh 2.5vw 20vh 2.5vw;
@@ -122,7 +126,7 @@ body {
 }
 
 .box {
-    border-bottom: 1px solid rgba(82,82,82,0.75);
+    border-bottom: 1px solid rgba(82, 82, 82, 0.75);
     text-align: center;
     padding: 5% 0 5% 0;
 }
@@ -133,7 +137,7 @@ body {
     color: black;
 }
 
-.text img{
+.text img {
     width: 95%;
     margin: 10vh 2.5% 0 2.5%;
     font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
@@ -142,13 +146,13 @@ body {
 
 .box:hover {
     cursor: pointer;
-    color: rgba(82,82,82,0.75);
+    color: rgba(82, 82, 82, 0.75);
 }
 
 
 /*Currently active page, change depending on the CSS file used*/
 #calendar {
-    background-color: rgba(22,150,210,0.8);
+    background-color: rgba(22, 150, 210, 0.8);
     border: 1px solid #1696D2;
     color: white;
 }
@@ -158,17 +162,16 @@ body {
 
 /*Calendar template: "https://www.youtube.com/watch?v=o1yMqPyYeAo"*/
 
-.calendar-container{
-    border: 1px solid black;
+.calendar-container {
     height: 92vh;
     display: grid;
-    justify-content: left;
+    justify-content: center;
     padding: 0 10vw 0 10vw;
     align-items: center;
 }
 
 .calendar {
-    width: 38vw;
+    width: 50vw;
     height: 70vh;
 }
 
@@ -178,10 +181,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom:4.85vh;
+    padding-bottom: 4.85vh;
     border-bottom: 0.3vh solid black;
     text-align: center;
-    text-shadow: 0 0.3vw 0.5vh rgba(22,150,210, 0.5);
+    text-shadow: 0 0.3vw 0.5vh rgba(22, 150, 210, 0.5);
 }
 
 .month i {
@@ -196,28 +199,26 @@ body {
     letter-spacing: 0.2rem;
     margin-bottom: 1rem;
 
-    color: rgb(22,150,210);
+    color: rgb(22, 150, 210);
 }
 
 .month p {
     font-size: 1.6rem;
-    color: rgb(22,150,210);
+    color: rgb(22, 150, 210);
 
 }
 
 .next, .prev {
-    text-shadow: 0 0.2vw 0.3vh rgba(0,0,0, 0.5);
+    text-shadow: 0 0.2vw 0.3vh rgba(0, 0, 0, 0.5);
 }
-.weekdays {
-    width: 38vw;
-    height: 6vh;
-    padding: 2.425vh 0;
 
+.weekdays {
+    width: 50vw;
+    height: 6vh;
+    padding: 2.425vh 25px;
     display: grid;
-    justify-content: center;
-    align-items: center;
-    gap: 1vw;
     grid-auto-flow: column;
+    align-items: center;
 }
 
 .weekdays div {
@@ -230,21 +231,22 @@ body {
     justify-content: center;
     align-items: center;
 
-    text-shadow: 0 0.2vw 0.4vh rgba(0,0,0,0.5);
+    text-shadow: 0 0.2vw 0.4vh rgba(0, 0, 0, 0.5);
 }
 
 .days {
-    width: 38vw;
-    max-width: 38vw;
+    width: 50vw;
+    max-width: 50vw;
     height: 38vh;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    flex-direction: row;
 }
 
 .days div {
     font-size: 1rem;
-    width: 5vw;
+    width: 7.03vw;
     height: calc(38vh / 4.5);
     max-height: 7.45vh;
     display: flex;
@@ -253,19 +255,112 @@ body {
     align-items: center;
     border: 0.1vw solid black;
 
-    text-shadow: 0 0.2vw 0.5vh rgba(0,0,0,0.5);
+    text-shadow: 0 0.2vw 0.5vh rgba(0, 0, 0, 0.5);
     transition: background-color 0.2s;
 }
 
 .days div:hover:not(.today) {
     background-color: #262626;
     color: white;
+}
+
+.days div:hover {
     cursor: pointer;
 }
+
 .prev-date, .next-date {
     opacity: 0.5;
 }
 
 .today {
-    background-color: rgba(22,150,210,0.5);
+    background-color: rgba(22, 150, 210, 0.5);
+}
+
+
+.event-display {
+    visibility: hidden;
+    position: relative;
+    z-index: 2;
+    height: 72vh;
+    width: 40vw;
+    top: -80vh;
+    left: 20vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    margin: 0;
+    padding: 0;
+}
+
+.blob-nav {
+    height: 8vh;
+    width: 40vw;
+    text-align: center;
+    padding-top: 4vh;
+    background-color: white;
+    border: 1px solid black;
+    border-bottom: 0;
+}
+
+.dots {
+    display: inline-block;
+    background-color: black;
+    border-radius: 50%;
+    color: white;
+    width: 2.5vw;
+    height: 4.7vh;
+    text-align: center;
+    line-height: 4.5vh;
+    margin: 0 0.3vw;
+    cursor: pointer;
+}
+
+.dots:hover {
+    scale: 1.5;
+    text-align: center;
+}
+
+.event {
+    height: 59vh;
+    width: 40vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: white;
+    border: 1px solid black;
+
+}
+
+.event-info {
+    padding: 10px 30px;
+    text-align: justify;
+}
+
+.event-info p {
+    font-weight: bold;
+}
+
+.event-info span {
+    font-weight: normal;
+}
+
+
+#active-button {
+    float: right;
+}
+
+#active-button button {
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    background-color: rgba(59, 238, 72, 0.84);
+    margin: 0 50px;
+    transform: translateY(-25px);
+    cursor: pointer;
+}
+
+#active-button button:active {
+    background-color: rgba(14, 134, 20, 0.84);
 }

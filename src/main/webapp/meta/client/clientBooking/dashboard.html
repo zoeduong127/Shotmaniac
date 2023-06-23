@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+	<link href="crewDashboardStyles.css" rel="stylesheet" id="currentCSS">
+	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+	      rel="stylesheet" type='text/css'>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<script src="dashboard.js" defer></script>
+</head>
+<body>
+<div class="container">
+	<header>
+		<div class="dropdown">
+			<button class="dropdownBtn">
+				<img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
+			</button>
+		</div>
+	</header>
+
+	<nav>
+		<div class="logo">
+			<img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs White Logo Without Text">
+		</div>
+		<div class="dash-box">
+			<a href="./../news/notifications.html" target="_self">
+				<div class="box" id="dashboard">
+					<img id="icon-1" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>News</label>
+				</div>
+			</a>
+			<a href="./../bookings/bookings.html" target="_self">
+				<div class="box" id="News">
+					<img id="icon-2" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>My Bookings</label>
+				</div>
+			</a>
+			<a href="./../profole/profile.html" target="_self">
+				<div class="box" id="calendar">
+					<img id="icon-3" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Account</label>
+				</div>
+			</a>
+			<a href="../../help/help.html" target="_self">
+				<div class="box" id="booking">
+					<img id="icon-4" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Help</label>
+				</div>
+			</a>
+		</div>
+	</nav>
+
+	<main>
+		<div class="page-title">
+			<div class="text">My Bookings</div>
+		</div>
+		<div class="navigation">
+			<!-- On main page -->
+			<div class="filter">
+				<button class="filter-btn" >
+					<span id="button-text">
+						<i class="fas fa-filter filter-icon"></i>
+							<span id = "filter_button_text">Filter: On Going</span>
+						<i class="fas fa-caret-down down-icon"></i>
+					</span>
+				</button>
+
+				<div class="filter-content">
+					<!--missing HREF-->
+					<div class="item" onclick="updateBookings('in_progress')">
+						<p>In Progress</p>
+					</div>
+					<div class="item" onclick="updateBookings('future')">
+						<p>Future</p>
+					</div>
+					
+					<div class="item" onclick="updateBookings('past')">
+						<p>Past</p>
+					</div>
+				</div>
+			</div>
+			<div class="search">
+				<label for="search-input"></label>
+				<input type="text" class="input" id="search-input" placeholder="Booking name">
+				<button class="search-icon-btn">
+					<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt="search">
+				</button>
+			</div>
+		</div>
+
+		<!-- On main page -->
+		<div class="booking-container" id="booking_container">
+				<div class="booking" onclick="toggleStyle()">
+					<div class="booking-info-grid">
+						<div class="booking-large-text">
+							<p id="event_name">
+								Event Name
+<!--
+								<span id="slots">(Available Slots: 0)</span>
+-->
+							</p>
+						</div>
+
+<!--
+						<div class="booking-small">
+							<p id="booking_type">Booking type</p>
+						</div>
+-->
+
+
+						<div class="booking-small">
+							<p id="location">Location</p>
+						</div>
+
+<!--
+						<div class="booking-small">
+							<p id="client">Client</p>
+						</div>
+-->
+						<div class="booking-small">
+							<p id="event_type">Event type</p>
+						</div>
+
+
+<!--
+						<div class="booking-small">
+							<p id="duration">Duration</p>
+						</div>
+-->
+					</div>
+					
+					<div class="innerBooking left">
+						<p id="state">Todo</p>
+					</div>
+					<div class="innerBooking right">
+						<p id="date"> 30 July, 2023 </p>
+					</div>
+				</div>
+		</div>
+	</main>
+<aside>
+	<div class="create-newbooking">
+		<div class = "text-newbooking">
+			<a href="applicationForm.html" target="_self">
+				<label>You want to upload new booking(s)?</label>
+			</a>
+		</div>
+	</div>
+	<div class="upcoming-event">
+		<div class="Upcoming-title">
+			<label> Upcoming events</label>
+		</div>
+		<div class="list">
+			<div class="list-booking">
+				<div class="booking-name">
+					<label>Booking's name</label>
+				</div>
+				<div class="booking-description">
+					<label>Short Description</label>
+				</div>
+			</div>
+			<div class="list-booking">
+				<div class="booking-name">
+					<label>Booking's name</label>
+				</div>
+				<div class="booking-description">
+					<label>Short Description</label>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</aside>
+
+</div>
+
+</body>
+</html>
