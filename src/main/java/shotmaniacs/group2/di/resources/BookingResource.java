@@ -1,20 +1,14 @@
 package shotmaniacs.group2.di.resources;
 
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import jakarta.xml.bind.JAXBElement;
 import shotmaniacs.group2.di.dao.BookingDao;
 import shotmaniacs.group2.di.dto.AssignRole;
 import shotmaniacs.group2.di.model.Booking;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class BookingResource {
   @Context
@@ -51,12 +45,12 @@ public class BookingResource {
       return booking;
     }
 
-
     /**
      * Assign a role to the booking
      * @param role
      * @return
      */
+    @Path("/role")
     @RolesAllowed({"Administrator","Crew"})
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -83,5 +77,56 @@ public class BookingResource {
             System.err.println("Error connecting: "+e);
         }
         return res;
+    }
+
+    @Path("/label")
+    @PUT
+    public Response updateState(@QueryParam("label") String label) {
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "UPDATE enrolment SET label = ? WHERE booking_id = ? AND crew_member_id = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, label);
+            ps.setInt(2, bookingId);
+            ps.setInt(3, accountId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                return Response.ok().entity("Booking label was updated").build();
+            } else {
+                return Response.ok().entity("Booking label was not updated").build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return Response.serverError().build();
+    }
+
+    @Path("/label")
+    @GET
+    public Response getLabelByID() {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT enrolment.label FROM enrolment WHERE booking_id = ? AND crew_member_id = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, bookingId);
+            ps.setInt(2, accountId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Response.ok().entity(rs.getString(1)).build();
+            } else {
+                return Response.ok().build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Response.serverError().build();
     }
 }

@@ -25,7 +25,13 @@ function reloadEvent() {
     //TODO: figure out a way to call the current event page
 }
 
+function loadSingleEvent(id) {
 
+
+}
+
+
+var selectedBooking;
 
 /*Filter*/
 const bookingContainer = document.getElementById("booking_container");
@@ -41,7 +47,7 @@ function parseCookie(cookieString) {
 }
 
 
-function    performQueryAndUpdateBookings(url) {
+function performQueryAndUpdateBookings(url) {
 
     while (bookingContainer.firstChild) {
         bookingContainer.removeChild(bookingContainer.firstChild);
@@ -49,6 +55,7 @@ function    performQueryAndUpdateBookings(url) {
 
     const cookies = parseCookie(document.cookie);
     const token = cookies['auth_token'];
+    const account_id = cookies['account_id'];
 
     fetch(url, {
         headers: {
@@ -71,30 +78,60 @@ function    performQueryAndUpdateBookings(url) {
                 bookingElementCopy.querySelector("#event_type").innerHTML =  "<b>Event Type: </b>" + booking.eventType;
 //                bookingElementCopy.querySelector("#duration").innerHTML =  "<b>Duration: </b>" + booking.duration + " hours";
 
+                bookingElementCopy.querySelector("#event_name").dataset.id = booking.id;
+
                 let dateTime = new Date(booking.date);
                 const formattedDate = dateTime.toLocaleString('en-US', {
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: false
                 });
+
                 bookingElementCopy.querySelector("#date").innerText = dateTime.toDateString() + ', ' + formattedDate;
 
-                let bookingState = bookingElementCopy.querySelector("#state");
+                let bookingLabel = bookingElementCopy.querySelector("#label");
 
-                switch (booking.state) {
-                    case "PENDING":
-                        bookingState.classList.add("pending-state");
+                const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${booking.id}/label`;
+
+                fetch(url, {
+                    headers: {
+                        'Authorization': `${token}`
+                    }
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        bookingLabel.innerHTML = data;
+                    })
+                    .catch(error => {
+                        // Handle any errors
+                        console.error(error);
+                    });
+
+                switch (bookingLabel.innerTEXT) { // the colors don't change
+                    case "DONE":
+                        bookingLabel.classList.add("approved-state");
                         break;
-                    case "APPROVED":
-                        bookingState.classList.add("approved-state");
+                    case "TODO":
+                        bookingLabel.classList.add("pending-state");
+                        break;
+                    case "IN PROGRESS":
+                        bookingLabel.classList.add("approved-state");
+                        break;
+                    case "REVIEW":
+                        bookingLabel.classList.add("pending-state");
                         break;
                     default:
-                        bookingState.classList.add("pending-state");
+                        bookingLabel.classList.add("pending-state");
                 }
 
-                bookingState.innerText = booking.state;
-                bookingContainer.appendChild(bookingElementCopy);
+                bookingElementCopy.onclick = function() {
+                    selectedBooking = booking;
+                    toggleStyle();
+                    document.getElementById("booking_header").innerHTML =  bookingElementCopy.querySelector("#event_name").innerHTML;
+                    document.getElementById("booking_sublink").innerHTML =  bookingElementCopy.querySelector("#event_name").innerHTML;
+                };
 
+                bookingContainer.appendChild(bookingElementCopy);
             });
         })
         .catch(error => {
@@ -143,6 +180,40 @@ function searchBookings(searchText) {
     performQueryAndUpdateBookings(url);
 }
 
+function updateLabel(label) {
+
+    var state;
+    switch (label){
+        case "todo":
+            state = "TODO";
+            break;
+        case "in_progress":
+            state = "IN PROGRESS";
+            break;
+        case "review":
+            state = "REVIEW";
+            break;
+        case "done":
+            state = "DONE";
+            break;
+        default:
+            state = "TODO";
+    }
+    const cookies = parseCookie(document.cookie);
+    const account_id = cookies['account_id'];
+    const token = cookies['auth_token'];
+
+    console.log(selectedBooking.id);
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${selectedBooking.id}/label?label=${state}`;
+
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `${token}`
+        }
+    });
+}
+
 //Event listeners
 const searchbox = document.getElementById("search-input");
 searchbox.addEventListener("keydown", function (e) {
@@ -152,3 +223,4 @@ searchbox.addEventListener("keydown", function (e) {
 });
 
 updateBookings("ongoing");
+
