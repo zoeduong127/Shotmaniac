@@ -226,7 +226,7 @@ body {
 
 .role-filter{
     box-sizing: border-box;
-    width: 190px;
+    width: 200px;
     height: 32px;
     position: absolute;
 
@@ -240,15 +240,10 @@ body {
     box-sizing: border-box;
     width: 120px;
     height: 32px;
-    position: absolute;
 
     width: 120px;
     height: 32px;
-    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 32px;
+
     background-color: #FFFEFE;
     background: #FFFFFF;
     border: 2px solid rgba(82, 82, 82, 0.9);

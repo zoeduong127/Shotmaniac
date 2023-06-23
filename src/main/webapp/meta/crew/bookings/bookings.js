@@ -9,3 +9,4 @@ openHref.addEventListener('click', function(){
 closeBtn.addEventListener('click', function(){
     popUpWindow.style.display = 'none';
 });
+
