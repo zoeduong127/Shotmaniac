@@ -104,7 +104,7 @@ body {
 }
 
 
-/*Navigational Dashboard*/
+/*Navigational Bookings*/
 
 #icon {
     width: 0;
@@ -166,12 +166,40 @@ body {
     font-size: 36px;
     line-height: 52px;
 }
+
+.text img{
+    width: 95%;
+    margin: 10vh 2.5% 0 2.5%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.logo-title-page .image{
+    margin: 1vh 3vw 0 3vw;
+}
+
+.search-container{
+    width: 100%;
+    height: 3vh;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 2vh;
+    position: absolute;
+    top: 8vh;
+}
+
+.search-container .searchbox .role-filter .checkbox .complete-search{
+    margin: 5px;
+}
+
 .searchbox{
     position: absolute;
     width: 222px;
     height: 32px;
-    padding-left: 26px;
+
+    margin-left: 26px;
     margin-top: 117px;
+
+    padding: 0% 10% 10% 0%;
 
 }
 .textbox{
@@ -188,16 +216,18 @@ body {
     font-weight: 300;
     font-size: 16px;
     line-height: 23px;
+
+    padding: 0% 5% 0% 0%;
 }
 
 .role-filter{
     box-sizing: border-box;
-    width: 120px;
+    width: 190px;
     height: 32px;
     position: absolute;
 
-    margin-left: 285px;
-    paddding-left: 285px;
+    margin-left: 305px;
+    padding: 0% 10% 10% 0%;
     margin-top: 117px;
 
 }
@@ -213,7 +243,7 @@ body {
     font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
     font-style: normal;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 32px;
     background-color: #FFFEFE;
     background: #FFFFFF;
@@ -291,7 +321,7 @@ body {
     width: 210px;
     height: 23px;
 
-    margin-left: 431px;
+    margin-left: 451px;
     margin-top: 125px;
 
     font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
@@ -303,8 +333,8 @@ body {
     color: rgba(0, 0, 0, 0.8);
 }
 .fmso{
-    margin-top: 119px;
-    pass-left: 455px;
+    margin-top: 109px;
+    pass-left: 485px;
 }
 
 .button-search{
@@ -312,12 +342,28 @@ body {
     width: 35px;
     height: 32px;
 
-    margin-left: 669px;
+    margin-left: 689px;
     margin-top: 114px;
 
     background-color: rgba(22,150,210,0.8);
     border-radius: 5px;
+}
 
+.search-button{
+    width: 25px;
+    height: 25px;
+
+    margin-left: -3px;
+}
+
+.bookings-container{
+    width: 100%;
+    height: 3vh;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 2vh;
+    position: absolute;
+    top: 10vh;
 }
 
 .booking1{
@@ -486,3 +532,5 @@ body {
     margin-top: 60px;
     margin-left: 50px;
 }
+
+
