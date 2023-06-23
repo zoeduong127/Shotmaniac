@@ -305,6 +305,18 @@ body {
     border-bottom: 0;
 }
 
+#back {
+    float: left;
+    margin: 1vh 2vw;}
+
+#back-img {
+    height: 3vh;
+}
+
+#back-img:hover {
+    cursor: pointer;
+}
+
 .dots {
     display: inline-block;
     background-color: black;
