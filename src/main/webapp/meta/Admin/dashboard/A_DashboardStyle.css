@@ -591,7 +591,7 @@ body {
 
 
 .cancel-container {
-    visibility: visible;
+    visibility: hidden;
     position: relative;
     z-index: 2;
     height: 50vh;

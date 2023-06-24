@@ -2,16 +2,10 @@ package shotmaniacs.group2.di.resources;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
-import shotmaniacs.group2.di.dao.AccountDao;
-import shotmaniacs.group2.di.dao.BookingDao;
 import shotmaniacs.group2.di.dto.Accountdto;
 import shotmaniacs.group2.di.dto.Bookingdto;
-import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.*;
 
-import java.sql.*;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("/client")

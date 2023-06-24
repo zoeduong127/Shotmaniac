@@ -3,12 +3,13 @@ package shotmaniacs.group2.di.resources;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
-import jakarta.xml.bind.JAXBElement;
 import shotmaniacs.group2.di.dao.BookingDao;
-import shotmaniacs.group2.di.dto.AssignRole;
 import shotmaniacs.group2.di.model.Booking;
+import shotmaniacs.group2.di.model.Role;
 
 import java.sql.*;
+
+import static java.lang.String.valueOf;
 
 public class BookingResource {
   @Context
@@ -33,7 +34,7 @@ public class BookingResource {
 
     @RolesAllowed({"Administrator","Crew"})
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     /**
      * Get all details of specific booking
      */
@@ -45,43 +46,59 @@ public class BookingResource {
       return booking;
     }
 
-    /**
-     * Assign a role to the booking
-     * @param role
-     * @return
-     */
     @Path("/role")
     @RolesAllowed({"Administrator","Crew"})
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response putRole(JAXBElement<AssignRole> role){
-      return putAndGetResponse(role.getValue());
-    }
-
-    private Response putAndGetResponse(AssignRole role) {
-        Response res = null;
+    public Response putEnrolment(@QueryParam("role") String roleToPut){
+        if (!roleIsValid(roleToPut)) {
+            return Response.serverError().entity("Role is not valid.").build();
+        }
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO enrolment VALUES (?,?,?)";
+            String query = "INSERT INTO enrolment (booking_id,crew_member_id, role,label) VALUES (?,?,?,?);";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,role.getBookingId());
-            preparedStatement.setInt(2,role.getCrewMemberId());
-            preparedStatement.setString(3, String.valueOf(role.getRole()));
-            int rowsInseted = preparedStatement.executeUpdate();
-            if(rowsInseted > 0) {
-                res = Response.created(uriInfo.getAbsolutePath()).build();
+            preparedStatement.setInt(1,bookingId);
+            preparedStatement.setInt(2,accountId);
+            preparedStatement.setString(3, roleToPut);
+            preparedStatement.setString(4, "TODO");
+            int rowsInserted = preparedStatement.executeUpdate();
+            if(rowsInserted > 0) {
+                return Response.ok().build();
             } else {
-                res = Response.serverError().build();
+                return Response.serverError().build();
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
         }
-        return res;
+        return Response.serverError().build();
+    }
+
+    @Path("/role")
+    @DELETE
+    public Response deleteEnrolment() {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "DELETE FROM enrolment WHERE booking_id = ? AND crew_member_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, bookingId);
+            ps.setInt(2, accountId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.ok().entity("No rows were affected.").build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Response.serverError().build();
     }
 
     @Path("/label")
     @PUT
-    public Response updateState(@QueryParam("label") String label) {
+    public Response updateLabel(@QueryParam("label") String label) {
 
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -129,4 +146,14 @@ public class BookingResource {
 
         return Response.serverError().build();
     }
+
+    public static boolean roleIsValid(String value) {
+        for (Role type : Role.values()) {
+            if (valueOf(type).equals(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

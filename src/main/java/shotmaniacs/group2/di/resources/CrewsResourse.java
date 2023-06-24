@@ -76,6 +76,32 @@ public class CrewsResourse {
     }
 
     @RolesAllowed({"Administrator","Crew"})
+    @Path("/mybooking/enrolled")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public List<Booking> getEnrolledBookings(@PathParam("crewid") int crewid) {
+        List<Booking> listbooking = new ArrayList<>();
+        try {
+
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,crewid);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                listbooking.add(booking);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return listbooking;
+    }
+
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/timefilter/{filtertime}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -178,7 +204,7 @@ public class CrewsResourse {
     /**
      * Modify specific event with given ID
      */
-    public BookingResource assignedRoleByCrew(@PathParam("crewid") int crewid, @PathParam("booking_id") int id) {
+    public BookingResource modifySpecificBooking(@PathParam("crewid") int crewid, @PathParam("booking_id") int id) {
         return new BookingResource(uriInfo, request, crewid, id);
     }
     //TODO: U - assign a specific role to the booking

@@ -4,18 +4,17 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
-import shotmaniacs.group2.di.dto.LoginInfor;
-import shotmaniacs.group2.di.model.Account;
-import shotmaniacs.group2.di.model.AccountType;
+import shotmaniacs.group2.di.dao.AnnouncementDao;
+import shotmaniacs.group2.di.model.*;
 
-import java.awt.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.*;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,6 +119,57 @@ public class AdministratorsResource {
         return Response.serverError().build();
     }
 
+    @Path("/announcement/{announcementid}")
+    @RolesAllowed({"Administrator"})
+    public AnnouncementResource modifySpecificAnnouncement(@PathParam("announcementid") int announcementId) {
+        return new AnnouncementResource(uriInfo, request, announcementId);
+    }
+
+    @Path("/announcement")
+    @RolesAllowed({"Administrator"})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @PUT
+    public Response createAnnouncement(Announcement announcement) {
+        int rowsAffected = AnnouncementDao.instance.addAnnouncement(announcement);
+
+        if (rowsAffected > 0) {
+            return Response.ok().build();
+        } else {
+            return Response.serverError().build();
+        }
+    }
+
+    @RolesAllowed({"Administrator","Crew"})
+    @Path("/booking/{booking_id}/crew")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public List<Account> getEnrolledCrewMembersByBookingId(@PathParam("booking_id") int booking_id) {
+        List<Account> accountList = new ArrayList<>();
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query = "SELECT a.* FROM account a , enrolment e WHERE e.booking_id = ? AND e.crew_member_id = a.account_id;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,booking_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                accountList.add(new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6)));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return accountList;
+    }
+
+    @RolesAllowed({"Administrator"})
+    @Path("/booking/{booking_id}/crew/{crew_id}")
+    /**
+     * Modify specific event with given ID
+     */
+    public BookingResource modifySpecificBooking(@PathParam("crew_id") int crewid, @PathParam("booking_id") int id) {
+        return new BookingResource(uriInfo, request, crewid, id);
+    }
+
     public String hash256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -195,6 +245,5 @@ public class AdministratorsResource {
             throw new RuntimeException(e);
         }
     }
-
 
 }

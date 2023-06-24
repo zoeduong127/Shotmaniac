@@ -1,13 +1,9 @@
 package shotmaniacs.group2.di.resources;
 
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
-import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
@@ -15,15 +11,11 @@ import shotmaniacs.group2.di.model.RootElementWrapper;
 import shotmaniacs.group2.di.security.TokenManager;
 
 import java.nio.charset.StandardCharsets;
-
-import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.HashMap;
-
 @Path("/login")
 public class LoginResource {
     @Context

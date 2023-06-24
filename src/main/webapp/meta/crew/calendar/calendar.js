@@ -117,10 +117,15 @@ function performQueryAndUpdateBookings(element) {
 
     const cookies = parseCookie(document.cookie);
     const id = cookies['account_id'];
+    const token = cookies['auth_token'];
 
     const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/allbookings`;
 
-    fetch(url)
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
         .then(response => response.json())
         .then(data => {
             data.forEach(booking => {
@@ -184,7 +189,7 @@ function performQueryAndUpdateBookings(element) {
 
 function displayInformation(booking) {
     console.log(booking);
-
+    document.getElementById("enroll-button").style.backgroundColor = "rgba(59, 238, 72, 0.84)";
     document.getElementById("event-name").innerHTML =
         `<p>Name: <span>${booking.name}</span></p>`;
 
