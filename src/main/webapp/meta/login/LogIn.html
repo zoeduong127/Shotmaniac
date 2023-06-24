@@ -100,7 +100,7 @@
             },
             body: JSON.stringify(account)
         };
-        fetch(url, options)
+        fetch(url, options, {mode: 'cors'})
             .then(response => {
                 if (response.ok) {
                     alert("Login successful!");
