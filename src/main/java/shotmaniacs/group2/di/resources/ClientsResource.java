@@ -2,6 +2,8 @@ package shotmaniacs.group2.di.resources;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
+import shotmaniacs.group2.di.dao.AccountDao;
+import shotmaniacs.group2.di.dao.BookingDao;
 import shotmaniacs.group2.di.dto.Accountdto;
 import shotmaniacs.group2.di.dto.Bookingdto;
 import shotmaniacs.group2.di.model.*;
@@ -16,6 +18,11 @@ public class ClientsResource {
     @Context
     Request request;
 
+
+    private static String host = "bronto.ewi.utwente.nl";
+    private static String dbName ="dab_dsgnprj_50";
+    private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
+    private static String password = "yummybanana";
 
     @POST
     @Path("/new_account")
@@ -55,7 +62,7 @@ public class ClientsResource {
         return Response.serverError().build();
     }
 
-//    @Path("/client/{clientid}")
+//    @Path("{clientid}")
 //    @GET
 //    @Produces(MediaType.APPLICATION_JSON)
 //    public List<Booking> getAllBookings(@PathParam("clientid")int id) {
@@ -79,31 +86,14 @@ public class ClientsResource {
 //        return listbooking;
 //    }
 //
-//    @Path("/client/{clientid}")
-//    @POST
-//    @Produces(MediaType.TEXT_HTML)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public void createBooking(@PathParam("clientid")int id ,Booking booking) {
-//        booking.setState(BookingState.PENDING);
-//        BookingDao.instance.addBooking(booking);
-//
-//        try {
-//            Connection connection = DriverManager.getConnection(url, dbName, password);
-//            String query = "INSERT INTO client VALUES (?,?)";
-//            PreparedStatement preparedStatement = connection.prepareStatement(query);
-//            preparedStatement.setInt(1,booking.getId());
-//            preparedStatement.setInt(2,id);
-//            int rowsInseted = preparedStatement.executeUpdate();
-//            while(rowsInseted > 0) {
-//                System.out.println("Successfully");
-//                System.out.println(booking);
-//                return;
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("Error connecting: "+e);
-//        }
-//        System.out.println("Unsuccessfully");
-//    }
+////    @Path("{clientid}")
+////    @POST
+////    @Produces(MediaType.TEXT_HTML)
+////    @Consumes(MediaType.APPLICATION_JSON)
+////    public Response createBooking(@PathParam("clientid")int id , Bookingid booking) {
+////        Bookingdto bookingdto = new Bookingdto()
+////        return createBooking_noid(bookingdto);
+////    }
 //    @Path("{clientid}/delete/{booking_id}")
 //    @Produces(MediaType.TEXT_HTML)
 //    @Consumes(MediaType.APPLICATION_JSON)

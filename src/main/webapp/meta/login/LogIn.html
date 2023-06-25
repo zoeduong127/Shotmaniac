@@ -86,7 +86,7 @@
 
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        const url = 'http://localhost:8080/shotmaniacs2/api/login';
+        const url = window.location.origin+'/shotmaniacs2/api/login';
         const account = {
             email: email,
             password: password,
@@ -96,7 +96,6 @@
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Origin': 'http://localhost:8080/shotmaniacs2/meta/login/LogIn.html'
             },
             body: JSON.stringify(account)
         };
