@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="BookingStyle.css">
+	<script defer src='bookings.js'></script>
+	<title>bookings</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="container">
+	<header>
+		<div class="dropdown">
+			<button class="dropdownBtn">
+				<img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
+			</button>
+			
+			<div class="dropdown-content">
+				<div class="item">
+					<a href="profile.html">Profile</a>
+				</div>
+				
+				<div class="item">
+					<a>Log Out</a>  <!--missing HREF-->
+				</div>
+			</div>
+		</div>
+	</header>
+	<nav>
+		<div class="text">
+			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
+		</div>
+		<div class="dash-box">
+			<div class="box" id="dashboard">
+				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label> Dashboard</label>
+			</div>
+			<div class="box" id="apply">
+				<img id="icon" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="">
+				<label> Bookings</label>
+			</div>
+			<div class="box" id="calendar">
+				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label> Calendar</label>
+			</div>
+			<div class="box" id="booking">
+				<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label>My Bookings</label>
+			</div>
+			<div class="box" id="help">
+				<img id="icon" src="../../Brand_Identity/images/icons/black_help_icon.png" alt="">
+				<label>Help</label>
+			</div>
+		</div>
+	</nav>
+	
+	
+	<main>
+		<div class="main-container">
+			<div class="page-title">
+				<div class="image">
+					<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png" alt="Shotmaniacs">
+				</div>
+				<div class="text">Bookings</div>
+			</div>
+			
+			<div class="search-container">
+				<div class="searchbox">
+					<input class="textbox" type="text" placeholder="Booking's name"/>
+				</div>
+				<div class="role-filter">
+					<form action="#">
+						<label for="role"></label>
+						<select class="role-option" name="role">
+							<option value="role">Role</option>
+							<option value="photographer">Photographer</option>
+							<option value="videographer">Videographer</option>
+							<option value="producer">Producer</option>
+							<option value="assitant">Assistant</option>
+							<option value="datahandler">Data Handler</option>
+							<option value="planner">Planner</option>
+							<option value="editor">Editor</option>
+						</select>
+					</form>
+				</div>
+				
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"/>
+						Fits my schedule only
+					</label>
+				</div>
+				
+				<div class="complete-search">
+					<button class="button-search" type="submit">
+						<img class="search-button"
+						     src="./../../Brand_Identity/images/icons/Magnifying-glass.png"
+						     alt="">
+					</button>
+				</div>
+			</div>
+			
+			<div class="bookings-container" id="booking_container">
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Unique Booking for JS test</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Longer description than short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+				<div class="booking" onclick="openInfo(this)">
+					<div class="bookings-name">
+						
+						<p>Booking's name</p>
+					
+					</div>
+					<div class="short-descri">
+						<p>Short description</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="hiddenpop" id="hiddenpop">
+			<div class="hiddenbg">
+				<div class="bookinginfo">
+					<div class="closetab" id="top-tab">
+						<span id="back">
+							<img src="./../../Brand_Identity/images/icons/X-icon.png" alt="close" id="back-img" onclick="closeInfo()">
+						</span>
+					</div>
+					<div class="main-content" id="popup-main">
+						<img class="icon" src="">
+						<p>Sunday, 21 May 2023, 23:59</p>
+						<img class="icon" src="">
+						<p>1/5 available slots</p>
+						<img class="icon" src="">
+						<p>Description</p>
+					</div>
+					<div class="enrolevent">
+						<input class="enrol" id="closeBtn" type="button" value="ENROL ME">
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+</body>
+</html>
