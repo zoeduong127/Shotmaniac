@@ -174,7 +174,7 @@
 	
 	function createe(event) {
 		event.preventDefault();
-		const url = 'http://localhost:8080/shotmaniacs2/api/client';
+		const url = window.location.origin+'/shotmaniacs2/api/client';
 		var form = document.getElementById('form1');
 		var elements = form.elements;
 		var booking = {};

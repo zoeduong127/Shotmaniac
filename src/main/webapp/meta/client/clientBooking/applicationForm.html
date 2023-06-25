@@ -157,13 +157,25 @@
 	</aside>
 </div>
 <script>
+	const cookies = parseCookie(document.cookie);
+	const id = cookies['account_id'];
+	function parseCookie(cookieString) {
+		const cookies = {};
+		cookieString.split(';').forEach(cookie => {
+			const [name, value] = cookie.trim().split('=');
+			cookies[name] = decodeURIComponent(value);
+		});
+		return cookies;
+	}
 	const create = document.querySelector("#form1");
 	create.addEventListener('submit', createe);
 	document.querySelector("#form2").addEventListener('submit', handleFileParsing);
 	
 	function createe(event) {
 		event.preventDefault();
-		const url = 'http://localhost:8080/shotmaniacs2/api/client';
+		const cookies = parseCookie(document.cookie);
+		const account_id = cookies['account_id'];
+		const url = 'http://localhost:8080/shotmaniacs2/api/client/'+account_id;
 		var form = document.getElementById('form1');
 		var elements = form.elements;
 		var booking = {};
@@ -275,7 +287,7 @@
 	}
 	
 	function sendJsonObjects(XL_row_object) {
-		const url = 'http://localhost:8080/shotmaniacs2/api/client/list';
+		const url = window.location.origin+'/shotmaniacs2/api/client/list';
 		var promises = [];
 		for (let i = 0; i < XL_row_object.length; i++) {
 			var jsonOb = JSON.stringify(XL_row_object[i]);
