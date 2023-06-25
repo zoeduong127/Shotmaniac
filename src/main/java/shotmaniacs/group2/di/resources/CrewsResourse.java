@@ -1,11 +1,18 @@
 package shotmaniacs.group2.di.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +90,6 @@ public class CrewsResourse {
     public List<Booking> getEnrolledBookings(@PathParam("crewid") int crewid) {
         List<Booking> listbooking = new ArrayList<>();
         try {
-
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -323,5 +329,57 @@ public class CrewsResourse {
             System.err.println("Error connecting: " + e);
         }
         return announcementList;
+    }
+
+
+    @RolesAllowed({"Administrator", "Crew"})
+    @Path("/mybooking/statistics/hoursworked")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    /**
+     * Gets the sum of the hours per booking aggregated by day. Gets all the days with bookings between startDate and endDate.
+     * NOTE: Format for input dates is yyyy-MM-dd
+     */
+    public Response getHoursWorkedPerDay(@PathParam("crewid") int crewid, @QueryParam("startDate") String start, @QueryParam("endDate") String end) {
+        String pattern = "yyyy-MM-dd";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        LocalDate startDate;
+        LocalDate endDate;
+        try {
+            startDate = LocalDate.parse(start, formatter);
+            endDate = LocalDate.parse(end, formatter);
+        } catch (DateTimeParseException e) {
+            return Response.serverError().entity(e.getMessage()).build();
+        }
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT DATE_TRUNC('day', b.date_and_time), SUM(b.duration_hours) \n" +
+                    "FROM booking b, enrolment e \n" +
+                    "WHERE e.crew_member_id = ? AND b.booking_id = e.booking_id \n" +
+                    "AND DATE_TRUNC('day', b.date_and_time) >= ?::date\n" +
+                    "AND DATE_TRUNC('day', b.date_and_time) <= ?::date\n" +
+                    "GROUP BY DATE_TRUNC('day', b.date_and_time);";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, crewid);
+            ps.setString(2,  startDate.toString());
+            ps.setString(3,  endDate.toString());
+
+            ResultSet rs = ps.executeQuery();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            ObjectNode jsonObject = objectMapper.createObjectNode();
+            while (rs.next()) {
+                jsonObject.put(rs.getString(1), rs.getInt(2));
+            }
+
+            return Response.ok(jsonObject.toString()).build();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Response.serverError().build();
     }
 }

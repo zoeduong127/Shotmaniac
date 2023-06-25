@@ -45,7 +45,7 @@ public class TokenManager {
 
             return jwtParser.parseClaimsJws(token).getBody();
         } catch (JwtException e) {
-            e.printStackTrace();
+            System.out.println("Authentication error: " + e.getMessage());
         }
         return null;
     }
@@ -62,10 +62,6 @@ public class TokenManager {
                 .compact();
 
         return token;
-    }
-
-    public static void setTokenKey(SecretKey key) {
-        tokenKey = key;
     }
 }
 
