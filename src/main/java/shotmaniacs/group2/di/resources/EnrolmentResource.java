@@ -36,7 +36,7 @@ public class EnrolmentResource {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String sql = "DELETE FROM enrolment WHERE enrolment_id;";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, enrolmentId);
+            //ps.setInt(1, enrolmentId);
 
             int rowsAffected = ps.executeUpdate();
 

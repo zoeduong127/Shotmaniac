@@ -119,6 +119,7 @@ public class BookingResource {
 
     @Path("/label")
     @GET
+    @Produces(MediaType.TEXT_PLAIN)
     public Response getLabelByAccountAndBookingId() {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
