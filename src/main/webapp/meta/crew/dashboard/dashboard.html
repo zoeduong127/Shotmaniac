@@ -55,7 +55,7 @@
 				<label> Calendar</label>
 			</div>
 			</a>
-			<a href="../bookings/Booking(MAIN).html" target="_self">
+			<a href="./../bookings/Booking.html" target="_self">
 			<div class="box" id="booking">
 				<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
 				<label>Bookings</label>
@@ -77,6 +77,7 @@
 			</div>
 			<div class="text">My Bookings</div>
 		</div>
+		
 		<div class="navigation">
 			<!-- On main page -->
 			<div class="filter">
@@ -114,14 +115,14 @@
 			<div class="title-bar">
 				<div class="left-heading">
 					<div class="heading">
-						<h1 id="booking_header">Booking Name</h1>
+						<h1>Booking Name</h1>
 					</div>
 					
 					<div class="navigation-pane">
 						<p>
 							<a onclick="toggleStyle()">My Booking</a>
 							/
-							<a onclick="setTheme('singleEventHomePage.css'); reloadEvent()" id="booking_sublink">Booking Name</a>
+							<a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
 						</p>
 					</div>
 				</div>
@@ -132,19 +133,19 @@
 						</button>
 
 						<div class="label-content">
-							<div class="item" id="todo" onclick="updateLabel('todo')">
+							<div class="item" id="todo">
 								<p>Todo</p>
 							</div>
 							
-							<div class="item" id="in-progress" onclick="updateLabel('in_progress')">
+							<div class="item" id="in-progress">
 								<p>In Progress</p>
 							</div>
 							
-							<div class="item" id="review" onclick="updateLabel('review')">
+							<div class="item" id="review">
 								<p>Review</p>
 							</div>
 							
-							<div class="item" id="done" onclick="updateLabel('done')">
+							<div class="item" id="done">
 								<p>Done</p>
 							</div>
 						</div>
@@ -155,10 +156,10 @@
 
 		<!-- On main page -->
 		<div class="booking-container" id="booking_container">
-				<div  class="booking" onclick="toggleStyle();">
+				<div class="booking" onclick="toggleStyle()">
 					<div class="booking-info-grid">
 						<div class="booking-large-text">
-							<p id="event_name" data-id="-1">
+							<p id="event_name">
 								Event Name
 <!--
 								<span id="slots">(Available Slots: 0)</span>
@@ -195,7 +196,7 @@
 					</div>
 					
 					<div class="innerBooking left">
-						<p class="approved-state" id="label">Todo</p>
+						<p id="state">Todo</p>
 					</div>
 					<div class="innerBooking right">
 						<p id="date"> 30 July, 2023 </p>
