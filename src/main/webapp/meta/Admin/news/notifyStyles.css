@@ -1,42 +1,30 @@
 .container {
     display: grid;
-    grid-template-columns: 20vw 1fr 20vw;
-    grid-template-rows: 8vh auto;
+    grid-template-columns: 100vw;
+    grid-template-rows: 20vh 1fr;
     grid-template-areas:
-        "header header header"
-        "nav content sidebar";
+        "header"
+        "content";
 
     min-height: 100vh;
     max-height: 100vh;
-
+    overflow-y: hidden;
 }
+
 
 header {
     grid-area: header;
-    background-color: rgba(22,150,210,0.8);
-}
-
-nav {
-    grid-area: nav;
-    background-color: rgba(31,31,31,0.05);
-    border: 1px solid rgba(31,31,31,0.2);
-}
-
-aside {
-    grid-area: sidebar;
-    background-color: rgba(31,31,31,0.05);
-    border: 1px solid rgba(31,31,31,0.2);
+    background-color: transparent;
 }
 
 main {
     grid-area: content;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgb(255, 255, 255);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Kiona', 'Quicksand', sans-serif;
 }
-
 
 body {
     margin: 0;
@@ -45,73 +33,187 @@ body {
 }
 
 
-
-/*Navigational Dashboard*/
-
-#icon {
-    width: 0;
-    height: 0;
-}
-/*Widths adjusted for a nav pane of 20vw*/
-
-.text img{
-    width: 95%;
-    margin: 10vh 2.5% 0 2.5%;
-    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+.top {
+    background-color: rgba(82, 82, 82, 0.8);
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.dash-box {
-    background-color: rgba(255,255,255,0.75);
-    border: 1px solid rgba(82,82,82,0.75);
-    width: 15vw;
-    height: 52vh;
-    margin: 10vh 2.5vw 20vh 2.5vw;
-    box-sizing: border-box;
-    font-size: 1.15rem;
-    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+
+.user-icon {
+    color: white;
+    scale: 1.7;
+    float: left;
+    transform: translateX(20px);
+}
+.logout {
+    color: white;
+    float: right;
+
+    padding-right: 26px;
+}
+
+
+.search-area {
+    background-color: white;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.left {
+    transform: translateX(30px);
+}
+
+.search-area img {
+    transform: translateY(20px);
+    width: 4vw;
+}
+
+.left .text {
+    transform: translate(100px, -50px);
+}
+
+.search-area .slogan {
+    font-size: 2rem;
+    font-family: "Kiona", "Times New Roman", serif;
+}
+
+/*TODO figure out a way to change the button colour*/
+.search {
+    float: right;
+    margin: 0 7vw 0 0;
+
+    display: flex;
+    justify-content: center;
+    width: 30vw;
+    height: 4vh;
+}
+
+.search  input{
+    border-radius: 20px 0 0 20px;
+    border: none;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+    width: 17.5vw;
+    padding: 0 0 0 1vw;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+}
+
+.search-icon-btn {
+    background-color: white;
+    border: none;
+    border-right: 2px solid #000;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-radius: 0 20px 20px 0 ;
+    width: 2.5vw;
+    cursor: pointer;
+    background-image: url("./../../Brand_Identity/images/icons/search_icon_black.png");
+    background-position: 5px 3px;
+    background-repeat: no-repeat;
+    background-size: 3vh;
+}
+
+
+
+.search input:focus {
+    color: black;
+    outline: none;
+    background-color: rgba(81,81,81,0.2);
+}
+
+#search:focus .search .search-icon-btn {
+    outline: none;
+    background-color: rgba(81,81,81,0.2);
+}
+
+.search input:focus::placeholder {
+    color: transparent;
+}
+
+
+
+.navigation {
+    background-color: rgba(22, 150, 210, 0.75);
+    height: 5vh;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .box {
-    border-bottom: 1px solid rgba(82,82,82,0.75);
+    width: 10vw;
+    height: 10vh;
     text-align: center;
-    padding: 5% 0 5% 0;
+    border-left: 1px solid white;
+    font-size: 1.3rem;
 }
 
-.box:hover {
-    cursor: pointer;
-    color: rgba(82,82,82,0.75);
+#img {
+    background-repeat: no-repeat;
+    background-position: 5vw 2.5vh;
+    background-image: url("./../../Brand_Identity/images/icons/white_house.png");
+    background-size: 5vh;
+    border-left: 0;
+}
+.box p {
+    margin: 3.5vh 0;
 }
 
-.dash-box a {
-    text-decoration: none;
-    color: black;
+.navigation img {
+    scale: 0.27;
+
 }
-/*Currently active page, change depending on the CSS file used*/
-#News {
-    background-color: rgba(22,150,210,0.8);
-    border: 1px solid #1696D2;
-    color: white;
+
+.main-container {
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
 }
+
+.heading {
+    width: 100%;
+}
+
+.heading h1{
+    height: 3.5vh;
+    color: #1696D2;
+    text-align: center;
+    text-decoration: underline;
+}
+
 
 /*End of Navigational Dashboard*/
-
-
 .announcement-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
     justify-content: center;
     align-items: center;
     border: 1px solid #ccc;
-
-    margin: 5% 2%;
-
-    width: 96%;
-    height: 70%;
-/*    margin-left: 228px;
-    margin-top: 151px;*/
-
+    margin: 2% 4% 5% 4%;
+    width: 90%;
+    height: 57%;
 }
 
 .announcement-list {
@@ -122,10 +224,17 @@ body {
      */
 
     width: 20%;
-    height: 90%;
-    overflow-y: scroll;
+    height: 100%;
     border-right: 1px solid #ccc;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;  /* hides scrollbar */
+    scrollbar-width: none;  /* hides scrollbar */
+}
 
+/*hides scrollbar*/
+.announcement-list::-webkit-scrollbar {
+    display: none;
 }
 
 .announcement-list-item {
@@ -148,15 +257,12 @@ body {
     height: 90%;
 }
 
-
-
 .announcement-list-gap {
     height: 20px; /* Adjust the height if needed */
 }
 
 
 .filter-container {
-
     height: 10%;
     width: 100%;
 }
@@ -164,13 +270,22 @@ body {
 .filter-dropdown {
     display: inline-block;
     position: relative;
+    width: 100%;
 }
 
 .filter-button {
     background-color: #f0f0f0;
-    border: none;
+    border: 1px solid rgba(31, 31, 31, 1);
+    border-radius: 5px;
     padding: 5px 10px;
+    margin: 1.4vh 2vw 0;
     cursor: pointer;
+    width: 40%;
+}
+
+#filter_img {
+    width: 1vw;
+    float: left;
 }
 
 .filter-options {
@@ -178,8 +293,10 @@ body {
     position: absolute;
     z-index: 1;
     background-color: #fff;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    min-width: 120px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    min-width: 70%;
+    margin-left: 14%;
+    text-align: center;
 }
 
 .filter-options a {
@@ -199,4 +316,42 @@ body {
 
 
 
+.filter-dropdown:hover .announcement-container {
+    opacity: 0.2;
+}
 
+.add-comment {
+    visibility: hidden;
+    position: fixed;
+    float: right;
+    top: 94%;
+    right: 7.2vw;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.pre-announcement {
+    text-align: center;
+    margin-top: 20%;
+}
+.comment-box {
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-box textarea {
+    width: 80%;
+    max-width: 90%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.comment-box button {
+    background-color: #007bff;
+    color: #fff;
+    width: 100px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
