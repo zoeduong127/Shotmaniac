@@ -34,6 +34,7 @@ public class Mailer {
     private static final String EMAIL = "shotmaniacs2mod04@gmail.com";
     private static Session session;
     private static String PATH;
+    private static final String NEWBOOKINGEMAIL = "shotmaniacs2mod04@gmail.com";
 
     private Mailer() {
     }
@@ -47,9 +48,8 @@ public class Mailer {
 //            loadHTMLFile(new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email");
 //        } catch (IOException ignored) {
 //        }
-        PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Change this path after done testing
-
-        System.out.println();
+        //PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Ensure this path is correct before deployment
+        PATH = new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\email";
         // Get system properties
         Properties properties = System.getProperties();
 
@@ -63,15 +63,11 @@ public class Mailer {
         session = Session.getInstance(properties, new jakarta.mail.Authenticator() {
 
             protected PasswordAuthentication getPasswordAuthentication() {
-
                 return new PasswordAuthentication(EMAIL, PASSWORD);
-
             }
         });
-
         // Used to debug SMTP issues
         session.setDebug(true);
-
     }
 
     public static void sendEmail(String to, String subject, String HTMLContent) throws MessagingException {
@@ -138,7 +134,7 @@ public class Mailer {
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
-            sendEmail("lucafuertes@gmail.com", "New Enrolment", doc.html()); //TODO: Change this to send to account's email
+            sendEmail(account.getEmail(), "New Enrolment", doc.html()); //TODO: Change this to send to account's email
         } catch (IOException e) {
             System.out.println("Error parsing email HTML file: " + e.getMessage());
         }
@@ -167,7 +163,7 @@ public class Mailer {
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
-            sendEmail("lucafuertes@gmail.com", "Booking Was Cancelled", doc.html()); //TODO: Change this to send to account's email
+            sendEmail(account.getEmail(), "Booking Was Cancelled", doc.html());
         } catch (IOException e) {
             System.out.println("Error parsing email HTML file: " + e.getMessage());
         }    }
@@ -195,7 +191,7 @@ public class Mailer {
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
-            sendEmail("lucafuertes@gmail.com", "Booking De-enrolment", doc.html()); //TODO: Change this to send to account's email
+            sendEmail(account.getEmail(), "Booking De-enrolment", doc.html());
         } catch (IOException e) {
             System.out.println("Error parsing email HTML file: " + e.getMessage());
         }
@@ -217,7 +213,7 @@ public class Mailer {
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
             doc.getElementById("client_contact").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client contact: </strong><br /> Phone: " + booking.getPhoneNumber() + "<br /> Email: " + booking.getClientEmail());
-            sendEmail("lucafuertes@gmail.com", "New Booking", doc.html()); //TODO: Change this to send to account's email
+            sendEmail(NEWBOOKINGEMAIL, "New Booking", doc.html());
         } catch (IOException e) {
             System.out.println("Error parsing email HTML file: " + e.getMessage());
         }
