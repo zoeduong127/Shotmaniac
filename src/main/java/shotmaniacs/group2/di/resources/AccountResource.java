@@ -42,7 +42,7 @@ public class AccountResource {
             if (rowsAffected > 0) {
                 return Response.ok().entity("Account was deleted.").build();
             } else {
-                return Response.ok().entity("Account with that id could not be found.").build();
+                return Response.notModified().build();
             }
 
         } catch (SQLException e) {
