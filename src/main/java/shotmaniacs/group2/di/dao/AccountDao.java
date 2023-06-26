@@ -43,16 +43,40 @@ public enum AccountDao {
             preparedStatement.setString(5, account.getSalt());
             int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Successfully");
                 return rowsInserted;
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: " + e);
         }
-        System.out.println("Unsuccessfully");
         return 0;
     }
 
+    /**
+     * Returns the account object that corresponds to the given account id.
+     * @param accountId
+     * @return The account if exists. Returns null otherwise.
+     */
+    public Account getAccountById(int accountId) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT * FROM account a WHERE a.account_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
 
+            ps.setInt(1, accountId);
 
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                try {
+                    Account result = new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6) );
+                    return result;
+                } catch (IllegalArgumentException e) {
+                    return null;
+                }
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting account by id: " + e.getMessage());
+        }
+        return null;
+    }
 }

@@ -32,6 +32,19 @@ public class AdministratorsResource {
     private static String password = "yummybanana";
 
     @RolesAllowed({"Administrator"})
+    @Path("enrolment/{enrolmentId}")
+    public EnrolmentResource modifySpecificEnrolment(@PathParam("enrolmentId") int enrolmentId) {
+        return new EnrolmentResource(uriInfo, request, enrolmentId);
+    }
+
+    @RolesAllowed({"Administrator"})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("account/{accountId}")
+    public AccountResource modifySpecificAccount(@PathParam("accountId") int accountId) {
+        return new AccountResource(uriInfo, request, accountId);
+    }
+
+    @RolesAllowed({"Administrator"})
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("/accounts")
@@ -97,27 +110,69 @@ public class AdministratorsResource {
     }
 
     @RolesAllowed({"Administrator"})
-    @DELETE
-    @Path("/accounts/{id}")
-    public Response deleteAccountById(@PathParam("id") int id) {
+    @GET
+    @Path("/accounts")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Account> searchAccountByUsername(@QueryParam("username") String username) {
+
+        List<Account> accountList = new ArrayList<>();
+
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String sql = "DELETE FROM account WHERE account.id = ?";
+            String sql = "SELECT * FROM account a WHERE to_tsvector(a.username) @@ phraseto_tsquery(?);";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            int rowsAffected = ps.executeUpdate();
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
 
-            if (rowsAffected > 0) {
-                return Response.ok().entity("Account was deleted.").build();
-            } else {
-                return Response.ok().entity("Account with that id could not be found.").build();
+            while (rs.next()) {
+                try {
+                    Account result = new Account(rs.getInt(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4),
+                            AccountType.valueOf(rs.getString(5)), rs.getString(6));
+                    accountList.add(result);
+                } catch (IllegalArgumentException ignored) {
+                }
             }
 
         } catch (SQLException e) {
             System.err.println("Error connecting: " + e);
         }
-        return Response.serverError().build();
+        return accountList;
     }
+
+    @RolesAllowed({"Administrator"})
+    @GET
+    @Path("/accounts/{accountType}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Account> searchAccountByUsernameAndType(@QueryParam("username") String username, @PathParam("accountType") String accountType) {
+        List<Account> accountList = new ArrayList<>();
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT * FROM account a WHERE to_tsvector(a.username) @@ phraseto_tsquery(?) AND a.account_type = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, accountType);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                try {
+                    Account result = new Account(rs.getInt(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4),
+                            AccountType.valueOf(rs.getString(5)), rs.getString(6));
+                    accountList.add(result);
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error connecting: " + e);
+        }
+        return accountList;
+    }
+
+
 
     @Path("/announcement/{announcementid}")
     @RolesAllowed({"Administrator"})
@@ -139,7 +194,7 @@ public class AdministratorsResource {
         }
     }
 
-    @RolesAllowed({"Administrator","Crew"})
+    @RolesAllowed({"Administrator"})
     @Path("/booking/{booking_id}/crew")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -242,8 +297,8 @@ public class AdministratorsResource {
                 return false;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error while checking if account exists: " + e.getMessage());
         }
+        return false;
     }
-
 }

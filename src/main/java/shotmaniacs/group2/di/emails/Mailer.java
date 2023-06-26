@@ -5,20 +5,35 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import shotmaniacs.group2.di.dao.AccountDao;
+import shotmaniacs.group2.di.dao.BookingDao;
+import shotmaniacs.group2.di.dto.EnrolmentDto;
+import shotmaniacs.group2.di.model.Account;
+import shotmaniacs.group2.di.model.Booking;
+import shotmaniacs.group2.di.resources.BookingResource;
 
+import java.awt.print.Book;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.*;
 import java.util.Properties;
 
 public class Mailer {
+
+    private static String dbHOST = "bronto.ewi.utwente.nl";
+    private static String dbNAME ="dab_dsgnprj_50";
+    private static String dbURL = "jdbc:postgresql://" + dbHOST + ":5432/" +dbNAME+"?currentSchema=dab_dsgnprj_50";
+    private static String dbPASSWORD = "yummybanana";
 
     private static final String HOST = "smtp.gmail.com";
     private static final String PASSWORD = "uxcwfkbcqiwbhvmw";
     private static final String EMAIL = "shotmaniacs2mod04@gmail.com";
     private static Session session;
-    private static String path;
+    private static String PATH;
 
     private Mailer() {
     }
@@ -32,7 +47,7 @@ public class Mailer {
 //            loadHTMLFile(new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email");
 //        } catch (IOException ignored) {
 //        }
-        path = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email";
+        PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Change this path after done testing
 
         System.out.println();
         // Get system properties
@@ -100,24 +115,63 @@ public class Mailer {
         return contentBuilder.toString();
     }
 
-    public static void sendEnrolmentNotification(int enrolmentId) {
-        // TODO
+    public static void sendEnrolmentNotification(int enrolmentId) throws MessagingException {
+        EnrolmentDto enrolmentDetails = getEnrolmentDetails(enrolmentId);
+        Booking booking = BookingDao.instance.getABooking(enrolmentDetails.getBookingId());
+        Account account = AccountDao.instance.getAccountById(enrolmentDetails.getCrewMemberId());
+        try {
+            Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\enrolmentNotification.html"));
+            sendEmail("lucafuertes@gmail.com", "Subject over here", doc.html());
+        } catch (IOException e) {
+            System.out.println("Error parsing email HTML file: " + e.getMessage());
+        }
     }
 
-    public static void sendBookingCancellation() {
-        // TODO
+    public static void sendBookingCancellation(int bookingId) {
+        Booking booking = BookingDao.instance.getABooking(bookingId);
     }
 
     public static void sendBookingUnenrolment(int enrolmentId) {
-        // TODO
+        EnrolmentDto enrolmentDetails = getEnrolmentDetails(enrolmentId);
+        Booking booking = BookingDao.instance.getABooking(enrolmentDetails.getBookingId());
+        Account account = AccountDao.instance.getAccountById(enrolmentDetails.getCrewMemberId());
     }
 
-//    public static void main(String[] args) {
+    private static EnrolmentDto getEnrolmentDetails(int enrolmentId) {
+        String query = "SELECT e.booking_id, e.crew_member_id FROM enrolment e WHERE e.enrolment_id = ?";
+
+        EnrolmentDto enrolmentDto = new EnrolmentDto();
+
+        try {
+            Connection connection = DriverManager.getConnection(dbURL, dbNAME, dbPASSWORD);
+            PreparedStatement ps = connection.prepareStatement(query);
+
+            ps.setInt(1, enrolmentId);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            enrolmentDto.setBookingId(rs.getInt(1));
+            enrolmentDto.setCrewMemberId(rs.getInt(2));
+            return enrolmentDto;
+        } catch (SQLException e) {
+            System.out.println("Error sending enrolment notification: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
 //        try {
 //            sendEmail("lucafuertes@gmail.com", "testing", "");
 //        } catch (MessagingException e) {
 //            e.printStackTrace();
 //        }
-//    }
+        try {
+            sendEnrolmentNotification(11);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

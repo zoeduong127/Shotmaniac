@@ -10,8 +10,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Arrays;
-
 import static java.lang.String.valueOf;
 
 public class TokenManager {

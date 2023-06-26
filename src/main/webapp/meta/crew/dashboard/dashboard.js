@@ -134,10 +134,7 @@ function performQueryAndUpdateBookings(url) {
                 bookingContainer.appendChild(bookingElementCopy);
             });
         })
-        .catch(error => {
-            // Handle any errors
-            console.error(error);
-        });
+
 }
 
 
@@ -211,6 +208,9 @@ function updateLabel(label) {
         headers: {
             'Authorization': `${token}`
         }
+    }).catch(error => {
+        // Handle any errors
+        console.error(error);
     });
 }
 
@@ -223,4 +223,3 @@ searchbox.addEventListener("keydown", function (e) {
 });
 
 updateBookings("ongoing");
-

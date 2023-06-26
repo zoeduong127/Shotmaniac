@@ -16,15 +16,12 @@ public class BookingResource {
     UriInfo uriInfo;
   @Context
     Request request;
-
     private static String host = "bronto.ewi.utwente.nl";
     private static String dbName ="dab_dsgnprj_50";
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
-
   int accountId;
   int bookingId;
-
     public BookingResource(UriInfo uriInfo, Request request, int accountId, int id) {
         this.uriInfo = uriInfo;
         this.request = request;
@@ -40,13 +37,10 @@ public class BookingResource {
      */
     public Booking getBooking() {
       Booking booking = BookingDao.instance.getABooking(bookingId);
-      if(booking == null) {
-          throw new RuntimeException("Get: booking with " + bookingId + "is not defined");
-      }
       return booking;
     }
 
-    @Path("/role")
+    @Path("/enrol")
     @RolesAllowed({"Administrator","Crew"})
     @PUT
     public Response putEnrolment(@QueryParam("role") String roleToPut){
@@ -73,9 +67,9 @@ public class BookingResource {
         return Response.serverError().build();
     }
 
-    @Path("/role")
+    @Path("/enrolment")
     @DELETE
-    public Response deleteEnrolment() {
+    public Response deleteEnrolmentByBookingIdAndAccountId() {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String sql = "DELETE FROM enrolment WHERE booking_id = ? AND crew_member_id = ?";
@@ -125,7 +119,7 @@ public class BookingResource {
 
     @Path("/label")
     @GET
-    public Response getLabelByID() {
+    public Response getLabelByAccountAndBookingId() {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String sql = "SELECT enrolment.label FROM enrolment WHERE booking_id = ? AND crew_member_id = ?";
