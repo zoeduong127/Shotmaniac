@@ -34,7 +34,7 @@ public class CrewsResourse {
     @Path("/mybookings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Booking> getBooking(@PathParam("crewid") int crewId) {
+    public List<Booking> getBookingById(@PathParam("crewid") int crewId) {
         List<Booking> listBooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -213,7 +213,6 @@ public class CrewsResourse {
     public BookingResource modifySpecificBooking(@PathParam("crewid") int crewid, @PathParam("booking_id") int id) {
         return new BookingResource(uriInfo, request, crewid, id);
     }
-    //TODO: U - assign a specific role to the booking
 
     @RolesAllowed({"Administrator","Crew"})
     @Path("/news")
