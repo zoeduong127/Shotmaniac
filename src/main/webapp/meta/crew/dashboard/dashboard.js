@@ -306,7 +306,7 @@ function updateBookings(filterType) {
     let filter;
     let url;
 
-    switch (filterType.toLowerCase()) {
+    switch (filterType) {
         case 'in_progress': {
             filter = "IN_PROGRESS";
             filterButton.textContent = "Filter: In progress";
