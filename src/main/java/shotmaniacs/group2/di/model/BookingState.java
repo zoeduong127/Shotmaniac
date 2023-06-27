@@ -4,5 +4,6 @@ import java.nio.channels.AcceptPendingException;
 
 public enum BookingState {
     PENDING,
-    APPROVED
+    APPROVED,
+    CANCELED
 }

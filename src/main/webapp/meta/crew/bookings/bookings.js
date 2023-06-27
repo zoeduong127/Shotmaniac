@@ -1,5 +1,6 @@
 const booking_container = document.getElementById("booking_container");
 const popup = document.getElementById("hiddenpop");
+const maincontainer = document.getElementById("main-container");
 const days = [
     "Sunday",
     "Monday",
@@ -25,22 +26,51 @@ const months = [
     "December"
 ];
 
+
+const cookies = parseCookie(document.cookie);
+const token = cookies['auth_token'];
+const account_id = cookies['account_id'];
+console.log("account id: " + account_id);
+
+function calcAvailableSlots(slots, id) {
+    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew`;
+    console.log("slots: " + slots);
+    console.log("id: " + id);
+
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            let slotCount = 0;
+            data.forEach(crew => {
+              if (crew.accountType === "Crew") slotCount++;
+            })
+            console.log("slotCount: " + slotCount);
+             document.getElementById("slot").innerHTML = ` 
+                <strong>Available slots: </strong>${slots - slotCount}/${slots}`;
+        })
+}
+
+
 function openInfo(element) {
     booking_container.style.opacity = "0.2";
     popup.style.visibility = "visible";
+    maincontainer.style.pointerEvents = "none";
 
-    const cookies = parseCookie(document.cookie);
-    const id = cookies['account_id'];
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/booking/${element.id}`
-    fetch(url)
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
         .then(response => response.json())
         .then(booking => {
-            let element = "";
             /*TODO: is it best to compare to the full database or try something else*/
-            console.log(element.children[0]);
-            console.log(element.children[1]);
-
 
             let info = "";
             info += `
@@ -48,21 +78,25 @@ function openInfo(element) {
                     <p>${days[new Date(booking.date).getDay()]}, 
                        ${new Date(booking.date).getDate()} 
                        ${months[new Date(booking.date).getMonth()]} 
-                       ${new Date(booking.date).getFullYear()}
-                       ${new Date(booking.date).getTime()}
+                       ${new Date(booking.date).getFullYear()},
+                       ${new Date(booking.date).getHours()}:${new Date(booking.date).getMinutes()}
                     </p>
+                    
                     <img class="icon" src="">
-                    <p><strong>Available slots: </strong>${booking.slot}</p> <!-- TODO: subtract number of crew in the event -->
+                    <p id="slot"></p> <!-- TODO: subtract number of crew in the event -->
+                    
                     <img class="icon" src="">
                     <p>${booking.description}</p>
-                    `;
+                `;
 
             document.getElementById("top-tab").innerHTML = `<h4 id = "heading"> ${booking.name}</h4>
                 <span id="back">
                         <img src="./../../Brand_Identity/images/icons/X-icon.png" alt="close" id="back-img" onclick="closeInfo()">
                 </span>`;
-
+            document.querySelector(".bookinginfo").id = booking.id;
             document.getElementById("popup-main").innerHTML = info;
+
+            calcAvailableSlots(booking.slots, booking.id);
         })
 }
 
@@ -70,6 +104,7 @@ function openInfo(element) {
 function closeInfo() {
     booking_container.style.opacity = "1";
     popup.style.visibility = "hidden";
+    maincontainer.style.pointerEvents = "auto"
 }
 
 
@@ -86,15 +121,14 @@ function parseCookie(cookieString) {
 
 
 /*Get all bookings*/
-
 function performQueryAndUpdateBookings() {
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
-    const cookies = parseCookie(document.cookie);
-    const id = cookies['account_id'];
-
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/allbookings`;
-
-    fetch(url)
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
         .then(response => response.json())
         .then(data => {
             let element = "";
@@ -123,7 +157,20 @@ function performQueryAndUpdateBookings() {
         });
 }
 
+function enroll() {
+    const id = document.querySelector(".bookinginfo").id;
+    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew/${account_id}/enrol`;
 
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `${token}`
+        }
+    }).catch(error => {
+        // Handle any errors
+        console.error(error);
+    });
+}
 
 /*To load at the start of the page*/
 performQueryAndUpdateBookings();
