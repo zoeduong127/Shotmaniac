@@ -206,7 +206,7 @@ body {
     align-items: center;
 }
 
-.title-bar a {
+.title-bar span {
     color: #1696D2;
 }
 
@@ -223,7 +223,7 @@ body {
 }
 
 /*Navigation*/
-.title-bar a:hover {
+.title-bar span:hover {
     cursor: pointer;
 }
 .heading {
@@ -343,9 +343,11 @@ body {
     margin: 0;
     font-family: "Kiona", "Times New Roman", serif;
     height: 3.5vh;
+    font-size: 0.8rem;
     width: 70%;
-    padding-top: 0.8vh;
+    padding-top: 0.9vh;
     color: rgb(147 76 218);
+
 }
 
 .REVIEW p {

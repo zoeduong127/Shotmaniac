@@ -1,4 +1,4 @@
-const booking = document.getElementById("booking_container");
+const booking_container = document.getElementById("booking_container");
 const popup = document.getElementById("hiddenpop");
 const days = [
     "Sunday",
@@ -26,7 +26,7 @@ const months = [
 ];
 
 function openInfo(element) {
-    booking.style.opacity = "0.2";
+    booking_container.style.opacity = "0.2";
     popup.style.visibility = "visible";
 
     const cookies = parseCookie(document.cookie);
@@ -68,7 +68,7 @@ function openInfo(element) {
 
 
 function closeInfo() {
-    booking.style.opacity = "1";
+    booking_container.style.opacity = "1";
     popup.style.visibility = "hidden";
 }
 
