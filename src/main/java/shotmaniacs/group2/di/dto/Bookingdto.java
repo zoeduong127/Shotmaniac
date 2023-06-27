@@ -62,7 +62,7 @@ public class Bookingdto {
     public boolean addBooking(Bookingdto booking) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO booking VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO booking VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,booking.getName());
             preparedStatement.setString(2,booking.getDescription());
@@ -76,6 +76,7 @@ public class Bookingdto {
             preparedStatement.setString(10, String.valueOf(booking.getBookingType()));
             preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
             preparedStatement.setInt(12, 0);
+            preparedStatement.setString(13, null);
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0) {
                 System.out.println("Successfully");

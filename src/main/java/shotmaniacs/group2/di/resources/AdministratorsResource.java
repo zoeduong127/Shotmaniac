@@ -5,6 +5,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dao.AnnouncementDao;
+import shotmaniacs.group2.di.dto.AccountWithRole;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
 import java.nio.charset.StandardCharsets;
@@ -194,21 +196,21 @@ public class AdministratorsResource {
         }
     }
 
-    @RolesAllowed({"Administrator", "Crew"})
+    @RolesAllowed({"Administrator", "Crew", "Client"})
     @Path("/booking/{booking_id}/crew")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
 
-    public List<Account> getEnrolledCrewMembersByBookingId(@PathParam("booking_id") int booking_id) {
-        List<Account> accountList = new ArrayList<>();
+    public List<AccountWithRole> getEnrolledCrewMembersByBookingId(@PathParam("booking_id") int booking_id) {
+        List<AccountWithRole> accountList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.* FROM account a , enrolment e WHERE e.booking_id = ? AND e.crew_member_id = a.account_id;";
+            String query = "SELECT a.*, e.role FROM account a JOIN enrolment e ON (e.crew_member_id = a.account_id)  WHERE e.booking_id = ? AND e.crew_member_id = a.account_id;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,booking_id);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
-                accountList.add(new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6)));
+                accountList.add(new AccountWithRole(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(8)));
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
@@ -240,7 +242,8 @@ public class AdministratorsResource {
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -275,7 +278,8 @@ public class AdministratorsResource {
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -323,6 +327,57 @@ public class AdministratorsResource {
         }
 
         return Response.serverError().build();
+    }
+
+    @RolesAllowed({"Administrator"})
+    @Path("/booking/{booking_id}/productmanager/{product_manager_id}")
+    @PUT
+    public Response setProductManager(@PathParam("booking_id") int bookingId, @PathParam("product_manager_id") int prod_man_id) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "UPDATE booking SET product_manager_id = ? WHERE booking_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, prod_man_id);
+            ps.setInt(2, bookingId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while setting booking product manager: " + e.getMessage());
+        }
+        return Response.serverError().build();
+    }
+
+    @RolesAllowed({"Administrator", "Crew"})
+    @Path("/booking/{booking_id}/productmanager")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Account getProductManagerByBookingId(@PathParam("booking_id") int bookingId) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT a.* FROM account a, booking b WHERE b.product_manager_id = a.account_id AND b.booking_id = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, bookingId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Account(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4),
+                        AccountType.valueOf(rs.getString(5)), rs.getString(6));
+            } else {
+                return null;
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while getting booking product manager: " + e.getMessage());
+        }
+        return null;
     }
 
     public String hash256(String input) {

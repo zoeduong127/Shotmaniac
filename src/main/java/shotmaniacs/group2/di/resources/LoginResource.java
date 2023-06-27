@@ -2,9 +2,11 @@ package shotmaniacs.group2.di.resources;
 
 
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dto.LoginInfor;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
 import shotmaniacs.group2.di.model.RootElementWrapper;
@@ -26,7 +28,6 @@ public class LoginResource {
     private static String dbName ="dab_dsgnprj_50";
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
-
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
@@ -93,7 +94,6 @@ public class LoginResource {
     public Response logOut(@HeaderParam("Authorization") String authorizationHeader) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-
             PreparedStatement tokenPS = connection.prepareStatement("DELETE FROM token WHERE token = ?");
             tokenPS.setString(1, authorizationHeader);
             int rowsAffected = tokenPS.executeUpdate();
@@ -101,7 +101,7 @@ public class LoginResource {
             if (rowsAffected > 0) {
                 return Response.ok().entity("Logged out successfully").build();
             } else {
-                return Response.ok().entity("The given account was not logged in.").build();
+                return Response.notModified().entity("The given account was not logged in.").build();
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);

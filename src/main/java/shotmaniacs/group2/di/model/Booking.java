@@ -34,13 +34,14 @@ public class Booking {
 
     @XmlAnyElement
     private int slots;
-
+    @XmlAnyElement
+    private int product_manager_id;
 
     public Booking(){}
 
     public Booking(int id, String name, String description, EventType eventType, Timestamp date,
                    String location, int duration, String clientName, String clientEmail, String phoneNumber,
-                   BookingType bookingType, BookingState state, int slots) {
+                   BookingType bookingType, BookingState state, int slots, int product_manager_id) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -54,6 +55,7 @@ public class Booking {
         this.bookingType = bookingType;
         this.state = state;
         this.slots = slots;
+        this.product_manager_id = product_manager_id;
     }
     public Booking(String name, String description, EventType eventType, Timestamp date,
                    String location, int duration, String clientName, String clientEmail, String phoneNumber,
@@ -174,5 +176,13 @@ public class Booking {
 
     public void setSlots(int slots) {
         this.slots = slots;
+    }
+
+    public int getProduct_manager_id() {
+        return product_manager_id;
+    }
+
+    public void setProduct_manager_id(int product_manager_id) {
+        this.product_manager_id = product_manager_id;
     }
 }
