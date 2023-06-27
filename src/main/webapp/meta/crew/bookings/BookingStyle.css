@@ -156,6 +156,7 @@ body {
     text-decoration: none;
     color: black;
 }
+
 /*Currently active page, change depending on the CSS file used*/
 #booking {
     background-color: rgba(22,150,210,0.8);
@@ -457,4 +458,5 @@ body {
     line-height: 25px;
     text-transform: uppercase;
     background: rgba(31, 31, 31, 0.35);
+    cursor: pointer;
 }

@@ -158,8 +158,11 @@ function performQueryAndUpdateBookings() {
 }
 
 function enroll() {
+    console.log("enroll clicked");
     const id = document.querySelector(".bookinginfo").id;
     const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew/${account_id}/enrol`;
+
+    popup.style.visibility = "hidden";
 
     fetch(url, {
         method: 'PUT',
