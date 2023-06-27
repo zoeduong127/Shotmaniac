@@ -1,5 +1,7 @@
 package shotmaniacs.group2.di.emails;
 
+import jakarta.activation.MailcapCommandMap;
+import jakarta.activation.MimetypesFileTypeMap;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeBodyPart;
@@ -20,7 +22,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
+import java.util.Random;
 
 public class Mailer {
 
@@ -48,7 +52,7 @@ public class Mailer {
 //            loadHTMLFile(new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email");
 //        } catch (IOException ignored) {
 //        }
-        //PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Ensure this path is correct before deployment
+//        PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Ensure this path is correct before deployment
         PATH = new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\email";
         // Get system properties
         Properties properties = System.getProperties();
@@ -100,6 +104,52 @@ public class Mailer {
         System.out.println("Sent message successfully....");
     }
 
+    public static void sendEmailWithInvite(String[] to, String subject, String HTMLContent, Booking booking, Account account) throws MessagingException {
+        // register the text/calendar mime type
+        MimetypesFileTypeMap mimetypes = 	(MimetypesFileTypeMap)MimetypesFileTypeMap.getDefaultFileTypeMap();
+        mimetypes.addMimeTypes("text/calendar ics ICS");
+
+        // register the handling of text/calendar mime type
+        MailcapCommandMap mailcap = (MailcapCommandMap) 	MailcapCommandMap.getDefaultCommandMap();
+        mailcap.addMailcap("text/calendar;;x-java-content-handler=com.sun.mail.handlers.text_plain");
+
+        // Create a default MimeMessage object.
+        MimeMessage message = new MimeMessage(session);
+
+        // Set From: header field of the header.
+        message.setFrom(new InternetAddress(EMAIL));
+
+        // Set To: header field of the header.
+        InternetAddress[] addressTo = new InternetAddress[to.length];
+        for (int i = 0; i < to.length; i++) {
+            addressTo[i] = new InternetAddress(to[i]);
+        }
+        message.setRecipients(Message.RecipientType.TO, addressTo);
+
+        // Set Subject: header field
+        message.setSubject(subject);
+
+        // Now set the actual message
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setContent(HTMLContent,"text/html");
+
+        // Create the multipart object and add the HTML body part
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart);
+
+        // Set the multipart as the message's content
+        message.setContent(multipart);
+
+        // Add part two, the calendar
+        BodyPart calendarPart = buildCalendarPart(new Date(booking.getDate().getTime()), new Date(booking.getDate().getTime()), booking, account);
+        multipart.addBodyPart(calendarPart);
+
+        System.out.println("sending email notification...");
+        // Send message
+        Transport.send(message);
+        System.out.println("Sent message successfully....");
+    }
+
     private static String loadHTMLFile(String path) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
         BufferedReader in = new BufferedReader(new FileReader(path));
@@ -134,7 +184,7 @@ public class Mailer {
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
-            sendEmail(account.getEmail(), "New Enrolment", doc.html()); //TODO: Change this to send to account's email
+            sendEmailWithInvite(new String[]{account.getEmail()}, "New Enrolment", doc.html(), booking, account); //TODO: Change this to send to account's email
         } catch (IOException e) {
             System.out.println("Error parsing email HTML file: " + e.getMessage());
         }
@@ -242,6 +292,56 @@ public class Mailer {
         return null;
     }
 
+    private static BodyPart buildCalendarPart(Date startDateTime, Date endDateTime, Booking booking, Account account) throws MessagingException {
+        SimpleDateFormat iCalendarDateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmm'00'");
+        BodyPart calendarPart = new MimeBodyPart();
+
+        String calendarContent = "BEGIN:VCALENDAR\n" + "METHOD:REQUEST\n"
+                + "PRODID: Shotmaniacs2\n" + "VERSION:2.0\n"
+                + "BEGIN:VEVENT\n" + "DTSTAMP:"
+                + iCalendarDateFormat.format(new Date(System.currentTimeMillis()))
+                + "\n"
+                + "DTSTART:"
+                + iCalendarDateFormat.format(startDateTime)
+                + "\n"
+                + "DTEND:"
+                + iCalendarDateFormat.format(endDateTime)
+                + "\n"
+                + "SUMMARY:"+ booking.getName() +"\n"
+                + "UID:"+ generateString(32)+"\n"
+                + "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:MAILTO:"+ account.getEmail() +"\n"
+                + "ORGANIZER:MAILTO:"+ EMAIL +"\n"
+                + "LOCATION:"+booking.getLocation()+"\n"
+                + "DESCRIPTION:"+booking.getDescription()+"\n"
+                + "SEQUENCE:0\n"
+                + "PRIORITY:5\n"
+                + "CLASS:PUBLIC\n"
+                + "STATUS:CONFIRMED\n"
+                + "TRANSP:OPAQUE\n"
+                + "BEGIN:VALARM\n"
+                + "ACTION:DISPLAY\n"
+                + "DESCRIPTION:REMINDER\n"
+                + "TRIGGER;RELATED=START:-PT00H15M00S\n"
+                + "END:VALARM\n"
+                + "END:VEVENT\n" + "END:VCALENDAR";
+        calendarPart.addHeader("Content-Class","urn:content-classes:calendarmessage");
+        calendarPart.setContent(calendarContent, "text/calendar;method=CANCEL");
+        return calendarPart;
+    }
+
+    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    public static String generateString(int length) {
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            builder.append(ALPHABET.charAt(random.nextInt(ALPHABET.length())));
+        }
+
+        return builder.toString();
+    }
+
     public static void main(String[] args) {
 //        try {
 //            sendEmail("lucafuertes@gmail.com", "testing", "");
@@ -249,12 +349,9 @@ public class Mailer {
 //            e.printStackTrace();
 //        }
         try {
-            sendNewBookingNotification(22);
+            sendEnrolmentNotification(32);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
-
     }
-
 }
