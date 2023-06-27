@@ -1,9 +1,95 @@
+const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
+const cookies = parseCookie(document.cookie);
+const token = cookies['auth_token'];
+const account_id = cookies['account_id'];
+let event_booking = "";
 let currentTheme = document.getElementById("currentCSS");
 currentTheme.setAttribute('href', 'crewDashboardStyles.css');
 
 console.log("initial theme: " + currentTheme.getAttribute('href'))
 
-function toggleStyle() {
+function addCrew(id) {
+        const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew`; //TODO confirm that crew have permission to see this as well
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(crew => {
+                console.log("crew name: " + crew.username + ", type: " + crew.accountType);
+                let crewList = document.getElementById("ul_list")
+                let adminList= document.getElementById("users")
+
+                switch (crew.accountType) {
+                    case "Crew": {
+                        crewList.innerHTML += `
+                            <li>${crew.username}</li>
+                        `;
+                        break;
+                    }
+                    case "Administrator": {
+                        adminList.innerHTML += `
+                            <i class="fas fa-user user-icon" style="color: #000000;"></i>
+                            <div class="user-box" id="user1">
+                                <span>${crew.username}</span>
+                            </div>
+                        `;
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+            })
+
+            setLabel(id);
+        })
+}
+
+function setLabel(id) {
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.text())
+        .then(data => {
+            let label = data.replace(" ", "-");
+            let toReplace = document.getElementById("label");
+            console.log("label for " + id + ": " + label);
+            if (label !== null) {
+                toReplace.innerHTML = `
+                        <p>${label.toUpperCase()}</p>
+                        <i class="fas fa-caret-down label-arrow"></i>`;
+
+               toReplace.classList.replace(toReplace.classList.item(1), label.toUpperCase());
+            }
+        })
+        .catch(error => {
+            // Handle any errors
+            console.error(error);
+        });
+}
+
+function toggleStyleAndPage(element) {
     let theme = document.getElementsByTagName('link');
     console.log(theme)
 
@@ -14,9 +100,89 @@ function toggleStyle() {
         currentTheme.setAttribute('href', 'crewDashboardStyles.css');
         console.log('new theme changed to: ' + currentTheme.getAttribute('href'));
     }
+
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`;
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(booking => {
+            /*Display booking as latest booking*/
+            document.getElementById("Latest_Booking").innerHTML = `
+            <p id="booking_name"> ${booking.name}</p>
+            <p id="booking_description">${booking.description}</p>
+            `;
+
+            /*Display Signle event information*/
+            document.getElementById("heading").innerHTML = booking.name;
+
+            document.getElementById("link").innerHTML = booking.name;
+
+            document.getElementById("label_content").innerHTML = `
+                <div class="item" id="todo" onclick="updateLabel(this, booking.id)">
+                    <p>Todo</p>
+                </div>
+                    
+                <div class="item" id="in-progress" onclick="updateLabel(this, booking.id)">
+                    <p>In Progress</p>
+                </div>
+                
+                <div class="item" id="review" onclick="updateLabel(this, booking.id)">
+                    <p>Review</p>
+                </div>
+                
+                <div class="item" id="done" onclick="updateLabel(this, booking.id)">
+                    <p>Done</p>
+                </div>
+            `;
+
+            document.getElementById("event").innerHTML = `
+                <div class="event-info" id="event-name">
+                    <p><strong>Name: </strong>${booking.name}</p>
+                </div>
+                
+                <div class="event-info" id="event-type">
+                    <p><strong>Event Type: </strong>${booking.eventType}</p>
+                </div> 
+                   
+                <div class="event-info" id="date"> <!-- TODO CHANGE THESE TWO ID's WITH event-{id} incl. JS -->
+                    <p><strong>Date: </strong> 
+                        ${new Date(booking.date).getDate()}
+                        ${months[new Date(booking.date).getMonth()]}
+                        ${new Date(booking.date).getFullYear()}</p>
+                </div>
+                
+                <div class="event-info" id="location">
+                    <p><strong>Location: </strong>${booking.location}</p>
+                </div>
+                
+                <div class="event-info" id="duration">
+                    <p><strong>Duration: </strong>${booking.duration}</p>
+                </div>
+                
+                <div class="event-info" id="booking-type">
+                    <p><strong>Booking Type: </strong>${booking.bookingType}</p>
+                </div>
+                
+                <div class="event-info" id="product-Manager">
+                    <p><strong>Product Manager: </strong>${booking.product_manager}</p>
+                </div>
+                
+                <div class="event-info" id="crew">
+                    <p><strong>Crew:</strong>
+                        <span><ul id="ul_list"></ul></span>
+                    </p>
+                </div>
+            `;
+
+            addCrew(booking.id);
+        })
 }
 
-function setTheme(href){
+function setTheme(href) {
     currentTheme.setAttribute('href', href);
 }
 
@@ -25,17 +191,9 @@ function reloadEvent() {
     //TODO: figure out a way to call the current event page
 }
 
-function loadSingleEvent(id) {
-
-
-}
-
-
-var selectedBooking;
 
 /*Filter*/
 const bookingContainer = document.getElementById("booking_container");
-const bookingElement = bookingContainer.firstElementChild.cloneNode(true);
 
 function parseCookie(cookieString) {
     const cookies = {};
@@ -48,14 +206,7 @@ function parseCookie(cookieString) {
 
 
 function performQueryAndUpdateBookings(url) {
-
-    while (bookingContainer.firstChild) {
-        bookingContainer.removeChild(bookingContainer.firstChild);
-    }
-
-    const cookies = parseCookie(document.cookie);
-    const token = cookies['auth_token'];
-    const account_id = cookies['account_id'];
+    let booking_list = [];
 
     fetch(url, {
         headers: {
@@ -65,76 +216,75 @@ function performQueryAndUpdateBookings(url) {
         .then(response => response.json())
         .then(data => {
             data.forEach(booking => {
-                let bookingElementCopy = bookingElement.cloneNode(true);
 
-                //TODO: Calculate amount of slots already taken.
-
-                //TODO: the line below probably allows stored code attacks. Needs fixing
-                bookingElementCopy.querySelector("#event_name").innerHTML = booking.name /*+ " <span class=\"bolded\">(Available Slots: " + booking.slots + ")</span>"*/;
-                // * bookingElementCopy.querySelector("#booking_type").innerHTML = "<b>Booking Type: </b>" + booking.bookingType;
-
-                bookingElementCopy.querySelector("#location").innerHTML =  "<b>Location: </b>" + booking.location;
-//                bookingElementCopy.querySelector("#client").innerHTML =  "<b>Client: </b>" + booking.clientName;
-                bookingElementCopy.querySelector("#event_type").innerHTML =  "<b>Event Type: </b>" + booking.eventType;
-//                bookingElementCopy.querySelector("#duration").innerHTML =  "<b>Duration: </b>" + booking.duration + " hours";
-
-                bookingElementCopy.querySelector("#event_name").dataset.id = booking.id;
-
-                let dateTime = new Date(booking.date);
-                const formattedDate = dateTime.toLocaleString('en-US', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                });
-
-                bookingElementCopy.querySelector("#date").innerText = dateTime.toDateString() + ', ' + formattedDate;
-
-                let bookingLabel = bookingElementCopy.querySelector("#label");
-
-                const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${booking.id}/label`;
-
-                fetch(url, {
-                    headers: {
-                        'Authorization': `${token}`
-                    }
-                })
-                    .then(response => response.text())
-                    .then(data => {
-                        bookingLabel.innerHTML = data;
-                    })
-                    .catch(error => {
-                        // Handle any errors
-                        console.error(error);
-                    });
-
-                switch (bookingLabel.innerTEXT) { // the colors don't change
-                    case "DONE":
-                        bookingLabel.classList.add("approved-state");
-                        break;
-                    case "TODO":
-                        bookingLabel.classList.add("pending-state");
-                        break;
-                    case "IN PROGRESS":
-                        bookingLabel.classList.add("approved-state");
-                        break;
-                    case "REVIEW":
-                        bookingLabel.classList.add("pending-state");
-                        break;
-                    default:
-                        bookingLabel.classList.add("pending-state");
-                }
-
-                bookingElementCopy.onclick = function() {
-                    selectedBooking = booking;
-                    toggleStyle();
-                    document.getElementById("booking_header").innerHTML =  bookingElementCopy.querySelector("#event_name").innerHTML;
-                    document.getElementById("booking_sublink").innerHTML =  bookingElementCopy.querySelector("#event_name").innerHTML;
-                };
-
-                bookingContainer.appendChild(bookingElementCopy);
+                event_booking += `
+                <div class="booking" id="${booking.id}" onclick="toggleStyleAndPage(this)">
+                    <div class="booking-info-grid">
+                        <div class="booking-large-text">
+                            <p id="event_name">
+                                ${booking.name}
+                            </p>
+                        </div>
+                    
+                        <div class="booking-small">
+                            <p class="location">
+                                ${booking.location}
+                            </p>
+                        </div>
+                    
+                        <div class="booking-small">
+                            <p id="event_type">
+                                ${booking.eventType}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="innerBooking left">
+                        <p class="state NOBOOKING" id="booking_${booking.id}">
+                        </p>
+                    </div>
+                    
+                    <div class="innerBooking right">
+                        <p class="date">
+                            ${new Date(booking.date).getDate()}
+                            ${months[new Date(booking.date).getMonth()]}
+                            ${new Date(booking.date).getFullYear()}
+                        </p>
+                    </div>
+                </div>
+            `;
+                document.getElementById("booking_container").innerHTML += event_booking;
+                booking_list.push(booking.id);
             });
+            addLabel(booking_list)
         })
+}
 
+function addLabel(list) {
+
+    for (let i = 0; i < list.length; i++) {
+        let id = list[i];
+        const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
+        fetch(url, {
+            headers: {
+                'Authorization': `${token}`
+            }
+        })
+            .then(response => response.text())
+            .then(data => {
+                let label = data.replace(" ", "-");
+                console.log("label for " + id + ": " + label);
+                const element = document.getElementById("booking_" + id);
+                if (label !== null) {
+                    element.classList.replace(element.classList.item(1), label.toUpperCase());
+                    element.innerHTML = label.toUpperCase();
+                }
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error(error);
+            });
+    }
 }
 
 
@@ -177,41 +327,38 @@ function searchBookings(searchText) {
     performQueryAndUpdateBookings(url);
 }
 
-function updateLabel(label) {
+function updateLabel(label, id) {
+    console.log("label: " + label.innerText)
+    let state = document.getElementById("label");
+    let replace = label.innerText.replace(" ", "-").toUpperCase();
+    switch (replace) {
 
-    var state;
-    switch (label){
-        case "todo":
-            state = "TODO";
+        case "TODO":
+            state.classList.replace(state.classList.item(1), replace);
+            state.innerHTML = `<p>${label.innerText}</p>
+            <i class="fas fa-caret-down label-arrow"></i>`;
             break;
-        case "in_progress":
-            state = "IN PROGRESS";
+        case "IN-PROGRESS":
+            state.classList.replace(state.classList.item(1), replace);
+            state.innerHTML = `<p>${label.innerText}</p>
+            <i class="fas fa-caret-down label-arrow"></i>`;
             break;
-        case "review":
-            state = "REVIEW";
+        case "REVIEW":
+            state.classList.replace(state.classList.item(1), replace);
+            state.innerHTML = `<p>${label.innerText}</p>
+            <i class="fas fa-caret-down label-arrow"></i>`;
             break;
-        case "done":
-            state = "DONE";
+        case "DONE":
+            state.classList.replace(state.classList.item(1), replace);
+            state.innerHTML = `<p>${label.innerText}</p>
+            <i class="fas fa-caret-down label-arrow"></i>`;
             break;
         default:
-            state = "TODO";
+            state.classList.replace(state.classList.item(1), "NORMAL");
+            state.innerHTML = `<p>Set Label </p>
+            <i class="fas fa-caret-down label-arrow"></i>`;
     }
-    const cookies = parseCookie(document.cookie);
-    const account_id = cookies['account_id'];
-    const token = cookies['auth_token'];
 
-    console.log(selectedBooking.id);
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${selectedBooking.id}/label?label=${state}`;
-
-    fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Authorization': `${token}`
-        }
-    }).catch(error => {
-        // Handle any errors
-        console.error(error);
-    });
 }
 
 //Event listeners

@@ -194,7 +194,7 @@ public class AdministratorsResource {
         }
     }
 
-    @RolesAllowed({"Administrator"})
+    @RolesAllowed({"Administrator", "Crew"})
     @Path("/booking/{booking_id}/crew")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

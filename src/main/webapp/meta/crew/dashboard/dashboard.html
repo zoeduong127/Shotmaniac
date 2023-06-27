@@ -115,24 +115,25 @@
 			<div class="title-bar">
 				<div class="left-heading">
 					<div class="heading">
-						<h1>Booking Name</h1>
+						<h1 id="heading">Booking Name</h1>
 					</div>
 					
 					<div class="navigation-pane">
 						<p>
-							<a onclick="toggleStyle()">My Booking</a>
+							<a onclick="setTheme('crewDashboardStyles.css'); reloadEvent()">My Bookings</a>
 							/
-							<a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
+							<a id="link" onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
 						</p>
 					</div>
 				</div>
 				<div class="right-heading">
 					<div class="label-dropdown">
-						<button class="labelButton">Set Label
+						<button class="labelButton NORMAL" id="label">
+							<p>Set Label</p>
 							<i class="fas fa-caret-down label-arrow"></i>
 						</button>
 
-						<div class="label-content">
+						<div class="label-content" id="label_content">
 							<div class="item" id="todo">
 								<p>Todo</p>
 							</div>
@@ -155,54 +156,7 @@
 		</div>
 
 		<!-- On main page -->
-		<div class="booking-container" id="booking_container">
-				<div class="booking" onclick="toggleStyle()">
-					<div class="booking-info-grid">
-						<div class="booking-large-text">
-							<p id="event_name">
-								Event Name
-<!--
-								<span id="slots">(Available Slots: 0)</span>
--->
-							</p>
-						</div>
-
-<!--
-						<div class="booking-small">
-							<p id="booking_type">Booking type</p>
-						</div>
--->
-
-
-						<div class="booking-small">
-							<p id="location">Location</p>
-						</div>
-
-<!--
-						<div class="booking-small">
-							<p id="client">Client</p>
-						</div>
--->
-						<div class="booking-small">
-							<p id="event_type">Event type</p>
-						</div>
-
-
-<!--
-						<div class="booking-small">
-							<p id="duration">Duration</p>
-						</div>
--->
-					</div>
-					
-					<div class="innerBooking left">
-						<p id="state">Todo</p>
-					</div>
-					<div class="innerBooking right">
-						<p id="date"> 30 July, 2023 </p>
-					</div>
-				</div>
-		</div>
+		<div class="booking-container" id="booking_container"></div>
 		
 		<!-- On single Event -->
 		<div class="main_area">
@@ -223,7 +177,7 @@
 					<div class="heading">
 						<h1> RESOURCES </h1>
 					</div>
-					<div class="files">
+					<!-- <div class="files">
 						<div class="pdf element">
 							<a href="" download>
 								<img src="./../../Brand_Identity/images/icons/pdf.png" alt="pdf">
@@ -244,6 +198,45 @@
 								<p id="xlsx-download">Event Details</p>
 							</a>
 						</div>
+					</div> -->
+					
+					<div class="event" id="event">
+						<div class="event-info" id="event-name">
+							<p>Name: </p>
+						</div>
+						
+						<div class="event-info" id="event-type">
+							<p>Event Type: </p>
+						</div>
+						
+						<div class="event-info" id="date"> <!-- TODO CHANGE THESE TWO ID's WITH event-{id} incl. JS -->
+							<p>Date: </p>
+						</div>
+						
+						<div class="event-info" id="location">
+							<p>Location: </p>
+						</div>
+						<div class="event-info" id="duration">
+							<p>Duration: </p>
+						</div>
+						<div class="event-info" id="booking-type">
+							<p>Booking Type: </p>
+						</div>
+						<div class="event-info" id="product-Manager">
+							<p>Product Manager: </p>
+						</div>
+						<div class="event-info" id="crew">
+							<p>Crew:
+								<span>
+							<ul>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+							</ul>
+					</span></p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -255,16 +248,7 @@
 					Administrators
 				</div>
 				
-				<div class="users">
-					<i class="fas fa-user user-icon" style="color: #000000;"></i>
-					<div class="user-box" id="user1">
-						<span>Name 1</span>
-					</div>
-					<i class="fas fa-user user-icon" style="color: #000000;"></i>
-					<div class="user-box" id="user2">
-						<span>Obscenely long name 2 h file fresh ehfhefhef</span>
-					</div>
-				</div>
+				<div class="users" id="users"></div>
 			</div>
 		</div>
 	</main>
@@ -273,10 +257,7 @@
 		<div class="recent">
 			<p>Recently accessed booking</p>
 			
-			<div class="latestBooking">
-				<a href="">booking name</a>
-				<p>Short description</p>
-			</div>
+			<div class="latestBooking" id="Latest_Booking" onclick="toggleStyleAndPage(this)"></div>
 		</div>
 		
 		<div class="stats">
@@ -290,9 +271,7 @@
 				<p id="total">Total number: 140</p>
 			</div>
 		</div>
-		
 	</aside>
-	
 </div>
 
 </body>
