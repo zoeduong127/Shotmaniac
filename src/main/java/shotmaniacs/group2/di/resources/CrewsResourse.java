@@ -159,13 +159,13 @@ public class CrewsResourse {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query;
             if(label.equals("TODO")) {
-                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'TODO'";
+                query = "SELECT b.* FROM booking b, enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND e.label = 'TODO'";
             } else if (label.equals("IN_PROGRESS")) {
-                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'IN PROGRESS'";
+                query = "SELECT b.* FROM booking b, enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND e.label = 'IN PROGRESS'";
             } else if (label.equals("REVIEW")) {
-                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'REVIEW'";
+                query = "SELECT b.* FROM booking b, enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND e.label = 'REVIEW'";
             } else { //label.equals("done")
-                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'DONE'";
+                query = "SELECT b.* FROM booking b, enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND e.label = 'DONE'";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,crewid);
