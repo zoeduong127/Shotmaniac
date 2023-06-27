@@ -14,7 +14,7 @@ public class Accountdto {
     public Accountdto(){}
 
     public Accountdto(String email, String username, String password, String tel) {
-
+        setUsername(username);
         settel(tel);
         setEmail(email);
         setPassword(password);

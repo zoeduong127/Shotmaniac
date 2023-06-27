@@ -118,7 +118,7 @@ function performQueryAndUpdateBookings(element) {
     const cookies = parseCookie(document.cookie);
     const id = cookies['account_id'];
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/allbookings`;
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${id}/allbookings`;
 
     fetch(url)
         .then(response => response.json())

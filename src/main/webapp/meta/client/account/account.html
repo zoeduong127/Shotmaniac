@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Client Account</title>
+  <link href="account.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+
+<body>
+<div class="container">
+  <header>
+    <div class="page-title">
+      <div class="text">Hello Client Shotmaniac2, Welcome to EDIT Profile</div>
+      <hr>
+    </div>
+
+    <div class="navigation">
+      <div class ="left-nav">
+        <img src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
+        <div id="navigate">
+          <label id = "user-name">User's name</label>
+          <div class ="navigate"><span>Account  </span>  / Edit Profile</div>
+        </div>
+      </div>
+      <div class ="right-nav">
+        <div class="favourite-color">
+          <a href="modify.html"><label>EXIT </label></a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="logo">
+      <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs White Logo Without Text">
+    </div>
+    <div class="dash-box">
+      <a href="../clientBooking/applicationForm.html" target="_self">
+        <div class="box" id="dashboard">
+          <img id="icon-1" src="../../Brand_Identity/images/icons/" alt="">
+          <label>New Booking</label>
+        </div>
+      </a>
+      <a href="../clientBooking/dashboard.html" target="_self">
+        <div class="box" id="News">
+          <img id="icon-2" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="">
+          <label>My Bookings</label>
+        </div>
+      </a>
+      <a href="account.html" target="_self">
+        <div class="box" id="calendar">
+          <img id="icon-3" src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
+          <label>Account</label>
+        </div>
+      </a>
+      <a href="../../help/help.html" target="_self">
+        <div class="box" id="booking">
+          <img id="icon-4" src="../../Brand_Identity/images/icons/black_help_icon.png" alt="">
+          <label>Help</label>
+        </div>
+      </a>
+    </div>
+  </nav>
+  <main>
+    <div id ="profile">
+      <div class="id">
+        <p>User ID<p>
+        <div class ="display" id="id"></div>
+      </div>
+      <div class="name">
+        <p>User Name<p>
+        <div class ="display" id="name"></div>
+      </div>
+      <div class="email">
+        <p>Email<p>
+        <div class ="display" id="email"></div>
+      </div>
+      <div class="password">
+        <p>Password<p>
+        <div class ="display" id="password"></div>
+      </div>
+
+
+    </div>
+  </main>
+  <aside>
+
+  </aside>
+
+</div>
+<script>
+
+  const cookies = parseCookie(document.cookie);
+  const id = cookies['account_id'];
+  const url = window.location.origin+ `/shotmaniacs2/api/client/${id}/profile`;
+  fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById("user-name").innerHTML = `${data.username}`;
+            document.getElementById("name").innerHTML = `${data.username}`;
+            document.getElementById("email").innerHTML = `${data.email}`;
+            document.getElementById("password").innerHTML = `${data.passwordHash}`;
+          });
+
+  document.getElementById("id").innerHTML = id;
+
+  function parseCookie(cookieString) {
+    const cookies = {};
+    cookieString.split(';').forEach(cookie => {
+      const [name, value] = cookie.trim().split('=');
+      cookies[name] = decodeURIComponent(value);
+    });
+    return cookies;
+  }
+
+</script>
+</body>
+</html>

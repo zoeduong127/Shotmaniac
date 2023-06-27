@@ -123,7 +123,7 @@ function updateBookings(filterType) {
     const cookies = parseCookie(document.cookie);
     const id = cookies['account_id'];
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking/timefilter/${filter}`;
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${id}/mybooking/timefilter/${filter}`;
 
     performQueryAndUpdateBookings(url);
 
@@ -132,7 +132,7 @@ function updateBookings(filterType) {
 function searchBookings(searchText) {
     const cookies = parseCookie(document.cookie);
     const id = cookies['account_id'];
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking/search?searchtext=\"${searchText}\"`;
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${id}/mybooking/search?searchtext=\"${searchText}\"`;
     performQueryAndUpdateBookings(url);
 }
 

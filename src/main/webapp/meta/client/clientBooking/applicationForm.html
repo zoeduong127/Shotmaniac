@@ -170,57 +170,65 @@
 	const create = document.querySelector("#form1");
 	create.addEventListener('submit', createe);
 	document.querySelector("#form2").addEventListener('submit', handleFileParsing);
-	
+	/*Create a single event*/
 	function createe(event) {
 		event.preventDefault();
 		const cookies = parseCookie(document.cookie);
 		const account_id = cookies['account_id'];
-		const url = 'http://localhost:8080/shotmaniacs2/api/client/'+account_id;
+		const url = window.location.origin+'/shotmaniacs2/api/client/'+account_id.toString();
 		var form = document.getElementById('form1');
 		var elements = form.elements;
 		var booking = {};
 		
-		for (var i = 0; i < elements.length - 1; i++) {
-			var element = elements[i];
-			var id = element.id;
-			var value;
-			// Exclude buttons and checkboxes that are not checked
-			if (element.type !== 'button' && !(element.type === 'checkbox' && !element.checked)) {
-				// Handle checkboxes separately
-				if (element.type === 'checkbox') {
-					value = element.checked;
-					if (value === true) {
-						value = document.getElementById(id).nextSibling.nodeValue.trim();
+		for (var i = -1; i < elements.length - 1; i++) {
+			if(i === -1){
+				booking['user_id'] = account_id;
+			}else {
+				var element = elements[i];
+				var id = element.id;
+				var value;
+				// Exclude buttons and checkboxes that are not checked
+				if (element.type !== 'button' && !(element.type === 'checkbox' && !element.checked)) {
+					// Handle checkboxes separately
+					if (element.type === 'checkbox') {
+						value = element.checked;
+						if (value === true) {
+							value = document.getElementById(id).nextSibling.nodeValue.trim();
+						}
+					} else if (id !== "other-For-booking-type-Booking-Type") {
+						value = element.value;
 					}
-				} else if (id !== "other-For-booking-type-Booking-Type") {
-					value = element.value;
+					if (id === 'event-name') {
+						id = 'name';
+					} else if (id.includes('eventtype')) {
+						id = 'eventType';
+					} else if (id === 'date-input') {
+						id = 'date';
+					} else if (id === 'time-input') {
+						id = 'time';
+					} else if (id === 'location-input') {
+						id = 'location';
+					} else if (id === 'duration-input') {
+						id = 'duration';
+					} else if (id.includes('booking-type')) {
+						id = 'bookingType';
+					} else if (id === 'name-input') {
+						id = 'clientName';
+					} else if (id === 'email-input') {
+						id = 'clientEmail';
+					} else if (id === 'tel-input') {
+						id = 'phoneNumber';
+					} else if (id === 'description-input') {
+						id = 'description';
+					}
+					if(id !== "phoneNumber" && value ===""){
+						alert("You need to fill "+id.toString());
+						return;
+					}
+					booking[id] = value;
 				}
-				if (id === 'event-name') {
-					id = 'name';
-				} else if (id.includes('eventtype')) {
-					id = 'eventType';
-				} else if (id === 'date-input') {
-					id = 'date';
-				} else if (id === 'time-input') {
-					id = 'time';
-				} else if (id === 'location-input') {
-					id = 'location';
-				} else if (id === 'duration-input') {
-					id = 'duration';
-				} else if (id.includes('booking-type')) {
-					id = 'bookingType';
-				} else if (id === 'name-input') {
-					id = 'clientName';
-				} else if (id === 'email-input') {
-					id = 'clientEmail';
-				} else if (id === 'tel-input') {
-					id = 'phoneNumber';
-				} else if (id === 'description-input') {
-					id = 'description';
-				}
-				
-				booking[id] = value;
 			}
+
 		}
 		var jsonBooking = JSON.stringify(booking);
 		console.log(jsonBooking);
@@ -287,11 +295,16 @@
 	}
 	
 	function sendJsonObjects(XL_row_object) {
-		const url = window.location.origin+'/shotmaniacs2/api/client/list';
+		const cookies = parseCookie(document.cookie);
+		const id = cookies['account_id'];
+		const url = window.location.origin+'/shotmaniacs2/api/client/'+id+'/list';
 		var promises = [];
 		for (let i = 0; i < XL_row_object.length; i++) {
-			var jsonOb = JSON.stringify(XL_row_object[i]);
-			const jsonObj = JSON.parse(jsonOb);
+			const cookies = parseCookie(document.cookie);
+			const id = cookies['account_id'];
+			const client_id = {"user_id": id}
+			promises.push(JSON.stringify(client_id));
+			const jsonObj = JSON.parse(JSON.stringify(XL_row_object[i]));
 			console.log(jsonObj)
 			renameKey(jsonObj, 'NO.', ' ');
 			renameKey(jsonObj, 'EVENT NAME', 'name');
@@ -302,11 +315,9 @@
 			renameKey(jsonObj, 'BOOKING TYPE', 'bookingType');
 			renameKey(jsonObj, 'DURATION', 'duration');
 			renameKey(jsonObj, 'DESCRIPTION', 'description');
-			renameKey(jsonObj, "CLIENT'S NAME", 'clientName');
-			renameKey(jsonObj, "CLIENT'S EMAIL ADDRESS", 'clientEmail');
-			renameKey(jsonObj, 'TEL. (optional)', 'phoneNumber');
 			promises.push(jsonObj)
 		}
+
 		console.log(promises)
 		const options = {
 			method: 'POST',

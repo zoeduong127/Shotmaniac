@@ -1,5 +1,6 @@
 package shotmaniacs.group2.di.dao;
 
+import shotmaniacs.group2.di.dto.Bookingdto;
 import shotmaniacs.group2.di.model.Booking;
 import shotmaniacs.group2.di.model.BookingState;
 import shotmaniacs.group2.di.model.BookingType;
@@ -17,6 +18,8 @@ public enum  BookingDao {
     private static String dbName ="dab_dsgnprj_50";
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
+
+
 
     public boolean addBooking(Booking booking) {
         try {
@@ -47,6 +50,7 @@ public enum  BookingDao {
         System.out.println("Unsuccessfully");
         return false;
     }
+
 
     public Booking getABooking(int id) {
         try {

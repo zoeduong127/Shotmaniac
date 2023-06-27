@@ -124,7 +124,7 @@
 					if (response.ok) {
 						alert("Your account is created successfully");
 						document.getElementById("signup-form").reset();
-						window.location.href ="http://localhost:8080/shotmaniacs2/index.html";
+						window.location.href =window.location.origin+"/shotmaniacs2/index.html";
 					} else {
 						return  response.text();
 					}})

@@ -286,7 +286,7 @@
 	}
 	
 	function sendJsonObjects(XL_row_object) {
-		const url = 'http://localhost:8080/shotmaniacs2/api/client/list';
+		const url = window.location.origin+'/shotmaniacs2/api/client/list';
 		var promises = [];
 		for (let i = 0; i < XL_row_object.length; i++) {
 			var jsonOb = JSON.stringify(XL_row_object[i]);
