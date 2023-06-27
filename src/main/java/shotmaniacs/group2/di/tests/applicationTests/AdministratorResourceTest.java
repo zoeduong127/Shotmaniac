@@ -1,4 +1,4 @@
-package shotmaniacs.group2.di.tests;
+package shotmaniacs.group2.di.tests.applicationTests;
 
 
 
