@@ -248,9 +248,8 @@ body {
     display: none;
     position: absolute;
     background-color: #F1F1F1;
-    border-radius: 5px;
-    width: 10vw;
-
+    text-align: center;
+    z-index: 1;
 }
 
 /*
@@ -264,12 +263,28 @@ Change depending on what the actual content is to be able to filter
     display: block;
     text-align: center;
     text-decoration: none;
+    font-size: 0.9rem;
 }
+
+.dropdown-header {
+    font-size: 1rem;
+    color: rgb(0 0 0 / 55%);
+    text-align: center;
+    margin: 0;
+    padding: 1vh 0;
+}
+
+.border-gradient {
+    background-image: linear-gradient(to right, rgb(0 0 0 / 0%), rgba(0 0 0), rgb(0 0 0 / 0%));
+    height: 0.1vh;
+    width: 80%;
+    margin: 0 10%;}
 
 .filter:hover .filter-content {
     display: block;
-    width: 10vw;
+    width: 30%;
     border-radius: 0;
+    margin-left: 5px;
 }
 
 .booking-container .filter:hover {

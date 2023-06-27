@@ -15,9 +15,10 @@ const months = [
 const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
 const account_id = cookies['account_id'];
-let event_booking = "";
+console.log("account id: " + account_id);
 let currentTheme = document.getElementById("currentCSS");
 currentTheme.setAttribute('href', 'crewDashboardStyles.css');
+let booking_list = [];
 
 console.log("initial theme: " + currentTheme.getAttribute('href'))
 
@@ -31,10 +32,15 @@ function addCrew(id) {
     })
         .then(response => response.json())
         .then(data => {
+            let crewList = document.getElementById("ul_list");
+            let adminList= document.getElementById("users");
+
+            crewList.innerHTML = "";
+            adminList.innerHTML = "";
+
             data.forEach(crew => {
                 console.log("crew name: " + crew.username + ", type: " + crew.accountType);
-                let crewList = document.getElementById("ul_list")
-                let adminList= document.getElementById("users")
+
 
                 switch (crew.accountType) {
                     case "Crew": {
@@ -90,16 +96,10 @@ function setLabel(id) {
 }
 
 function toggleStyleAndPage(element) {
-    let theme = document.getElementsByTagName('link');
-    console.log(theme)
 
-    if (currentTheme.getAttribute("href") === 'crewDashboardStyles.css') {
-        currentTheme.setAttribute('href', 'singleEventHomePage.css');
-        console.log('new theme changed to: ' + currentTheme.getAttribute('href'));
-    } else {
-        currentTheme.setAttribute('href', 'crewDashboardStyles.css');
-        console.log('new theme changed to: ' + currentTheme.getAttribute('href'));
-    }
+    currentTheme.setAttribute('href', 'singleEventHomePage.css');
+    console.log('new theme changed to: ' + currentTheme.getAttribute('href'));
+
 
     const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`;
 
@@ -116,25 +116,34 @@ function toggleStyleAndPage(element) {
             <p id="booking_description">${booking.description}</p>
             `;
 
-            /*Display Signle event information*/
+            /*Display Single event information*/
             document.getElementById("heading").innerHTML = booking.name;
 
-            document.getElementById("link").innerHTML = booking.name;
+            document.getElementById("navigation").innerHTML = `
+                        <p>
+                            <span id="backToBooking" onclick="addLabel([${booking.id}]); setTheme('crewDashboardStyles.css')"> 
+                                My Bookings
+                            </span>
+                            /
+                            <span id="link" onclick="setTheme('singleEventHomePage.css'); toggleStyleAndPage(${booking.id})">
+                                ${booking.name}
+                            </span>
+                        </p>`;
 
             document.getElementById("label_content").innerHTML = `
-                <div class="item" id="todo" onclick="updateLabel(this, booking.id)">
+                <div class="item" id="todo" onclick="updateLabel(this, ${booking.id})">
                     <p>Todo</p>
                 </div>
                     
-                <div class="item" id="in-progress" onclick="updateLabel(this, booking.id)">
+                <div class="item" id="in-progress" onclick="updateLabel(this, ${booking.id})">
                     <p>In Progress</p>
                 </div>
                 
-                <div class="item" id="review" onclick="updateLabel(this, booking.id)">
+                <div class="item" id="review" onclick="updateLabel(this, ${booking.id})">
                     <p>Review</p>
                 </div>
                 
-                <div class="item" id="done" onclick="updateLabel(this, booking.id)">
+                <div class="item" id="done" onclick="updateLabel(this, ${booking.id})">
                     <p>Done</p>
                 </div>
             `;
@@ -193,7 +202,6 @@ function reloadEvent() {
 
 
 /*Filter*/
-const bookingContainer = document.getElementById("booking_container");
 
 function parseCookie(cookieString) {
     const cookies = {};
@@ -204,9 +212,8 @@ function parseCookie(cookieString) {
     return cookies;
 }
 
-
 function performQueryAndUpdateBookings(url) {
-    let booking_list = [];
+    let event_booking = "";
 
     fetch(url, {
         headers: {
@@ -253,9 +260,9 @@ function performQueryAndUpdateBookings(url) {
                     </div>
                 </div>
             `;
-                document.getElementById("booking_container").innerHTML += event_booking;
                 booking_list.push(booking.id);
             });
+            document.getElementById("booking_container").innerHTML = event_booking;
             addLabel(booking_list)
         })
 }
@@ -285,45 +292,73 @@ function addLabel(list) {
                 console.error(error);
             });
     }
+    console.log("bookingList: " + booking_list)
+    booking_list = [];
+    console.log("bookingList after Clear: " + booking_list);
 }
 
 
 function updateBookings(filterType) {
+    console.log("update bookings started");
+    console.log("filter type: " + filterType.toLowerCase());
     const filterButton = document.getElementById("filter_button_text");
 
-    var filter;
+    let filter;
+    let url;
 
-    switch (filterType) {
-        case 'in_progress':
-            filter = "ongoing";
+    switch (filterType.toLowerCase()) {
+        case 'in_progress': {
+            filter = "IN_PROGRESS";
             filterButton.textContent = "Filter: In progress";
+            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
             break;
-        case 'future':
+        }
+        case "todo": {
+            filter = "TODO";
+            filterButton.textContent = "Filter: TODO";
+            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+            break;
+        }
+        case "review": {
+            console.log("Entered Review Section");
+            filter = "REVIEW";
+            filterButton.textContent = "Filter: REVIEW";
+            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/REVIEW`;
+            break;
+        }
+        case "done": {
+            filter = "DONE";
+            filterButton.textContent = "Filter: DONE";
+            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+            break;
+        }
+        case 'future': {
             filter = "ongoing";
-            filterButton.textContent = "Filter: On going";
+            filterButton.textContent = "Filter: Upcoming";
+            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
             break;
-        case 'past':
+        }
+        case 'past': {
             filter = "past";
             filterButton.textContent = "Filter: Past";
+            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
             break;
-        default:
+        }
+        default: {
             filter = 'ongoing';
-
+            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+        }
     }
 
-    const cookies = parseCookie(document.cookie);
-    const id = cookies['account_id'];
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking/timefilter/${filter}`;
 
     performQueryAndUpdateBookings(url);
 
 }
 
 function searchBookings(searchText) {
-    const cookies = parseCookie(document.cookie);
-    const id = cookies['account_id'];
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${id}/mybooking/search?searchtext=\"${searchText}\"`;
+
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext=\"${searchText}\"`;
     performQueryAndUpdateBookings(url);
 }
 
@@ -359,6 +394,17 @@ function updateLabel(label, id) {
             <i class="fas fa-caret-down label-arrow"></i>`;
     }
 
+
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${id}/label?label=${label.innerText.replace("-"," ").toUpperCase()}`;
+    fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `${token}`
+            }
+        }).catch(error => {
+            // Handle any errors
+            console.error(error);
+        });
 }
 
 //Event listeners

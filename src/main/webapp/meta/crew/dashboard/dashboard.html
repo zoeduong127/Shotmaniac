@@ -84,22 +84,38 @@
 				<button class="filter-btn" >
 					<span id="button-text">
 						<i class="fas fa-filter filter-icon"></i>
-							<span id = "filter_button_text">Filter: On Going</span>
+							<span id = "filter_button_text">Filter: Upcoming</span>
 						<i class="fas fa-caret-down down-icon"></i>
 					</span>
 				</button>
 
 				<div class="filter-content">
 					<!--missing HREF-->
-					<div class="item" onclick="updateBookings('in_progress')">
-						<p>In Progress</p>
-					</div>
+					<h6 class="dropdown-header">Time Stamp</h6>
+					<div class="border-gradient"></div>
 					<div class="item" onclick="updateBookings('future')">
-						<p>Future</p>
+						<p>Upcoming</p>
 					</div>
 					
 					<div class="item" onclick="updateBookings('past')">
 						<p>Past</p>
+					</div>
+					
+					<div class="border-gradient"></div>
+					<h6 class="dropdown-header">Labels</h6>
+					<div class="border-gradient"></div>
+					
+					<div class="item" onclick="updateBookings('TODO')">
+						<p>TODO</p>
+					</div>
+					<div class="item" onclick="updateBookings('IN PROGRESS')">
+						<p>IN-PROGRESS</p>
+					</div>
+					<div class="item" onclick="updateBookings('REVIEW')">
+						<p>REVIEW</p>
+					</div>
+					<div class="item" onclick="updateBookings('DONE')">
+						<p>DONE</p>
 					</div>
 				</div>
 			</div>
@@ -118,11 +134,11 @@
 						<h1 id="heading">Booking Name</h1>
 					</div>
 					
-					<div class="navigation-pane">
+					<div class="navigation-pane" id="navigation">
 						<p>
-							<a onclick="setTheme('crewDashboardStyles.css'); reloadEvent()">My Bookings</a>
+							<span id="backToBooking">My Bookings</span>
 							/
-							<a id="link" onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
+							<span id="link">Booking Name</span>
 						</p>
 					</div>
 				</div>
