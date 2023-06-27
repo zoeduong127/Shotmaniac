@@ -4,6 +4,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.BookingDao;
+import shotmaniacs.group2.di.model.AccountType;
 import shotmaniacs.group2.di.model.Booking;
 import shotmaniacs.group2.di.model.Role;
 
@@ -45,11 +46,11 @@ public class BookingResource {
     @PUT
     public Response putEnrolment(@QueryParam("role") String roleToPut){
         if (!roleIsValid(roleToPut)) {
-            return Response.serverError().entity("Role is not valid.").build();
+            return Response.notModified().build();
         }
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO enrolment (booking_id,crew_member_id, role,label) VALUES (?,?,?,?);";
+            String query = "INSERT INTO enrolment (booking_id,crew_member_id, role,label) VALUES (?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,bookingId);
             preparedStatement.setInt(2,accountId);
@@ -59,14 +60,15 @@ public class BookingResource {
             if(rowsInserted > 0) {
                 return Response.ok().build();
             } else {
-                return Response.serverError().build();
+                return Response.notModified().build();
             }
         } catch (SQLException e) {
-            System.err.println("Error connecting: "+e);
+            System.err.println("Error putting enrolment: "+e);
         }
         return Response.serverError().build();
     }
 
+    @RolesAllowed({"Administrator"})
     @Path("/enrolment")
     @DELETE
     public Response deleteEnrolmentByBookingIdAndAccountId() {
@@ -82,7 +84,7 @@ public class BookingResource {
             if (rowsAffected > 0) {
                 return Response.ok().build();
             } else {
-                return Response.ok().entity("No rows were affected.").build();
+                return Response.notModified().build();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,6 +92,7 @@ public class BookingResource {
         return Response.serverError().build();
     }
 
+    @RolesAllowed({"Administrator", "Crew"})
     @Path("/label")
     @PUT
     public Response updateLabel(@QueryParam("label") String label) {
@@ -107,7 +110,7 @@ public class BookingResource {
             if (rowsAffected > 0) {
                 return Response.ok().entity("Booking label was updated").build();
             } else {
-                return Response.ok().entity("Booking label was not updated").build();
+                return Response.notModified().build();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,9 +120,10 @@ public class BookingResource {
         return Response.serverError().build();
     }
 
+    @RolesAllowed({"Administrator", "Crew"})
     @Path("/label")
     @GET
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.TEXT_PLAIN)
     public Response getLabelByAccountAndBookingId() {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);

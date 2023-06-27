@@ -116,12 +116,12 @@ public class CrewsResourse {
      * Param "ongoing": filter ongoing event
      * Param "past":filter past event
      */
-    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @PathParam("filtertime") String ongoing) {
+    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @PathParam("filtertime") String filter) {
         List<Booking> listbooking = new ArrayList<>();
         try {
             String query;
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            if(ongoing.equals("ongoing")) {
+            if(filter.equals("ongoing")) {
                 query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time >= NOW()";
             } else {
                 query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time < NOW()";
