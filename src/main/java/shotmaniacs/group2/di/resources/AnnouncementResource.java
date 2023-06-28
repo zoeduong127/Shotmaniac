@@ -41,10 +41,6 @@ public class AnnouncementResource {
      */
     public Announcement getAnnouncement() {
         Announcement announcement = AnnouncementDao.instance.getAnAnnouncement(announcementId);
-
-        if(announcement == null) {
-            throw new RuntimeException("GET: announcement with " + announcementId + "is not defined");
-        }
         return announcement;
     }
 

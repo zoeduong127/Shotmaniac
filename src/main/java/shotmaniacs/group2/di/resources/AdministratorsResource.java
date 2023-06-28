@@ -195,6 +195,32 @@ public class AdministratorsResource {
         }
     }
 
+    @Path("/announcements/search")
+    @RolesAllowed({"Administrator", "Crew"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public List<Announcement> searchAllAnnouncementsByTitleText(@QueryParam("searchtext") String searchText) {
+
+        List<Announcement> announcementList = new ArrayList<>();
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT * FROM announcement a WHERE to_tsvector(a.title) @@ plainto_tsquery(?);";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, searchText);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                announcementList.add(new Announcement(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getInt(4), Urgency.valueOf(rs.getString(5)), rs.getTimestamp(6)));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error searching all announcements by title text: " + e.getMessage());
+        }
+        return announcementList;
+    }
+
+
     @RolesAllowed({"Administrator", "Crew", "Client"})
     @Path("/booking/{booking_id}/crew")
     @GET

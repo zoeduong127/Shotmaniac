@@ -67,7 +67,7 @@ public class CrewsResourse {
         try {
             String query;
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND to_tsvector(b.title) @@ phraseto_tsquery(?)";
+            query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND to_tsvector(b.title) @@ plainto_tsquery(?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,crewid);
             preparedStatement.setString(2,searchText);
