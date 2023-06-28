@@ -131,19 +131,19 @@
 		</div>
 		<div class="list">
 			<div class="list-booking">
-				<div class="booking-name">
-					<label>Booking's name</label>
+				<div class="booking-name" >
+					<label id="upcoming-1" >Booking's name</label>
 				</div>
 				<div class="booking-description">
-					<label>Short Description</label>
+					<label id="description1">Short Description</label>
 				</div>
 			</div>
 			<div class="list-booking">
 				<div class="booking-name">
-					<label>Booking's name</label>
+					<label id="upcoming-2">Booking's name</label>
 				</div>
 				<div class="booking-description">
-					<label>Short Description</label>
+					<label id="description2">Short Description</label>
 				</div>
 			</div>
 		</div>
@@ -180,6 +180,7 @@
 		fetch(url)
 				.then(response => response.json())
 				.then(data => {
+
 					data.forEach(booking => {
 						let bookingElementCopy = bookingElement.cloneNode(true);
 
@@ -218,6 +219,26 @@
 
 						bookingState.innerText = booking.state;
 						bookingContainer.appendChild(bookingElementCopy);
+
+					});
+					var index = 1;
+					data.sort(function (a, b) {
+						return a.timestamp - b.timestamp;
+					});
+					var earliestEvents = data.slice(0, 2);
+					console.log("Earliest Events:");
+					earliestEvents.forEach(function (event) {
+						console.log(index);
+						if(index === 1){
+							document.getElementById("upcoming-1").innerHTML = event.name;
+							document.getElementById("description1").innerHTML = event.description;
+							index = 2;
+						}
+						else if(index === 2){
+							document.getElementById("upcoming-2").innerHTML = event.name;
+							document.getElementById("description2").innerHTML = event.description;
+							index = 1;
+						}
 
 					});
 				})
