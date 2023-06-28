@@ -53,7 +53,7 @@ function renderCalendar(){
     }
 
     for (let i = 1; i <= lastDay; i++) { //days of the month
-        if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
+        if (i === new Date().getDate() && date.getMonth() === new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) {
             days += `<div class="today" onclick="performQueryAndUpdateBookings(this)">${i}</div>`;
         } else {
             if (i < 10) {
@@ -117,17 +117,21 @@ function performQueryAndUpdateBookings(element) {
 
     const cookies = parseCookie(document.cookie);
     const id = cookies['account_id'];
+    const token = cookies['auth_token'];
 
     const url = window.location.origin+`/shotmaniacs2/api/crew/${id}/allbookings`;
 
-    fetch(url)
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
         .then(response => response.json())
         .then(data => {
             data.forEach(booking => {
                 console.log("inner loop started")
                 let list = [booking];
                 console.log(list);
-
 
                 let BackDay = new Date(booking.date).getDate();
                 let BackMonth = new Date(booking.date).getMonth();
@@ -137,7 +141,6 @@ function performQueryAndUpdateBookings(element) {
                 // complicated, due to the do icons added later.
                 let CalMonth = date.getMonth();
                 let CalYear = date.getFullYear();
-
 
                 if (BackDay == CalDay && BackMonth == CalMonth && BackYear == CalYear) {
                     correctDay.push(booking);
@@ -167,8 +170,16 @@ function performQueryAndUpdateBookings(element) {
                 document.getElementById("enroll-button").style.backgroundColor = "gray";
 
             } else {
+                var dotClass = "";
+                if (correctDay.length > 3) {
+                    dotClass = "calendar-dot-overflow";
+                } else {
+                    dotClass = "calendar-dot";
+                }
+
                 for (let i = 0; i < correctDay.length; i++) {
                     blob += `<span class = "dots" onclick="displayInformation(correctDay.at(${i}))">${i + 1}</span>`
+                    element.innerHTML += `<span class="${dotClass}"></span>`
                     console.log("blob added (" + i + ")")
                 }
                 document.getElementById("blob-nav").innerHTML = `<span id="back" onclick="back()"> 
@@ -184,7 +195,7 @@ function performQueryAndUpdateBookings(element) {
 
 function displayInformation(booking) {
     console.log(booking);
-
+    document.getElementById("enroll-button").style.backgroundColor = "rgba(59, 238, 72, 0.84)";
     document.getElementById("event-name").innerHTML =
         `<p>Name: <span>${booking.name}</span></p>`;
 

@@ -19,24 +19,22 @@ public class Account {
     @XmlAnyElement
     private String salt;
     @XmlAnyElement
-    private String tel;
+    private String telephone;
+    @XmlAnyElement
+    private String role;
+
 
     public Account(){}
 
-
-    public Account(int id, String username, String email, String passwordHash, AccountType accountType,String tel) {
+    public Account(Integer id, String username, String email, String passwordHash, AccountType accountType, String salt, String telephone, String role) {
         setId(id);
         setUsername(username);
         setEmail(email);
         setPasswordHash(passwordHash);
         setAccountType(accountType);
-        settel(tel);
-    }
-    public String gettel(){
-        return this.tel;
-    }
-    public void settel(String tel){
-        this.tel= tel;
+        setSalt(salt);
+        setTelephone(telephone);
+        setRole(role);
     }
 
     public int getId() {
@@ -85,5 +83,21 @@ public class Account {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

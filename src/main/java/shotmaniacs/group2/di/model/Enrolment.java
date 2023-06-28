@@ -5,13 +5,16 @@ public class Enrolment{
     private int bookingId;
     private int crewMemberId;
     private Role role;
+    private String label;
     public Enrolment() {}
 
-    public Enrolment(int id, int bookingId, int crewMemberId, Role role) {
+
+    public Enrolment(int id, int bookingId, int crewMemberId, Role role, String label) {
         this.id = id;
         this.bookingId = bookingId;
         this.crewMemberId = crewMemberId;
         this.role = role;
+        this.label = label;
     }
 
 
@@ -46,5 +49,13 @@ public class Enrolment{
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }
