@@ -431,6 +431,28 @@ public class AdministratorsResource {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator"})
+    @Path("/booking/{booking_id}")
+    @DELETE
+    public Response deleteBookingById(@PathParam("booking_id") int bookingId) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "DELETE FROM booking b WHERE b.booking_id =?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, bookingId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error deleting booking: " + e.getMessage());
+        }
+        return  Response.serverError().build();
+    }
+
     public String hash256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

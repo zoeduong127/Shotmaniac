@@ -91,7 +91,7 @@ public class Bookingdto {
             preparedStatement.setString(10, String.valueOf(booking.getBookingType()));
             preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
             preparedStatement.setInt(12, 0);
-            preparedStatement.setString(13, null);
+            preparedStatement.setNull(13, java.sql.Types.INTEGER);
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0) {
                 System.out.println("Successfully");

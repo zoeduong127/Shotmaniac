@@ -44,20 +44,6 @@ public class AnnouncementTest extends JerseyTest {
         authToken = wrapper.getTokens().get(0);
     }
 
-//    public static String authenticateUser(String email, String password) {
-//
-//        Response response = target("/login")
-//                .request()
-//                .post(Entity.json(new LoginInfor(email,password)));
-//
-//        RootElementWrapper responseObject = response.readEntity(RootElementWrapper.class);
-//        String authToken = responseObject.getTokens().get(0);
-//
-//        response.close();
-//
-//        return authToken;
-//    }
-
     @Test
     public void announcementCreateSearchAndDeleteTest() {
         Response response = target("/admin/announcement")
