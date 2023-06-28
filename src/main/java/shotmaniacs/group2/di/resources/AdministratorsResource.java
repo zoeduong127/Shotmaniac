@@ -24,6 +24,7 @@ import static java.lang.String.valueOf;
 
 @Path("/admin")
 public class AdministratorsResource {
+
     @Context
     UriInfo uriInfo;
     @Context

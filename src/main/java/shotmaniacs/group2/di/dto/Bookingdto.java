@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 
 public class Bookingdto {
     private int user_id;
-
     private String name;
 
     private String eventType;

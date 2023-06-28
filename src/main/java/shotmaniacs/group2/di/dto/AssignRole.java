@@ -4,7 +4,6 @@ import shotmaniacs.group2.di.model.Role;
 
 public class AssignRole {
     private int booking_id;
-
     private int crew_member_id;
     private Role role;
     public AssignRole(){}

@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 public class Booking {
     @XmlAnyElement
     private int id;
+
     @XmlAnyElement
     private String name;
     @XmlAnyElement

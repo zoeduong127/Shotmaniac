@@ -24,6 +24,7 @@ import java.util.HashMap;
 
 @Path("/login")
 public class LoginResource {
+
     @Context
     UriInfo uriInfo;
     @Context

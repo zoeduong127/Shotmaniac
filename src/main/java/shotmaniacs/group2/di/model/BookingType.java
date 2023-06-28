@@ -5,4 +5,5 @@ public enum BookingType {
     FILM,
     MARKETING,
     OTHER
+
 }

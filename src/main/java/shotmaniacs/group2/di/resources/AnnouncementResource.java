@@ -7,6 +7,7 @@ import shotmaniacs.group2.di.dao.AnnouncementDao;
 import shotmaniacs.group2.di.model.Announcement;
 
 public class AnnouncementResource {
+
     @Context
     UriInfo uriInfo;
     @Context

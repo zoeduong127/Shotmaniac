@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path("/client")
-
 public class ClientsResource {
     @Context
     UriInfo uriInfo;

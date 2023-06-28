@@ -5,7 +5,6 @@ public class Changepass {
     String newpass;
     public Changepass(){}
     public Changepass(String oldpass, String newpass){
-
     }
     public void setOldpass(String pass){
         this.oldpass = pass;

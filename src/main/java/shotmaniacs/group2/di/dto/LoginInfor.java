@@ -2,6 +2,7 @@ package shotmaniacs.group2.di.dto;
 
 public class LoginInfor {
     private String email;
+
     private String password;
     public LoginInfor(){}
     public LoginInfor(String email, String password){

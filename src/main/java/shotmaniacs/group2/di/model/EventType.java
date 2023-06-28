@@ -4,4 +4,5 @@ public enum EventType {
     CLUB_PHOTOGRAPHY,
     FESTIVAL,
     PRODUCT_SHOOT,
+
 }
