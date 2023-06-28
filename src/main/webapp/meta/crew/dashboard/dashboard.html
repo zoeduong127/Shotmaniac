@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
 	<link href="crewDashboardStyles.css" rel="stylesheet" id="currentCSS">
 	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
 	<link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
 	      rel="stylesheet" type='text/css'>
 	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<script src="dashboard.js" defer></script>
 </head>
@@ -31,41 +31,41 @@
 			</div>
 		</div>
 	</header>
-
+	
 	<nav>
 		<div class="text">
 			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
 		</div>
 		<div class="dash-box">
 			<a href="dashboard.html" target="_self">
-			<div class="box" id="dashboard">
-				<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label> Dashboard</label>
-			</div>
+				<div class="box" id="dashboard">
+					<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label> Dashboard</label>
+				</div>
 			</a>
 			<a href="./../news/notifications.html" target="_self">
-			<div class="box" id="News">
-				<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label>News</label>
-			</div>
+				<div class="box" id="News">
+					<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>News</label>
+				</div>
 			</a>
 			<a href="./../calendar/calendar.html" target="_self">
-			<div class="box" id="calendar">
-				<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label> Calendar</label>
-			</div>
+				<div class="box" id="calendar">
+					<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label> Calendar</label>
+				</div>
 			</a>
 			<a href="./../bookings/Booking.html" target="_self">
-			<div class="box" id="booking">
-				<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label>Bookings</label>
-			</div>
+				<div class="box" id="booking">
+					<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Bookings</label>
+				</div>
 			</a>
 			<a href="../../help/help.html" target="_self">
-			<div class="box" id="help">
-				<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label>Help</label>
-			</div>
+				<div class="box" id="help">
+					<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Help</label>
+				</div>
 			</a>
 		</div>
 	</nav>
@@ -81,14 +81,14 @@
 		<div class="navigation">
 			<!-- On main page -->
 			<div class="filter">
-				<button class="filter-btn" >
+				<button class="filter-btn">
 					<span id="button-text">
 						<i class="fas fa-filter filter-icon"></i>
-							<span id = "filter_button_text">Filter: Upcoming</span>
+							<span id="filter_button_text">Filter: Upcoming</span>
 						<i class="fas fa-caret-down down-icon"></i>
 					</span>
 				</button>
-
+				
 				<div class="filter-content">
 					<!--missing HREF-->
 					<h6 class="dropdown-header">Time Stamp</h6>
@@ -121,15 +121,16 @@
 			</div>
 			
 			<form action="" autocomplete="off">
-			<div class="search" id="searchbar">
-				<label for="search-input"></label>
-				<input type="text" class="input" id="search-input" placeholder="Booking name"
-					onfocus="getAllBookings()">
-				
-				<button class="search-icon-btn" id="search-button">
-					<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt="search">
-				</button>
-			</div>
+				<div class="search" id="searchbar">
+					<label for="search-input"></label>
+					<input type="text" class="input" id="search-input" placeholder="Booking name"
+					       onfocus="getAllBookings()">
+					
+					<button class="search-icon-btn" id="search-button">
+						<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png"
+						     alt="search">
+					</button>
+				</div>
 			</form>
 			
 			<!-- On single Event -->
@@ -153,7 +154,7 @@
 							<p>Set Label</p>
 							<i class="fas fa-caret-down label-arrow"></i>
 						</button>
-
+						
 						<div class="label-content" id="label_content">
 							<div class="item" id="todo">
 								<p>Todo</p>
@@ -175,7 +176,7 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<!-- On main page -->
 		<div class="booking-container" id="booking_container"></div>
 		
@@ -249,14 +250,15 @@
 						<div class="event-info" id="crew">
 							<p>Crew:
 								<span>
-							<ul>
-								<li></li>
-								<li></li>
-								<li></li>
-								<li></li>
-								<li></li>
-							</ul>
-					</span></p>
+									<ul>
+										<li></li>
+										<li></li>
+										<li></li>
+										<li></li>
+										<li></li>
+									</ul>
+								</span>
+							</p>
 						</div>
 					</div>
 				</div>
