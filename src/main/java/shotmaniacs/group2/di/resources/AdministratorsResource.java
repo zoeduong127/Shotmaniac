@@ -379,6 +379,32 @@ public class AdministratorsResource {
         return null;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
+    @Path("/bookings/search")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Booking> searchAllBookings(@QueryParam("searchtext") String searchText) {
+        List<Booking> listbooking = new ArrayList<>();
+        try {
+            String query;
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            query = "SELECT b.* FROM booking b WHERE to_tsvector(b.title) @@ phraseto_tsquery(?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,searchText);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                listbooking.add(booking);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return listbooking;
+    }
+
     public String hash256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
