@@ -273,7 +273,7 @@
                         userCopy.querySelector("#admin-name").innerHTML = account.username
                         console.log(account.username)
                         userCopy.querySelector("#admin-email").innerHTML = account.email
-                        userCopy.querySelector("#admin-tel").innerHTML = account.tel
+                        userCopy.querySelector("#admin-tel").innerHTML = account.telephone
                         admincontainer.appendChild(userCopy)
                         employee[account.id]=account
                       })
@@ -300,7 +300,7 @@
                         userCopy.id = account.id;
                         userCopy.querySelector("#crew-name").innerHTML = account.username
                         userCopy.querySelector("#crew-email").innerHTML = account.email
-                        userCopy.querySelector("#crew-tel").innerHTML = account.tel
+                        userCopy.querySelector("#crew-tel").innerHTML = account.telephone
                         crewcontainer.appendChild(userCopy);
                         employee[account.id]=account
                       })
@@ -313,8 +313,8 @@
     cancel.classList.remove('hidden');
     overlay.classList.remove('hidden');
     document.getElementById("employee-name").placeholder = employee[element.id].username
-    document.getElementById("employee-email").innerHTML = employee[element.id].email
-    document.getElementById("employee-tel").placeholder = employee[element.id].tel
+    document.getElementById("employee-email").placeholder= employee[element.id].email
+    document.getElementById("employee-tel").placeholder = employee[element.id].telephone
   }
 
 

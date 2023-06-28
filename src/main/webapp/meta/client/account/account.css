@@ -56,15 +56,21 @@ body {
 
 
 /*Navigational Dashboard*/
-nav .logo img {
-    width:120%;
+.dropdown{
+    margin-top: 2vh;
+    margin-left: 70vw;
 }
-.logo{
-    margin-left: -70px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+.dropdown img{
+    width: 3vw;
+    height: 3vh;
 }
 
+/*Navigational Dashboard*/
+.logo{
+    margin-left: -5vw;
+    margin-bottom: 5vh;
+    margin-top: 3vh;
+}
 .dash-box img {
     width: 20%;
     height: 100%;
@@ -78,6 +84,7 @@ nav .logo img {
 
 .dash-box {
     background-color: rgb(255, 255, 255);
+    border: 2px solid rgba(82,82,82,0.75);
     width: 15vw;
     height: 52vh;
     margin: 20px 2.5vw 20vh 2.5vw;
@@ -100,12 +107,19 @@ nav .logo img {
 }
 .box:hover {
     cursor: pointer;
-    color: white;
-    background-color: #1696D2;
+    color: black;
+    background-color: #80ebbb;
 }
 
 .dash-box a {
     text-decoration: none;
+    color: black;
+}
+nav .logo img {
+    width:120%;
+}
+#calendar{
+    background: #80ebbb;
     color: black;
 }
 /*Currently active page, change depending on the CSS file used*/

@@ -51,26 +51,41 @@ body {
 
 
 /*header*/
+.dropdownBtn{
+    width: 4vw;
+    height: 6vh;
+    margin-left: 65vw;
+    margin-top: -20vh;
+}
 
 .dropdown{
-    margin-top: -13vh;
+    position: relative;
     margin-left: 75vw;
-    margin-bottom: 9vh;
+    margin-bottom: 0vh;
+
 }
 .dropdown img{
-    width: 3vw;
-    height: 4vh;
+    width: 4vw;
+    height: 6vh;
 }
 
 
 /*Navigational Dashboard*/
-nav .logo img {
-    width:120%;
-}.logo{
-     margin-left: -5vw;
-     margin-bottom: 5vh;
-     margin-top: 3vh;
- }
+.dropdown{
+    margin-top: 2vh;
+    margin-left: 70vw;
+}
+.dropdown img{
+    width: 3vw;
+    height: 3vh;
+}
+
+/*Navigational Dashboard*/
+.logo{
+    margin-left: -5vw;
+    margin-bottom: 5vh;
+    margin-top: 3vh;
+}
 .dash-box img {
     width: 20%;
     height: 100%;
@@ -107,8 +122,8 @@ nav .logo img {
 }
 .box:hover {
     cursor: pointer;
-    color: white;
-    background-color: #1696D2;
+    color: black;
+    background-color: #80ebbb;
 }
 
 .dash-box a {
@@ -118,14 +133,11 @@ nav .logo img {
 nav .logo img {
     width:120%;
 }
-
-/*Currently active page, change depending on the CSS file used*/
-#dashboard {
-    background-color: rgba(22,150,210,0.8);
-    border: 1px solid #1696D2;
-    color: white;
+#calendar{
+    background: #80ebbb;
+    color: black;
 }
-
+/*Currently active page, change depending on the CSS file used*/
 
 /*End of Navigational Dashboard*/
 
@@ -171,7 +183,7 @@ nav .logo img {
     color: white;
 }
 .navigation {
-    margin-top: 1.5vh;
+    margin-top: -3vh;
     margin-left: 8vw;
     width: 60%;
     height: 12vh;

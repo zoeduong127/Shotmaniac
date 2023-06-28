@@ -123,7 +123,8 @@
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            document.getElementById("user-namefe").innerHTML = `${data.username}`;
+            document.getElementById("user-name").innerHTML = `${data.username}`;
+        })
     function parseCookie(cookieString) {
         const cookies = {};
         cookieString.split(';').forEach(cookie => {

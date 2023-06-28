@@ -104,7 +104,21 @@ nav .logo img {
 
 
 /*Navigational Dashboard*/
+.dropdown{
+    margin-top: 2vh;
+    margin-left: 70vw;
+}
+.dropdown img{
+    width: 3vw;
+    height: 3vh;
+}
 
+/*Navigational Dashboard*/
+.logo{
+    margin-left: -5vw;
+    margin-bottom: 5vh;
+    margin-top: 3vh;
+}
 .dash-box img {
     width: 20%;
     height: 100%;
@@ -117,8 +131,8 @@ nav .logo img {
 }
 
 .dash-box {
-    border: 1px solid white;
     background-color: rgb(255, 255, 255);
+    border: 2px solid rgba(82,82,82,0.75);
     width: 15vw;
     height: 52vh;
     margin: 20px 2.5vw 20vh 2.5vw;
@@ -130,9 +144,8 @@ nav .logo img {
 .box {
     display: flex;
     align-content: center;
-    border-bottom: 1px solid rgba(82, 82, 82, 0.75);
+    border-bottom: 1px solid black;
     height: 50px;
-    border-bottom: 1px solid rgba(82,82,82,0.75);
     text-align: center;
     padding: 5% 0 5% 0;
 }
@@ -142,14 +155,23 @@ nav .logo img {
 }
 .box:hover {
     cursor: pointer;
-    color: white;
-    background-color: #1696D2;
+    color: black;
+    background-color: #80ebbb;
 }
 
 .dash-box a {
     text-decoration: none;
     color: black;
 }
+nav .logo img {
+    width:120%;
+}
+#News{
+    background-color: #80ebbb;
+    border: 1px solid #1696D2;
+    color: black;
+}
+
 /*Currently active page, change depending on the CSS file used*/
 
 /*End of Navigational Dashboard*/
@@ -541,6 +563,7 @@ label {
     height: 10vh;
 }
 .confirm{
+    width: 20vw;
     display: flex;
     font-size: 17px;
     font-weight: 500;
@@ -552,7 +575,7 @@ label {
     width: 8vw;
     background-color: #EE0000;
     color: white;
-    margin-left: 50vw;
+    margin-left: 18vw;
 }
 .cancel-request{
     width: 4vw;

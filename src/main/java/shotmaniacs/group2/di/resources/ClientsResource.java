@@ -31,7 +31,7 @@ public class ClientsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAccount(Accountdto accountdto) {
         AdministratorsResource admin = new AdministratorsResource();
-        return admin.addAccount(new Account(-1, accountdto.getUsername(), accountdto.getEmail(), accountdto.getPassword(), AccountType.Client,accountdto.gettel()));
+        return admin.addAccount(new Account(-1,accountdto.getUsername(),accountdto.getEmail(),accountdto.getPassword(),AccountType.Client,null,accountdto.gettel(),null));
     }
 
     /**
@@ -92,7 +92,7 @@ public class ClientsResource {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()){
-                return new Account(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4),AccountType.valueOf(rs.getString(5)),rs.getString(7));
+                return new Account(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4),AccountType.valueOf(rs.getString(5)),null,rs.getString(7),null);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -164,7 +164,7 @@ public class ClientsResource {
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13),-1);
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -189,7 +189,7 @@ public class ClientsResource {
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13),-1);
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -214,7 +214,7 @@ public class ClientsResource {
             while(rs.next()) {
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13),-1);
                 listBooking.add(booking);
             }
         } catch (SQLException e) {
@@ -241,7 +241,7 @@ public class ClientsResource {
             if(rs.next()) {
                 return new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13),-1);
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
@@ -256,12 +256,12 @@ public class ClientsResource {
         List<Account> listadmins = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.username,a.account_id, a.email, a.tel FROM account a, admin_enroll e WHERE e.booking_id= ? AND a.account_id = e.admin_id";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, enrolment e WHERE e.admin_id = ? AND a.account_id = e.admin_id";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Account account = new Account(rs.getInt(2), rs.getString(1), rs.getString(3), null, null,rs.getString(7));
+            while(rs.next()) {
+                Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),"",null,null,rs.getString(7),null);
                 listadmins.add(account);
             }
         } catch (SQLException e) {
@@ -277,13 +277,13 @@ public class ClientsResource {
         List<Account> listcrews = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.username,a.account_id, a.email, a.tel FROM account a, enrolment e WHERE e.admin_id = ? AND a.account_id = e.admin_id";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, enrolment e WHERE e.admin_id = ? AND a.account_id = e.admin_id";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()) {
-                Account account = new Account(rs.getInt(2), rs.getString(1), rs.getString(3),"",null,rs.getString(7));
+                Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),"",null,null,rs.getString(7),null);
                 listcrews.add(account);
             }
         } catch (SQLException e) {
