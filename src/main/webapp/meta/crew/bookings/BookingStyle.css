@@ -38,6 +38,9 @@ body {
     max-width: 100vw;
 }
 
+button {
+    cursor: pointer;
+}
 
 
 /*Dropdown  todo: Fix, maybe add delay or something
@@ -215,6 +218,7 @@ body {
 }
 
 .search-container{
+    box-sizing: border-box;
     width: 100%;
     height: 15vh;
     display: flex;
@@ -224,14 +228,18 @@ body {
     align-items: center;
 }
 
-.searchbox{
-    width: 17vw;
+.searchbar{
+  /*  width: 17vw;
     height: 4vh;
-    padding-left: 1vw;
+    padding-left: 1vw;*/
+
+    display: inline-block;
+    position: relative; /*needed to make the li 100% of the Input
+                            Relative doesn't change anything unless top/left.. is used*/
 }
 
-.textbox{
-    width: 15vw;
+.textBox{
+    /*width: 15vw;
     height: 4vh;
     background: #FFFFFF;
     border: 2px solid rgba(82, 82, 82, 0.9);
@@ -242,7 +250,50 @@ body {
     font-weight: 300;
     font-size: 16px;
     line-height: 23px;
-    padding: 0 0 0 5%;
+    padding: 0 0 0 5%;*/
+
+    border: unset;
+    background: #e9e9e9;
+    padding: 0.5em;
+}
+
+.autocomplete-list {
+    list-style: none;
+    padding: unset;
+    margin: unset;
+    position: absolute;
+    width: 100%;
+
+    -ms-overflow-style: none;  /* hides scrollbar */
+    scrollbar-width: none;  /* hides scrollbar */
+}
+
+.autocomplete-list::-webkit-scrollbar {
+    display: none;
+}
+
+
+.autocomplete-list button {
+    border: unset;
+    background: unset;
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5em;
+}
+
+.autocomplete-list button:hover {
+    background-color: rgba(0, 0, 0, 0.13);
+}
+
+.autocomplete-list ul {
+    background-color: #ffffff;
+}
+
+.autocomplete-list li {
+    border: 1px solid #b5aeae;
+    border-top: unset;
+    border-radius: 6px;
 }
 
 .role-filter{
@@ -276,15 +327,20 @@ body {
 }
 
 
-.button-search{
-    width: 3vw;
+.search-button {
+    /*width: 3vw;
     height: 5vh;
     margin: 0 1vw;
     background-color: rgba(22,150,210,0.8);
-    border-radius: 5px;
+    border-radius: 5px;*/
+
+    border: unset;
+    background-color: rgba(22,150,210,0.8);
+    padding: 0.5em;
+    cursor: pointer;
 }
 
-.search-button{
+.search-button-icon {
     width: 1.5vw;
     padding-top: 0.5vh;
 }

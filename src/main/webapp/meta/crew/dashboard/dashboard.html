@@ -119,13 +119,18 @@
 					</div>
 				</div>
 			</div>
-			<div class="search">
+			
+			<form action="" autocomplete="off">
+			<div class="search" id="searchbar">
 				<label for="search-input"></label>
-				<input type="text" class="input" id="search-input" placeholder="Booking name">
-				<button class="search-icon-btn">
+				<input type="text" class="input" id="search-input" placeholder="Booking name"
+					onfocus="getAllBookings()">
+				
+				<button class="search-icon-btn" id="search-button">
 					<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt="search">
 				</button>
 			</div>
+			</form>
 			
 			<!-- On single Event -->
 			<div class="title-bar">

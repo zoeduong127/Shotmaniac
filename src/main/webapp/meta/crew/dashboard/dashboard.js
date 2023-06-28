@@ -345,8 +345,8 @@ function updateBookings(filterType) {
             break;
         }
         default: {
-            filter = 'ongoing';
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+            filterButton.textContent = "All Bookings";
+            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybookings`;
         }
     }
 
@@ -356,11 +356,13 @@ function updateBookings(filterType) {
 
 }
 
+/*
 function searchBookings(searchText) {
 
     const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext=\"${searchText}\"`;
     performQueryAndUpdateBookings(url);
 }
+*/
 
 function updateLabel(label, id) {
     console.log("label: " + label.innerText)
@@ -406,7 +408,7 @@ function updateLabel(label, id) {
             console.error(error);
         });
 }
-
+/*
 //Event listeners
 const searchbox = document.getElementById("search-input");
 searchbox.addEventListener("keydown", function (e) {
@@ -414,5 +416,91 @@ searchbox.addEventListener("keydown", function (e) {
         searchBookings(searchbox.value);
     }
 });
+*/
 
-updateBookings("ongoing");
+
+/*Search function*/
+let allBookings = [];
+let inputElement = document.getElementById("search-input");
+
+inputElement.addEventListener("input", onInputChange);
+function getAllBookings() {
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybookings`
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            allBookings = data.map((booking) => {
+                return booking.name;
+            })
+        })
+}
+
+function  onInputChange() {
+    removeAutocompleteDropdown();
+
+    const value = inputElement.value.toLowerCase();
+
+    if (value.length === 0) return;
+
+    const filteredNames = [];
+
+
+    allBookings.forEach((BookingName) => {
+        if (BookingName.substring(0, value.length).toLowerCase() === value) {
+            filteredNames.push(BookingName);
+        }
+    })
+    createAutocompleteDropdown(filteredNames);
+}
+
+function createAutocompleteDropdown(list) {
+    const listEl = document.createElement("ul");
+    listEl.className = "autocomplete-list";
+    listEl.id =  "autocomplete-list";
+    list.forEach((booking) => {
+        const listItem = document.createElement("li");
+
+        const bookingButton = document.createElement("button");
+        bookingButton.innerHTML = booking;
+        bookingButton.addEventListener("click", onBookingButtonClick)
+        listItem.appendChild(bookingButton);
+
+        listEl.appendChild(listItem);
+    })
+    document.querySelector("#searchbar").appendChild(listEl);
+}
+
+function removeAutocompleteDropdown() {
+    const listEl = document.querySelector("#autocomplete-list");
+    if (listEl) listEl.remove(); //checks if it exists and then removes it
+}
+
+function onBookingButtonClick(event) {
+    event.preventDefault(); //cancels default event (submitting the form)
+
+
+    document.querySelector("#search-button").addEventListener("click", sendInput);
+
+    const buttonEl = event.target; //element that triggered the event (the button itself)
+    inputElement.value = buttonEl.innerHTML; //should be a string of the booking name
+
+    removeAutocompleteDropdown();
+
+}
+
+
+function sendInput(event) {
+    console.log("input called")
+    event.preventDefault();
+
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
+    performQueryAndUpdateBookings(url);
+}
+
+
+updateBookings("");

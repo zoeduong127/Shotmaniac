@@ -75,11 +75,16 @@
 				<div class="text">Bookings</div>
 			</div>
 			
-			<div class="search-container">
-				<div class="searchbox">
-					<input class="textbox" type="text" placeholder="Booking's name"/>
-				</div>
-				<div class="role-filter">
+			<form action="" autocomplete="off">
+				<div class="search-container" id="search-container">
+					<div id="searchbar" class="searchbar">
+						<input class="textBox" id="booking_name_input" type="text" placeholder="Booking name"
+						       onfocus="getAllBookings()"/>
+					</div>
+					
+					
+					
+					<!-- <div class="role-filter">
 					<form action="#">
 						<label for="role"></label>
 						<select class="role-option" id="role" name="role">
@@ -100,16 +105,9 @@
 						<input type="checkbox"/>
 						Fits my schedule only
 					</label>
+				</div> -->
 				</div>
-				
-				<div class="complete-search">
-					<button class="button-search" type="submit">
-						<img class="search-button"
-						     src="./../../Brand_Identity/images/icons/Magnifying-glass.png"
-						     alt="">
-					</button>
-				</div>
-			</div>
+			</form>
 			
 			<div class="bookings-container" id="booking_container"></div>
 		</div>
@@ -119,7 +117,8 @@
 				<div class="bookinginfo">
 					<div class="closetab" id="top-tab">
 						<span id="back">
-							<img src="./../../Brand_Identity/images/icons/X-icon.png" alt="close" id="back-img" onclick="closeInfo()">
+							<img src="./../../Brand_Identity/images/icons/X-icon.png" alt="close" id="back-img"
+							     onclick="closeInfo()">
 						</span>
 					</div>
 					<div class="main-content" id="popup-main">
