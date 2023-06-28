@@ -54,7 +54,7 @@ public class AccountResource {
         return Response.serverError().build();
     }
 
-    @RolesAllowed({"Administrator"})
+    @RolesAllowed({"Administrator", "Crew"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Account getAccountById() {

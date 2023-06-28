@@ -38,7 +38,7 @@ public class AdministratorsResource {
         return new EnrolmentResource(uriInfo, request, enrolmentId);
     }
 
-    @RolesAllowed({"Administrator"})
+    @RolesAllowed({"Administrator", "Crew"})
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("account/{accountId}")
     public AccountResource modifySpecificAccount(@PathParam("accountId") int accountId) {

@@ -76,11 +76,16 @@
 			</div>
 			
 			<form action="" autocomplete="off">
-				<div class="search-container" id="search-container">
-					<div id="searchbar" class="searchbar">
-						<input class="textBox" id="booking_name_input" type="text" placeholder="Booking name"
-						       onfocus="getAllBookings()"/>
-					</div>
+				<div class="search" id="searchbar">
+					<label for="search-input"></label>
+					<input type="text" class="input" id="search-input" placeholder="Booking name"
+					       onfocus="getAllBookings()">
+					
+					<button class="search-icon-btn" id="search-button">
+						<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt="search">
+					</button>
+				</div>
+			</form>
 					
 					
 					
@@ -106,8 +111,6 @@
 						Fits my schedule only
 					</label>
 				</div> -->
-				</div>
-			</form>
 			
 			<div class="bookings-container" id="booking_container"></div>
 		</div>

@@ -30,7 +30,7 @@ const months = [
 const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
 const account_id = cookies['account_id'];
-let role = "";
+let role;
 
 console.log("account id: " + account_id);
 
@@ -201,12 +201,13 @@ function enroll() {
         // Handle any errors
         console.error(error);
     });
+    performQueryAndUpdateBookings(" ")
 }
 
 
 /*Search function*/
 let bookings = [];
-let inputElement = document.getElementById("booking_name_input");
+let inputElement = document.getElementById("search-input");
 
 inputElement.addEventListener("input", onInputChange);
 function getAllBookings() {
@@ -269,7 +270,7 @@ function onBookingButtonClick(event) {
     event.preventDefault(); //cancels default event (submitting the form)
 
 
-    createSearchButton();
+    document.querySelector("#search-button").addEventListener("click", sendInput);
 
     const buttonEl = event.target; //element that triggered the event (the button itself)
     inputElement.value = buttonEl.innerHTML; //should be a string of the booking name
@@ -278,36 +279,22 @@ function onBookingButtonClick(event) {
 
 }
 
-function createSearchButton() {
-    const searchButton = document.createElement("button");
-    searchButton.className = "search-button";
-    searchButton.type = "submit";
-    searchButton.addEventListener("click", sendInput);
-
-
-    const searchIMG = document.createElement("img");
-    searchIMG.className = "search-button-icon";
-    searchIMG.src = "./../../Brand_Identity/images/icons/Magnifying-glass.png";
-    searchIMG.alt = "submit Search";
-
-    searchButton.appendChild(searchIMG);
-
-    document.querySelector("#search-container").appendChild(searchButton);
-}
-
 function sendInput(event) {
     console.log("input called")
     event.preventDefault();
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
-    performQueryAndUpdateBookings(url);
+    if (inputElement.value.length === 0) performQueryAndUpdateBookings(" ");
+    else {
+        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
+        performQueryAndUpdateBookings(url);
+    }
 }
 
 /*To load at the start of the page*/
 getAccount();
 
 function getAccount() {
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/account/${account_id}"`;
+    const url = `http://localhost:8080/shotmaniacs2/api/admin/account/${account_id}`;
     fetch(url, {
         headers: {
             'Authorization': `${token}`
@@ -315,9 +302,8 @@ function getAccount() {
     })
         .then(response => response.json())
         .then(data => {
-            bookings = data.map((booking) => {
-                return booking.name;
-            })
+            role = data.role;
+            console.log("Role: " + role);
         })
     performQueryAndUpdateBookings(" ");
 }

@@ -217,44 +217,30 @@ button {
     margin: 1vh 3vw 0 3vw;
 }
 
-.search-container{
-    box-sizing: border-box;
-    width: 100%;
-    height: 15vh;
+/*Searchbar*/
+
+.search {
+    float: right;
+    margin: 5.5vh 7vw 5.5vh 4vw;
+
     display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
+    position: relative;
+    justify-content: right;
+    width: 20vw;
+    height: 4vh;
 }
 
-.searchbar{
-  /*  width: 17vw;
-    height: 4vh;
-    padding-left: 1vw;*/
 
-    display: inline-block;
-    position: relative; /*needed to make the li 100% of the Input
-                            Relative doesn't change anything unless top/left.. is used*/
-}
+#search-input {
+    border-radius: 5px 0 0 5px;
+    border: none;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+    width: 17.5vw;
+    padding: 0 0 0 1vw;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
 
-.textBox{
-    /*width: 15vw;
-    height: 4vh;
-    background: #FFFFFF;
-    border: 2px solid rgba(82, 82, 82, 0.9);
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 23px;
-    padding: 0 0 0 5%;*/
-
-    border: unset;
-    background: #e9e9e9;
-    padding: 0.5em;
 }
 
 .autocomplete-list {
@@ -263,6 +249,8 @@ button {
     margin: unset;
     position: absolute;
     width: 100%;
+    background-color: white;
+    top: 4vh;
 
     -ms-overflow-style: none;  /* hides scrollbar */
     scrollbar-width: none;  /* hides scrollbar */
@@ -286,16 +274,39 @@ button {
     background-color: rgba(0, 0, 0, 0.13);
 }
 
-.autocomplete-list ul {
-    background-color: #ffffff;
-}
-
 .autocomplete-list li {
-    border: 1px solid #b5aeae;
+    border: 1px solid #e9e9e9;
     border-top: unset;
     border-radius: 6px;
 }
 
+.search-icon-btn {
+    background-color: #1696d2;
+    border: none;
+    border-right: 2px solid #000;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-radius: 0 5px 5px 0 ;
+    width: 2.5vw;
+    cursor: pointer;
+}
+
+.search-icon-btn .magnifying-glass {
+    width: 1.4vw;
+    padding: 1px;
+}
+
+.search input:focus {
+    color: black;
+    outline: none;
+    background-color: rgba(81,81,81,0.2);
+}
+
+.search input:focus::placeholder {
+    color: transparent;
+}
+
+/*End searchbar*/
 .role-filter{
     box-sizing: border-box;
     width: AUTO;

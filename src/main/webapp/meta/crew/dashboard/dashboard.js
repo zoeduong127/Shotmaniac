@@ -498,8 +498,11 @@ function sendInput(event) {
     console.log("input called")
     event.preventDefault();
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
-    performQueryAndUpdateBookings(url);
+    if (inputElement.value.length === 0) updateBookings("");
+    else {
+        const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
+        performQueryAndUpdateBookings(url);
+    }
 }
 
 
