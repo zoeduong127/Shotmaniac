@@ -256,7 +256,7 @@ public class ClientsResource {
         List<Account> listadmins = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, enrolment e WHERE e.admin_id = ? AND a.account_id = e.admin_id";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, admin_enroll e WHERE e.admin_id = ? AND a.account_id = e.admin_id";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
