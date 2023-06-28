@@ -248,8 +248,9 @@ body {
     display: none;
     position: absolute;
     background-color: #F1F1F1;
-    text-align: center;
-    z-index: 1;
+    border-radius: 5px;
+    width: 10vw;
+
 }
 
 /*
@@ -263,28 +264,12 @@ Change depending on what the actual content is to be able to filter
     display: block;
     text-align: center;
     text-decoration: none;
-    font-size: 0.9rem;
 }
-
-.dropdown-header {
-    font-size: 1rem;
-    color: rgb(0 0 0 / 55%);
-    text-align: center;
-    margin: 0;
-    padding: 1vh 0;
-}
-
-.border-gradient {
-    background-image: linear-gradient(to right, rgb(0 0 0 / 0%), rgba(0 0 0), rgb(0 0 0 / 0%));
-    height: 0.1vh;
-    width: 80%;
-    margin: 0 10%;}
 
 .filter:hover .filter-content {
     display: block;
-    width: 30%;
+    width: 10vw;
     border-radius: 0;
-    margin-left: 5px;
 }
 
 .booking-container .filter:hover {
@@ -369,6 +354,11 @@ Change depending on what the actual content is to be able to filter
     overflow-y: scroll;
     -ms-overflow-style: none;  /* hides scrollbar */
     scrollbar-width: none;  /* hides scrollbar */
+
+
+
+
+
 }
 /*hides scrollbar*/
 .booking-container::-webkit-scrollbar {
@@ -485,28 +475,21 @@ Change depending on what the actual content is to be able to filter
 
 .left p{
     float: left;
-    font-size: 17px;
+    font-size: 16px;
     text-align: center;
+    padding: 5px 0;
 }
 
+.pending-state {
+    background-color: rgba(255, 105, 98, 0.72);
 
-.TODO {
-    background-color: rgb(255 104 104);
+}
+.approved-state {
+    background-color: rgba(98, 105, 255, 0.72);
 }
 
-.IN-PROGRESS {
-    background-color: rgb(147 76 218);
-}
-
-.REVIEW {
-    background-color: rgba(255, 140, 0, 75%);
-}
-
-.DONE {
-    background-color: rgb(23, 190, 23);
-}
-
-.state {
+.todo {
+    background-color: red;
     height: 30px;
     padding-top: 8px;
     width: 20%;
@@ -536,27 +519,20 @@ Change depending on what the actual content is to be able to filter
     height: 17vh;
 }
 
-#booking_name {
+.latestBooking a{
     display: block;
     height: 3vh;
     background-color: rgba(22, 150, 210, 0.5);
     text-align: center;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
 }
 
-#booking_description {
-    background-color: inherit;
-    padding: 0 20px;
-    height: 73%;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: -2vh;
-    margin-bottom: 0;
+.latestBooking p {
+background-color: inherit;
+    padding: 20px;
 }
+
+
+
 
 
 .stats {

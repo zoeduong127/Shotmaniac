@@ -35,13 +35,14 @@ public enum AccountDao {
 
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO account VALUES (DEFAULT,?,?,?,?,?)";
+            String query = "INSERT INTO account VALUES (DEFAULT,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getEmail());
             preparedStatement.setString(3, account.getPasswordHash());
             preparedStatement.setString(4, String.valueOf(account.getAccountType()));
             preparedStatement.setString(5, account.getSalt());
+            preparedStatement.setString(6, account.gettel());
             int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Successfully");

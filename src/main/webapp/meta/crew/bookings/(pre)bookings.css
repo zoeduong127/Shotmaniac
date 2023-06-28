@@ -1,0 +1,72 @@
+.bookinginfo{
+    ox-sizing: border-box;
+
+    position: absolute;
+    width: 371px;
+    height: 503px;
+
+    margin-left: 463px;
+    margin-top: 223px;
+
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(82, 82, 82, 0.5);
+}
+
+.closetab{
+    position: absolute;
+    width: 371px;
+    height: 50px;
+
+    background: rgba(31, 31, 31, 0.35);
+}
+
+.close{
+    position: absolute;
+    width: 43px;
+    height: 27px;
+
+    margin-left: 321px;
+    margin-top: 13px;
+
+    background: url(close1437-removebg-preview);
+}
+
+.main-content{
+    position:absolute;
+    width: 371px;
+    height: 453px;
+
+    margin-top: 50px;
+
+}
+
+.enrolevent{
+    position: absolute;
+    width: 371px;
+    height: 50px;
+
+    margin-top: 453px;
+
+
+    background: rgba(31, 31, 31, 0.35);
+}
+
+.enrol{
+    position: absolute;
+    width: 108px;
+    height: 31px;
+
+    margin-left: 248px;
+    margin-top: 9px;
+
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 25px;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+
+    background: rgba(31, 31, 31, 0.35);
+}
+

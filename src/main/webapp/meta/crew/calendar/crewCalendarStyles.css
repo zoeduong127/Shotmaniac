@@ -336,19 +336,13 @@ body {
 }
 
 .event {
-    height: 35vh;
-    width: 36vw;
+    height: 59vh;
+    width: 40vw;
     overflow-x: hidden;
     overflow-y: scroll;
     background-color: white;
+    border: 1px solid black;
 
-    -ms-overflow-style: none;  /* hides scrollbar */
-    scrollbar-width: none;  /* hides scrollbar */
-}
-
-/*hides scrollbar*/
-.event::-webkit-scrollbar {
-    display: none;
 }
 
 .event-info {
@@ -362,4 +356,23 @@ body {
 
 .event-info span {
     font-weight: normal;
+}
+
+
+#active-button {
+    float: right;
+}
+
+#active-button button {
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    background-color: rgba(59, 238, 72, 0.84);
+    margin: 0 50px;
+    transform: translateY(-25px);
+    cursor: pointer;
+}
+
+#active-button button:active {
+    background-color: rgba(14, 134, 20, 0.84);
 }
