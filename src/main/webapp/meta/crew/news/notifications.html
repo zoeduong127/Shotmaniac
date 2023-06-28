@@ -1,154 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Announcement Scroll</title>
-	<link rel="stylesheet" type="text/css" href="notifyStyles.css">
-	<!--
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	-->
+  <title>Announcement Scroll</title>
+  <link rel="stylesheet" type="text/css" href="notifyStyles.css">
+<!--
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+-->
 </head>
 <body>  <!-- here's it bunch of announcements, each with a title
  that needs to be edited regarding the actual announcements-->
 <div class="container">
-	
-	<header>
-		<div class="dropdown">
-			<button class="dropdownBtn">
-				<img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
-			</button>
-			
-			<div class="dropdown-content">
-				<div class="item">
-					<a href="./../profile/profile.html">Profile</a>
-				</div>
-				
-				<div class="item">
-					<a href="./../../login/LogIn.html">Log Out</a>  <!--missing HREF-->
-				</div>
-			</div>
-		</div>
-	</header>
-	
-	
-	<nav>
-		<div class="text">
-			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
-		</div>
-		<div class="dash-box">
-			<a href="./../dashboard/dashboard.html" target="_self">
-				<div class="box" id="dashboard">
-					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-					<label> Dashboard</label>
-				</div>
-			</a>
-			<a href="./notifications.html" target="_self">
-				<div class="box" id="News">
-					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-					<label>News</label>
-				</div>
-			</a>
-			<a href="./../calendar/calendar.html" target="_self">
-				<div class="box" id="calendar">
-					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-					<label> Calendar</label>
-				</div>
-			</a>
-			<a href="./../bookings/Booking.html" target="_self">
-				<div class="box" id="booking">
-					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-					<label>Bookings</label>
-				</div>
-			</a>
-			<a href="../../help/help.html" target="_self">
-				<div class="box" id="help">
-					<img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-					<label>Help</label>
-				</div>
-			</a>
-		</div>
-	</nav>
-	
-	
-	<main>
-		<div class="page-title">
-			<div class="image">
-				<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png" alt="Shotmaniacs">
-			</div>
-			<div class="text">Notifications</div>
-		</div>
-		
-		<div class="announcement-container">
-			
-			
-			<div class="announcement-list">
-				<div class="filter-container">
-					<div class="filter-dropdown">
-						<button class="filter-button">
-							<img id="filter_img" src="./../../Brand_Identity/images/icons/black_filter_icon.png" alt="">
-							Filter
-						</button>
-						<div class="filter-options">
-							<a href="#" class="filter-option">Read</a>
-							<a href="#" class="filter-option">Unread</a>
-						</div>
-					</div>
-				</div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 1
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 2
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 3
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 4
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 5
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				<!-- Add more announcement list items here -->
-			
-			</div>
-			
-			
-			<div class="announcement-content">
-				<h3 id="announcement-title"></h3>
-				<div id="pre-announcement">
-					<img src="./../../Brand_Identity/images/icons/" alt="">
-					<p>Select from the list of notifications on the side to view more details</p>
-				</div>
-				<div id="announcement-description"></div>
-				<div class="add-comment" id="add-comment" onclick="showComment()">Add a comment</div>
-				<div class="comment-box" id="comment-box">
-					<label for="comment-input"></label>
-					<textarea id="comment-input" placeholder="Type your comment here"></textarea>
-					<button id="comment-submit" type="submit">Submit</button>
-				</div>
-			</div>
-		</div>
-	</main>
+
+  <header></header>
+
+
+
+
+  <nav>
+    <div class="text">
+      <img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
+    </div>
+    <div class="dash-box">
+      <a href="./../dashboard/dashboard.html" target="_self">
+        <div class="box" id="dashboard">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label> Dashboard</label>
+        </div>
+      </a>
+      <a href="./notifications.html" target="_self">
+        <div class="box" id="News">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>News</label>
+        </div>
+      </a>
+      <a href="./../calendar/calendar.html" target="_self">
+        <div class="box" id="calendar">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label> Calendar</label>
+        </div>
+      </a>
+      <a href="./../bookings/bookings.html" target="_self">
+        <div class="box" id="booking">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>Bookings</label>
+        </div>
+      </a>
+      <a href="../../help/help.html" target="_self">
+        <div class="box" id="help">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>Help</label>
+        </div>
+      </a>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <div class="notification-label">
+      <h2>Notifications</h2>
+    </div>
+
+    <div class="announcement-container">
+      <div class="filter-container">
+        <div class="filter-dropdown">
+          <button class="filter-button">Filter</button>
+          <div class="filter-options">
+            <a href="#" class="filter-option">Read</a>
+            <a href="#" class="filter-option">Unread</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="announcement-list">
+        <div class="announcement-list-item">
+          <span class="announcement-icon"><i class="fas fa-user"></i></span>
+          Announcement 1
+        </div>
+
+        <div class="announcement-list-gap"></div>
+
+        <div class="announcement-list-item">
+          <span class="announcement-icon"><i class="fas fa-user"></i></span>
+          Announcement 2
+        </div>
+
+        <div class="announcement-list-gap"></div>
+
+        <div class="announcement-list-item">
+          <span class="announcement-icon"><i class="fas fa-user"></i></span>
+          Announcement 3
+        </div>
+
+        <div class="announcement-list-gap"></div>
+
+        <div class="announcement-list-item">
+          <span class="announcement-icon"><i class="fas fa-user"></i></span>
+          Announcement 4
+        </div>
+
+        <div class="announcement-list-gap"></div>
+
+        <div class="announcement-list-item">
+          <span class="announcement-icon"><i class="fas fa-user"></i></span>
+          Announcement 5
+        </div>
+
+        <div class="announcement-list-gap"></div>
+        <!-- Add more announcement list items here -->
+
+      </div>
+
+
+      <div class="announcement-content">
+        <h3 id="announcement-title"></h3>
+        <div id="announcement-description"></div>
+        <div class="add-comment" id ="add-comment" onclick="showComment()">Add a comment</div>
+        <div class="comment-box" id="comment-box">
+          <textarea id="comment-input" placeholder="Type your comment here"></textarea>
+          <button id="comment-submit">Submit</button>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
 
 <script src="notify.js"></script>

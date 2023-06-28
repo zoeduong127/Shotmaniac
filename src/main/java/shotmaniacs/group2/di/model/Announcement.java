@@ -1,5 +1,6 @@
 package shotmaniacs.group2.di.model;
 
+import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 

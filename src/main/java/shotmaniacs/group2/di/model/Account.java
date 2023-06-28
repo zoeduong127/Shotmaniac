@@ -18,15 +18,24 @@ public class Account {
     private AccountType accountType;
     @XmlAnyElement
     private String salt;
+    @XmlAnyElement
+    private String tel;
 
     public Account(){}
 
-    public Account(Integer id, String username, String email, String passwordHash, AccountType accountType) {
+    public Account(int id, String username, String email, String passwordHash, AccountType accountType,String tel) {
         setId(id);
         setUsername(username);
         setEmail(email);
         setPasswordHash(passwordHash);
         setAccountType(accountType);
+        settel(tel);
+    }
+    public String gettel(){
+        return this.tel;
+    }
+    public void settel(String tel){
+        this.tel= tel;
     }
 
     public int getId() {
