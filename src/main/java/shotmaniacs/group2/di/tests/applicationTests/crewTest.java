@@ -1,4 +1,4 @@
-package shotmaniacs.group2.di.tests.unitTests;
+package shotmaniacs.group2.di.tests.applicationTests;
 
 import org.junit.After;
 import org.junit.Before;

@@ -5,11 +5,14 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.model.Account;
+import shotmaniacs.group2.di.model.Role;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import static java.lang.String.valueOf;
 
 public class AccountResource {
     @Context
@@ -56,6 +59,44 @@ public class AccountResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Account getAccountById() {
         return AccountDao.instance.getAccountById(accountId);
+    }
+
+    @RolesAllowed({"Administrator"})
+    @PUT
+    @Path("/role")
+    public Response setAccountRoleById(@QueryParam("role") String role) {
+
+        if (!roleIsValid(role)) {
+            return Response.notModified().build();
+        }
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "UPDATE account SET account.role = ? WHERE account.id = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, role);
+            ps.setInt(2, accountId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while setting account role by id: " + e.getMessage());
+        }
+
+        return Response.serverError().build();
+    }
+
+    public static boolean roleIsValid(String value) {
+        for (Role type : Role.values()) {
+            if (valueOf(type).equals(value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -1,4 +1,4 @@
-package shotmaniacs.group2.di.tests.applicationTests;
+package shotmaniacs.group2.di.tests.unitTests;
 
 
 
@@ -58,7 +58,7 @@ public class AdministratorResourceTest extends JerseyTest {
         response = target("/admin/accounts")
                 .request()
                 .header("Authorization", authToken)
-                .put(Entity.json(new Account(0,"addAccountTest", "addAccountTest@student.utwente.nl", "yummybanana", AccountType.Administrator, null)));
+                .put(Entity.json(new Account(0,"addAccountTest", "addAccountTest@student.utwente.nl", "yummybanana", AccountType.Administrator, null, null, null)));
 
         Assertions.assertTrue(response.getStatus() == 200);
 

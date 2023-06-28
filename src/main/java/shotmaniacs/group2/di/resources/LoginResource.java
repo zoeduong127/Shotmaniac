@@ -9,6 +9,7 @@ import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
+import shotmaniacs.group2.di.model.Role;
 import shotmaniacs.group2.di.model.RootElementWrapper;
 import shotmaniacs.group2.di.security.TokenManager;
 
@@ -50,7 +51,7 @@ public class LoginResource {
 
                 RootElementWrapper responseObject = new RootElementWrapper();
                 Account responseAccount =  new Account(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        rs.getString(4),AccountType.valueOf(rs.getString(5)), rs.getString(6));
+                        rs.getString(4),AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8));
 
                 responseObject.addAccount(responseAccount);
 

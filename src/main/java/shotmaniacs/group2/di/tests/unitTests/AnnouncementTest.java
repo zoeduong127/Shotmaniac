@@ -1,4 +1,4 @@
-package shotmaniacs.group2.di.tests.applicationTests;
+package shotmaniacs.group2.di.tests.unitTests;
 
 import jakarta.ws.rs.core.Application;
 import org.glassfish.jersey.server.ResourceConfig;

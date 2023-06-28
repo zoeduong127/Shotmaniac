@@ -5,7 +5,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dao.AnnouncementDao;
-import shotmaniacs.group2.di.dto.AccountWithRole;
 import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
@@ -130,7 +129,7 @@ public class AdministratorsResource {
                 try {
                     Account result = new Account(rs.getInt(1), rs.getString(2),
                             rs.getString(3), rs.getString(4),
-                            AccountType.valueOf(rs.getString(5)), rs.getString(6));
+                            AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8));
                     accountList.add(result);
                 } catch (IllegalArgumentException ignored) {
                 }
@@ -162,7 +161,7 @@ public class AdministratorsResource {
                 try {
                     Account result = new Account(rs.getInt(1), rs.getString(2),
                             rs.getString(3), rs.getString(4),
-                            AccountType.valueOf(rs.getString(5)), rs.getString(6));
+                            AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8));
                     accountList.add(result);
                 } catch (IllegalArgumentException ignored) {
                 }
@@ -201,16 +200,16 @@ public class AdministratorsResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
 
-    public List<AccountWithRole> getEnrolledCrewMembersByBookingId(@PathParam("booking_id") int booking_id) {
-        List<AccountWithRole> accountList = new ArrayList<>();
+    public List<Account> getEnrolledCrewMembersByBookingId(@PathParam("booking_id") int booking_id) {
+        List<Account> accountList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.*, e.role FROM account a JOIN enrolment e ON (e.crew_member_id = a.account_id)  WHERE e.booking_id = ? AND e.crew_member_id = a.account_id;";
+            String query = "SELECT a.* FROM account a, enrolment e WHERE e.booking_id = ? AND e.crew_member_id = a.account_id;";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,booking_id);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
-                accountList.add(new AccountWithRole(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(8)));
+                accountList.add(new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8)));
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
@@ -369,7 +368,7 @@ public class AdministratorsResource {
             if (rs.next()) {
                 return new Account(rs.getInt(1), rs.getString(2),
                         rs.getString(3), rs.getString(4),
-                        AccountType.valueOf(rs.getString(5)), rs.getString(6));
+                        AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8));
             } else {
                 return null;
 

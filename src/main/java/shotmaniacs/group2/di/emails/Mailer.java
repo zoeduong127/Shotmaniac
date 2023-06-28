@@ -14,9 +14,6 @@ import shotmaniacs.group2.di.dao.BookingDao;
 import shotmaniacs.group2.di.dto.EnrolmentDto;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.Booking;
-import shotmaniacs.group2.di.resources.BookingResource;
-
-import java.awt.print.Book;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
