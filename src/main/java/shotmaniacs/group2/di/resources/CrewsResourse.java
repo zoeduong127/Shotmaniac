@@ -1,10 +1,18 @@
 package shotmaniacs.group2.di.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +30,11 @@ public class CrewsResourse {
     private static String password = "yummybanana";
 
 
-
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybookings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Booking> getBooking(@PathParam("crewid") int crewId) {
+    public List<Booking> getBookingById(@PathParam("crewid") int crewId) {
         List<Booking> listBooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -38,7 +46,8 @@ public class CrewsResourse {
             while(rs.next()) {
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listBooking.add(booking);
             }
         } catch (SQLException e) {
@@ -47,6 +56,7 @@ public class CrewsResourse {
         return listBooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/search")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -64,7 +74,8 @@ public class CrewsResourse {
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -73,6 +84,33 @@ public class CrewsResourse {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
+    @Path("/mybooking/enrolled")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public List<Booking> getEnrolledBookings(@PathParam("crewid") int crewid) {
+        List<Booking> listbooking = new ArrayList<>();
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,crewid);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                listbooking.add(booking);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return listbooking;
+    }
+
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/timefilter/{filtertime}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -81,12 +119,12 @@ public class CrewsResourse {
      * Param "ongoing": filter ongoing event
      * Param "past":filter past event
      */
-    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @PathParam("filtertime") String ongoing) {
+    public List<Booking> getBookingWithTimeFilter(@PathParam("crewid") int crewid, @PathParam("filtertime") String filter) {
         List<Booking> listbooking = new ArrayList<>();
         try {
             String query;
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            if(ongoing.equals("ongoing")) {
+            if(filter.equals("ongoing")) {
                 query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time >= NOW()";
             } else {
                 query = "SELECT b.* FROM booking b , enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND b.date_and_time < NOW()";
@@ -97,7 +135,8 @@ public class CrewsResourse {
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -106,6 +145,7 @@ public class CrewsResourse {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/labelfilter/{label}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -117,23 +157,24 @@ public class CrewsResourse {
         List<Booking> listbooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query;
-            if(label.equals("todo")) {
-                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Todo'";
-            } else if (label.equals("in_progress")) {
-                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'In progress'";
-            } else if (label.equals("review")) {
-                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Review'";
-            } else { //label.equals("done")
-                query = "SELECT b.* FROM booking b, enrolment e, label l WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND l.booking_id = b.booking_id AND l.label = 'Done'";
-            }
+            String query = switch (label) {
+                case "TODO" ->
+                        "SELECT b.* FROM booking b, enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND e.label = 'TODO'";
+                case "IN_PROGRESS" ->
+                        "SELECT b.* FROM booking b, enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND e.label = 'IN PROGRESS'";
+                case "REVIEW" ->
+                        "SELECT b.* FROM booking b, enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND e.label = 'REVIEW'";
+                default ->  //label.equals("done")
+                        "SELECT b.* FROM booking b, enrolment e WHERE e.crew_member_id = ? AND e.booking_id = b.booking_id AND e.label = 'DONE'";
+            };
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,crewid);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -142,6 +183,7 @@ public class CrewsResourse {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/allbookings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -158,7 +200,8 @@ public class CrewsResourse {
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -167,16 +210,17 @@ public class CrewsResourse {
         return listbooking;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/booking/{booking_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     /**
      * Modify specific event with given ID
      */
-    public BookingResource assignedRoleByCrew(@PathParam("crewid") int crewid, @PathParam("booking_id") int id) {
+    public BookingResource modifySpecificBooking(@PathParam("crewid") int crewid, @PathParam("booking_id") int id) {
         return new BookingResource(uriInfo, request, crewid, id);
     }
-    //TODO: U - assign a specific role to the booking
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/news")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -202,13 +246,14 @@ public class CrewsResourse {
         return announcementList;
     }
 
-    @Path("/news?filter=<Read/Unread>")
+    @RolesAllowed({"Administrator","Crew"})
+    @Path("/news/filter")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
      * Filter based on read or unread announcements
      */
-    public List<Announcement> getNewsWithFilter(@QueryParam("filter") int status) {
+    public List<Announcement> getNewsWithFilter(@QueryParam("status") int status) {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -232,6 +277,7 @@ public class CrewsResourse {
         return announcementList;
     }
 
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/mybooking/{booking_id}/announcements")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -258,13 +304,14 @@ public class CrewsResourse {
         return announcementList;
     }
 
-    @Path("/mybooking/{booking_id}/announcements?filter=<Read/Unread>")
+    @RolesAllowed({"Administrator","Crew"})
+    @Path("/mybooking/{booking_id}/announcements/filter")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     /**
-     * Returns all announcements of a specific booking
+     * Returns all announcements of a specific booking with a status filter
      */
-    public List<Announcement> getAnnouncementOfBookingWithFilter(@PathParam("booking_id") int bookingId, @QueryParam("filter") int status) {
+    public List<Announcement> getAnnouncementOfBookingWithFilter(@PathParam("booking_id") int bookingId, @QueryParam("status") int status) {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -287,5 +334,57 @@ public class CrewsResourse {
             System.err.println("Error connecting: " + e);
         }
         return announcementList;
+    }
+
+
+    @RolesAllowed({"Administrator", "Crew"})
+    @Path("/mybooking/statistics/hoursworked")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    /**
+     * Gets the sum of the hours per booking aggregated by day. Gets all the days with bookings between startDate and endDate.
+     * NOTE: Format for input dates is yyyy-MM-dd
+     */
+    public Response getHoursWorkedPerDay(@PathParam("crewid") int crewid, @QueryParam("startDate") String start, @QueryParam("endDate") String end) {
+        String pattern = "yyyy-MM-dd";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        LocalDate startDate;
+        LocalDate endDate;
+        try {
+            startDate = LocalDate.parse(start, formatter);
+            endDate = LocalDate.parse(end, formatter);
+        } catch (DateTimeParseException e) {
+            return Response.serverError().entity(e.getMessage()).build();
+        }
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT DATE_TRUNC('day', b.date_and_time), SUM(b.duration_hours) \n" +
+                    "FROM booking b, enrolment e \n" +
+                    "WHERE e.crew_member_id = ? AND b.booking_id = e.booking_id \n" +
+                    "AND DATE_TRUNC('day', b.date_and_time) >= ?::date\n" +
+                    "AND DATE_TRUNC('day', b.date_and_time) <= ?::date\n" +
+                    "GROUP BY DATE_TRUNC('day', b.date_and_time);";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, crewid);
+            ps.setString(2,  startDate.toString());
+            ps.setString(3,  endDate.toString());
+
+            ResultSet rs = ps.executeQuery();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            ObjectNode jsonObject = objectMapper.createObjectNode();
+            while (rs.next()) {
+                jsonObject.put(rs.getString(1), rs.getInt(2));
+            }
+
+            return Response.ok(jsonObject.toString()).build();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Response.serverError().build();
     }
 }

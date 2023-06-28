@@ -55,7 +55,7 @@ public class LoginResource {
 
                 RootElementWrapper responseObject = new RootElementWrapper();
                 Account responseAccount =  new Account(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        rs.getString(4),AccountType.valueOf(rs.getString(5)),rs.getString(7));
+                        rs.getString(4),AccountType.valueOf(rs.getString(5)));
 
                 responseObject.addAccount(responseAccount);
 

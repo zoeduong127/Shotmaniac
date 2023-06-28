@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum AnnouncementDao {
-    // TODO: Hook this class up to the database in
     instance;
 
     private static String host = "bronto.ewi.utwente.nl";
@@ -16,26 +15,23 @@ public enum AnnouncementDao {
     private static String password = "yummybanana";
 
 
-    public void addAnnouncement(Announcement announcement) {
+    public int addAnnouncement(Announcement announcement) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO annoucement VALUES (?,?,?,?,?,?)";
+            String query = "INSERT INTO announcement VALUES (DEFAULT,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,announcement.getId());
-            preparedStatement.setString(2,announcement.getTitle());
-            preparedStatement.setString(3,announcement.getBody());
-            preparedStatement.setInt(4, announcement.getPublisher());
-            preparedStatement.setString(5, String.valueOf(announcement.getUrgency()));
-            preparedStatement.setTimestamp(6,announcement.getDate());
+            preparedStatement.setString(1,announcement.getTitle());
+            preparedStatement.setString(2,announcement.getBody());
+            preparedStatement.setInt(3, announcement.getPublisher());
+            preparedStatement.setString(4, String.valueOf(announcement.getUrgency()));
+            preparedStatement.setTimestamp(5,announcement.getDate());
             int rowsInserted = preparedStatement.executeUpdate();
-            while(rowsInserted > 0) {
-                System.out.println("Successfully");
-                return;
-            }
+            return rowsInserted;
         } catch (SQLException e) {
-            System.err.println("Error connecting: "+e);
+            e.printStackTrace();
         }
-        System.out.println("Unsuccessfully");
+        System.out.println("Unsuccessful");
+        return 0;
     }
 
     public Announcement getAnAnnouncement(int announcementId) {

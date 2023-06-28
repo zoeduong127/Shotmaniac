@@ -1,0 +1,462 @@
+.container {
+    display: grid;
+    grid-template-columns: 20vw 1fr 20vw;
+    grid-template-rows: 8vh auto;
+    grid-template-areas:
+        "header header header"
+        "nav content content";
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    grid-area: header;
+    background-color: rgba(22,150,210,0.8);
+}
+
+nav {
+    grid-area: nav;
+    background-color: rgba(31,31,31,0.05);
+    border: 1px solid rgba(31,31,31,0.2);
+}
+
+
+main {
+    grid-area: content;
+    background-color: rgba(255,255,255,0.8);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+}
+
+
+body {
+    margin: 0;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+
+
+
+/*Dropdown  todo: Fix, maybe add delay or something
+                    change icons*/
+
+.dropdown {
+    float: right;
+    overflow: hidden;
+    margin: 0 3vw 0 0;
+    height: 100%;
+}
+
+.dropdown .dropdownBtn {
+    background-color: inherit;
+    color: white;
+    border: none;
+    outline: none;
+    margin: 0 0 0 0.5vw;
+    padding: 0 0 0 0.5vw;
+}
+
+.dropdown:hover .dropdownBtn{
+    cursor: pointer;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    text-decoration: none;
+    background-color: #F1F1F1;
+    min-width: 7vw;
+    text-align: center;
+    z-index: 1;
+    right: 1.5vw;
+    top: 8vh;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/*End of DropDown*/
+
+
+#avatar {
+    height: 8vh;
+}
+/*Content inside dropdowns*/
+.item:hover{
+    color: #000000;
+    background-color: rgba(81,81,81,0.5);
+}
+/*End of DropDown*/
+
+
+#avatar {
+    height: 8vh;
+}
+
+
+/*Navigational Bookings*/
+
+#icon {
+    width: 3vw;
+    height: 4.3vh;
+    float: left;
+    padding-left: 0.5vw;
+}
+
+
+/*Navigational Dashboard*/
+
+.dash-box img {
+    width: 0;
+    height: 0;
+}
+/*Widths adjusted for a nav pane of 20vw*/
+
+.text img{
+    width: 95%;
+    margin: 10vh 2.5% 0 2.5%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.dash-box {
+    background-color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(82,82,82,0.75);
+    width: 15vw;
+    height: 52vh;
+    margin: 10vh 2.5vw 20vh 2.5vw;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.box {
+    border-bottom: 1px solid rgba(82,82,82,0.75);
+    text-align: center;
+    padding: 8% 0 8% 0;
+}
+
+.box:hover {
+    cursor: pointer;
+    color: rgba(82,82,82,0.75);
+}
+
+.dash-box a {
+    text-decoration: none;
+    color: black;
+}
+
+/*Currently active page, change depending on the CSS file used*/
+#booking {
+    background-color: rgba(22,150,210,0.8);
+    border: 1px solid #1696D2;
+    color: white;
+}
+
+/*End of Navigational Dashboard*/
+
+
+.page-title {
+    height: 15vh;
+    width: 100%;
+    display: flex;
+    position: sticky;
+    top: 0;
+}
+
+
+.main-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/*Title page thing*/
+.page-title .image img{
+    height: 85%;
+    margin: 1vh 3vw 0 3vw;
+}
+.text {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 4vh;
+}
+
+.logo-title-page{
+    width: 4.2vw;
+    padding-top: 1vh;
+    padding-left: 2vw;
+}
+
+
+.text img{
+    width: 95%;
+    margin: 10vh 2.5% 0 2.5%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.logo-title-page .image{
+    margin: 1vh 3vw 0 3vw;
+}
+
+.search-container{
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.searchbox{
+    width: 17vw;
+    height: 4vh;
+    padding-left: 1vw;
+}
+
+.textbox{
+    width: 15vw;
+    height: 4vh;
+    background: #FFFFFF;
+    border: 2px solid rgba(82, 82, 82, 0.9);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 23px;
+    padding: 0 0 0 5%;
+}
+
+.role-filter{
+    box-sizing: border-box;
+    width: AUTO;
+    height: 4vh;
+    margin: 0 2vw;
+}
+
+.role-option{
+    box-sizing: border-box;
+    width: 10vw;
+    height: 4vh;
+
+    background-color: #FFFEFE;
+    border: 2px solid rgba(82, 82, 82, 0.9);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+
+.checkbox{
+    width: auto;
+    height: 3vh;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+
+.button-search{
+    width: 3vw;
+    height: 5vh;
+    margin: 0 1vw;
+    background-color: rgba(22,150,210,0.8);
+    border-radius: 5px;
+}
+
+.search-button{
+    width: 1.5vw;
+    padding-top: 0.5vh;
+}
+
+.bookings-container{
+    width: 100%;
+    height: 62vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
+    -ms-overflow-style: none;  /* hides scrollbar */
+    scrollbar-width: none;  /* hides scrollbar */
+}
+
+.bookings-container::-webkit-scrollbar {
+    display: none;
+}
+
+.booking {
+    box-sizing: border-box;
+    width: 18.3vw;
+    height: 20vh;
+    margin: 2vh 4vw;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(22, 150, 210, 0.8);
+    cursor: pointer;
+}
+
+
+
+.bookings-name{
+    width: 100%;
+    height: 30%;
+    text-align: center;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 25px;
+    color: #1F1F1F;
+    box-sizing: border-box;
+    border: 1px solid rgba(22, 150, 210, 0.8);
+    background-color: rgba(22, 150, 210, 0.5);
+}
+
+.bookings-name p{
+    margin-top: 8px;
+    padding: 0 1vw;
+    max-width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+.short-descri{
+    width: 100%;
+    height: 70%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.short-descri p {
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    padding: 0 1vw;
+    overflow: hidden;
+}
+
+
+.hiddenpop{
+    visibility: hidden;
+    position: relative;
+    z-index: 2;
+    height: 53vh;
+    width: 25vw;
+    top: -113vh;
+    left: 22vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    margin: 0;
+    padding: 0;
+    align-items: flex-start;
+}
+
+.bookinginfo {
+    width: 25vw;
+    height: 53vh;
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(82, 82, 82, 0.5);
+}
+
+.closetab{
+    width: 84%;
+    height: 8vh;
+    padding: 0 2vw;
+    background: rgba(31, 31, 31, 0.35);
+}
+
+.main-content {
+    width: 84%;
+    height: 38vh;
+    padding: 0 2vw;
+    overflow-y: hidden;
+}
+
+.enrolevent{
+    width: 100%;
+    height: 7vh;
+    background: rgba(31, 31, 31, 0.35);
+}
+
+#heading {
+    width: 70%;
+    height: 3vh;
+    margin: 2vh 0;
+    float: left;
+    min-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#heading:hover {
+    position: absolute;
+    left: 10px;
+    white-space: normal;
+    overflow: visible;
+    background-color: rgb(157 157 157);
+    height: auto;
+    border: 1px solid black;
+}
+
+.main-content p {
+    width: 90%;
+}
+
+#back {
+    float: right;
+    margin: 2.5vh 2vw;
+}
+
+#back-img {
+    height: 3vh;
+}
+
+#back-img:hover {
+    cursor: pointer;
+}
+
+.enrol {
+    width: 8vw;
+    height: 4vh;
+    float: right;
+    margin: 1.5vh 1vw;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 25px;
+    text-transform: uppercase;
+    background: rgba(31, 31, 31, 0.35);
+    cursor: pointer;
+}

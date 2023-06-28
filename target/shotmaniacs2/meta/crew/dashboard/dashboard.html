@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+	<link href="crewDashboardStyles.css" rel="stylesheet" id="currentCSS">
+	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+	      rel="stylesheet" type='text/css'>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<script src="dashboard.js" defer></script>
+</head>
+<body>
+<div class="container">
+	<header>
+		<div class="dropdown">
+			<button class="dropdownBtn">
+				<img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
+			</button>
+			
+			<div class="dropdown-content">
+				<div class="item">
+					<a href="./../profile/profile.html">Profile</a>
+				</div>
+				
+				<div class="item">
+					<a href="./../../login/LogIn.html">Log Out</a>  <!--missing HREF-->
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<nav>
+		<div class="text">
+			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
+		</div>
+		<div class="dash-box">
+			<a href="dashboard.html" target="_self">
+			<div class="box" id="dashboard">
+				<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label> Dashboard</label>
+			</div>
+			</a>
+			<a href="./../news/notifications.html" target="_self">
+			<div class="box" id="News">
+				<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label>News</label>
+			</div>
+			</a>
+			<a href="./../calendar/calendar.html" target="_self">
+			<div class="box" id="calendar">
+				<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label> Calendar</label>
+			</div>
+			</a>
+			<a href="./../bookings/bookings.html" target="_self">
+			<div class="box" id="booking">
+				<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label>Bookings</label>
+			</div>
+			</a>
+			<a href="../../help/help.html" target="_self">
+			<div class="box" id="help">
+				<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<label>Help</label>
+			</div>
+			</a>
+		</div>
+	</nav>
+	
+	<main>
+		<div class="page-title">
+			<div class="image">
+				<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png" alt="Shotmaniacs">
+			</div>
+			<div class="text">My Bookings</div>
+		</div>
+		<div class="navigation">
+			<!-- On main page -->
+			<div class="filter">
+				<button class="filter-btn" >
+					<span id="button-text">
+						<i class="fas fa-filter filter-icon"></i>
+							<span id = "filter_button_text">Filter: On Going</span>
+						<i class="fas fa-caret-down down-icon"></i>
+					</span>
+				</button>
+
+				<div class="filter-content">
+					<!--missing HREF-->
+					<div class="item" onclick="updateBookings('in_progress')">
+						<p>In Progress</p>
+					</div>
+					<div class="item" onclick="updateBookings('future')">
+						<p>Future</p>
+					</div>
+					
+					<div class="item" onclick="updateBookings('past')">
+						<p>Past</p>
+					</div>
+				</div>
+			</div>
+			<div class="search">
+				<label for="search-input"></label>
+				<input type="text" class="input" id="search-input" placeholder="Booking name">
+				<button class="search-icon-btn">
+					<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt="search">
+				</button>
+			</div>
+			
+			<!-- On single Event -->
+			<div class="title-bar">
+				<div class="left-heading">
+					<div class="heading">
+						<h1>Booking Name</h1>
+					</div>
+					
+					<div class="navigation-pane">
+						<p>
+							<a onclick="toggleStyle()">My Booking</a>
+							/
+							<a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
+						</p>
+					</div>
+				</div>
+				<div class="right-heading">
+					<div class="label-dropdown">
+						<button class="labelButton">Set Label
+							<i class="fas fa-caret-down label-arrow"></i>
+						</button>
+
+						<div class="label-content">
+							<div class="item" id="todo">
+								<p>Todo</p>
+							</div>
+							
+							<div class="item" id="in-progress">
+								<p>In Progress</p>
+							</div>
+							
+							<div class="item" id="review">
+								<p>Review</p>
+							</div>
+							
+							<div class="item" id="done">
+								<p>Done</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- On main page -->
+		<div class="booking-container" id="booking_container">
+				<div class="booking" onclick="toggleStyle()">
+					<div class="booking-info-grid">
+						<div class="booking-large-text">
+							<p id="event_name">
+								Event Name
+<!--
+								<span id="slots">(Available Slots: 0)</span>
+-->
+							</p>
+						</div>
+
+<!--
+						<div class="booking-small">
+							<p id="booking_type">Booking type</p>
+						</div>
+-->
+
+
+						<div class="booking-small">
+							<p id="location">Location</p>
+						</div>
+
+<!--
+						<div class="booking-small">
+							<p id="client">Client</p>
+						</div>
+-->
+						<div class="booking-small">
+							<p id="event_type">Event type</p>
+						</div>
+
+
+<!--
+						<div class="booking-small">
+							<p id="duration">Duration</p>
+						</div>
+-->
+					</div>
+					
+					<div class="innerBooking left">
+						<p id="state">Todo</p>
+					</div>
+					<div class="innerBooking right">
+						<p id="date"> 30 July, 2023 </p>
+					</div>
+				</div>
+		</div>
+		
+		<!-- On single Event -->
+		<div class="main_area">
+			<div class="event-container">
+				<div class="event-nav">
+					<div class="announcement">
+						<i class="fas fa-duotone fa-bullhorn"></i>
+						<p>Announcement</p>
+					</div>
+					
+					<div class="discussion">
+						<i class="fas fa-duotone fa-comments"></i>
+						<p>Discussion Forum</p>
+					</div>
+				</div>
+				
+				<div class="resources">
+					<div class="heading">
+						<h1> RESOURCES </h1>
+					</div>
+					<div class="files">
+						<div class="pdf element">
+							<a href="" download>
+								<img src="./../../Brand_Identity/images/icons/pdf.png" alt="pdf">
+								<p id="pdf-download">Event Details</p>
+							</a>
+						</div>
+						
+						<div class="doc element">
+							<a href="" download>
+								<img src="./../../Brand_Identity/images/icons/doc.png" alt="doc">
+								<p id="doc-download">Plan</p>
+							</a>
+						</div>
+						
+						<div class="xlsx element">
+							<a href="" download>
+								<img src="./../../Brand_Identity/images/icons/excel_Icon.png" alt="xlsx">
+								<p id="xlsx-download">Event Details</p>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!-- Admins -->
+			<div class="admins">
+				<div id="head">
+					Administrators
+				</div>
+				
+				<div class="users">
+					<i class="fas fa-user user-icon" style="color: #000000;"></i>
+					<div class="user-box" id="user1">
+						<span>Name 1</span>
+					</div>
+					<i class="fas fa-user user-icon" style="color: #000000;"></i>
+					<div class="user-box" id="user2">
+						<span>Obscenely long name 2 h file fresh ehfhefhef</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	
+	<aside>
+		<div class="recent">
+			<p>Recently accessed booking</p>
+			
+			<div class="latestBooking">
+				<a href="">booking name</a>
+				<p>Short description</p>
+			</div>
+		</div>
+		
+		<div class="stats">
+			<p>Statistics</p>
+			<div class="graph"></div>
+			<div class="numbers">
+				<p>1st number: 28</p>
+				<p>2nd number: 30</p>
+				<p>3rd number: 18</p>
+				<p>4th number: 5</p>
+				<p id="total">Total number: 140</p>
+			</div>
+		</div>
+		
+	</aside>
+	
+</div>
+
+</body>
+</html>

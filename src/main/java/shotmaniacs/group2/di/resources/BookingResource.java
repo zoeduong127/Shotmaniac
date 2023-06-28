@@ -1,6 +1,9 @@
 package shotmaniacs.group2.di.resources;
 
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.*;
 import jakarta.xml.bind.JAXBElement;
 import shotmaniacs.group2.di.dao.BookingDao;
