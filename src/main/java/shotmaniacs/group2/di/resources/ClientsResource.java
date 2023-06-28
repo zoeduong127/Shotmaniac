@@ -9,6 +9,7 @@ import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.model.*;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -256,12 +257,12 @@ public class ClientsResource {
         List<Account> listadmins = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, admin_enroll e WHERE e.admin_id = ? AND a.account_id = e.admin_id";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, admin_enroll e WHERE e.booking_id = ? AND a.account_id = e.admin_id";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()) {
-                Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),"",null,null,rs.getString(7),null);
+                Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),"",null,null,rs.getString(4),null);
                 listadmins.add(account);
             }
         } catch (SQLException e) {
@@ -278,13 +279,13 @@ public class ClientsResource {
         List<Account> listcrews = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, enrolment e WHERE e.admin_id = ? AND a.account_id = e.admin_id";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, enrolment e WHERE e.booking_id = ? AND a.account_id = e.crew_member_id";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()) {
-                Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),"",null,null,rs.getString(7),null);
+                Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),"",null,null,rs.getString(4),null);
                 listcrews.add(account);
             }
         } catch (SQLException e) {
@@ -418,5 +419,9 @@ public class ClientsResource {
         }
         return false;
 
+    }
+    public static void main (String args[]) throws ParseException {
+        ClientsResource client = new ClientsResource();
+        System.out.println(client.getAdmins(10217));
     }
 }
