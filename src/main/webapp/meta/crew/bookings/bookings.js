@@ -30,7 +30,7 @@ const months = [
 const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
 const account_id = cookies['account_id'];
-let role;
+let role = "";
 
 console.log("account id: " + account_id);
 
@@ -50,11 +50,6 @@ function calcAvailableSlots(slots, id) {
             let slotCount = 0;
             data.forEach(crew => {
                 if (crew.accountType === "Crew") slotCount++;
-                if (crew.crew_member_id === account_id) {
-                    console.log("match");
-                    role = crew.role;
-                } //TODO returning the role here,
-                // change in the case of a DB change
             })
             console.log("slotCount: " + slotCount);
             document.getElementById("slot").innerHTML = ` 
@@ -309,4 +304,20 @@ function sendInput(event) {
 }
 
 /*To load at the start of the page*/
-performQueryAndUpdateBookings(" ");
+getAccount();
+
+function getAccount() {
+    const url = `http://localhost:8080/shotmaniacs2/api/admin/account/${account_id}"`;
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            bookings = data.map((booking) => {
+                return booking.name;
+            })
+        })
+    performQueryAndUpdateBookings(" ");
+}
