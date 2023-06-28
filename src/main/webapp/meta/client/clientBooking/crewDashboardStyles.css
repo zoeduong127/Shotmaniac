@@ -115,7 +115,7 @@ nav .logo img {
 }
 
 /*Currently active page, change depending on the CSS file used*/
-#News{
+#dashboard {
     background-color: rgba(22,150,210,0.8);
     border: 1px solid #1696D2;
     color: white;
@@ -422,9 +422,10 @@ Change depending on what the actual content is to be able to filter
 }
 
 .booking-description {
-    margin-top: 0.5vh;
+    margin: 0;
     text-align: left;
     width: 100%;
+    padding: 0 0 0 10px;
     font-size: 12px;
     font-family: Arial, serif;
     font-weight: normal;
