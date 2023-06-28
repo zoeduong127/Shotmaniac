@@ -9,28 +9,10 @@ const commentBox = document.getElementById("comment-box");
 const commentInput = document.getElementById("comment-input");
 const commentSubmitButton = document.getElementById("comment-submit");
 
-//clicking on an announcement makes it show the content
-/*
-announcementListItems.forEach(function(item) {
-    item.addEventListener("click", function() {
-        const title = this.textContent.trim();
-        const content = "Content for " + title;
 
-        announcementTitle.textContent = title;
-        announcementDescription.textContent = content;
-        announcementContent.style.display = "block";
-        addCommentButton.style.visibility = "visible";
-        preannouncement.style.visibility = "hidden"
-    });
-});
-*/
 
 function display(element) {
-    announcementTitle.textContent = element.innerText;
-    announcementDescription.textContent = "";
-    announcementContent.style.display = "block";
-    addCommentButton.style.visibility = "visible";
-    pre_announcement.style.visibility = "hidden";
+    document.getElementById(element).style.visibility = "visible";
 }
 /*announcementContent.addEventListener('click', function() {
     announcementTitle.textContent = '';
@@ -47,15 +29,7 @@ filterButton.addEventListener('click', function() {
 
 
 
-filterOptions.forEach(function(option) {
-    option.addEventListener('click', function(e) {
-        e.preventDefault();
-        const selectedOption = this.textContent;
-        filterButton.textContent = selectedOption;
-        // Perform filtering logic based on the selected option
-        // You can add your code here to filter the announcements based on the selected option
-    });
-});
+
 function showComment() {
     const comment = document.getElementById("add-comment");
     if (comment.innerHTML === "Add a comment") {

@@ -64,6 +64,25 @@ function addCrew(id) {
                 }
             })
 
+            addProductManager(id);
+        })
+}
+
+
+function addProductManager(id) {
+    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/productmanager`
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            let productManager = document.getElementById("product-Manager");
+
+            productManager.innerHTML = `<p><strong>Product Manager: </strong>${data.username}</p>`;
+
             setLabel(id);
         })
 }

@@ -1,0 +1,224 @@
+.container {
+    display: grid;
+    grid-template-columns: 20vw 80vw auto;
+    grid-template-rows: 30vh auto;
+    grid-template-areas:
+        "nav header header"
+        "nav content sidebar";
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    grid-area: header;
+}
+
+nav {
+    grid-area: nav;
+    align-content: center;
+    background: #2ea9eb;
+    border: 1px solid rgb(9, 16, 18);
+}
+
+main {
+    margin-top: 0;
+    margin-left: 8vw;
+    grid-area: content;
+    background-color: white;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+    height: 100%;
+    /*
+    overflow: scroll; !*try to hide any dumb overflow that happens *!*!
+    */
+}
+aside{
+    display: block;
+    grid-area: sidebar;
+    margin-top: 55%;
+    margin-right: 20%
+}
+
+
+body {
+    margin: 0;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+
+
+
+#avatar {
+    height: 8vh;
+}
+
+
+/*Navigational Dashboard*/
+.dropdown{
+    margin-top: 2vh;
+    margin-left: 70vw;
+}
+.dropdown img{
+    width: 3vw;
+    height: 3vh;
+}
+
+/*Navigational Dashboard*/
+.logo{
+    margin-left: -5vw;
+    margin-bottom: 5vh;
+    margin-top: 3vh;
+}
+.dash-box img {
+    width: 20%;
+    height: 100%;
+}
+/*Widths adjusted for a nav pane of 20vw*/
+
+.text img{
+    width: 90%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.dash-box {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgba(82,82,82,0.75);
+    width: 15vw;
+    height: 52vh;
+    margin: 20px 2.5vw 20vh 2.5vw;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.box {
+    display: flex;
+    align-content: center;
+    border-bottom: 1px solid black;
+    height: 50px;
+    text-align: center;
+    padding: 5% 0 5% 0;
+}
+.box label{
+    margin-left: 10%;
+    margin-top: 5%;
+}
+.box:hover {
+    cursor: pointer;
+    color: black;
+    background-color: #80ebbb;
+}
+
+.dash-box a {
+    text-decoration: none;
+    color: black;
+}
+nav .logo img {
+    width:120%;
+}
+#calendar{
+    background: #80ebbb;
+    color: black;
+}
+/*Currently active page, change depending on the CSS file used*/
+
+/*End of Navigational Dashboard*/
+
+
+/*HEADER*/
+.left-nav img{
+    height: 70%;
+}
+.left-nav{
+    margin-top: -2%;
+    width: 18vw;
+    height: 200%;
+    display: flex;
+    margin-left: -1%;
+    text-align: center;
+    font-size: 25px;
+    color:rgba(22, 150, 210, 1);
+}
+.navigate{
+    display: block;
+    width: 15vw;
+    height: 100%;
+    font-size: 20px;
+
+}
+.navigate span{
+    text-decoration: underline;
+}
+#navigate{
+    margin-top: 12%;
+}
+#user-name{
+}
+.right-nav{
+    margin-top: 4%;
+    text-align: center;
+    width: 5vw;
+    height: 4vh;
+    margin-left: 50%;
+    font-size: 20px;
+    border: 1px solid white;
+    background-color: #dd6565;
+    color: white;
+}
+.navigation {
+    margin-top: 1.5%;
+    margin-left: 8vw;
+    width: 60%;
+    height: 12vh;
+    display: flex;
+    border: 1.5px solid black;
+    background-color: #e2ebe8;
+}
+
+/*MAIN*/
+
+.page-title {
+    height: 15vh;
+    width: 100%;
+    top: 0;
+    margin-left: 5vw;
+    color: rgba(22, 150, 210, 1);
+;
+}
+
+
+
+/*Title page thing*/
+.page-title hr{
+    float: left;
+    width: 80%;
+    border: 1.5px solid rgba(0, 0, 0, 0.45);
+}
+.text {
+    text-align: left;
+    margin-left: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    padding-top: 5vh;
+}
+
+/*End Navigation*/
+
+/*Main*/
+main  p{
+    font-size: 22px;
+    font-weight: 1000;
+    text-align: left;
+    text-decoration: underline;
+}
+.display{
+    text-align: left;
+    width: 700px;
+    height: 30px;
+    border: 1px solid black;
+}
+.id, .email, .name, .password{
+    margin-top: 40px;
+}
