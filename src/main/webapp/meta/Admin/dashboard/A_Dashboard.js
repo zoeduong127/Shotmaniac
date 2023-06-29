@@ -185,20 +185,8 @@ function displayInformation(id) {
                 </div>
             `;
 
-            document.getElementById("input-area").innerHTML = `
-                <h4>Number of workers needed</h4>
-                
-                <div class="input-section">
-                    <label for="crew-needed">Crew Members</label>
-                    <input id="crew-needed" type="number" required>
-                </div>
-                
-                <div class="input-section" id="searchbar"> 
-                    <label for="product-manager">Prod. Manager</label>
-                    <input type="text" id="product-manager" onfocus="getAllCrew()" required>
-                    <button style="visibility: hidden" id="fakeButton"></button>
-                </div>
-            `;
+
+
         })
 }
 
@@ -206,9 +194,6 @@ function displayInformation(id) {
 function addUpcomingEvents() {
     const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
     let booking_list = [];
-    let day = "" + new Date().getDate() +
-        new Date().getMonth() +
-        new Date().getFullYear();
 
 
     fetch(url, {
@@ -218,36 +203,43 @@ function addUpcomingEvents() {
     })
         .then(response => response.json())
         .then(data => {
-            data.forEach(booking => {
-
-
-                let BackDay = new Date(booking.date).getDate();
-                let BackMonth = new Date(booking.date).getMonth();
-                let BackYear = new Date(booking.date).getFullYear();
-
-                let bookingDay = "" + BackDay + BackMonth + BackYear;
-
-
-                if (day === bookingDay) {
-                    booking_list.push(booking);
-
-                } else if (String(Number(day + 1)) === bookingDay || String(Number(day - 1)) === bookingDay) {
-
-                }
-
+            //TODO FIX THIS BS, its supposed to sort and filter but it does neither
+            data.sort(function (a, b) {
+                return a.timestamp - b.timestamp;
             });
-            booking_list.sort(function (a, b) {
-                return a.id - b.id
-            }).reverse();
+            console.log(data);
+            data.filter(date => {
+                return date >= new Date()
+            });
+            console.log(data);
+            const earliestEvents = data.slice(0, 5);
+            console.log("Earliest Events:");
+            let output = "<h1>Upcoming Events</h1>";
+            earliestEvents.forEach(function (event) {
+                output += `
+                    <div class="booking" id="B1">
+                        ${event.name}
+                        <span> 
+                            ${new Date(event.date).getDate()}
+                            ${months[new Date(event.date).getMonth()]}
+                            ${new Date(event.date).getFullYear()}
+                        </span>
+                    </div>
+                `
+            })
+            document.getElementById("upcoming-container").innerHTML = output;
         })
 }
 
 /*Search for crew (single event)*/
 let crewMemberList = [];
-let productManagerElement = document.getElementById("product-Manager");
+let productManagerElement = document.getElementById("product-manager"); //TODO WHY IS THIS NULL
+productManagerElement.addEventListener("input", onSingleInputChange);
+
 
 function getAllCrew() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`; //TODO CHANGE LINK TO GET ALL CREW
+    console.log("get all crew called")
+    const url = `http://localhost:8080/shotmaniacs2/api/admin/allcrew`;
 
     fetch(url, {
         headers: {
@@ -260,7 +252,6 @@ function getAllCrew() {
                 return crew.username;
             })
         })
-    productManagerElement.addEventListener("input", onSingleInputChange);
 }
 
 function  onSingleInputChange() {
@@ -482,3 +473,4 @@ function removeAutocompleteDropdown() {
 
 /*Startup*/
 performQueryAndUpdateBookings(" ")
+addUpcomingEvents();

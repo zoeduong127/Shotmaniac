@@ -87,29 +87,7 @@
 					<div id="L2" class="announcement">Title 2</div>
 					<div id="L3" class="announcement">Title 3</div>
 				</div>
-				<div class="upcoming-container">
-					<h1>Upcoming Events</h1>
-					<div class="booking" id="B1">
-						Booking name
-						<span>21 Jun 2023</span>
-					</div>
-					<div class="booking" id="B2">
-						Booking name
-						<span>21 Jun 2023</span>
-					</div>
-					<div class="booking" id="B3">
-						Booking name
-						<span>21 Jun 2023</span>
-					</div>
-					<div class="booking" id="B4">
-						Booking name
-						<span>21 Jun 2023</span>
-					</div>
-					<div class="booking" id="B5">
-						Booking name
-						<span>21 Jun 2023</span>
-					</div>
-				</div>
+				<div class="upcoming-container" id="upcoming-container"></div>
 			</div>
 		</div>
 		
@@ -126,7 +104,20 @@
 			<div class="scroll-area">
 				<div class="info" id="information-section"></div>
 				
-				<div class="input-area" id="input-area"></div>
+				<div class="input-area" id="input-area">
+					<h4>Number of workers needed</h4>
+					
+					<div class="input-section">
+						<label for="crew-needed">Crew Members</label>
+						<input id="crew-needed" type="number" required>
+					</div>
+					
+					<div class="input-section" id="searchbar">
+						<label for="product-manager">Prod. Manager</label>
+						
+						<input type="text" id="product-manager" onfocus="getAllCrew()" required>
+					</div>
+				</div>
 				
 				<div class="footer">
 					<p onclick="callCancel()" class="link" id="cancel">Cancel Booking</p>
@@ -137,7 +128,7 @@
 		
 		<!-- Cancel popup -->
 		
-		<form class="cancel-container">
+		<form class="cancel-container" id="cancel-container">
 			<div class="top_heading">
 				<span id="image">
 					<img src="./../../Brand_Identity/images/icons/X-icon.png" alt="exit">
