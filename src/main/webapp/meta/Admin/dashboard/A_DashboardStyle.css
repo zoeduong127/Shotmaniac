@@ -75,8 +75,9 @@ body {
 }
 
 .search-area img {
-    transform: translateY(20px);
+    position: relative;
     width: 4vw;
+    transform: translateY(48px);
 }
 
 .left .text {
@@ -159,7 +160,7 @@ body {
 
 .box {
     width: 10vw;
-    height: 10vh;
+    height: autovh;
     text-align: center;
     border-left: 1px solid white;
     font-size: 1.3rem;
@@ -171,9 +172,13 @@ body {
     background-image: url("./../../Brand_Identity/images/icons/white_house.png");
     background-size: 5vh;
     border-left: 0;
+    height: 10vh;
 }
-.box p {
+
+.box a {
     margin: 3.5vh 0;
+    text-decoration: none;
+    color: white;
 }
 
 .navigation img {
