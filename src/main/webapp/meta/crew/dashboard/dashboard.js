@@ -1,16 +1,16 @@
 const months = [
-    "January",
-    "February",
-    "March",
-    "April",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
 ];
 const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
@@ -177,7 +177,7 @@ function toggleStyleAndPage(element) {
                 </div> 
                    
                 <div class="event-info" id="date"> <!-- TODO CHANGE THESE TWO ID's WITH event-{id} incl. JS -->
-                    <p><strong>Date: </strong> 
+                    <p><strong>Date: </strong>
                         ${new Date(booking.date).getDate()}
                         ${months[new Date(booking.date).getMonth()]}
                         ${new Date(booking.date).getFullYear()}</p>
