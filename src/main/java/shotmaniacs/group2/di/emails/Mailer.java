@@ -13,7 +13,10 @@ import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dao.BookingDao;
 import shotmaniacs.group2.di.dto.EnrolmentDto;
 import shotmaniacs.group2.di.model.Account;
+import shotmaniacs.group2.di.model.Announcement;
 import shotmaniacs.group2.di.model.Booking;
+import shotmaniacs.group2.di.model.Urgency;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -49,8 +52,8 @@ public class Mailer {
 //            loadHTMLFile(new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email");
 //        } catch (IOException ignored) {
 //        }
-//        PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Ensure this path is correct before deployment
-        PATH = new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\email";
+        PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Ensure this path is correct before deployment
+//        PATH = new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\email";
         // Get system properties
         Properties properties = System.getProperties();
 
@@ -266,6 +269,22 @@ public class Mailer {
         }
     }
 
+    public static void sendNewAnnouncementNotification(Announcement announcement, String email) throws MessagingException {
+        if (announcement == null) {
+            throw new MessagingException();
+        }
+        try {
+            Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\announcementNotification.html"));
+
+            doc.getElementById("title").html(" New Announcement: <br> " + announcement.getTitle());
+            doc.getElementById("announcement_description").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Details: </strong><br /> " + announcement.getBody());
+            doc.getElementById("urgency").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Urgency: </strong><br /> " + announcement.getUrgency());
+            sendEmail(email, "Announcement - " + announcement.getTitle(), doc.html());
+        } catch (IOException e) {
+            System.out.println("Error parsing email HTML file: " + e.getMessage());
+        }
+    }
+
     private static EnrolmentDto getEnrolmentDetails(int enrolmentId) {
         String query = "SELECT e.booking_id, e.crew_member_id FROM enrolment e WHERE e.enrolment_id = ?";
 
@@ -340,13 +359,10 @@ public class Mailer {
     }
 
     public static void main(String[] args) {
-//        try {
-//            sendEmail("lucafuertes@gmail.com", "testing", "");
-//        } catch (MessagingException e) {
-//            e.printStackTrace();
-//        }
         try {
-            sendEnrolmentNotification(32);
+            sendNewAnnouncementNotification(new Announcement(-1, "Announcement test",
+                    "Announcement test body goes here.", 23,
+                    Urgency.MINOR, new Timestamp(System.currentTimeMillis())), "lucafuertes@gmail.com");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
