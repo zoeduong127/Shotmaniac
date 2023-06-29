@@ -26,7 +26,7 @@
 				</div>
 				
 				<div class="item">
-					<a href="./../../login/LogIn.html">Log Out</a>  <!--missing HREF-->
+					<a onclick="logout()">Log Out</a>  <!--missing HREF-->
 				</div>
 			</div>
 		</div>
@@ -285,7 +285,123 @@
 		
 		<div class="stats">
 			<p>Statistics</p>
-			<div class="graph"></div>
+			<div class="graph">
+				<canvas id="chart" style="position:relative;width:150%;height:150%"></canvas>
+				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				<script>
+					// Array of bookings
+					var bookings = [
+						{"timestamp": "2023-01-15 10:30:00"},
+						{"timestamp": "2023-02-05 14:45:00"},
+						{"timestamp": "2023-02-18 09:15:00"},
+						{"timestamp": "2023-03-02 16:20:00"},
+						{"timestamp": "2023-03-15 11:30:00"},
+						{"timestamp": "2023-04-10 13:45:00"},
+						{"timestamp": "2023-05-01 09:00:00"},
+						{"timestamp": "2023-05-18 15:30:00"},
+						{"timestamp": "2023-06-08 10:15:00"},
+						{"timestamp": "2023-06-22 12:30:00"},
+						{"timestamp": "2023-01-15 10:30:00"},
+						{"timestamp": "2023-02-05 14:45:00"},
+						{"timestamp": "2023-02-18 09:15:00"},
+						{"timestamp": "2023-03-02 16:20:00"},
+						{"timestamp": "2023-03-15 11:30:00"},
+						{"timestamp": "2023-04-10 13:45:00"},
+						{"timestamp": "2023-05-01 09:00:00"},
+						{"timestamp": "2023-05-18 15:30:00"},
+						{"timestamp": "2023-06-08 10:15:00"},
+						{"timestamp": "2023-06-22 12:30:00"},
+						{"timestamp": "2023-07-05 18:45:00"},
+						{"timestamp": "2023-07-20 11:00:00"},
+						{"timestamp": "2023-08-10 14:30:00"},
+						{"timestamp": "2023-08-24 08:15:00"},
+						{"timestamp": "2023-09-06 16:20:00"},
+						{"timestamp": "2023-09-20 10:30:00"},
+						{"timestamp": "2023-10-10 13:45:00"},
+						{"timestamp": "2023-10-25 09:00:00"},
+						{"timestamp": "2023-11-08 15:30:00"},
+						{"timestamp": "2023-11-22 10:15:00"},
+						{"timestamp": "2023-12-05 14:45:00"},
+						{"timestamp": "2023-12-20 09:15:00"},
+						{"timestamp": "2024-01-10 16:30:00"},
+						{"timestamp": "2024-01-25 11:00:00"},
+						{"timestamp": "2024-02-08 17:45:00"},
+						{"timestamp": "2024-02-23 10:30:00"},
+						{"timestamp": "2024-03-05 14:00:00"},
+						{"timestamp": "2024-03-20 09:30:00"},
+						{"timestamp": "2024-04-10 13:00:00"},
+						{"timestamp": "2024-04-25 08:15:00"},
+						{"timestamp": "2024-05-08 16:20:00"},
+						{"timestamp": "2024-05-23 10:45:00"},
+						{"timestamp": "2024-06-05 15:00:00"},
+						{"timestamp": "2024-06-20 09:30:00"},
+						{"timestamp": "2024-07-10 14:00:00"}
+					];
+
+					// Count the number of bookings per month
+					var bookingCounts = {};
+					bookings.forEach(function(booking) {
+						var date = new Date(booking.timestamp);
+						var month = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0');
+
+						if (bookingCounts[month]) {
+							bookingCounts[month]++;
+						} else {
+							bookingCounts[month] = 1;
+						}
+					});
+
+					// Convert the booking counts object to arrays
+					var months = Object.keys(bookingCounts);
+					var counts = months.map(function(month) {
+						return bookingCounts[month];
+					});
+
+					// Get the canvas element
+					var canvas = document.getElementById('chart');
+					var ctx = canvas.getContext('2d');
+
+					// Chart configuration
+					var chartConfig = {
+						type: 'line',
+						data: {
+							labels: months,
+							datasets: [{
+								label: 'Number of Bookings',
+								data: counts,
+								borderColor: 'blue',
+								backgroundColor: 'transparent'
+							}]
+						},
+						options: {
+							responsive: true,
+							title: {
+								display: true,
+							},
+							scales: {
+								x: {
+									display: true,
+									title: {
+										display: true,
+									},
+									min: months[0],  // Specify the minimum value on the x-axis
+									max: months[4]
+								},
+								y: {
+									display: true,
+									title: {
+										display: true,
+									},
+								}
+							}
+						}
+					};
+
+					// Create the chart graph
+					var chart = new Chart(ctx, chartConfig);
+				</script>
+
+			</div>
 			<div class="numbers">
 				<p>1st number: 28</p>
 				<p>2nd number: 30</p>

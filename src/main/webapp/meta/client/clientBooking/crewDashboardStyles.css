@@ -242,6 +242,9 @@ Change depending on what the actual content is to be able to filter
 .booking-container .filter:hover {
     opacity: 0.2;
 }
+.item:hover{
+    background-color: #706e6f;
+}
 
 
 /*END of Filter Button*/

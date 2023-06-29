@@ -74,10 +74,6 @@
 					<div class="item" onclick="updateBookings('in_progress')">
 						<p>In Progress</p>
 					</div>
-					<div class="item" onclick="updateBookings('future')">
-						<p>Future</p>
-					</div>
-
 					<div class="item" onclick="updateBookings('past')">
 						<p>Past</p>
 					</div>
@@ -185,6 +181,7 @@
 				.then(data => {
 
 					data.forEach(booking => {
+						console.log(booking)
 						let bookingElementCopy = bookingElement.cloneNode(true);
 
 						//TODO: Calculate amount of slots already taken.
@@ -263,10 +260,6 @@
 		var filter;
 
 		switch (filterType) {
-			case 'in_progress':
-				filter = "ongoing";
-				filterButton.textContent = "Filter: In progress";
-				break;
 			case 'future':
 				filter = "ongoing";
 				filterButton.textContent = "Filter: On going";
@@ -317,6 +310,7 @@
 		.then(response => {
 			if (response.ok) {
 				document.cookie = "account_id =;  Path=/";
+				document.cookie = "account_username =;  Path=/";
 				document.cookie = "auth_token =;  Path=/";
 				window.location.href="http://localhost:8080/shotmaniacs2/";
 			} else if (response.status === 304) {
