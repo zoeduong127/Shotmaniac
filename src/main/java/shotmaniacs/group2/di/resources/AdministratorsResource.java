@@ -315,30 +315,27 @@ public class AdministratorsResource {
     }
 
     @RolesAllowed({"Administrator"})
-    @Path("/allbookings")
+    @Path("/allcrew")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Booking> getAllBooking() {
-        List<Booking> allBookings = new ArrayList<>();
+    public List<Account> getAllCrew() {
+        List<Account> allCrew = new ArrayList<>();
 
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
 
-            String sql = "SELECT * FROM booking;";
+            String sql = "SELECT a.* FROM account a WHERE a.account_type = 'Crew';";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                allBookings.add(new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
-                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14)));
+                allCrew.add(new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8)));
             }
         } catch (SQLException e) {
-            System.out.println("ERROR Getting all bookings: " + e.getMessage());
+            System.out.println("ERROR Getting all crew: " + e.getMessage());
         }
-        return allBookings;
+        return allCrew;
     }
 
     @RolesAllowed({"Administrator"})

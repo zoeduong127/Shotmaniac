@@ -55,6 +55,13 @@ public class LoginResourceTest extends JerseyTest {
         RootElementWrapper responseObject = response.readEntity(RootElementWrapper.class);
         String authToken = responseObject.getTokens().get(0);
         Assertions.assertTrue(authToken != null && !authToken.equals(""));
-        Assertions.assertTrue(response.getStatus() == 200);
+        Assertions.assertEquals(200,response.getStatus());
+
+        response = target("/login")
+                .request()
+                .header("Authorization", authToken)
+                .delete();
+
+        Assertions.assertEquals(200, response.getStatus());
     }
 }
