@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -66,6 +67,138 @@ public class crewTest {
     }
 
     @Test
-    public void testDashboardFilter() {
+    public void testNavigationDashboard() {
+        testLogin();
+        driver.findElement(By.id("News")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Announcement Scroll"));
+        assertTrue(driver.findElement(By.id("filter_img")).isDisplayed());
+
+        driver.findElement(By.id("dashboard")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Dashboard"));
+
+        driver.findElement(By.id("calendar")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Calendar"));
+        assertTrue(driver.findElement(By.id("calendar_container")).isDisplayed());
+
+        driver.findElement(By.id("dashboard")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Dashboard"));
+
+        driver.findElement(By.id("booking")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("bookings"));
+        assertTrue(driver.findElement(By.id("role")).isDisplayed());
     }
+
+    @Test
+    public void testNavigationCalendar(){
+        testLogin();
+        driver.findElement(By.id("calendar")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Calendar"));
+        assertTrue(driver.findElement(By.id("calendar_container")).isDisplayed());
+
+        driver.findElement(By.id("dashboard")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Dashboard"));
+        assertTrue(driver.findElement(By.id("dashboard")).isDisplayed());
+
+        driver.findElement(By.id("calendar")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Calendar"));
+        assertTrue(driver.findElement(By.id("calendar_container")).isDisplayed());
+
+        driver.findElement(By.id("News")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Announcement Scroll"));
+        assertTrue(driver.findElement(By.id("filter_img")).isDisplayed());
+
+        driver.findElement(By.id("calendar")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Calendar"));
+        assertTrue(driver.findElement(By.id("calendar_container")).isDisplayed());
+
+        driver.findElement(By.id("booking")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("bookings"));
+        assertTrue(driver.findElement(By.id("role")).isDisplayed());
+    }
+
+    @Test
+    public void testNavigationNews(){
+        testLogin();
+        driver.findElement(By.id("News")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Announcement Scroll"));
+        assertTrue(driver.findElement(By.id("filter_img")).isDisplayed());
+
+
+        driver.findElement(By.id("dashboard")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Dashboard"));
+        assertTrue(driver.findElement(By.id("dashboard")).isDisplayed());
+
+        driver.findElement(By.id("News")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Announcement Scroll"));
+        assertTrue(driver.findElement(By.id("filter_img")).isDisplayed());
+
+        driver.findElement(By.id("calendar")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Calendar"));
+        assertTrue(driver.findElement(By.id("calendar_container")).isDisplayed());
+
+        driver.findElement(By.id("News")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Announcement Scroll"));
+        assertTrue(driver.findElement(By.id("filter_img")).isDisplayed());
+
+        driver.findElement(By.id("booking")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("bookings"));
+        assertTrue(driver.findElement(By.id("role")).isDisplayed());
+    }
+
+    @Test
+    public void testNavigationBooking(){
+        testLogin();
+        driver.findElement(By.id("booking")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("bookings"));
+        assertTrue(driver.findElement(By.id("role")).isDisplayed());
+
+        driver.findElement(By.id("dashboard")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Dashboard"));
+        assertTrue(driver.findElement(By.id("dashboard")).isDisplayed());
+
+        driver.findElement(By.id("booking")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("bookings"));
+        assertTrue(driver.findElement(By.id("role")).isDisplayed());
+
+        driver.findElement(By.id("News")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Announcement Scroll"));
+        assertTrue(driver.findElement(By.id("filter_img")).isDisplayed());
+
+        driver.findElement(By.id("booking")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("bookings"));
+        assertTrue(driver.findElement(By.id("role")).isDisplayed());
+
+        driver.findElement(By.id("calendar")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Calendar"));
+        assertTrue(driver.findElement(By.id("calendar_container")).isDisplayed());
+
+        driver.findElement(By.id("booking")).click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("bookings"));
+        assertTrue(driver.findElement(By.id("role")).isDisplayed());
+    }
+
 }

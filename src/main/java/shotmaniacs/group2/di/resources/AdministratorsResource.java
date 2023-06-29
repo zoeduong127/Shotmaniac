@@ -195,6 +195,32 @@ public class AdministratorsResource {
         }
     }
 
+    @Path("/announcements/search")
+    @RolesAllowed({"Administrator", "Crew"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public List<Announcement> searchAllAnnouncementsByTitleText(@QueryParam("searchtext") String searchText) {
+
+        List<Announcement> announcementList = new ArrayList<>();
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT * FROM announcement a WHERE to_tsvector(a.title) @@ plainto_tsquery(?);";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, searchText);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                announcementList.add(new Announcement(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getInt(4), Urgency.valueOf(rs.getString(5)), rs.getTimestamp(6)));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error searching all announcements by title text: " + e.getMessage());
+        }
+        return announcementList;
+    }
+
+
     @RolesAllowed({"Administrator", "Crew", "Client"})
     @Path("/booking/{booking_id}/crew")
     @GET
@@ -403,6 +429,28 @@ public class AdministratorsResource {
             System.err.println("Error connecting: "+e);
         }
         return listbooking;
+    }
+
+    @RolesAllowed({"Administrator"})
+    @Path("/booking/{booking_id}")
+    @DELETE
+    public Response deleteBookingById(@PathParam("booking_id") int bookingId) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "DELETE FROM booking b WHERE b.booking_id =?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, bookingId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error deleting booking: " + e.getMessage());
+        }
+        return  Response.serverError().build();
     }
 
     public String hash256(String input) {
