@@ -202,6 +202,46 @@ function displayInformation(id) {
         })
 }
 
+
+function addUpcomingEvents() {
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    let booking_list = [];
+    let day = "" + new Date().getDate() +
+        new Date().getMonth() +
+        new Date().getFullYear();
+
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(booking => {
+
+
+                let BackDay = new Date(booking.date).getDate();
+                let BackMonth = new Date(booking.date).getMonth();
+                let BackYear = new Date(booking.date).getFullYear();
+
+                let bookingDay = "" + BackDay + BackMonth + BackYear;
+
+
+                if (day === bookingDay) {
+                    booking_list.push(booking);
+
+                } else if (String(Number(day + 1)) === bookingDay || String(Number(day - 1)) === bookingDay) {
+
+                }
+
+            });
+            booking_list.sort(function (a, b) {
+                return a.id - b.id
+            }).reverse();
+        })
+}
+
 /*Search for crew (single event)*/
 let crewMemberList = [];
 let productManagerElement = document.getElementById("product-Manager");
