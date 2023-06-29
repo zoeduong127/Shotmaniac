@@ -120,6 +120,7 @@ nav .logo img {
     margin-top: 3vh;
 }
 .dash-box img {
+    margin-left: 1vw;
     width: 20%;
     height: 100%;
 }
@@ -205,10 +206,21 @@ nav .logo img {
 
 }
 .text {
-    font-size: 30px;
+    font-size: 28px;
     margin-left: 3vw;
     padding-top: 5vh;
     color: #1696D2;
+}
+.text label{
+    font-size: 28px;
+    color: #1696D2;
+}
+.logout img{
+    width: 3vw;
+    height: 5vh;
+    position: absolute;
+    margin-left: 75%;
+    margin-top: -5%;
 }
 
 
@@ -595,6 +607,7 @@ label {
     width: 30vw;
     height:90vh;
     border: 20px solid rgba(22, 150, 210, 1) ;
+    overflow: scroll;
 }
 .cancel-form-title{
     align-items: center;

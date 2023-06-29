@@ -78,8 +78,6 @@ public class ClientsResource {
     }
 
 
-
-
     /*For clienst who already has their own account*/
     @Path("{client_id}/profile")
     @GET
@@ -101,8 +99,8 @@ public class ClientsResource {
         return null;
     }
 
-    @POST
     @Path("{client_id}")
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
     public Response createBooking_noid(@PathParam("client_id")int user_id,Bookingdto booking) {
@@ -122,7 +120,6 @@ public class ClientsResource {
      */
     @Path("{client_id}/list")
     @POST
-
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
     public Response createBooking_noid(@PathParam("client_id")int user_id,List<Bookingdto> booking) {
@@ -340,6 +337,31 @@ public class ClientsResource {
         }
         return Response.serverError().build();
     }
+    @Path("{client_id}/change-tel")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response changephone(@PathParam("client_id") int id, @QueryParam("new") String newname) {
+        try {
+            if(nameExists(newname)){
+                return  Response.status(422)
+                        .entity("Username is already in use.")
+                        .build();
+            }
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query = "UPDATE account SET tel = ? WHERE account_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,newname);
+            preparedStatement.setInt(2,id);
+            int rowsInserted = preparedStatement.executeUpdate();
+            if(rowsInserted > 0){
+                return Response.ok().build();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return Response.serverError().build();
+    }
+
 
     public boolean nameExists(String name) {
         String sql = "SELECT username FROM account WHERE username = ? ";
@@ -420,8 +442,8 @@ public class ClientsResource {
         return false;
 
     }
-    public static void main (String args[]) throws ParseException {
-        ClientsResource client = new ClientsResource();
-        System.out.println(client.getAdmins(10217));
-    }
+//    public static void main (String args[]) throws ParseException {
+//        CrewsResourse client = new CrewsResourse();
+//        System.out.println(client.getAllAnnouncements());
+//    }
 }
