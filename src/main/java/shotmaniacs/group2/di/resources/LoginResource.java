@@ -1,27 +1,24 @@
 package shotmaniacs.group2.di.resources;
 
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
-import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dto.LoginInfor;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
+import shotmaniacs.group2.di.model.Role;
 import shotmaniacs.group2.di.model.RootElementWrapper;
+import shotmaniacs.group2.di.security.TokenManager;
 
 import java.nio.charset.StandardCharsets;
-
-import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.HashMap;
-
 @Path("/login")
 public class LoginResource {
     @Context
@@ -32,7 +29,6 @@ public class LoginResource {
     private static String dbName ="dab_dsgnprj_50";
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
-
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
@@ -55,18 +51,18 @@ public class LoginResource {
 
                 RootElementWrapper responseObject = new RootElementWrapper();
                 Account responseAccount =  new Account(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        rs.getString(4),AccountType.valueOf(rs.getString(5)));
+                        rs.getString(4),AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8));
 
                 responseObject.addAccount(responseAccount);
 
                 Timestamp expiration = addTime(new Timestamp(System.currentTimeMillis()), 24, Calendar.HOUR);
-                String token = generateToken(responseAccount, expiration);
+                String token = TokenManager.generateToken(responseAccount.getEmail(), responseAccount.getId(), responseAccount.getAccountType(), expiration);
                 responseObject.addToken(token);
 
                 // Delete existing tokens associated with the same account (log other devices/browsers out)
                 PreparedStatement tokenPS = connection.prepareStatement("DELETE FROM token WHERE token.account_id = ?");
                 tokenPS.setInt(1, responseAccount.getId());
-                tokenPS.executeUpdate();
+                 tokenPS.executeUpdate();
 
                 // Add token into the database
                 tokenPS = connection.prepareStatement("INSERT INTO token (account_id, token, expiration) VALUES (?, ?, ?)");
@@ -94,9 +90,24 @@ public class LoginResource {
         return Response.serverError().build();
     }
 
+    @RolesAllowed({"Administrator","Crew", "Client"})
     @DELETE
-    public Response logOut() {
-        return null;
+    public Response logOut(@HeaderParam("Authorization") String authorizationHeader) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            PreparedStatement tokenPS = connection.prepareStatement("DELETE FROM token WHERE token = ?");
+            tokenPS.setString(1, authorizationHeader);
+            int rowsAffected = tokenPS.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().entity("Logged out successfully").build();
+            } else {
+                return Response.notModified().entity("The given account was not logged in.").build();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return Response.serverError().build();
     }
 
 
@@ -139,26 +150,6 @@ public class LoginResource {
             return null;
         }
     }
-
-    // TODO: Add log out api call that destroys the token
-
-    private String generateToken(Account account, Timestamp expiration) {
-        // Set the token expiration time
-        Date expirationDate = new Date(expiration.getTime());
-
-        // Generate the JWT token
-        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        String token = Jwts.builder()
-                .setSubject(account.getEmail())
-                .claim("account_type", account.getAccountType())
-                .claim("account_id", account.getId())
-                .setExpiration(expirationDate)
-                .signWith(key)
-                .compact();
-
-        return token;
-    }
-
     public static Timestamp addTime(Timestamp timestamp, int amount, int field) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(timestamp);

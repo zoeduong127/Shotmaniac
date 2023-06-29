@@ -1,5 +1,6 @@
 package shotmaniacs.group2.di.dao;
 
+import shotmaniacs.group2.di.dto.Bookingdto;
 import shotmaniacs.group2.di.model.Booking;
 import shotmaniacs.group2.di.model.BookingState;
 import shotmaniacs.group2.di.model.BookingType;
@@ -11,12 +12,13 @@ import java.util.List;
 
 public enum  BookingDao {
     instance;
-
     // TODO: Hook this class up to the database
     private static String host = "bronto.ewi.utwente.nl";
     private static String dbName ="dab_dsgnprj_50";
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
+
+
 
     public boolean addBooking(Booking booking) {
         try {
@@ -48,6 +50,7 @@ public enum  BookingDao {
         return false;
     }
 
+
     public Booking getABooking(int id) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -56,10 +59,9 @@ public enum  BookingDao {
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()) {
-                System.out.println("Successful");
                 return new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
@@ -77,7 +79,8 @@ public enum  BookingDao {
             while(rs.next()) {
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
                         EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
-                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10), BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13));
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {

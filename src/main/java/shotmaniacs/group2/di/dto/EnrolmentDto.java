@@ -2,13 +2,12 @@ package shotmaniacs.group2.di.dto;
 
 import shotmaniacs.group2.di.model.Role;
 
-public class AssignRole {
+public class EnrolmentDto {
     private int booking_id;
-
     private int crew_member_id;
     private Role role;
-    public AssignRole(){}
-    public AssignRole(int booking_id, int crew_member_id, Role role) {
+    public EnrolmentDto(){}
+    public EnrolmentDto(int booking_id, int crew_member_id, Role role) {
         setBookingId(booking_id);
         setCrewMemberId(crew_member_id);
         setRole(role);

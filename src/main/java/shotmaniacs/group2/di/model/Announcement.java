@@ -1,6 +1,5 @@
 package shotmaniacs.group2.di.model;
 
-import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -10,6 +9,7 @@ import java.sql.Timestamp;
 public class Announcement {
     @XmlAnyElement
     private int id;
+
     @XmlAnyElement
     private String title;
     @XmlAnyElement

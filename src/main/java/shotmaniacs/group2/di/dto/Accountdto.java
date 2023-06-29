@@ -4,7 +4,6 @@ import jakarta.xml.bind.annotation.XmlAnyElement;
 import shotmaniacs.group2.di.model.AccountType;
 
 public class Accountdto {
-
     private String email;
     private String password;
     private String tel;
@@ -14,7 +13,7 @@ public class Accountdto {
     public Accountdto(){}
 
     public Accountdto(String email, String username, String password, String tel) {
-
+        setUsername(username);
         settel(tel);
         setEmail(email);
         setPassword(password);

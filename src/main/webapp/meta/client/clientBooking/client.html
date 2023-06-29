@@ -6,39 +6,28 @@
   <link href="clientStyle.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
-<body>
+<body onload = "getadmin(), getcrew()">
 <div class="container">
   <header>
     <div class="page-title">
-      <div class="text">My Bookings</div>
+      <div class="text">Hello Client Shotmaniac2, Welcome to your Bookings</div>
+      <hr>
       <div class="logout">
         <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="logout">
       </div>
     </div>
-
     <div class="navigation">
-      <!-- On single Event -->
       <div class="title-bar">
         <div class="left-heading">
           <div class="heading">
-            <h1>Booking Name</h1>
+            <h1 id ="header-name">Booking Name</h1>
           </div>
-
-          <div class="navigation-pane">
-            <p>
-              <a onclick="toggleStyle()">My Booking</a>
-              /
-              <a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
-            </p>
-          </div>
+          <div class ="navigate"><a href="dashboard.html"><span>My Bookings </span></a> /Booking details</div>
         </div>
         <div class="right-heading">
-          <div class="label-dropdown">
-            <button class="labelButton" onclick="cancel()">Cancel
-              <i class="fas fa-caret-down label-arrow"></i>
-            </button>
-          </div>
+          <button class="labelButton" onclick="cancel()">Cancel</button>
         </div>
       </div>
     </div>
@@ -47,21 +36,21 @@
   <nav>
     <div class="logo">
       <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs White Logo Without Text">
-      </div>
+    </div>
     <div class="dash-box">
-      <a href="" target="_self">
+      <a href="applicationForm.html" target="_self">
         <div class="box" id="dashboard">
           <img id="icon-1" src="../../Brand_Identity/images/icons/" alt="">
-          <label>News</label>
+          <label>New Booking</label>
         </div>
       </a>
-      <a href="./../bookings/bookings.html" target="_self">
+      <a href="dashboard.html" target="_self">
         <div class="box" id="News">
           <img id="icon-2" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="">
           <label>My Bookings</label>
         </div>
       </a>
-      <a href="./../profole/profile.html" target="_self">
+      <a href="../account/account.html" target="_self">
         <div class="box" id="calendar">
           <img id="icon-3" src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
           <label>Account</label>
@@ -77,85 +66,109 @@
   </nav>
   <main>
     <!-- On single Event -->
-    <div class="main_area">
-      <div class="event-container">
-        <div class="event-nav">
-          <div class="announcement">
-            <i class="fas fa-duotone fa-bullhorn"></i>
-            <p>Announcement</p>
-          </div>
+    <div class="event-name">
+      <label class="name-label" for="event-name">Event Name</label>
+      <input type="text" class="eventInput" id="event-name" placeholder="Input Event Name" readonly>
+    </div>
+    <div class="event-type">
+      <label>Event Type</label>
+      <input type="text" class="eventInput" id="event-type" placeholder="Input Event Type" readonly>
+    </div>
+    <div class="event-time">
+      <label class="name-label" for="time-input">Event TIME</label>
+      <input type="datetime-localtime" class="eventInput" id="time-input" placeholder="Input Event Time" readonly>
+    </div>
 
-          <div class="discussion">
-            <i class="fas fa-duotone fa-comments"></i>
-            <p>Discussion Forum</p>
-          </div>
-        </div>
-
-        <div class="resources">
-          <div class="heading">
-            <h1> RESOURCES </h1>
-          </div>
-          <div class="files">
-            <div class="pdf element">
-              <a href="" download>
-                <img src="./../../Brand_Identity/images/icons/pdf.png" alt="pdf">
-                <p id="pdf-download">Event Details</p>
-              </a>
-            </div>
-
-            <div class="doc element">
-              <a href="" download>
-                <img src="./../../Brand_Identity/images/icons/doc.png" alt="doc">
-                <p id="doc-download">Plan</p>
-              </a>
-            </div>
-
-            <div class="xlsx element">
-              <a href="" download>
-                <img src="./../../Brand_Identity/images/icons/excel_Icon.png" alt="xlsx">
-                <p id="xlsx-download">Event Details</p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="location">
+      <label class="name-label" for="location-input">Location</label>
+      <input type="text" class="eventInput" id="location-input" placeholder="Input Event Location" readonly>
+    </div>
+    <div class="booking-type">
+      <label>Booking Type</label>
+      <input type="text" class="eventInput" id="bookingtype-input" placeholder="Input Booking Type" readonly>
+    </div>
+    <div class="duration">
+      <label class="name-label" for="duration-input">Duration</label>
+      <input type="number" class="eventInput" id="duration-input" placeholder="Input Duration" readonly>
+    </div>
+    <div class="description">
+      <label class="name-label" for="description-input">description</label>
+      <input type="text" class="eventInput" id="description-input" placeholder="Input Description" readonly>
     </div>
   </main>
   <aside>
+    <div>
     <div class = "members">
       <div class="admins">
         <div class="head">
           Administrators
         </div>
-
-        <div class="users">
-          <i class="fas fa-user user-icon" style="color: #000000;"></i>
-          <div class="user-box" id="user1">
-            <span>Name 1</span>
-          </div>
-          <i class="fas fa-user user-icon" style="color: #000000;"></i>
-          <div class="user-box" id="user2">
-            <span>Obscenely long name 2 h file fresh ehfhefhef</span>
+        <div class="users" id = "admin">
+          <div class="user-box" onclick="displaydetail(this)">
+            <p id = "admin-name">Name 1</p>
+            <p class ="none-display" id = "admin-email"></p>
+            <p class ="none-display"id = "admin-tel"></p>
           </div>
         </div>
       </div>
+
       <div class="crews">
         <div class="head">
           Crews
         </div>
-        <div class="users">
-          <i class="fas fa-user user-icon" style="color: #000000;"></i>
-          <div class="user-box" id="crew1">
-            <span>Name 1</span>
+        <div class="users" id ="crew">
+          <div class="user-box" onclick="displaydetail(this)" >
+            <p  id = "crew-name">Name 1</p>
+            <p class ="none-display" id = "crew-email"></p>
+            <p class ="none-display" id = "crew-tel"></p>
           </div>
-          <i class="fas fa-user user-icon" style="color: #000000;"></i>
-          <div class="user-box" id="crew2">
-            <span>Name 2</span>
           </div>
         </div>
       </div>
     </div>
+    <div class="statistics">
+      <div class="admin-funtion">
+        <div class = "close" >
+          <img id="admin-close" src="../../Brand_Identity/images/icons/arrowdown.png" >
+        </div>
+        <div class = "number">
+          <label id ="number-admins"></label>
+        </div>
+        <div class = "reload">
+          <img id="reload-admins"src="../../Brand_Identity/images/icons/reload.png" onclick="getadmin()">
+        </div>
+      </div>
+      <div class="crew-funtion">
+        <div class = "close" >
+          <img id="crew-close"  src="../../Brand_Identity/images/icons/arrowdown.png">
+        </div>
+        <div class = "number">
+          <label id ="number-crews"></label>
+        </div>
+        <div class = "reload">
+          <img id="reload-crews" src="../../Brand_Identity/images/icons/reload.png" onclick="getcrew()">
+        </div>
+      </div>
+    </div>
   </aside>
+  <div id="details" class="hidden">
+    <div id="exit-icon"><img src="../../Brand_Identity/images/icons/X-icon.png" onclick="cancelrequest()"></div>
+    <div class ="details">
+      <div class="employee-title">EMPLOYEE</div>
+      <div class="employee-name">
+        <label class="name-label" for="employee-name">NAME</label>
+        <input type="text" class="employeeInput" id="employee-name" placeholder="" readonly>
+      </div>
+      <div class="employee-email">
+        <label class="employee-email" for="employee-email">EMAIL</label>
+        <input type="text" class="employeeInput" id="employee-email" placeholder="" readonly>
+      </div>
+      <div class="employee-tel">
+        <label class="name-label" for="employee-tel">PHONE</label>
+        <input type="text" class="employeeInput" id="employee-tel" placeholder="" readonly>
+      </div>
+    </div>
+  </div>
   <div id="cancel-box" class="hidden" >
     <div class="cancel-header">
       <label>CANCEL BOOKING</label>
@@ -199,13 +212,144 @@
 </div>
 <div id="overlay" class="hidden"></div>
 <script>
-  function cancel(){
-    var cancel = document.getElementById('cancel-box');
+  window.addEventListener('beforeunload', function (event) {
+    // Cancel the event to prevent the browser from closing immediately
+    event.preventDefault();
+    document.cookie ="booking_id =;  Path=/";
+    return;
+  });
+  function parseCookie(cookieString) {
+    const cookies = {};
+    cookieString.split(';').forEach(cookie => {
+      const [name, value] = cookie.trim().split('=');
+      cookies[name] = decodeURIComponent(value);
+    });
+    return cookies;
+  }
+
+  const employee =[]
+
+  const cookies = parseCookie(document.cookie);
+  const id = cookies['booking_id'];
+  const url = window.location.origin+"/shotmaniacs2/api/client/"+id;
+  const url1 = window.location.origin+"/shotmaniacs2/api/client/"+id+"/admins";
+  const url2 =  window.location.origin+"/shotmaniacs2/api/client/"+id+"/crews"
+  fetch(url)
+          .then(response => response.json())
+          .then(data =>
+          {
+            document.getElementById("event-name").placeholder = `${data.name}`
+            document.getElementById("header-name").innerHTML = data.name
+            document.getElementById("event-type").placeholder = `${data.eventType}`
+            let dateTime = new Date(data.date);
+            const formattedDate = dateTime.toLocaleString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+            });
+            document.getElementById("time-input").placeholder = formattedDate;
+            document.getElementById("location-input").placeholder = `${data.location}`
+            document.getElementById("duration-input").placeholder = `${data.duration}`
+            document.getElementById("description-input").placeholder = `${data.description}`
+          })
+  function getadmin() {
+    const admincontainer = document.getElementById("admin");
+    const adminelement = admincontainer.firstElementChild.cloneNode(true);
+
+    fetch(url1)
+            .then(response => response.json())
+            .then(data => {
+                      while (admincontainer.firstChild) {
+                        admincontainer.removeChild(admincontainer.firstChild);
+                      }
+                      document.getElementById("number-admins").innerHTML = data.length;
+                      data.forEach(account => {
+                        let userCopy = adminelement.cloneNode(true);
+
+                        //TODO: Calculate amount of slots already taken.
+
+                        //TODO: the line below probably allows stored code attacks. Needs fixing
+                        userCopy.id = account.id;
+                        userCopy.querySelector("#admin-name").innerHTML = account.username
+                        console.log(account.username)
+                        userCopy.querySelector("#admin-email").innerHTML = account.email
+                        userCopy.querySelector("#admin-tel").innerHTML = account.telephone
+                        admincontainer.appendChild(userCopy)
+                        employee[account.id]=account
+                      })
+                    }
+            )
+  }
+  function getcrew() {
+    const crewcontainer = document.getElementById("crew");
+    const crewelement = crewcontainer.firstElementChild.cloneNode(true);
+
+    fetch(url2)
+            .then(response => response.json())
+            .then(data => {
+                      while (crewcontainer.firstChild) {
+                        crewcontainer.removeChild(crewcontainer.firstChild);
+                      }
+                      document.getElementById("number-crews").innerHTML = data.length;
+                      data.forEach(account => {
+                        let userCopy = crewelement.cloneNode(true);
+
+                        //TODO: Calculate amount of slots already taken.
+
+                        //TODO: the line below probably allows stored code attacks. Needs fixing
+                        userCopy.id = account.id;
+                        userCopy.querySelector("#crew-name").innerHTML = account.username
+                        userCopy.querySelector("#crew-email").innerHTML = account.email
+                        userCopy.querySelector("#crew-tel").innerHTML = account.telephone
+                        crewcontainer.appendChild(userCopy);
+                        employee[account.id]=account
+                      })
+                    }
+            )
+  }
+  function displaydetail(element){
+    var cancel = document.getElementById('details');
     var overlay = document.getElementById('overlay');
     cancel.classList.remove('hidden');
     overlay.classList.remove('hidden');
+    document.getElementById("employee-name").placeholder = employee[element.id].username
+    document.getElementById("employee-email").placeholder= employee[element.id].email
+    document.getElementById("employee-tel").placeholder = employee[element.id].telephone
+  }
+
+
+  function cancel(){
+    var cancel = document.getElementById('cancel-box');
+
+    var overlay = document.getElementById('overlay');
+    cancel.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+
   }
   function changetoterm(){
+    const url = window.location.origin+"/shotmaniacs2/api/client/"+id;
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json' // Set the appropriate content type
+      },
+      // You can include a request body if required
+      // body: JSON.stringify(data)
+    })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Error: ' + response.status);
+              }
+              return response; // Parse the response as JSON if needed
+            })
+            .then(data => {
+              console.log('Delete successful', data);
+              // Handle the response data or perform other actions
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              // Handle any errors that occurred during the request
+            });
     var cancellation = document.getElementById("cancellation");
     var cancel = document.getElementById('cancel-box');
     cancel.classList.add('hidden');
@@ -215,9 +359,16 @@
   function cancelrequest(){
     var cancel = document.getElementById('cancel-box');
     var overlay = document.getElementById('overlay');
+    var detail = document.getElementById('details');
     cancel.classList.add('hidden');
     overlay.classList.add('hidden');
+    detail.classList.add('hidden');
   }
+  console.log(employee)
+
+  /*filter*/
+
+
 </script>
 </body>
 </html>

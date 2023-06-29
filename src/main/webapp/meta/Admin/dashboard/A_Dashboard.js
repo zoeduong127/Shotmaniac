@@ -1,7 +1,9 @@
 const left = document.getElementById("container1");
 const right = document.getElementById("information");
 const popup = document.getElementById("popup-container");
-const cancel = document.getElementById("cancel-container")
+const cancel = document.getElementById("cancel-container");
+
+
 function toggleStyle() {
     left.style.opacity = "0.2";
     right.style.opacity = "0.2";
@@ -17,8 +19,8 @@ function toggleOff() {
 }
 
 function callCancel() {
-    left.style.opacity = "0.2";
-    right.style.opacity = "0.2";
+    popup.style.visibility = "hidden";
+    popup.style.zIndex = "auto";
 
     cancel.style.visibility = "visible";
 }

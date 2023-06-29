@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Account</title>
+    <link href="modify.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <div class="page-title">
+            <div class="text">Hello Client Shotmaniac2, Welcome to EDIT Profile</div>
+            <hr>
+        </div>
+        <div class="dropdown">
+            <button class="dropdownBtn" onclick="logout()">
+                <img id="avatar" src="../../Brand_Identity/images/icons/logOut-Black.png" alt="dropdown">
+            </button>
+        </div>
+        <div class="navigation">
+            <div class ="left-nav">
+                <img src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
+                <div id="navigate">
+                    <label id = "user-name">User's name</label>
+                    <div class ="navigate"><span>Account  </span>  / Edit Profile</div>
+                </div>
+            </div>
+            <div class ="right-nav">
+                <div class="favourite-color">
+                    <label> EXIT </label>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="logo">
+            <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs White Logo Without Text">
+        </div>
+        <div class="dash-box">
+            <a href="../clientBooking/applicationForm.html" target="_self">
+                <div class="box" id="dashboard">
+                    <img id="icon-1" src="../../Brand_Identity/images/icons/" alt="">
+                    <label>New Booking</label>
+                </div>
+            </a>
+            <a href="../clientBooking/dashboard.html" target="_self">
+                <div class="box" id="News">
+                    <img id="icon-2" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="">
+                    <label>My Bookings</label>
+                </div>
+            </a>
+            <a href="./../account/account.html" target="_self">
+                <div class="box" id="calendar">
+                    <img id="icon-3" src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
+                    <label>Account</label>
+                </div>
+            </a>
+            <a href="../../help/help.html" target="_self">
+                <div class="box" id="booking">
+                    <img id="icon-4" src="../../Brand_Identity/images/icons/black_help_icon.png" alt="">
+                    <label>Help</label>
+                </div>
+            </a>
+        </div>
+    </nav>
+    <main>
+          <div class ="general">
+              <div class="modify-username">
+                  <img src="../../Brand_Identity/images/icons/arrow_button.png" onclick="displayusername()">
+                  <label>Username</label>
+              </div>
+              <div class="modify-email">
+                  <img  src="../../Brand_Identity/images/icons/arrow_button.png" onclick="displayemail()">
+                  <label>Phone</label>
+              </div>
+              <div class="modify-password">
+                  <img src="../../Brand_Identity/images/icons/arrow_button.png" onclick="displaypassword()">
+                  <label>Password</label>
+              </div>
+          </div>
+    </main>
+    <div id="change-password" class="hidden">
+        <div class="head">
+            CHANGE PASSWORD
+        </div>
+        <div class ="content">
+            <label for="old-password">Old Password </label>
+            <input id="old-password" type="text"><br>
+            <label for="new-password">New Password </label>
+            <input id="new-password" type="text"><br>
+        </div>
+        <div class="footer">
+            <button class="cancel" onclick="cancel()">Cancel</button>
+            <button class="submit" onclick="changepassword()">Submit</button>
+        </div>
+    </div>
+    <div id="change-username" class="hidden">
+        <div class="head">
+            CHANGE USERNAME
+        </div>
+        <div class ="content">
+            <label for="new-username">New username:</label>
+            <br><input id="new-username" type="text"><br>
+        </div>
+        <div class="footer">
+            <button class="cancel" onclick="cancel()">Cancel</button>
+            <button class="submit" onclick="changeusername()">Submit</button>
+        </div>
+    </div>
+</div>
+<div id="overlay" class="hidden"></div>
+
+<script>
+    const cookies = parseCookie(document.cookie);
+    const id = cookies['account_id'];
+    const url = window.location.origin+ `/shotmaniacs2/api/client/${id}/profile`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("user-name").innerHTML = `${data.username}`;
+        })
+    function parseCookie(cookieString) {
+        const cookies = {};
+        cookieString.split(';').forEach(cookie => {
+            const [name, value] = cookie.trim().split('=');
+            cookies[name] = decodeURIComponent(value);
+        });
+        return cookies;
+    }
+
+    function displayusername(){
+        var changeusername = document.getElementById('change-username');
+        var overlay = document.getElementById('overlay');
+        overlay.classList.remove('hidden');
+        changeusername.classList.remove('hidden')
+    }
+    function displaypassword(){
+        const changepassword = document.getElementById('change-password');
+        var overlay = document.getElementById('overlay');
+        changepassword.classList.remove('hidden');
+        overlay.classList.remove('hidden');
+    }
+  function changeusername(){
+      const cookies = parseCookie(document.cookie);
+      const id = cookies['account_id'];
+      const newusername = document.getElementById('new-username').value;
+      const url = window.location.origin+"/shotmaniacs2/api/client/"+id+"/change-username?new="+newusername
+      fetch(url)
+          .then(response=>{
+              if(response.ok){
+                  var changeusername = document.getElementById('change-username');
+                  var overlay = document.getElementById('overlay');
+                  overlay.classList.add('hidden');
+                  changeusername.classList.add('hidden')
+                  alert("Change username successfully")
+              }
+              else{
+                  document.getElementById('new-username').reset();
+                  alert(response.text())
+              }
+          })
+
+  }
+    function changepassword(){
+        const cookies = parseCookie(document.cookie);
+        const id = cookies['account_id'];
+        const url = window.location.origin+"/shotmaniacs2/api/client/"+id+"/change-password";
+        const password = {
+            old: document.getElementById("old-password").value,
+            new: document.getElementById("new-password").value ,
+        };
+        fetch(url,password)
+            .then(response=>{
+                if(response.ok){
+                    var changepassword = document.getElementById('change-password');
+                    var overlay = document.getElementById('overlay');
+                    changepassword.classList.remove('hidden');
+                    overlay.classList.remove('hidden');
+                    alert("Change username successfully")
+                }
+                else{
+                    document.getElementById('new-username').reset();
+                    alert("Unsuccessfully! Please try again")
+                }
+            })
+
+    }
+  function changeemail(){
+      alert("You can't change email")
+  }
+  function cancel(){
+      var changeusername = document.getElementById('change-username');
+      var changepassword = document.getElementById('change-password');
+      var overlay = document.getElementById('overlay');
+      changepassword = document.getElementById('change-password');
+      changepassword.classList.add('hidden')
+      changeusername.classList.add('hidden');
+      overlay.classList.add('hidden');
+  }
+</script>
+</body>
+</html>

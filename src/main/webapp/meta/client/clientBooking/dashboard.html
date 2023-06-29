@@ -9,15 +9,15 @@
 	      rel="stylesheet" type='text/css'>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<script src="dashboard.js" defer></script>
+	<script>
+	</script>
 </head>
 <body>
 <div class="container">
 	<header>
 		<div class="dropdown">
 			<button class="dropdownBtn" onclick="logout()">
-				<img id="avatar" src="../../Brand_Identity/images/icons/logOut-Black.png" alt="dropdown">
+				<img id="log-out" src="../../Brand_Identity/images/icons/Exit-Icon.png" alt="dropdown">
 			</button>
 		</div>
 	</header>
@@ -27,19 +27,19 @@
 			<img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs White Logo Without Text">
 		</div>
 		<div class="dash-box">
-			<a href="" target="_self">
+			<a href="applicationForm.html" target="_self">
 				<div class="box" id="dashboard">
-					<img id="icon-1" src="../../Brand_Identity/images/icons/" alt="">
-					<label>News</label>
+					<img id="icon-1" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="">
+					<label>New Booking</label>
 				</div>
 			</a>
-			<a href="./../bookings/bookings.html" target="_self">
+			<a href="dashboard.html" target="_self">
 				<div class="box" id="News">
 					<img id="icon-2" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="">
 					<label>My Bookings</label>
 				</div>
 			</a>
-			<a href="./../profole/profile.html" target="_self">
+			<a href="./../account/account.html" target="_self">
 				<div class="box" id="calendar">
 					<img id="icon-3" src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
 					<label>Account</label>
@@ -94,45 +94,19 @@
 
 		<!-- On main page -->
 		<div class="booking-container" id="booking_container">
-				<div class="booking" onclick="toggleStyle()">
+				<div class="booking" onclick="accessbooking(this)">
 					<div class="booking-info-grid">
 						<div class="booking-large-text">
 							<p id="event_name">
-								Event Name
-<!--
-								<span id="slots">(Available Slots: 0)</span>
--->
-							</p>
+								Event Name</p>
 						</div>
-
-<!--
-						<div class="booking-small">
-							<p id="booking_type">Booking type</p>
-						</div>
--->
-
-
 						<div class="booking-small">
 							<p id="location">Location</p>
 						</div>
-
-<!--
-						<div class="booking-small">
-							<p id="client">Client</p>
-						</div>
--->
 						<div class="booking-small">
 							<p id="event_type">Event type</p>
 						</div>
-
-
-<!--
-						<div class="booking-small">
-							<p id="duration">Duration</p>
-						</div>
--->
 					</div>
-					
 					<div class="innerBooking left">
 						<p id="state">Todo</p>
 					</div>
@@ -156,19 +130,19 @@
 		</div>
 		<div class="list">
 			<div class="list-booking">
-				<div class="booking-name">
-					<label>Booking's name</label>
+				<div class="booking-name" >
+					<label id="upcoming-1" >Booking's name</label>
 				</div>
 				<div class="booking-description">
-					<label>Short Description</label>
+					<label id="description1">Short Description</label>
 				</div>
 			</div>
 			<div class="list-booking">
 				<div class="booking-name">
-					<label>Booking's name</label>
+					<label id="upcoming-2">Booking's name</label>
 				</div>
 				<div class="booking-description">
-					<label>Short Description</label>
+					<label id="description2">Short Description</label>
 				</div>
 			</div>
 		</div>
@@ -178,9 +152,150 @@
 
 </div>
 <script>
-	function toggleStyle(){
-		window.location.href="http://localhost:8080/shotmaniacs2/meta/client/clientBooking/client.html"
+	/*Filter*/
+	const bookingContainer = document.getElementById("booking_container");
+	const bookingElement = bookingContainer.firstElementChild.cloneNode(true);
+	function accessbooking(element){
+		console.log(element.id)
+		document.cookie = "booking_id=" + element.id + "; path=/";
+		window.location.href = "./../clientBooking/client.html";
 	}
+
+	function parseCookie(cookieString) {
+		const cookies = {};
+		cookieString.split(';').forEach(cookie => {
+			const [name, value] = cookie.trim().split('=');
+			cookies[name] = decodeURIComponent(value);
+		});
+		return cookies;
+	}
+
+
+	function    performQueryAndUpdateBookings(url) {
+		while (bookingContainer.firstChild) {
+			bookingContainer.removeChild(bookingContainer.firstChild);
+		}
+
+		fetch(url)
+				.then(response => response.json())
+				.then(data => {
+
+					data.forEach(booking => {
+						let bookingElementCopy = bookingElement.cloneNode(true);
+
+						//TODO: Calculate amount of slots already taken.
+
+						//TODO: the line below probably allows stored code attacks. Needs fixing
+						bookingElementCopy.id = booking.id
+						bookingElementCopy.querySelector("#event_name").innerHTML = booking.name /*+ " <span class=\"bolded\">(Available Slots: " + booking.slots + ")</span>"*/;
+						// * bookingElementCopy.querySelector("#booking_type").innerHTML = "<b>Booking Type: </b>" + booking.bookingType;
+
+						bookingElementCopy.querySelector("#location").innerHTML =  "<b>Location: </b>" + booking.location;
+//                bookingElementCopy.querySelector("#client").innerHTML =  "<b>Client: </b>" + booking.clientName;
+						bookingElementCopy.querySelector("#event_type").innerHTML =  "<b>Event Type: </b>" + booking.eventType;
+//                bookingElementCopy.querySelector("#duration").innerHTML =  "<b>Duration: </b>" + booking.duration + " hours";
+
+						let dateTime = new Date(booking.date);
+						const formattedDate = dateTime.toLocaleString('en-US', {
+							hour: '2-digit',
+							minute: '2-digit',
+							hour12: false
+						});
+						bookingElementCopy.querySelector("#date").innerText = dateTime.toDateString() + ', ' + formattedDate;
+
+						let bookingState = bookingElementCopy.querySelector("#state");
+
+						switch (booking.state) {
+							case "PENDING":
+								bookingState.classList.add("pending-state");
+								break;
+							case "APPROVED":
+								bookingState.classList.add("approved-state");
+								break;
+							default:
+								bookingState.classList.add("pending-state");
+						}
+
+						bookingState.innerText = booking.state;
+						bookingContainer.appendChild(bookingElementCopy);
+
+					});
+					var index = 1;
+					data.sort(function (a, b) {
+						return a.timestamp - b.timestamp;
+					});
+					var earliestEvents = data.slice(0, 2);
+					console.log("Earliest Events:");
+					earliestEvents.forEach(function (event) {
+						console.log(index);
+						if(index === 1){
+							document.getElementById("upcoming-1").innerHTML = event.name;
+							document.getElementById("description1").innerHTML = event.description;
+							index = 2;
+						}
+						else if(index === 2){
+							document.getElementById("upcoming-2").innerHTML = event.name;
+							document.getElementById("description2").innerHTML = event.description;
+							index = 1;
+						}
+
+					});
+				})
+				.catch(error => {
+					// Handle any errors
+					console.error(error);
+				});
+	}
+
+
+	function updateBookings(filterType) {
+		const filterButton = document.getElementById("filter_button_text");
+
+		var filter;
+
+		switch (filterType) {
+			case 'in_progress':
+				filter = "ongoing";
+				filterButton.textContent = "Filter: In progress";
+				break;
+			case 'future':
+				filter = "ongoing";
+				filterButton.textContent = "Filter: On going";
+				break;
+			case 'past':
+				filter = "past";
+				filterButton.textContent = "Filter: Past";
+				break;
+			default:
+				filter = 'ongoing';
+
+		}
+
+		const cookies = parseCookie(document.cookie);
+		const id = cookies['account_id'];
+
+		const url = window.location.origin+ `/shotmaniacs2/api/client/${id}/mybooking/timefilter/${filter}`;
+
+		performQueryAndUpdateBookings(url);
+
+	}
+
+	function searchBookings(searchText) {
+		const cookies = parseCookie(document.cookie);
+		const id = cookies['account_id'];
+		const url = window.location.origin+`/shotmaniacs2/api/client/${id}/mybooking/search?searchtext=\"${searchText}\"`;
+		performQueryAndUpdateBookings(url);
+	}
+
+	//Event listeners
+	const searchbox = document.getElementById("search-input");
+	searchbox.addEventListener("keydown", function (e) {
+		if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+			searchBookings(searchbox.value);
+		}
+	});
+
+	updateBookings("ongoing");
 	function logout(){
 		window.location.href="http://localhost:8080/shotmaniacs2/";
 	}

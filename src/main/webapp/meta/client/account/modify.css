@@ -1,0 +1,339 @@
+.container {
+    display: grid;
+    grid-template-columns: 20vw 50vw 30vw;
+    grid-template-rows: 45vh auto;
+    grid-template-areas:
+        "nav header header"
+        "nav content sidebar";
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    grid-area: header;
+}
+
+nav {
+    grid-area: nav;
+    display: grid;
+    align-content: center;
+    background: #2ea9eb;
+}
+
+main {
+    margin-top: 25%;
+    margin-left: 20%;
+    grid-area: content;
+    background-color: white;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+    height: 100%;
+    /*
+    overflow: scroll; !*try to hide any dumb overflow that happens *!*!
+    */
+}
+aside{
+    display: block;
+    grid-area: sidebar;
+    margin-top: 55%;
+    margin-right: 20%
+}
+
+
+body {
+    margin: 0;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+
+
+
+/*header*/
+.dropdownBtn{
+    width: 4vw;
+    height: 6vh;
+    margin-left: 65vw;
+    margin-top: -20vh;
+}
+
+.dropdown{
+    position: relative;
+    margin-left: 75vw;
+    margin-bottom: 0vh;
+
+}
+.dropdown img{
+    width: 4vw;
+    height: 6vh;
+}
+
+
+/*Navigational Dashboard*/
+.dropdown{
+    margin-top: 2vh;
+    margin-left: 70vw;
+}
+.dropdown img{
+    width: 3vw;
+    height: 3vh;
+}
+
+/*Navigational Dashboard*/
+.logo{
+    margin-left: -5vw;
+    margin-bottom: 5vh;
+    margin-top: 3vh;
+}
+.dash-box img {
+    width: 20%;
+    height: 100%;
+}
+/*Widths adjusted for a nav pane of 20vw*/
+
+.text img{
+    width: 90%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.dash-box {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgba(82,82,82,0.75);
+    width: 15vw;
+    height: 52vh;
+    margin: 20px 2.5vw 20vh 2.5vw;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.box {
+    display: flex;
+    align-content: center;
+    border-bottom: 1px solid black;
+    height: 50px;
+    text-align: center;
+    padding: 5% 0 5% 0;
+}
+.box label{
+    margin-left: 10%;
+    margin-top: 5%;
+}
+.box:hover {
+    cursor: pointer;
+    color: black;
+    background-color: #80ebbb;
+}
+
+.dash-box a {
+    text-decoration: none;
+    color: black;
+}
+nav .logo img {
+    width:120%;
+}
+#calendar{
+    background: #80ebbb;
+    color: black;
+}
+/*Currently active page, change depending on the CSS file used*/
+
+/*End of Navigational Dashboard*/
+
+
+/*HEADER*/
+.left-nav img{
+    height: 15vh;
+}
+.left-nav{
+    margin-top: -1vh;
+    width: 18vw;
+    height: 20vh;
+    display: flex;
+    margin-left: -1%;
+    text-align: center;
+    font-size: 25px;
+    color:rgba(22, 150, 210, 1);
+}
+.navigate{
+    display: block;
+    width: 15vw;
+    height: 10vh;
+    font-size: 20px;
+
+}
+.navigate span{
+  text-decoration: underline;
+}
+#navigate{
+    margin-top: 4vh;
+}
+#user-name{
+}
+.right-nav{
+    margin-top: 4vh;
+    text-align: center;
+    width: 5vw;
+    height: 4vh;
+    margin-left: 20vw;
+    font-size: 20px;
+    border: 1px solid white;
+    background-color: red;
+    color: white;
+}
+.navigation {
+    margin-top: -3vh;
+    margin-left: 8vw;
+    width: 60%;
+    height: 12vh;
+    display: flex;
+    border: 1.5px solid black;
+    background-color: #e2ebe8;
+}
+
+/*MAIN*/
+
+.page-title {
+    height: 15vh;
+    width: 100%;
+    top: 0;
+    margin-left: 5vw;
+    color: rgba(22, 150, 210, 1);
+;
+}
+
+
+
+/*Title page thing*/
+.page-title hr{
+    float: left;
+    width: 80%;
+    border: 1.5px solid rgba(0, 0, 0, 0.45);
+}
+.text {
+    text-align: left;
+    margin-left: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    padding-top: 5vh;
+}
+
+
+
+/*Main*/
+.general{
+    position: relative;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 150%;
+    height: 60vh;
+    margin-top:-45%;
+    margin-left: -3vw;
+    border: 3px solid black;
+    align-content: center;
+}
+
+.general img{
+    width: 5%;
+}
+.general label{
+    position: absolute;
+    margin-top: 0.5%;
+    margin-left: 2%;
+}
+.modify-email, .modify-username, .modify-password{
+    position: relative;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 80%;
+    height: 12vh;
+    border-bottom: 1px solid #1696D2;
+}
+
+.hidden{
+    visibility: hidden;
+}
+#change-username{
+    font-family: Kiwi Maru, serif;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    width: 30vw;
+    height: 20vh;
+    font-size: 20px;
+    border: 1px solid white;
+
+}
+#change-password{
+    font-family: Kiwi Maru, serif;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    width: 30vw;
+    height: 16vh;
+    font-size: 20px;
+    border: 1px solid white;
+}
+.head{
+    text-align: center;
+    width: 30vw;
+    height: 5vh;
+    background-color: rgba(22, 150, 210, 1);
+
+}
+.content{
+    width: 30vw;
+    height: 10vh;
+    background-color: #c4ecf1;
+    text-align: center;
+}
+.content label,#new-username{
+    margin-top:5%;
+    margin-left:5%;
+}
+.cancel{
+    color: white;
+    background-color: #EE0000;
+    border: 0.1px solid white;
+}
+.submit{
+    color: black;
+    background-color: #6de1f1;
+    border: 0.1px solid white;
+}
+.footer{
+    margin-top: 0%;
+    margin-left:65%;
+}
+#change-password .content{
+    align-items: center;
+    width: 30vw;
+    height: 8vh;
+    background-color: #c4ecf1;
+}
+
+#old-password, #new-password{
+    width: 15vw;
+}
+#old-password{
+    margin-left: 1.75%;
+}
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+}

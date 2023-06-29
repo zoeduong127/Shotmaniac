@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>SignUp</title>
@@ -93,7 +94,7 @@
 	function createaccount(event) {
 		event.preventDefault(); // prevents auto-submission
 
-		const url = "http://localhost:8080/shotmaniacs2/api/client/new_account";
+		const url = window.location.origin+"/shotmaniacs2/api/client/new_account";
 
 		const  form = document.getElementById("signup-form");
 		const elements = form.elements;
@@ -124,7 +125,7 @@
 					if (response.ok) {
 						alert("Your account is created successfully");
 						document.getElementById("signup-form").reset();
-						window.location.href ="http://localhost:8080/shotmaniacs2/index.html";
+						window.location.href =window.location.origin+"/shotmaniacs2/index.html";
 					} else {
 						return  response.text();
 					}})

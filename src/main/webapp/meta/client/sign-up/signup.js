@@ -14,7 +14,6 @@ document.getElementById('Hide-Pass').addEventListener("click", () => {
 
 
 
-
 /*Form JS*/
 
 

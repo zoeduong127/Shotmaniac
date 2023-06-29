@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
 	<link href="crewDashboardStyles.css" rel="stylesheet" id="currentCSS">
 	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
 	<link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
 	      rel="stylesheet" type='text/css'>
 	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<script src="dashboard.js" defer></script>
 </head>
@@ -31,41 +31,41 @@
 			</div>
 		</div>
 	</header>
-
+	
 	<nav>
 		<div class="text">
 			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
 		</div>
 		<div class="dash-box">
 			<a href="dashboard.html" target="_self">
-			<div class="box" id="dashboard">
-				<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label> Dashboard</label>
-			</div>
+				<div class="box" id="dashboard">
+					<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label> Dashboard</label>
+				</div>
 			</a>
 			<a href="./../news/notifications.html" target="_self">
-			<div class="box" id="News">
-				<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label>News</label>
-			</div>
+				<div class="box" id="News">
+					<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>News</label>
+				</div>
 			</a>
 			<a href="./../calendar/calendar.html" target="_self">
-			<div class="box" id="calendar">
-				<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label> Calendar</label>
-			</div>
+				<div class="box" id="calendar">
+					<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label> Calendar</label>
+				</div>
 			</a>
-			<a href="./../bookings/Booking(MAIN).html" target="_self">
-			<div class="box" id="booking">
-				<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label>Bookings</label>
-			</div>
+			<a href="./../bookings/Booking.html" target="_self">
+				<div class="box" id="booking">
+					<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Bookings</label>
+				</div>
 			</a>
 			<a href="../../help/help.html" target="_self">
-			<div class="box" id="help">
-				<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-				<label>Help</label>
-			</div>
+				<div class="box" id="help">
+					<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Help</label>
+				</div>
 			</a>
 		</div>
 	</nav>
@@ -77,61 +77,85 @@
 			</div>
 			<div class="text">My Bookings</div>
 		</div>
+		
 		<div class="navigation">
 			<!-- On main page -->
 			<div class="filter">
-				<button class="filter-btn" >
+				<button class="filter-btn">
 					<span id="button-text">
 						<i class="fas fa-filter filter-icon"></i>
-							<span id = "filter_button_text">Filter: On Going</span>
+							<span id="filter_button_text">Filter: Upcoming</span>
 						<i class="fas fa-caret-down down-icon"></i>
 					</span>
 				</button>
-
+				
 				<div class="filter-content">
 					<!--missing HREF-->
-					<div class="item" onclick="updateBookings('in_progress')">
-						<p>In Progress</p>
-					</div>
+					<h6 class="dropdown-header">Time Stamp</h6>
+					<div class="border-gradient"></div>
 					<div class="item" onclick="updateBookings('future')">
-						<p>Future</p>
+						<p>Upcoming</p>
 					</div>
 					
 					<div class="item" onclick="updateBookings('past')">
 						<p>Past</p>
 					</div>
+					
+					<div class="border-gradient"></div>
+					<h6 class="dropdown-header">Labels</h6>
+					<div class="border-gradient"></div>
+					
+					<div class="item" onclick="updateBookings('todo')">
+						<p>TODO</p>
+					</div>
+					<div class="item" onclick="updateBookings('in_progress')">
+						<p>IN-PROGRESS</p>
+					</div>
+					<div class="item" onclick="updateBookings('review')">
+						<p>REVIEW</p>
+					</div>
+					<div class="item" onclick="updateBookings('done')">
+						<p>DONE</p>
+					</div>
 				</div>
 			</div>
-			<div class="search">
-				<label for="search-input"></label>
-				<input type="text" class="input" id="search-input" placeholder="Booking name">
-				<button class="search-icon-btn">
-					<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt="search">
-				</button>
-			</div>
+			
+			<form action="" autocomplete="off">
+				<div class="search" id="searchbar">
+					<label for="search-input"></label>
+					<input type="text" class="input" id="search-input" placeholder="Booking name"
+					       onfocus="getAllBookings()">
+					
+					<button class="search-icon-btn" id="search-button">
+						<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png"
+						     alt="search">
+					</button>
+				</div>
+			</form>
 			
 			<!-- On single Event -->
 			<div class="title-bar">
 				<div class="left-heading">
 					<div class="heading">
-						<h1>Booking Name</h1>
+						<h1 id="heading">Booking Name</h1>
 					</div>
 					
-					<div class="navigation-pane">
+					<div class="navigation-pane" id="navigation">
 						<p>
-							<a onclick="toggleStyle()">My Booking</a>
+							<span id="backToBooking">My Bookings</span>
 							/
-							<a onclick="setTheme('singleEventHomePage.css'); reloadEvent()">Booking Name</a>
+							<span id="link">Booking Name</span>
 						</p>
 					</div>
 				</div>
 				<div class="right-heading">
 					<div class="label-dropdown">
-						<button class="labelButton">Set Label
+						<button class="labelButton NORMAL" id="label">
+							<p>Set Label</p>
 							<i class="fas fa-caret-down label-arrow"></i>
 						</button>
-
-						<div class="label-content">
+						
+						<div class="label-content" id="label_content">
 							<div class="item" id="todo">
 								<p>Todo</p>
 							</div>
@@ -152,56 +176,9 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<!-- On main page -->
-		<div class="booking-container" id="booking_container">
-				<div class="booking" onclick="toggleStyle()">
-					<div class="booking-info-grid">
-						<div class="booking-large-text">
-							<p id="event_name">
-								Event Name
-<!--
-								<span id="slots">(Available Slots: 0)</span>
--->
-							</p>
-						</div>
-
-<!--
-						<div class="booking-small">
-							<p id="booking_type">Booking type</p>
-						</div>
--->
-
-
-						<div class="booking-small">
-							<p id="location">Location</p>
-						</div>
-
-<!--
-						<div class="booking-small">
-							<p id="client">Client</p>
-						</div>
--->
-						<div class="booking-small">
-							<p id="event_type">Event type</p>
-						</div>
-
-
-<!--
-						<div class="booking-small">
-							<p id="duration">Duration</p>
-						</div>
--->
-					</div>
-					
-					<div class="innerBooking left">
-						<p id="state">Todo</p>
-					</div>
-					<div class="innerBooking right">
-						<p id="date"> 30 July, 2023 </p>
-					</div>
-				</div>
-		</div>
+		<div class="booking-container" id="booking_container"></div>
 		
 		<!-- On single Event -->
 		<div class="main_area">
@@ -222,7 +199,7 @@
 					<div class="heading">
 						<h1> RESOURCES </h1>
 					</div>
-					<div class="files">
+					<!-- <div class="files">
 						<div class="pdf element">
 							<a href="" download>
 								<img src="./../../Brand_Identity/images/icons/pdf.png" alt="pdf">
@@ -243,6 +220,46 @@
 								<p id="xlsx-download">Event Details</p>
 							</a>
 						</div>
+					</div> -->
+					
+					<div class="event" id="event">
+						<div class="event-info" id="event-name">
+							<p>Name: </p>
+						</div>
+						
+						<div class="event-info" id="event-type">
+							<p>Event Type: </p>
+						</div>
+						
+						<div class="event-info" id="date"> <!-- TODO CHANGE THESE TWO ID's WITH event-{id} incl. JS -->
+							<p>Date: </p>
+						</div>
+						
+						<div class="event-info" id="location">
+							<p>Location: </p>
+						</div>
+						<div class="event-info" id="duration">
+							<p>Duration: </p>
+						</div>
+						<div class="event-info" id="booking-type">
+							<p>Booking Type: </p>
+						</div>
+						<div class="event-info" id="product-Manager">
+							<p>Product Manager: </p>
+						</div>
+						<div class="event-info" id="crew">
+							<p>Crew:
+								<span>
+									<ul>
+										<li></li>
+										<li></li>
+										<li></li>
+										<li></li>
+										<li></li>
+									</ul>
+								</span>
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -254,16 +271,7 @@
 					Administrators
 				</div>
 				
-				<div class="users">
-					<i class="fas fa-user user-icon" style="color: #000000;"></i>
-					<div class="user-box" id="user1">
-						<span>Name 1</span>
-					</div>
-					<i class="fas fa-user user-icon" style="color: #000000;"></i>
-					<div class="user-box" id="user2">
-						<span>Obscenely long name 2 h file fresh ehfhefhef</span>
-					</div>
-				</div>
+				<div class="users" id="users"></div>
 			</div>
 		</div>
 	</main>
@@ -272,10 +280,7 @@
 		<div class="recent">
 			<p>Recently accessed booking</p>
 			
-			<div class="latestBooking">
-				<a href="">booking name</a>
-				<p>Short description</p>
-			</div>
+			<div class="latestBooking" id="Latest_Booking" onclick="toggleStyleAndPage(this)"></div>
 		</div>
 		
 		<div class="stats">
@@ -289,9 +294,7 @@
 				<p id="total">Total number: 140</p>
 			</div>
 		</div>
-		
 	</aside>
-	
 </div>
 
 </body>
