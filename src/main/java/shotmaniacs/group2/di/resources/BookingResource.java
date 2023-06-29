@@ -4,6 +4,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.BookingDao;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.AccountType;
 import shotmaniacs.group2.di.model.Booking;
 import shotmaniacs.group2.di.model.Role;
