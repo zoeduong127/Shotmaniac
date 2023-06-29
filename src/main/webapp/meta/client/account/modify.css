@@ -87,6 +87,7 @@ body {
     margin-top: 3vh;
 }
 .dash-box img {
+    margin-left: 1vw;
     width: 20%;
     height: 100%;
 }
@@ -156,6 +157,9 @@ nav .logo img {
     font-size: 25px;
     color:rgba(22, 150, 210, 1);
 }
+.left-nav a{
+    color:rgba(22, 150, 210, 1);
+}
 .navigate{
     display: block;
     width: 15vw;
@@ -182,6 +186,7 @@ nav .logo img {
     background-color: red;
     color: white;
 }
+
 .navigation {
     margin-top: -3vh;
     margin-left: 8vw;
@@ -218,6 +223,15 @@ nav .logo img {
     font-weight: bold;
     padding-top: 5vh;
 }
+.logout img{
+    width: 3vw;
+    height: 5vh;
+    position: absolute;
+    margin-left: 75%;
+    margin-top: -5%;
+}
+
+
 
 
 
@@ -257,7 +271,7 @@ nav .logo img {
 .hidden{
     visibility: hidden;
 }
-#change-username{
+#change-username, #change-phone{
     font-family: Kiwi Maru, serif;
     position: fixed;
     top: 50%;
@@ -265,10 +279,10 @@ nav .logo img {
     background-color: white;
     transform: translate(-50%, -50%);
     z-index: 10000;
-    width: 30vw;
+    width: 25vw;
     height: 20vh;
     font-size: 20px;
-    border: 1px solid white;
+    border: 10px solid #2ea9eb;
 
 }
 #change-password{
@@ -280,24 +294,52 @@ nav .logo img {
     transform: translate(-50%, -50%);
     z-index: 10000;
     width: 30vw;
-    height: 16vh;
+    height: 25vh;
     font-size: 20px;
-    border: 1px solid white;
+    border: 10px solid #2ea9eb;
+}
+#change-password .head{
+    margin-left: 5vw;
+}
+#change-password .content{
+    margin-top: 2vh;
+    background: white;
+    align-items: center;
+    width: 30vw;
+    height: 8vh;
+}
+#change-password .footer{
+    margin-top: 4vh;
+}
+#old-password, #new-password{
+    width: 15vw;
+}
+#old-password{
+    margin-left: 1.75%;
+}
+.logo-shomaniac{
+    margin-left: 3vw;
+    margin-right: 2vw;
+}
+.logo-shomaniac img{
+    width: 5vw;
+    height: 12vh;
 }
 .head{
+    margin-left: 1.5vw;
     text-align: center;
     width: 30vw;
     height: 5vh;
-    background-color: rgba(22, 150, 210, 1);
+    text-decoration: underline;
 
 }
 .content{
-    width: 30vw;
+    display: flex;
+    width: 25vw;
     height: 10vh;
-    background-color: #c4ecf1;
     text-align: center;
 }
-.content label,#new-username{
+.content label,#new-username, #new-phone{
     margin-top:5%;
     margin-left:5%;
 }
@@ -315,19 +357,7 @@ nav .logo img {
     margin-top: 0%;
     margin-left:65%;
 }
-#change-password .content{
-    align-items: center;
-    width: 30vw;
-    height: 8vh;
-    background-color: #c4ecf1;
-}
 
-#old-password, #new-password{
-    width: 15vw;
-}
-#old-password{
-    margin-left: 1.75%;
-}
 #overlay {
     position: fixed;
     top: 0;

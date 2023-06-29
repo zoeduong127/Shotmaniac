@@ -23,7 +23,7 @@ let booking_list = [];
 console.log("initial theme: " + currentTheme.getAttribute('href'))
 
 function addCrew(id) {
-        const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew`; //TODO confirm that crew have permission to see this as well
+        const url = window.location.origin+`/shotmaniacs2/api/admin/booking/${id}/crew`; //TODO confirm that crew have permission to see this as well
 
     fetch(url, {
         headers: {

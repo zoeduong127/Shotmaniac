@@ -79,4 +79,9 @@ public enum AccountDao {
         }
         return null;
     }
+    public static void main (String args[]) throws ParseException {
+        LoginInfor account = new LoginInfor("duongthuhuyen@student.utwente.nl","meomeo");
+        LoginResource login = new LoginResource();
+        System.out.println(login.loginCheck(account));
+    }
 }

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
 	<link href="crewDashboardStyles.css" rel="stylesheet" id="currentCSS">
 	<link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
 	<link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
-	      rel="stylesheet" type='text/css'>
+		  rel="stylesheet" type='text/css'>
 	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script>
 	</script>
 </head>
@@ -29,7 +29,7 @@
 		<div class="dash-box">
 			<a href="applicationForm.html" target="_self">
 				<div class="box" id="dashboard">
-					<img id="icon-1" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="">
+					<img id="icon-1" src="../../Brand_Identity/images/icons/create_file.png" alt="">
 					<label>New Booking</label>
 				</div>
 			</a>
@@ -77,7 +77,7 @@
 					<div class="item" onclick="updateBookings('future')">
 						<p>Future</p>
 					</div>
-					
+
 					<div class="item" onclick="updateBookings('past')">
 						<p>Past</p>
 					</div>
@@ -94,72 +94,72 @@
 
 		<!-- On main page -->
 		<div class="booking-container" id="booking_container">
-				<div class="booking" onclick="accessbooking(this)">
-					<div class="booking-info-grid">
-						<div class="booking-large-text">
-							<p id="event_name">
-								Event Name</p>
-						</div>
-						<div class="booking-small">
-							<p id="location">Location</p>
-						</div>
-						<div class="booking-small">
-							<p id="event_type">Event type</p>
-						</div>
+			<div class="booking" onclick="accessbooking(this)">
+				<div class="booking-info-grid">
+					<div class="booking-large-text">
+						<p id="event_name">
+							Event Name</p>
 					</div>
-					<div class="innerBooking left">
-						<p id="state">Todo</p>
+					<div class="booking-small">
+						<p id="location">Location</p>
 					</div>
-					<div class="innerBooking right">
-						<p id="date"> 30 July, 2023 </p>
+					<div class="booking-small">
+						<p id="event_type">Event type</p>
 					</div>
 				</div>
+				<div class="innerBooking left">
+					<p id="state">Todo</p>
+				</div>
+				<div class="innerBooking right">
+					<p id="date"> 30 July, 2023 </p>
+				</div>
+			</div>
 		</div>
 	</main>
-<aside>
-	<div class="create-newbooking">
-		<div class = "text-newbooking">
-			<a href="applicationForm.html" target="_self">
-				<label>You want to upload new booking(s)?</label>
-			</a>
-		</div>
-	</div>
-	<div class="upcoming-event">
-		<div class="Upcoming-title">
-			<label> Upcoming events</label>
-		</div>
-		<div class="list">
-			<div class="list-booking">
-				<div class="booking-name" >
-					<label id="upcoming-1" >Booking's name</label>
-				</div>
-				<div class="booking-description">
-					<label id="description1">Short Description</label>
-				</div>
-			</div>
-			<div class="list-booking">
-				<div class="booking-name">
-					<label id="upcoming-2">Booking's name</label>
-				</div>
-				<div class="booking-description">
-					<label id="description2">Short Description</label>
-				</div>
+	<aside>
+		<div class="create-newbooking">
+			<div class = "text-newbooking">
+				<a href="applicationForm.html" target="_self">
+					<label>You want to upload new booking(s)?</label>
+				</a>
 			</div>
 		</div>
+		<div class="upcoming-event">
+			<div class="Upcoming-title">
+				<label> Upcoming events</label>
+			</div>
+			<div class="list">
+				<div class="list-booking">
+					<div class="booking-name" onclick="accessbooking(this)" >
+						<label id="upcoming-1" >Booking's name</label>
+					</div>
+					<div class="booking-description" >
+						<label id="description1">Short Description</label>
+					</div>
+				</div>
+				<div class="list-booking">
+					<div class="booking-name" onclick="accessbooking(this)">
+						<label id="upcoming-2">Booking's name</label>
+					</div>
+					<div class="booking-description">
+						<label id="description2">Short Description</label>
+					</div>
+				</div>
+			</div>
 
-	</div>
-</aside>
+		</div>
+	</aside>
 
 </div>
 <script>
 	/*Filter*/
 	const bookingContainer = document.getElementById("booking_container");
 	const bookingElement = bookingContainer.firstElementChild.cloneNode(true);
-	function accessbooking(element){
-		console.log(element.id)
-		document.cookie = "booking_id=" + element.id + "; path=/";
-		window.location.href = "./../clientBooking/client.html";
-	}
+
+	const cookies = parseCookie(document.cookie);
+	const id = cookies['account_id'];
+	const url = window.location.origin+`/shotmaniacs2/api/client/${id}/mybookings`;
+	performQueryAndUpdateBookings(url);
 
 	function parseCookie(cookieString) {
 		const cookies = {};
@@ -169,7 +169,11 @@
 		});
 		return cookies;
 	}
-
+	function accessbooking(element){
+		console.log(element.id)
+		document.cookie = "booking_id=" + element.id + "; path=/";
+		window.location.href = "./../clientBooking/client.html";
+	}
 
 	function    performQueryAndUpdateBookings(url) {
 		while (bookingContainer.firstChild) {
@@ -212,6 +216,9 @@
 							case "APPROVED":
 								bookingState.classList.add("approved-state");
 								break;
+							case "CANCELED":
+								bookingState.classList.add("canceled-state");
+								break;
 							default:
 								bookingState.classList.add("pending-state");
 						}
@@ -229,11 +236,13 @@
 					earliestEvents.forEach(function (event) {
 						console.log(index);
 						if(index === 1){
+							document.getElementById("upcoming-1").parentNode.id = event.id
 							document.getElementById("upcoming-1").innerHTML = event.name;
 							document.getElementById("description1").innerHTML = event.description;
 							index = 2;
 						}
 						else if(index === 2){
+							document.getElementById("upcoming-2").parentNode.id = event.id
 							document.getElementById("upcoming-2").innerHTML = event.name;
 							document.getElementById("description2").innerHTML = event.description;
 							index = 1;
@@ -295,9 +304,34 @@
 		}
 	});
 
-	updateBookings("ongoing");
+
 	function logout(){
-		window.location.href="http://localhost:8080/shotmaniacs2/";
+		const token = cookies['auth_token'];
+		const url = window.location.origin+`/shotmaniacs2/api/login`
+		fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Authorization': `${token}`
+			}
+		})
+		.then(response => {
+			if (response.ok) {
+				document.cookie = "account_id =;  Path=/";
+				document.cookie = "auth_token =;  Path=/";
+				window.location.href="http://localhost:8080/shotmaniacs2/";
+			} else if (response.status === 304) {
+				throw new Error('The given account was not logged in.');
+			} else {
+				throw new Error('Failed to log out. Status: ' + response.status);
+			}
+		})
+		.then(data => {
+			console.log(data); // Logged out successfully
+		})
+		.catch(error => {
+			console.error(error);
+		});
+
 	}
 </script>
 </body>
