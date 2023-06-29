@@ -78,8 +78,6 @@ public class ClientsResource {
     }
 
 
-
-
     /*For clienst who already has their own account*/
     @Path("{client_id}/profile")
     @GET
@@ -444,8 +442,8 @@ public class ClientsResource {
         return false;
 
     }
-    public static void main (String args[]) throws ParseException {
-        ClientsResource client = new ClientsResource();
-        System.out.println(client.getAdmins(10217));
-    }
+//    public static void main (String args[]) throws ParseException {
+//        CrewsResourse client = new CrewsResourse();
+//        System.out.println(client.getAllAnnouncements());
+//    }
 }

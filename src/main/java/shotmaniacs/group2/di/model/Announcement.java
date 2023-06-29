@@ -8,8 +8,9 @@ import java.sql.Timestamp;
 @XmlRootElement
 public class Announcement {
     @XmlAnyElement
+    private AnnouncementState state;
+    @XmlAnyElement
     private int id;
-
     @XmlAnyElement
     private String title;
     @XmlAnyElement
@@ -32,6 +33,21 @@ public class Announcement {
     }
     public Announcement(){
 
+    }
+    public Announcement(int id, String title,String body,int publisher, Urgency urgency, java.sql.Timestamp date,AnnouncementState state) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.publisher = publisher;
+        this.urgency = urgency;
+        this.date = date;
+        this.state = state;
+    }
+    public AnnouncementState getAnnouncementState(){
+        return state;
+    }
+    public void setAnnouncementState(AnnouncementState state){
+        state = state;
     }
 
     public int getId() {

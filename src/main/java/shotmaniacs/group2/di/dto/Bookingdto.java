@@ -41,7 +41,7 @@ public class Bookingdto {
     public Bookingdto(){
     }
     public Bookingdto(String name,String eventType, String date, String time,
-                   String location,String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber) {
+                      String location,String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber) {
         setName(name);
         setDescription(description);
         setEventType(eventType.replace(" ","_").toUpperCase());
@@ -56,6 +56,7 @@ public class Bookingdto {
     }
     public Bookingdto(int user_id,String name,String eventType, String date, String time,
                       String location,String bookingType, int duration, String description) {
+        setUser_id(user_id);
         setName(name);
         setDescription(description);
         setEventType(eventType.replace(" ","_").toUpperCase());
@@ -77,7 +78,7 @@ public class Bookingdto {
                 return false;
             }
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO booking VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO booking VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,booking.getName());
             preparedStatement.setString(2,booking.getDescription());
@@ -90,8 +91,6 @@ public class Bookingdto {
             preparedStatement.setString(9,booking.getPhoneNumber());
             preparedStatement.setString(10, String.valueOf(booking.getBookingType()));
             preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
-            preparedStatement.setInt(12, 0);
-            preparedStatement.setNull(13, java.sql.Types.INTEGER);
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0) {
                 System.out.println("Successfully");
@@ -114,7 +113,7 @@ public class Bookingdto {
             ResultSet rs = preparedStatement.executeQuery();
             /* Insert a new booking*/
             if(rs.next()) {
-                Bookingdto bookingdto = new Bookingdto(name,eventType,date,time,location,bookingType,duration,description,rs.getString("username"), rs.getString("email"),rs.getString("tel"));
+                Bookingdto bookingdto = new Bookingdto(booking.getName(),booking.getEventType(),booking.getDate(),booking.getTime(),booking.getLocation(),booking.getBookingType(),booking.getDuration(),booking.getDescription(),rs.getString("username"), rs.getString("email"),rs.getString("tel"));
                 /*get the id of new Booking*/
                 if (addBooking(bookingdto)) {
                     int booking_id = bookingdto.checkexists(bookingdto);
@@ -141,7 +140,7 @@ public class Bookingdto {
     public int checkexists(Bookingdto booking){
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT * FROM booking WHERE title = ? AND description = ? AND event_type = ?  AND date_and_time =? AND location=? AND duration_hours = ? AND client_name = ? AND client_email =? AND booking_type = ?";
+            String query = "SELECT * FROM booking WHERE title = ? AND description = ? AND event_type = ?  AND date_and_time =? AND location =? AND duration_hours = ? AND client_name = ? AND client_email =? AND booking_type = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, booking.getName());
             preparedStatement.setString(2, booking.getDescription());
@@ -172,7 +171,7 @@ public class Bookingdto {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-            return null;
+        return null;
     }
     public void setTime(String time){
         this.time = time;
@@ -269,12 +268,12 @@ public class Bookingdto {
     public void setSlots(int slots) {
         this.slots = slots;
     }
-    public static void main (String args[]) throws ParseException {
-        Bookingdto bookingdto = new Bookingdto( "Wedding Ceramony","Club Photography",
-              "2023-07-12","12:08","Amsterdam",
-                "Photography",2,"This is one of my most important event in my life",
-                "Duong Huyen","duonghuyen127@gmail.com","0687845896");
-        System.out.println(bookingdto.addBooking_id(11,bookingdto));
-    }
+//    public static void main (String args[]) throws ParseException {
+//        Bookingdto bookingdto = new Bookingdto( "HELLO","Club Photography",
+//              "2023-07-12","12:08","Amsterdam",
+//                "Photography",2,"This is one of my most important event in my life",
+//                "Duong Huyen","duonghuyen127@gmail.com","0687845896");
+//        System.out.println(bookingdto.addBooking_id(11,bookingdto));
+//    }
 
 }

@@ -64,6 +64,12 @@ body {
     width: 3vw;
     height: 3vh;
 }
+.dropdownBtn{
+    margin-top: -10vh;
+}
+.dropdownBtn:hover{
+    background-color: #EE0000;
+}
 
 /*Navigational Dashboard*/
 .logo{
