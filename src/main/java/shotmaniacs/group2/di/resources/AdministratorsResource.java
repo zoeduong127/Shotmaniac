@@ -8,6 +8,7 @@ import shotmaniacs.group2.di.dao.AnnouncementDao;
 import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
+import java.awt.print.Book;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -311,6 +312,33 @@ public class AdministratorsResource {
             System.err.println("Error connecting: "+e);
         }
         return listbooking;
+    }
+
+    @RolesAllowed({"Administrator"})
+    @Path("/allbookings")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Booking> getAllBooking() {
+        List<Booking> allBookings = new ArrayList<>();
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+
+            String sql = "SELECT * FROM booking;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                allBookings.add(new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14)));
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR Getting all bookings: " + e.getMessage());
+        }
+        return allBookings;
     }
 
     @RolesAllowed({"Administrator"})
