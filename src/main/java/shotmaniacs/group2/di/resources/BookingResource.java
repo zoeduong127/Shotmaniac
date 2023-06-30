@@ -1,6 +1,7 @@
 package shotmaniacs.group2.di.resources;
 
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.BookingDao;
@@ -59,13 +60,18 @@ public class BookingResource {
             preparedStatement.setString(4, "TODO");
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0) {
+                Mailer.sendEnrolmentNotification(bookingId, accountId);
                 return Response.ok().build();
             } else {
                 return Response.notModified().build();
             }
         } catch (SQLException e) {
-            System.err.println("Error putting enrolment: "+e);
+            System.err.println("Error putting enrolment: "+e.getMessage());
+        } catch (MessagingException e) {
+            System.err.println("Error putting enrolment: "+e.getMessage());
+            return Response.ok().entity("Enrolment was successful but email failed to send.").build();
         }
+
         return Response.serverError().build();
     }
 

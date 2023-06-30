@@ -1,7 +1,9 @@
 package shotmaniacs.group2.di.dto;
 
+import jakarta.mail.MessagingException;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import shotmaniacs.group2.di.dao.BookingDao;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.Booking;
 import shotmaniacs.group2.di.model.BookingState;
 import shotmaniacs.group2.di.model.BookingType;
@@ -93,10 +95,15 @@ public class Bookingdto {
             preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0) {
-                System.out.println("Successfully");
+                try {
+                    Mailer.sendNewBookingNotification(booking);
+                } catch (MessagingException e) {
+                    System.out.println("Error sending new booking notification: " + e.getMessage());
+                }
+
+
                 return true;
             }
-
         } catch (SQLException e) {
             System.err.println("Error connecting: "+e);
         }
@@ -125,6 +132,11 @@ public class Bookingdto {
                         int rowsInserted1 = preparedStatement3.executeUpdate();
                         if(rowsInserted1 == 1){
                             System.out.println("Successfully");
+                            try {
+                                Mailer.sendNewBookingNotification(bookingdto);
+                            } catch (MessagingException e) {
+                                System.out.println("Error sending email notification for new booking: " + e.getMessage());
+                            }
                             return true;
                         }
                     }
