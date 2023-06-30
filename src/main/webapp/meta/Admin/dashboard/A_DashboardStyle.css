@@ -461,6 +461,11 @@ body {
     padding: 10px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     margin-right: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .booking span {
@@ -811,4 +816,11 @@ body {
     border: 1px solid #e9e9e9;
     border-top: unset;
     border-radius: 6px;
+}
+
+.upcoming-event-names {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    width: 70%;
 }

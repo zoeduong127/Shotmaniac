@@ -2,12 +2,16 @@ const left = document.getElementById("container1");
 const right = document.getElementById("information");
 const popup = document.getElementById("popup-container");
 const cancel = document.getElementById("cancel-container");
+const inputArea = document.getElementById("input-area");
+
+
 
 const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
 const account_id = cookies['account_id'];
-const booking_id = cookies['booking_id'];
+let booking_id = cookies['booking_id'];
 console.log("account id: " + account_id);
+
 
 const months = [
     "Jan",
@@ -42,12 +46,10 @@ function toggleStyle(id) {
     right.style.pointerEvents = "none";
 
     popup.style.visibility = "visible";
-
     displayInformation(id);
 }
 
 function toggleOff() {
-    document.cookie = "booking_id=; path=/";
     left.style.opacity = "1";
     left.style.pointerEvents = "auto";
 
@@ -55,6 +57,7 @@ function toggleOff() {
     right.style.pointerEvents = "auto";
 
     popup.style.visibility = "hidden";
+    inputArea.style.visibility = "hidden";
     performQueryAndUpdateBookings(" ");
 }
 
@@ -195,20 +198,20 @@ function displayInformation(id) {
             console.log(booking.state);
             if (booking.state === "APPROVED") {
                 console.log("entered")
-                document.getElementById("input-area").style.visibility = "visible";
+                inputArea.style.visibility = "visible";
                 document.getElementById("crew-needed").placeholder = booking.slots;
                 document.getElementById("crew-needed").style.pointerEvents = "none";
 
-                console.log(document.getElementById("input-area").innerHTML);
+                console.log(inputArea.innerHTML);
                 addProductManager(booking.id);
             } else if (booking.state === "PENDING") {
-                document.getElementById("input-area").style.visibility = "visible";
+                inputArea.style.visibility = "visible";
                 document.getElementById("product-manager").pointerEvents = "auto";
                 document.getElementById("crew-needed").style.pointerEvents = "auto";
                 document.getElementById("crew-needed").placeholder = "";
 
             } else {
-                document.getElementById("input-area").style.visibility = "hidden";
+                inputArea.style.visibility = "hidden";
             }
         })
 }
@@ -232,47 +235,7 @@ function addProductManager(id) {
         })
 }
 
-// function acceptBooking(){
-//     const state = 'APPROVED'
-//     const booking_id = cookies['booking_id'];
-//     const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
-//     fetch(url,{
-//         method: 'PUT',
-//         headers: {
-//             'Authorization': `${token}`
-//         }
-//     })
-//         .then(response => {
-//             if(response.ok){
-//                 document.cookie = "booking_id=; path=/";
-//                 performQueryAndUpdateBookings(" ");
-//                 toggleOff();
-//             }else{
-//                 alert("Something wrong! Please try again")
-//             }
-//         })
-// }
-//
-// function cancelBooking(){
-//     const state = 'CANCELED'
-//     const booking_id = cookies['booking_id'];
-//     const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
-//     fetch(url,{
-//         method: 'PUT',
-//         headers: {
-//             'Authorization': `${token}`
-//         }
-//     })
-//         .then(response => {
-//             if(response.ok){
-//                 document.cookie = "booking_id=; path=/";
-//                 performQueryAndUpdateBookings(" ");
-//                 toggleOff();
-//             }else{
-//                 alert("Something wrong! Please try again")
-//             }
-//         })
-// }
+
 function acceptBooking() {
     var crewNeededInput = document.getElementById("crew-needed");
     var productManagerInput = document.getElementById("product-manager");
@@ -288,7 +251,7 @@ function acceptBooking() {
     }
     const state = 'APPROVED'
     const booking_id = cookies['booking_id'];
-    console.log(booking_id)
+    console.log("booking ID" + booking_id)
     const url = window.location.origin + `/shotmaniacs2/api/admin/booking/` + booking_id + `/state?state=` + state;
     const url1 = window.location.origin + `/shotmaniacs2/api/admin/booking/` + booking_id + `/slots?slots=` + crewNeededInput.value;
     const url2 = window.location.origin + `/shotmaniacs2/api/admin/booking/` + booking_id + `/setproductmanager?username=` + productManagerInput.value;
@@ -310,9 +273,9 @@ function acceptBooking() {
                                 .then(response => {
                                     console.log(response)
                                     if (response.ok) {
-                                        document.cookie = "booking_id=; path=/";
                                         performQueryAndUpdateBookings(" ");
                                         toggleOff();
+                                        inputArea.style.visibility = "hidden";
                                     } else {
                                         alert("Something wrong! Please try again")
                                     }
@@ -353,7 +316,7 @@ function addUpcomingEvents() {
             earliestEvents.forEach(function (event) {
                 output += `
                     <div class="booking" id="B1">
-                        ${event.name}
+                        <span class="upcoming-event-names">${event.name}</span>
                         <span> 
                             ${new Date(event.date).getDate()}
                             ${months[new Date(event.date).getMonth()]}
@@ -737,12 +700,16 @@ function graph() {
 }
 
 function cancelBooking() {
+    console.log("cancel started")
     const url = window.location.origin + `/shotmaniacs2/api/admin/booking/${booking_id}/cancel`;
+    console.log(url);
     let options;
-    const input = document.getElementById("text_box");
+    const input = document.getElementById("text_box").value;
     if (input === "") {
         alert("Please enter a reason for the cancellation!")
+        return;
     } else {
+        console.log("input check")
         options = {
             method: 'POST',
             headers: {
@@ -757,7 +724,10 @@ function cancelBooking() {
     console.log("url" + url);
     fetch(url, options)
         .then(response => {
-            if (response.ok) console.log(response);
+            if (response.ok) {
+                console.log(response);
+                toggleOff();
+            }
         })
         .catch(err => console.log(err));
 }
