@@ -38,7 +38,7 @@ public class AdministratorsResource {
 
 
     @RolesAllowed({"Administrator"})
-    @Path("createnews/{enrolmentId}")
+    @Path("enrolment/{enrolmentId}")
     public EnrolmentResource modifySpecificEnrolment(@PathParam("enrolmentId") int enrolmentId) {
         return new EnrolmentResource(uriInfo, request, enrolmentId);
     }
@@ -51,7 +51,7 @@ public class AdministratorsResource {
     }
 
     @RolesAllowed({"Administrator"})
-    @PUT
+    @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("/accounts")
     public Response addAccount(Account account) {

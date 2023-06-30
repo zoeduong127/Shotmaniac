@@ -61,5 +61,11 @@ public class clientTest {
 
     @Test
     public void testLogOut() {
+        testLogin();
+
+        driver.findElement(By.id("log-out")).click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Shotmaniacs"));
     }
 }

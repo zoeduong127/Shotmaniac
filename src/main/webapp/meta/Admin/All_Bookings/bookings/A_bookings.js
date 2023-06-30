@@ -64,7 +64,7 @@ function UnassignedBookings() {
 }
 
 function calcAvailableSlots(slots, id, name, description) {
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew`;
+    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/${id}/crew`;
     console.log("slots: " + slots);
     console.log("id: " + id);
 
@@ -485,25 +485,25 @@ function updateBookingsByFilter(filterType) {
         case 'approved': {
             filter = "approved";
             filterButton.textContent = filter;
-            url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/statefilter/${filter}`;
+            url =  window.location.origin+`/shotmaniacs2/api/admin/bookings/statefilter/${filter}`;
             break;
         }
         case 'pending': {
             filter = "pending";
             filterButton.textContent = filter;
-            url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/statefilter/${filter}`;
+            url =  window.location.origin+`/shotmaniacs2/api/admin/bookings/statefilter/${filter}`;
             break;
         }
         case 'on-going': {
             filter = "ongoing";
             filterButton.textContent = filter;
-            url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
+            url =  window.location.origin+`/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
             break;
         }
         case 'past': {
             filter = "past";
             filterButton.textContent = filter;
-            url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
+            url =  window.location.origin+`/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
             break;
         }
         default: {
@@ -521,7 +521,7 @@ let inputElement = document.getElementById("booking-input");
 
 inputElement.addEventListener("input", onInputChange);
 function getAllBookings() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`
+    const url =  window.location.origin+`/shotmaniacs2/api/crew/${account_id}/allbookings`
 
     fetch(url, {
         headers: {
@@ -593,7 +593,7 @@ function sendInput(event) {
 
     if (inputElement.value.length === 0) fetchBookings(" ");
     else {
-        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext="${inputElement.value}"`
+        const url =  window.location.origin+`/shotmaniacs2/api/admin/bookings/search?searchtext="${inputElement.value}"`
         fetchBookings(url);
     }
 }
@@ -612,7 +612,7 @@ function logout(){
                 document.cookie = "account_id =;  Path=/";
                 document.cookie = "account_username =;  Path=/";
                 document.cookie = "auth_token =;  Path=/";
-                window.location.href="http://localhost:8080/shotmaniacs2/";
+                window.location.href= window.location.origin+"/shotmaniacs2/";
             } else if (response.status === 304) {
                 throw new Error('The given account was not logged in.');
             } else {

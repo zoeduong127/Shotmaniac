@@ -7,6 +7,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -60,5 +61,10 @@ public class administratorTest {
 
     @Test
     public void testLogOut() {
+        testLogin();
+        driver.findElement(By.id("logout_button")).click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Shotmaniacs"));
     }
 }
