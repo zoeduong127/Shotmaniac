@@ -51,6 +51,7 @@ body {
     float: left;
     transform: translateX(20px);
 }
+
 .logout {
     color: white;
     float: right;
@@ -370,7 +371,7 @@ body {
 
 .statistics #stats {
     width: 10vw;
-    margin-left: 20vw;
+    margin-left: 43%;
     text-align: center;
     border: 2px solid #F58024;
     background-color: rgba(245, 128, 36, 0.5);
@@ -381,9 +382,8 @@ body {
 
 .graph {
     border: 2px solid rgba(82, 82, 82, 0.5);
-    background-color: rgba(82, 82, 82, 0.22);
     height: 25vh;
-    width: 70%;
+    width: 100%;
     margin: 0 0.5vw 1.5vh 2vw;
 }
 
