@@ -307,3 +307,32 @@ function getAccount() {
         })
     performQueryAndUpdateBookings(" ");
 }
+function logout(){
+    const token = cookies['auth_token'];
+    const url = window.location.origin+`/shotmaniacs2/api/login`
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                document.cookie = "account_id =;  Path=/";
+                document.cookie = "account_username =;  Path=/";
+                document.cookie = "auth_token =;  Path=/";
+                window.location.href="http://localhost:8080/shotmaniacs2/";
+            } else if (response.status === 304) {
+                throw new Error('The given account was not logged in.');
+            } else {
+                throw new Error('Failed to log out. Status: ' + response.status);
+            }
+        })
+        .then(data => {
+            console.log(data); // Logged out successfully
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+}
