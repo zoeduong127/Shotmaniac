@@ -185,6 +185,7 @@ function getEnrolled() {
         })
 }
 
+
 function performQueryAndUpdateBookings(element) {
     /*Styling*/
     event_info.style.visibility = "visible";

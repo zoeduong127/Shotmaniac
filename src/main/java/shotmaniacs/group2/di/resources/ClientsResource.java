@@ -1,17 +1,21 @@
 package shotmaniacs.group2.di.resources;
 
+import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dto.Accountdto;
 import shotmaniacs.group2.di.dto.Bookingdto;
 import shotmaniacs.group2.di.dto.Changepass;
 import shotmaniacs.group2.di.dto.LoginInfor;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
 import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.String.*;
 
 @Path("/client")
 public class ClientsResource {
@@ -47,7 +51,12 @@ public class ClientsResource {
     public Response createBooking_noid(Bookingdto booking) {
        boolean response = booking.addBooking(booking);
        if(response){
-            return Response.ok().build();
+           try {
+               Mailer.sendNewBookingNotification(booking);
+               return Response.ok().build();
+           } catch (MessagingException e) {
+               System.out.println("Error while sending new booking email notification: " + e.getMessage());
+           }
        }
         return Response.serverError().build();
     }
@@ -63,7 +72,7 @@ public class ClientsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
-    public Response createBooking_noid(List<Bookingdto> booking) {
+    public Response createBookings_noId(List<Bookingdto> booking) {
         int i = 0;
         for(Bookingdto bookingdto: booking) {
             boolean response = bookingdto.addBooking(bookingdto);
@@ -103,10 +112,10 @@ public class ClientsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
-    public Response createBooking_noid(@PathParam("client_id")int user_id,Bookingdto booking) {
+    public Response createBooking_withid(@PathParam("client_id")int user_id,Bookingdto booking) {
         boolean response = booking.addBooking_id(user_id,booking);
-        if(response){
-            return Response.ok().build();
+        if(response) {
+                return Response.ok().build();
         }
         return Response.serverError().build();
     }
@@ -122,7 +131,7 @@ public class ClientsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
-    public Response createBooking_noid(@PathParam("client_id")int user_id,List<Bookingdto> booking) {
+    public Response createBookings_withId(@PathParam("client_id")int user_id,List<Bookingdto> booking) {
         int i = 0;
         for(Bookingdto bookingdto: booking) {
             boolean response = bookingdto.addBooking_id(user_id,bookingdto);
@@ -272,13 +281,13 @@ public class ClientsResource {
     @Path("{booking_id}/crews")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Account> getCrews(@PathParam("booking_id") int id) {
+    public List<Account> getCrews() {
         List<Account> listcrews = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, enrolment e WHERE e.booking_id = ? AND a.account_id = e.crew_member_id";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a WHERE account_type = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setString(1,String.valueOf(AccountType.Administrator));
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()) {
@@ -300,7 +309,7 @@ public class ClientsResource {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query = "UPDATE booking SET state = ? WHERE booking_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,String.valueOf(BookingState.CANCELED));
+            preparedStatement.setString(1, valueOf(BookingState.CANCELED));
             preparedStatement.setInt(2,id);
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0){

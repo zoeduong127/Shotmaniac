@@ -379,15 +379,53 @@ public class AdministratorsResource {
     }
 
     @RolesAllowed({"Administrator"})
-    @Path("/booking/{booking_id}/productmanager/{product_manager_id}")
+    @Path("/booking/{booking_id}/setproductmanager")
     @PUT
-    public Response setProductManager(@PathParam("booking_id") int bookingId, @PathParam("product_manager_id") int prod_man_id) {
+    public Response setProductManagerByUsername(@PathParam("booking_id") int bookingId, @QueryParam("username") String username) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "SELECT a.account_id FROM account a WHERE a.username = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet rs = ps.executeQuery();
+
+            int managerId;
+            if (rs.next()) {
+                managerId = rs.getInt(1);
+            } else {
+                return Response.notModified().entity("Product manager with that username does not exist.").build();
+            }
+
+            String query = "UPDATE booking SET product_manager_id = ? WHERE booking_id = ?;";
+            ps = connection.prepareStatement(query);
+
+            ps.setInt(1, managerId);
+            ps.setInt(2, bookingId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while setting booking product manager: " + e.getMessage());
+        }
+        return Response.serverError().build();
+    }
+
+    @RolesAllowed({"Administrator"})
+    @Path("/booking/{booking_id}/productmanager/{prod_manager_id}")
+    @PUT
+    public Response setProductManagerById(@PathParam("booking_id") int bookingId, @PathParam("prod_manager_id") int managerId) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String sql = "UPDATE booking SET product_manager_id = ? WHERE booking_id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
 
-            ps.setInt(1, prod_man_id);
+            ps.setInt(1, managerId);
             ps.setInt(2, bookingId);
 
             int rowsAffected = ps.executeUpdate();
@@ -427,6 +465,32 @@ public class AdministratorsResource {
             System.out.println("Error while getting booking product manager: " + e.getMessage());
         }
         return null;
+    }
+
+    @RolesAllowed({"Administrator", "Crew"})
+    @Path("/booking/{booking_id}/slots")
+    @PUT
+    public Response setBookingSlotById(@PathParam("booking_id") int bookingId, @QueryParam("slots") int slots) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "UPDATE booking SET slots = ? WHERE booking_id = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, slots);
+            ps.setInt(2, bookingId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error occured while setting slots of booking: " + e.getMessage());
+        }
+        return Response.serverError().build();
     }
 
     @RolesAllowed({"Administrator","Crew"})

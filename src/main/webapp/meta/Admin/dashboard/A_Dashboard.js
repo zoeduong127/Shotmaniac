@@ -7,6 +7,7 @@ const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
 const account_id = cookies['account_id'];
 console.log("account id: " + account_id);
+addUpcomingEvents();
 
 const months = [
     "Jan",
@@ -46,6 +47,7 @@ function toggleStyle(id) {
 }
 
 function toggleOff() {
+    document.cookie = "booking_id=; path=/";
     left.style.opacity = "1";
     left.style.pointerEvents = "auto";
 
@@ -107,6 +109,7 @@ function performQueryAndUpdateBookings(input) {
         })
 }
 
+
 function displaySortedBookings(list) {
     let element = "";
 
@@ -142,7 +145,8 @@ function displaySortedBookings(list) {
 }
 
 function displayInformation(id) {
-    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/booking/${id}`;
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${id}`;
+    document.cookie = "booking_id=" + id + "; path=/";
 
     fetch(url, {
         headers: {
@@ -189,11 +193,52 @@ function displayInformation(id) {
 
         })
 }
+function acceptBooking(){
+    const state = 'APPROVED'
+    const booking_id = cookies['booking_id'];
+    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
+    fetch(url,{
+        method: 'PUT',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if(response.ok){
+                document.cookie = "booking_id=; path=/";
+                performQueryAndUpdateBookings(" ");
+                toggleOff();
+            }else{
+                alert("Something wrong! Please try again")
+            }
+        })
+}
+function cancelBooking(){
+    const state = 'APPROVED'
+    const booking_id = cookies['booking_id'];
+    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
+    fetch(url,{
+        method: 'PUT',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if(response.ok){
+                document.cookie = "booking_id=; path=/";
+                performQueryAndUpdateBookings(" ");
+                toggleOff();
+            }else{
+                alert("Something wrong! Please try again")
+            }
+        })
+}
 
 
 function addUpcomingEvents() {
-    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
-
+    const filter = "ongoing";
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    let booking_list = [];
 
     fetch(url, {
         headers: {
@@ -202,17 +247,16 @@ function addUpcomingEvents() {
     })
         .then(response => response.json())
         .then(data => {
+            console.log(data)
+            data = data.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA - dateB;
+            });
             //TODO FIX THIS BS, its supposed to sort and filter but it does neither
-            data.sort(function (a, b) {
-                return a.timestamp - b.timestamp;
-            });
             console.log(data);
-            data.filter(date => {
-                return date >= new Date()
-            });
-            console.log(data);
-            const earliestEvents = data.slice(0, 5);
-            console.log("Earliest Events:");
+            const earliestEvents = data.slice(0,5);
+            console.log(earliestEvents);
             let output = "<h1>Upcoming Events</h1>";
             earliestEvents.forEach(function (event) {
                 output += `
@@ -224,39 +268,9 @@ function addUpcomingEvents() {
                             ${new Date(event.date).getFullYear()}
                         </span>
                     </div>
-                `;
+                `
             })
             document.getElementById("upcoming-container").innerHTML = output;
-        })
-}
-
-
-function fillAnnouncements(input) {
-    let url;
-    if (input === " ") {
-        url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`;
-    } else {
-        url = input;
-    }
-    fetch(url, {
-        headers: {
-            'Authorization': `${token}`
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            data.sort(function (a, b) {
-                return a.id - b.id;
-            }).reverse();
-
-
-            let element = "<h1>Latest News</h1>";
-            data.forEach(item => {
-                element += `
-                <div id="L${item.id}" class="announcement">${item.title}</div>
-            `;
-            })
-            document.getElementById("announcement-wrapper").innerHTML = element;
         })
 }
 
@@ -268,7 +282,7 @@ productManagerElement.addEventListener("input", onSingleInputChange);
 
 function getAllCrew() {
     console.log("get all crew called")
-    const url = window.location.origin + `/shotmaniacs2/api/admin/allcrew`;
+    const url = `http://localhost:8080/shotmaniacs2/api/admin/allcrew`;
 
     fetch(url, {
         headers: {
@@ -335,7 +349,7 @@ let inputElement = document.getElementById("search");
 inputElement.addEventListener("input", ALL_onInputChange);
 
 function getAllBookings() {
-    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
     fetch(url, {
         headers: {
@@ -404,7 +418,7 @@ function ALL_sendInput(event) {
 
     if (inputElement.value.length === 0) performQueryAndUpdateBookings(" ");
     else {
-        const url = window.location.origin + `/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
+        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
         performQueryAndUpdateBookings(url);
     }
 }
@@ -417,7 +431,7 @@ let AnnouncementInputElement = document.getElementById("search-input");
 
 AnnouncementInputElement.addEventListener("input", Announcement_onInputChange);
 function getAllAnnouncements() {
-    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`; //TODO CHANGE THE URL TO ALL ANNOUNCEMENTS
+    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`; //TODO CHANGE THE URL TO ALL ANNOUNCEMENTS
 
     fetch(url, {
         headers: {
@@ -427,7 +441,7 @@ function getAllAnnouncements() {
         .then(response => response.json())
         .then(data => {
             Announcements = data.map((announcement) => {
-                return announcement.title;
+                return announcement.name;
             })
         })
 }
@@ -442,9 +456,9 @@ function  Announcement_onInputChange() {
     const filteredNames = [];
 
 
-    Announcements.forEach((announcement) => {
-        if (announcement.substring(0, value.length).toLowerCase() === value) {
-            filteredNames.push(announcement);
+    Announcements.forEach((BookingName) => {
+        if (BookingName.substring(0, value.length).toLowerCase() === value) {
+            filteredNames.push(BookingName);
         }
     })
     Announcement_createAutocompleteDropdown(filteredNames);
@@ -484,10 +498,10 @@ function Announcement_sendInput(event) {
     console.log("input called")
     event.preventDefault();
 
-    if (AnnouncementInputElement.value.length === 0) fillAnnouncements(" ");
+    if (AnnouncementInputElement.value.length === 0) performQueryAndUpdateBookings(" ");
     else {
-        const url = window.location.origin + `/shotmaniacs2/api/admin/announcements/search?searchtext=${AnnouncementInputElement.value}`
-        fillAnnouncements(url);
+        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext=${AnnouncementInputElement.value}`
+        performQueryAndUpdateBookings(url);
     }
 }
 
@@ -497,26 +511,30 @@ function removeAutocompleteDropdown() {
     const listEl = document.querySelector("#autocomplete-list");
     if (listEl) listEl.remove(); //checks if it exists and then removes it
 }
-
-
-//TODO change filter to incoming bookings or pending cancelled approved or something to do with admin
 function graph(){
     const filter = "DONE";
-    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+    const url = window.location.origin+`/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
     fetch(url, {
         headers: {
             'Authorization': `${token}`
         }
     })
         .then(response => response.json())
-        .then(bookings => {
+        .then(booking => {
+            console.log(booking)
+            const bookings = booking.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA - dateB;
+            });
+            console.log(bookings)
             var bookingCounts = {};
 
             bookings.forEach(function (booking) {
                 var timestamp = new Date(parseInt(booking.date));
 
                 if (!isNaN(timestamp)) { // Check if timestamp is valid
-                    var date = new Date(timestamp); // Convert to Date object
+                    var date = new Date(timestamp);// Convert to Date object
 
                     var monthh = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0');
 
@@ -534,11 +552,11 @@ function graph(){
             });
 
             // Get the canvas element
-            const canvas = document.getElementById('chart');
-            const ctx = canvas.getContext('2d');
+            var canvas = document.getElementById('chart');
+            var ctx = canvas.getContext('2d');
 
             // Chart configuration
-            const chartConfig = {
+            var chartConfig = {
                 type: 'line',
                 data: {
                     labels: monthss,
@@ -560,8 +578,8 @@ function graph(){
                             title: {
                                 display: true,
                             },
-                            min: monthss[0],  // Specify the minimum value on the x-axis
-                            max: monthss[4]
+                            min: monthss[(monthss.length)-5],  // Specify the minimum value on the x-axis
+                            max: monthss[(monthss.length)-1]
                         },
                         y: {
                             display: true,
@@ -574,43 +592,9 @@ function graph(){
             };
 
             // Create the chart graph
-            const chart = new Chart(ctx, chartConfig);
-        })
-}
-
-function logout(){
-    const token = cookies['auth_token'];
-    const url = window.location.origin+`/shotmaniacs2/api/login`
-    fetch(url, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': `${token}`
-        }
-    })
-        .then(response => {
-            if (response.ok) {
-                document.cookie = "account_id =;  Path=/";
-                document.cookie = "account_username =;  Path=/";
-                document.cookie = "auth_token =;  Path=/";
-                window.location.href="http://localhost:8080/shotmaniacs2/";
-            } else if (response.status === 304) {
-                throw new Error('The given account was not logged in.');
-            } else {
-                throw new Error('Failed to log out. Status: ' + response.status);
-            }
-        })
-        .then(data => {
-            console.log(data); // Logged out successfully
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
+            var chart = new Chart(ctx, chartConfig);})
 }
 
 
 /*Startup*/
 performQueryAndUpdateBookings(" ")
-addUpcomingEvents(" ");
-fillAnnouncements(" ");
-graph();

@@ -198,7 +198,7 @@ public class CrewsResourse {
         List<Booking> listbooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT b.* FROM booking b";
+            String query = "SELECT b.* FROM booking b WHERE b.date_and_time >= NOW() ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -263,9 +263,9 @@ public class CrewsResourse {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query;
             if(status == 0) { //Unread announcement
-                query = "SELECT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 0";
+                query = "SELECT DISTINCT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 'UNREAD'";
             } else {
-                query = "SELECT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 1";
+                query = "SELECT DISTINCT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 'READ'";
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
