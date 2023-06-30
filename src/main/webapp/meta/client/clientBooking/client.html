@@ -12,10 +12,10 @@
 <div class="container">
   <header>
     <div class="page-title">
-      <div class="text">Hello Client Shotmaniac2, Welcome to your Bookings</div>
+      <div class="text"> <label>Hello <span id ="client-name">Client</span>, Welcome to Shotmaniac2 Your Bookings</label></div>
       <hr>
       <div class="logout">
-        <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="logout">
+        <img src="../../Brand_Identity/images/icons/logOut-Black.png" alt="logout" onclick="logout()">
       </div>
     </div>
     <div class="navigation">
@@ -40,7 +40,7 @@
     <div class="dash-box">
       <a href="applicationForm.html" target="_self">
         <div class="box" id="dashboard">
-          <img id="icon-1" src="../../Brand_Identity/images/icons/" alt="">
+          <img id="icon-1" src="../../Brand_Identity/images/icons/create_file.png" alt="">
           <label>New Booking</label>
         </div>
       </a>
@@ -174,7 +174,7 @@
       <label>CANCEL BOOKING</label>
     </div>
     <div class="cancel-question">
-      <label>Are you sure you want to cancel the"Booking's name" booking?</label>
+      <label>Are you sure you want to cancel the booking?</label>
     </div>
     <div class="cancel-reason">
       <label>Reason for cancellation(if applicable)</label>
@@ -183,7 +183,7 @@
       </div>
     </div>
     <div clas="confirm">
-      <button class="cancel-booking" onclick="changetoterm()"> Cancel booking</button>
+      <button class="cancel-booking" onclick="changetoterm()"> Submit</button>
       <button class="cancel-request" onclick="cancelrequest()">Cancel</button>
     </div>
   </div>
@@ -204,14 +204,14 @@
       <br><br><label id ="label 2">Your cancellation request has been sent on June 20, 2023. We’re really sorry when this booking doesn’t work out for you anymore, but thank you so much for giving us a try.</label>
       <br><br><label id ="label 3">Make a mistake? Having second thoughts?<br>
       If you believe this cancellation is in error, please visit: <span>SHOTMANIACS.support</span> for more details.</label>
-      <br><br><label id="label 4">You want to upload other new booking(s)?</label>
+      <br><br><a href="applicationForm.html"><label id="label 4">You want to upload other new booking(s)?</label></a>
       <br><br><label id="label 5">Once again, thank you so much for being our customer.</label>
 
     </div>
   </div>
 </div>
 <div id="overlay" class="hidden"></div>
-<script>
+<script defer>
   window.addEventListener('beforeunload', function (event) {
     // Cancel the event to prevent the browser from closing immediately
     event.preventDefault();
@@ -230,6 +230,7 @@
   const employee =[]
 
   const cookies = parseCookie(document.cookie);
+
   const id = cookies['booking_id'];
   const url = window.location.origin+"/shotmaniacs2/api/client/"+id;
   const url1 = window.location.origin+"/shotmaniacs2/api/client/"+id+"/admins";
@@ -238,6 +239,7 @@
           .then(response => response.json())
           .then(data =>
           {
+            document.getElementById("client-name").textContent = cookies['account_username']
             document.getElementById("event-name").placeholder = `${data.name}`
             document.getElementById("header-name").innerHTML = data.name
             document.getElementById("event-type").placeholder = `${data.eventType}`
@@ -320,7 +322,6 @@
 
   function cancel(){
     var cancel = document.getElementById('cancel-box');
-
     var overlay = document.getElementById('overlay');
     cancel.classList.remove('hidden');
     overlay.classList.remove('hidden');
@@ -364,7 +365,35 @@
     overlay.classList.add('hidden');
     detail.classList.add('hidden');
   }
-  console.log(employee)
+  function logout(){
+    const token = cookies['auth_token'];
+    const url = window.location.origin+`/shotmaniacs2/api/login`
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `${token}`
+      }
+    })
+            .then(response => {
+              if (response.ok) {
+                document.cookie = "account_id =;  Path=/";
+                document.cookie = "account_username =;  Path=/";
+                document.cookie = "auth_token =;  Path=/";
+                window.location.href="http://localhost:8080/shotmaniacs2/";
+              } else if (response.status === 304) {
+                throw new Error('The given account was not logged in.');
+              } else {
+                throw new Error('Failed to log out. Status: ' + response.status);
+              }
+            })
+            .then(data => {
+              console.log(data); // Logged out successfully
+            })
+            .catch(error => {
+              console.error(error);
+            });
+
+  }
 
   /*filter*/
 

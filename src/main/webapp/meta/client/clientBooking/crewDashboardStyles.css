@@ -51,12 +51,20 @@ body {
 
 /*Dropdown*/
 .dropdown{
+    width: 3vw;
+    height: 6vh;
     margin-top: 2vh;
     margin-left: 70vw;
 }
+.dropdownBtn{
+    background-color: unset;
+}
+.dropdownBtn:hover{
+    background-color: #EE0000;
+}
 .dropdown img{
     width: 3vw;
-    height: 3vh;
+    height: 5vh;
 }
 
 /*Navigational Dashboard*/
@@ -66,6 +74,7 @@ body {
     margin-top: 3vh;
 }
 .dash-box img {
+    margin-left: 1vw;
     width: 20%;
     height: 100%;
 }
@@ -150,8 +159,9 @@ nav .logo img {
     margin: 1vh 3vw 0 3vw;
 }
 .text {
+    margin-top: -5vh;
     margin-left: 30%;
-    font-size: 2rem;
+    font-size: 50px;
     font-weight: bold;
     text-align: center;
     padding-top: 5vh;
@@ -231,6 +241,9 @@ Change depending on what the actual content is to be able to filter
 
 .booking-container .filter:hover {
     opacity: 0.2;
+}
+.item:hover{
+    background-color: #706e6f;
 }
 
 
@@ -444,7 +457,9 @@ Change depending on what the actual content is to be able to filter
 .approved-state {
     background-color: rgba(98, 105, 255, 0.72);
 }
-
+.canceled-state {
+    background-color: #eb9b57;
+}
 .todo {
     background-color: red;
     height: 30px;

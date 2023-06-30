@@ -64,6 +64,12 @@ body {
     width: 3vw;
     height: 3vh;
 }
+.dropdownBtn{
+    margin-top: -10vh;
+}
+.dropdownBtn:hover{
+    background-color: #EE0000;
+}
 
 /*Navigational Dashboard*/
 .logo{
@@ -72,6 +78,7 @@ body {
     margin-top: 3vh;
 }
 .dash-box img {
+    margin-left: 1vw;
     width: 20%;
     height: 100%;
 }
@@ -159,13 +166,20 @@ nav .logo img {
 .right-nav{
     margin-top: 4%;
     text-align: center;
-    width: 5vw;
+    width: 10vw;
     height: 4vh;
-    margin-left: 50%;
+    margin-left: 18vw;
     font-size: 20px;
-    border: 1px solid white;
-    background-color: #dd6565;
-    color: white;
+    border: 2px solid red;
+    color: black;
+    background: white;
+}
+.right-nav a{
+    color: black;
+    text-decoration: none;
+}
+.right-nav:hover{
+    background: #eb8383;;
 }
 .navigation {
     margin-top: 1.5%;
@@ -203,6 +217,14 @@ nav .logo img {
     font-weight: bold;
     padding-top: 5vh;
 }
+.logout img{
+    width: 3vw;
+    height: 5vh;
+    position: absolute;
+    margin-left: 75%;
+    margin-top: -5%;
+}
+
 
 /*End Navigation*/
 

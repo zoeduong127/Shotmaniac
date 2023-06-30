@@ -8,6 +8,7 @@ import shotmaniacs.group2.di.dao.AnnouncementDao;
 import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
+import java.awt.print.Book;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -334,6 +335,30 @@ public class AdministratorsResource {
             System.err.println("Error connecting: "+e);
         }
         return listbooking;
+    }
+
+    @RolesAllowed({"Administrator"})
+    @Path("/allcrew")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Account> getAllCrew() {
+        List<Account> allCrew = new ArrayList<>();
+
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+
+            String sql = "SELECT a.* FROM account a WHERE a.account_type = 'Crew';";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                allCrew.add(new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8)));
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR Getting all crew: " + e.getMessage());
+        }
+        return allCrew;
     }
 
     @RolesAllowed({"Administrator"})

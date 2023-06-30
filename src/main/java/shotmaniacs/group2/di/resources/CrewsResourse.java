@@ -6,10 +6,13 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
+import shotmaniacs.group2.di.dao.AnnouncementDao;
+import shotmaniacs.group2.di.dto.LoginInfor;
 import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -228,7 +231,7 @@ public class CrewsResourse {
     /**
      * Get all announcements from News site
      */
-    public List<Announcement> getAllAnnouncements() {
+    public List<Announcement> getAllAnnouncements(@PathParam("crewid") int id) {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
@@ -238,7 +241,7 @@ public class CrewsResourse {
 
             while(resultSet.next()) {
                 Announcement announcement = new Announcement(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
-                        resultSet.getInt(4), Urgency.valueOf(resultSet.getString(5)), resultSet.getTimestamp(6));
+                        resultSet.getInt(4), Urgency.valueOf(resultSet.getString(5)), resultSet.getTimestamp(6), AnnouncementDao.instance.getState(resultSet.getInt(1),id));
                 announcementList.add(announcement);
             }
         } catch (SQLException e) {
@@ -387,5 +390,29 @@ public class CrewsResourse {
         }
 
         return Response.serverError().build();
+    }
+    @RolesAllowed({"Administrator", "Crew"})
+    @Path("/profile")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+    public Account getprofile(@PathParam("crewid") int id) {
+        try {
+            String query;
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            query = "SELECT * FROM account WHERE account_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                return new Account(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4),AccountType.valueOf(rs.getString(5)),null,rs.getString(7),null);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+    public static void main (String args[]) throws ParseException {
+        CrewsResourse crew = new CrewsResourse();
+        crew.getAllAnnouncements(17);
     }
 }
