@@ -136,6 +136,8 @@ function closeComment() {
     }
 }
 function display(id) {
+    document.getElementById("add-comment").innerHTML = "Add a comment";
+    commentBox.style.visibility = "hidden";
     document.getElementById(id).style.visibility = "visible";
     document.querySelector(".current_display").style.visibility = "hidden";
     document.getElementById(id).classList.add("current_display");

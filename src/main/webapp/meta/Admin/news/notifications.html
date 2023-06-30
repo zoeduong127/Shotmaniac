@@ -7,7 +7,7 @@
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	-->
 </head>
-<body onload="readAllAnnouncements(" ")>  <!-- here's it bunch of announcements, each with a title
+<body onload="readAllAnnouncements(' ')">  <!-- here's it bunch of announcements, each with a title
  that needs to be edited regarding the actual announcements-->
 <div class="container">
 	
@@ -24,9 +24,9 @@
 				<div class="image">
 					<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_MT.png" alt="Shotmaniacs">
 				</div>
-				<div class="text">
-					<span class="slogan">Make Every Shot Count</span>
-				</div>
+			</div>
+			<div class="text">
+				<span class="slogan">Make Every Shot Count</span>
 			</div>
 			
 			<div class="search" id="search_ALL">
@@ -66,8 +66,8 @@
 							Filter
 						</button>
 						<div class="filter-options" id="filter-dropdown">
-							<a class="filter-option" onclick="filterAnnouncement('READ')">Read</a>
-							<a class="filter-option" onclick="filterAnnouncement('UNREAD')">Unread</a>
+							<a class="filter-option" onclick="filterAnnouncement('1')">Read</a>
+							<a class="filter-option" onclick="filterAnnouncement('0')">Unread</a>
 						</div>
 					</div>
 				</div>
@@ -107,7 +107,8 @@
 		} else {
 			url = input;
 		}
-		
+
+		console.log(url);
 		fetch(url, {
 			headers: {
 				'Authorization': `${token}`
@@ -129,8 +130,6 @@
 			
 			                    <div class="announcement-description" id="announcement-description">${a.body}</div>
 		                    </div>
-		                    
-		                     <div class="add-comment" id="add-comment" onclick="showComment()">Add a comment</div>
 		                    `;
 							
 							check = false;
@@ -144,33 +143,35 @@
 		                    </div>
                             `;
 						}
-						
-						
-						const submit = document.createElement("div");
-						const label = document.createElement("label");
-						const textarea = document.createElement("textarea");
-						const button = document.createElement("button");
-						const stupidWrapper = document.createElement("div");
-						
-						submit.className = "comment-box";
-						submit.id = "comment-box";
-						
-						label.setAttribute("for", "comment-input");
-						
-						textarea.id = "comment-input";
-						textarea.placeholder = "Type your comment here";
-						
-						button.id = "comment-submit";
-						button.type = "submit";
-						button.innerText = "Submit";
-						button.addEventListener('click', closeComment);
-						
-						submit.appendChild(label)
-						submit.appendChild(textarea)
-						submit.appendChild(button);
-						stupidWrapper.appendChild(submit);
-						description += stupidWrapper.innerHTML;
 					})
+					/*
+					const submit = document.createElement("div");
+					const label = document.createElement("label");
+					const textarea = document.createElement("textarea");
+					const button = document.createElement("button");
+					const stupidWrapper = document.createElement("div");
+					
+					submit.className = "comment-box";
+					submit.id = "comment-box";
+					
+					label.setAttribute("for", "comment-input");
+					
+					textarea.id = "comment-input";
+					textarea.placeholder = "Type your comment here";
+					
+					button.id = "comment-submit";
+					button.type = "submit";
+					button.innerText = "Submit";
+					button.addEventListener('click', closeComment);
+					
+					submit.appendChild(label)
+					submit.appendChild(textarea)
+					submit.appendChild(button);
+					stupidWrapper.appendChild(submit);
+					description += `<div class="add-comment" id="add-comment" onclick="showComment()">Add a comment</div>`
+					+ stupidWrapper.innerHTML;
+					*/
+					
 					console.log(container + ", " + description)
 					document.getElementById("announcement-wrapper").innerHTML = container;
 					document.getElementById("description").innerHTML = description;
@@ -178,7 +179,7 @@
 	}
 	
 	
-	function showComment() {
+	/*function showComment() {
 		const comment = document.getElementById("add-comment");
 		if (comment.innerHTML === "Add a comment") {
 			comment.innerHTML = "Close comment box";
@@ -213,18 +214,31 @@
 			commentBox.style.display = "none";
 		}
 	}
-	
+	*/
 	function display(id) {
+		/*document.getElementById("add-comment").innerHTML = "Add a comment";
+		commentBox.style.visibility = "hidden";
+		commentBox.style.display = "none";*/
 		document.querySelector(".current_display").className = "description-wrapper";
 		document.getElementById(id).classList.add("current_display");
+		
+/*
+		changeState(id);
+*/
 	}
+	
+	
 	
 	/*Filter*/
 	
 	function filterAnnouncement(state) {
 		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/filter?status=${state}`;
 		//TODO possibly have to switch this to 0's and 1's, check DB for which is which.
-		
+		if (state === 0) {
+			state = "UNREAD"
+		} else {
+			state = "READ";
+		}
 		document.getElementById("filter-dropdown").innerText = state;
 		
 		readAllAnnouncements(url)
@@ -237,7 +251,7 @@
 	
 	inputElement.addEventListener("input", onInputChange);
 	function getAllAnnouncements() {
-		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybookings`
+		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`
 		
 		fetch(url, {
 			headers: {
@@ -312,13 +326,40 @@
 		
 		if (inputElement.value.length === 0) readAllAnnouncements(" ");
 		else {
-			const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
+			const url = window.location.origin + `/shotmaniacs2/api/admin/announcements/search?searchText="${inputElement.value}"`
 			readAllAnnouncements(url);
 		}
 	}
-
-
-
+	
+	
+	function logout(){
+		const token = cookies['auth_token'];
+		const url = window.location.origin+`/shotmaniacs2/api/login`
+		fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Authorization': `${token}`
+			}
+		})
+			.then(response => {
+				if (response.ok) {
+					document.cookie = "account_id =;  Path=/";
+					document.cookie = "account_username =;  Path=/";
+					document.cookie = "auth_token =;  Path=/";
+					window.location.href="http://localhost:8080/shotmaniacs2/";
+				} else if (response.status === 304) {
+					throw new Error('The given account was not logged in.');
+				} else {
+					throw new Error('Failed to log out. Status: ' + response.status);
+				}
+			})
+			.then(data => {
+				console.log(data); // Logged out successfully
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	}
 </script>
 </body>
 </html>

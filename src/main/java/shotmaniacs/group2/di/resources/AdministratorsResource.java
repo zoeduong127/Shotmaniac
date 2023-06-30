@@ -200,7 +200,7 @@ public class AdministratorsResource {
     @RolesAllowed({"Administrator", "Crew"})
     @Produces(MediaType.APPLICATION_JSON)
     @GET
-    public List<Announcement> searchAllAnnouncementsByTitleText(@QueryParam("searchtext") String searchText) {
+    public List<Announcement> searchAllAnnouncementsByTitleText(@QueryParam("searchText") String searchText) {
 
         List<Announcement> announcementList = new ArrayList<>();
 

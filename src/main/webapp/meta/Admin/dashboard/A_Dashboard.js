@@ -499,8 +499,118 @@ function removeAutocompleteDropdown() {
 }
 
 
+//TODO change filter to incoming bookings or pending cancelled approved or something to do with admin
+function graph(){
+    const filter = "DONE";
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(bookings => {
+            var bookingCounts = {};
+
+            bookings.forEach(function (booking) {
+                var timestamp = new Date(parseInt(booking.date));
+
+                if (!isNaN(timestamp)) { // Check if timestamp is valid
+                    var date = new Date(timestamp); // Convert to Date object
+
+                    var monthh = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0');
+
+                    if (bookingCounts[monthh]) {
+                        bookingCounts[monthh]++;
+                    } else {
+                        bookingCounts[monthh] = 1;
+                    }
+                }});
+
+            // Convert the booking counts object to arrays
+            var monthss = Object.keys(bookingCounts);
+            var counts = monthss.map(function(month) {
+                return bookingCounts[month];
+            });
+
+            // Get the canvas element
+            const canvas = document.getElementById('chart');
+            const ctx = canvas.getContext('2d');
+
+            // Chart configuration
+            const chartConfig = {
+                type: 'line',
+                data: {
+                    labels: monthss,
+                    datasets: [{
+                        label: 'Number of Bookings',
+                        data: counts,
+                        borderColor: 'blue',
+                        backgroundColor: 'transparent'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                            },
+                            min: monthss[0],  // Specify the minimum value on the x-axis
+                            max: monthss[4]
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                            },
+                        }
+                    }
+                }
+            };
+
+            // Create the chart graph
+            const chart = new Chart(ctx, chartConfig);
+        })
+}
+
+function logout(){
+    const token = cookies['auth_token'];
+    const url = window.location.origin+`/shotmaniacs2/api/login`
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                document.cookie = "account_id =;  Path=/";
+                document.cookie = "account_username =;  Path=/";
+                document.cookie = "auth_token =;  Path=/";
+                window.location.href="http://localhost:8080/shotmaniacs2/";
+            } else if (response.status === 304) {
+                throw new Error('The given account was not logged in.');
+            } else {
+                throw new Error('Failed to log out. Status: ' + response.status);
+            }
+        })
+        .then(data => {
+            console.log(data); // Logged out successfully
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+}
+
 
 /*Startup*/
 performQueryAndUpdateBookings(" ")
 addUpcomingEvents(" ");
 fillAnnouncements(" ");
+graph();

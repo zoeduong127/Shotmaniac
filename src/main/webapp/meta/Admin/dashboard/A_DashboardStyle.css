@@ -54,7 +54,7 @@ body {
 .logout {
     color: white;
     float: right;
-
+    cursor: pointer;
     padding-right: 26px;
 }
 
@@ -71,17 +71,19 @@ body {
 }
 
 .left {
-    transform: translateX(30px);
+    height: 10vh;
 }
 
 .search-area img {
-    position: relative;
     width: 4vw;
-    transform: translateY(48px);
+    padding: 0.5vh 1vw;
 }
 
-.left .text {
-    transform: translate(100px, -50px);
+.text {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: justify;
+    width: 56%;
 }
 
 .search-area .slogan {
@@ -810,4 +812,3 @@ body {
     border-top: unset;
     border-radius: 6px;
 }
-
