@@ -405,7 +405,7 @@ productManagerElement.addEventListener("input", onSingleInputChange);
 
 function getAllCrew() {
     console.log("get all crew called")
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/allcrew`;
+    const url =  window.location.origin+`/shotmaniacs2/api/admin/allcrew`;
 
     fetch(url, {
         headers: {

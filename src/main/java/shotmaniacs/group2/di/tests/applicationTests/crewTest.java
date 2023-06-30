@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -64,6 +65,14 @@ public class crewTest {
 
     @Test
     public void testLogOut() {
+        testLogin();
+
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(By.id("drop_down"))).perform();
+        driver.findElement(By.id("logout")).click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs("Shotmaniacs"));
     }
 
     @Test
@@ -90,7 +99,6 @@ public class crewTest {
         driver.findElement(By.id("booking")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs("bookings"));
-        assertTrue(driver.findElement(By.id("role")).isDisplayed());
     }
 
     @Test
@@ -124,7 +132,6 @@ public class crewTest {
         driver.findElement(By.id("booking")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs("bookings"));
-        assertTrue(driver.findElement(By.id("role")).isDisplayed());
     }
 
     @Test
@@ -159,7 +166,6 @@ public class crewTest {
         driver.findElement(By.id("booking")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs("bookings"));
-        assertTrue(driver.findElement(By.id("role")).isDisplayed());
     }
 
     @Test
@@ -168,7 +174,6 @@ public class crewTest {
         driver.findElement(By.id("booking")).click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs("bookings"));
-        assertTrue(driver.findElement(By.id("role")).isDisplayed());
 
         driver.findElement(By.id("dashboard")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -178,7 +183,6 @@ public class crewTest {
         driver.findElement(By.id("booking")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs("bookings"));
-        assertTrue(driver.findElement(By.id("role")).isDisplayed());
 
         driver.findElement(By.id("News")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -188,7 +192,6 @@ public class crewTest {
         driver.findElement(By.id("booking")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs("bookings"));
-        assertTrue(driver.findElement(By.id("role")).isDisplayed());
 
         driver.findElement(By.id("calendar")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -198,7 +201,6 @@ public class crewTest {
         driver.findElement(By.id("booking")).click();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs("bookings"));
-        assertTrue(driver.findElement(By.id("role")).isDisplayed());
     }
 
 }

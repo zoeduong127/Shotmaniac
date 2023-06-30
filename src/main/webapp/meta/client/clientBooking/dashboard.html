@@ -16,8 +16,8 @@
 <div class="container">
 	<header>
 		<div class="dropdown">
-			<button class="dropdownBtn" onclick="logout()">
-				<p id="log-out" alt="dropdown">Log Out</p>
+			<button class="dropdownBtn" onclick="logout()" id="log-out">
+				<p alt="dropdown">Log Out</p>
 			</button>
 		</div>
 	</header>
@@ -308,7 +308,7 @@
 				document.cookie = "account_id =;  Path=/";
 				document.cookie = "account_username =;  Path=/";
 				document.cookie = "auth_token =;  Path=/";
-				window.location.href="http://localhost:8080/shotmaniacs2/";
+				window.location.href= window.location.origin+"/shotmaniacs2/";
 			} else if (response.status === 304) {
 				throw new Error('The given account was not logged in.');
 			} else {
