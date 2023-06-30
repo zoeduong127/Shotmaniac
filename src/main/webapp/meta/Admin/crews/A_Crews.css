@@ -374,7 +374,7 @@ body {
     border-width: 2px;
     width: 8vw;
     height: 9.5vh;
-    margin-top: -6.715vh;
+    margin-top: -10vh;
     margin-left: 46.9vw;
 }
 
@@ -384,10 +384,10 @@ body {
     border-style: solid;
     border-color: #1696d2;
     border-width: 2px;
-    width: 8vw;
+    width: 12vw;
     height: 9.5vh;
     margin-top: -6.715vh;
-    margin-left: 46.9vw;
+    margin-left: 32.9vw;
 }
 
 .hours {
@@ -402,7 +402,16 @@ body {
     cursor: pointer;
 }
 
-.real
+.real-hours {
+    text-align: center;
+    font: 18px "Kiona SemiBold";
+    margin-left: -0.01vw;
+    margin-top: 1.4vh;
+    font-weight: bolder;
+    text-decoration: underline;
+    font-style: oblique;
+    color: #1696d2;
+}
 
 .pad {
     margin-bottom: 2.6vh;
@@ -467,9 +476,8 @@ body {
     text-decoration: underline;
     color: #e70f0f;
     position: absolute;
-    top: 32.5vh;
-    right: 14vw;
-
+    top: 30.5vh;
+    right: 13.5vw;
 }
 
 .addingCrew {
@@ -553,5 +561,71 @@ body {
     font-style: oblique;
     font-size: 17px;
     font-weight: bolder;
+    cursor: pointer;
+}
+
+.small-rectangle-crews-setting {
+    background: rgba(31, 31, 31, 0.35);
+    width: 23vw;
+    height: 7vh;
+    position: relative;
+    z-index: 1;
+    margin-top: -3vh;
+}
+
+#crews-in-box {
+    color: #160000;
+    font: 20px "Kiona SemiBold";
+    padding-top: 1.7vh;
+    padding-left: 3.45vw;
+}
+
+.input-section {
+    width: 100%;
+    font-family: "Kiona SemiBold";
+    padding: 16px 0 10px 1.3vw;
+}
+
+.number-type {
+    width: 9vw;
+}
+
+#email {
+    margin-left: 5.9vw;
+}
+
+#username {
+    margin-left: 3.45vw;
+}
+
+#passwordForNewCrew {
+    margin-left: 3.6vw;
+}
+
+#accountType {
+    margin-left: 1.3vw;
+}
+
+#role {
+    margin-left: 6.68vw;
+}
+
+.footer {
+    background: rgba(31, 31, 31, 0.35);
+    width: 23vw;
+    height: 7vh;
+    position: relative;
+    z-index: 1;
+    margin-top: 2.1vh;
+}
+
+.save-data-and-accept {
+    color: #160000;
+    font: 18px "Kiona SemiBold";
+    text-decoration: underline;
+    position: relative;
+    padding-top: 1.5vh;
+    padding-left: 4vw;
+    font-style: italic;
     cursor: pointer;
 }

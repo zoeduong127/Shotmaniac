@@ -129,8 +129,6 @@ function fetchBookings(input) {
 }
 
 function allBookings(url) {
-
-
     fetch(url, {
         headers: {
             'Authorization': `${token}`
@@ -385,7 +383,8 @@ function allBookings(url) {
 function back() {
     if (currentPage>1) {
         currentPage--;
-        allBookings();
+        const url = getCurrentURL();
+        allBookings(url);
         const bookingsElement = document.getElementById("bookings");
         bookingsElement.style.animation = 'slide-right 0.5s';
         setTimeout(() => {
@@ -398,13 +397,42 @@ function next() {
     const maxPage = Math.ceil(bookingsArr.length / bookingsPerPage);
     if (currentPage<maxPage) {
         currentPage++;
-        allBookings();
+        const url = getCurrentURL();
+        allBookings(url);
         const bookingsElement = document.getElementById("bookings");
         bookingsElement.style.animation = 'slide-left 0.5s';
         setTimeout(() => {
             bookingsElement.style.animation = '';
         }, 500);
     }
+}
+
+function getCurrentURL() {
+    const filterChoice = document.getElementById("filter-choice").textContent.toLowerCase();
+    let url = "";
+
+    switch (filterChoice) {
+        case 'approved':
+            url = `${window.location.origin}/shotmaniacs2/api/admin/bookings/statefilter/approved`;
+            console.log("Approved: " + url);
+            break;
+        case 'pending':
+            url = `${window.location.origin}/shotmaniacs2/api/admin/bookings/statefilter/pending`;
+            console.log("pending: " + url);
+            break;
+        case 'on-going':
+            url = `${window.location.origin}/shotmaniacs2/api/admin/bookings/timefilter/ongoing`;
+            console.log("ongoing: " + url);
+            break;
+        case 'past':
+            url = `${window.location.origin}/shotmaniacs2/api/admin/bookings/timefilter/past`;
+            console.log("past: " + url);
+            break;
+        default:
+            url = `${window.location.origin}/shotmaniacs2/api/crew/${account_id}/allbookings`;
+            console.log("all: " + url);
+    }
+    return url;
 }
 
 //Add sliding animation to CSS
@@ -568,6 +596,36 @@ function sendInput(event) {
         const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext="${inputElement.value}"`
         fetchBookings(url);
     }
+}
+
+function logout(){
+    const token = cookies['auth_token'];
+    const url = window.location.origin+`/shotmaniacs2/api/login`
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                document.cookie = "account_id =;  Path=/";
+                document.cookie = "account_username =;  Path=/";
+                document.cookie = "auth_token =;  Path=/";
+                window.location.href="http://localhost:8080/shotmaniacs2/";
+            } else if (response.status === 304) {
+                throw new Error('The given account was not logged in.');
+            } else {
+                throw new Error('Failed to log out. Status: ' + response.status);
+            }
+        })
+        .then(data => {
+            console.log(data); // Logged out successfully
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
 }
 
 //Call startups
