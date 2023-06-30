@@ -85,10 +85,14 @@ public class BookingResource {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, bookingId);
             ps.setInt(2, accountId);
-
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {
+                try {
+                    Mailer.sendBookingDeenrolment(bookingId, accountId);
+                } catch (MessagingException e) {
+                    System.out.println("Error while sending booking de-enrolment: " + e.getMessage());
+                }
                 return Response.ok().build();
             } else {
                 return Response.notModified().build();
