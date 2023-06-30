@@ -263,10 +263,13 @@ body {
 }
 .text {
     font-size: 2.5rem;
+    font-weight: bold;
     text-align: center;
-    padding-top: 5vh;
+    padding-top: 4vh;
+    margin-left: -0.5vw;
     font-family: Kiona Semibold;
     text-decoration: underline;
+    margin-top: 1vh;
 }
 /*Filter Dropdown*/
 

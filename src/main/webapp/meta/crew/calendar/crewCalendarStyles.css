@@ -117,7 +117,7 @@ button {
 /*Navigational Dashboard*/
 
 /*Widths adjusted for a nav pane of 20vw*/
-.dash-box {
+/*.dash-box {
     background-color: rgba(255, 255, 255, 0.75);
     border: 1px solid rgba(82, 82, 82, 0.75);
     width: 15vw;
@@ -153,11 +153,131 @@ button {
 }
 
 
-/*Currently active page, change depending on the CSS file used*/
+!*Currently active page, change depending on the CSS file used*!
 #calendar {
     background-color: rgba(22, 150, 210, 0.8);
     border: 1px solid #1696D2;
     color: white;
+}*/
+
+#dashboard-icon {
+    width: 2.2vw;
+    height: 6vh;
+    position: absolute;
+    top: 35vh;
+    left: 4.8vw;
+    z-index: 1;
+}
+
+#news-icon {
+    width: 3vw;
+    height: 6vh;
+    position: absolute;
+    top: 44vh;
+    left: 4.6vw;
+    z-index: 1;
+}
+
+#News {
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    color: black;
+    padding-left: 2.8vw;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    font-size: 19px;
+    padding-top: 2.2vh;
+}
+
+#calendar-icon {
+    width: 3vw;
+    height: 6vh;
+    position: absolute;
+    top: 53.5vh;
+    left: 4.7vw;
+    z-index: 1;
+}
+
+#calendar {
+    background-color: rgba(22,150,210,0.8);
+    border: 1px solid #1696D2;
+    color: white;
+    padding-left: 3.6vw;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    font-size: 19px;
+    padding-top: 2.3vh;
+}
+
+#booking-icon {
+    width: 3vw;
+    height: 6.5vh;
+    position: absolute;
+    top: 62.4vh;
+    left: 4.7vw;
+    z-index: 1;
+}
+
+#booking {
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    color: black;
+    padding-left: 3.95vw;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    font-size: 19px;
+    padding-top: 2.3vh;
+}
+
+/*Navigational Dashboard*/
+
+.dash-box img {
+    width: 0;
+    height: 0;
+}
+/*Widths adjusted for a nav pane of 20vw*/
+
+.text img{
+    width: 95%;
+    margin: 10vh 2.5% 0 2.5%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.dash-box {
+    background-color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(82,82,82,0.75);
+    width: 15vw;
+    height: 52vh;
+    margin: 10vh 2.5vw 20vh 2.5vw;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.box {
+    border-bottom: 1px solid rgba(82,82,82,0.75);
+    text-align: center;
+    padding: 5% 0 5% 0;
+    height: 5vh;
+    cursor: pointer;
+}
+
+.box:hover {
+    cursor: pointer;
+    color: rgba(82,82,82,0.75);
+}
+
+.dash-box a {
+    text-decoration: none;
+    color: black;
+}
+/*Currently active page, change depending on the CSS file used*/
+#dashboard {
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    color: black;
+    padding-left: 2.8vw;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    font-size: 19px;
+    padding-top: 2.2vh;
 }
 
 /*End of Navigational Dashboard*/
