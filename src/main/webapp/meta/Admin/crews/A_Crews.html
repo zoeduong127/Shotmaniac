@@ -17,7 +17,7 @@
       <i class="fas fa-user user-icon"></i>
       <p id="Username">Admin Shotmaniacs Group 2</p>
       <img id="LogOutIcon" src="./../../Brand_Identity/images/icons/white_Logout.png" alt="LogOut-Icon">
-      <p id="LogOut">Log out</p>
+      <p id="LogOut" onclick="logout()">Log out</p>
     </div>
     <div class="search-area">
       <div class="left">
@@ -38,11 +38,10 @@
     </div>
 
     <div class="navigation">
-      <div class="box" id="img"><a href="./../../dashboard/A_Dashboard.html"></a></div>
+      <div class="box" id="img"><a href="./../dashboard/A_Dashboard.html"></a></div>
       <div class="box"><a href="./../news/notifications.html" style="left: 35.3vw">Announcement</a></div>
       <div class="box"><a href="./../All_Bookings/bookings/A_bookings.html" style="left: 47.2vw">Bookings</a></div>
-      <div class="box"><a href="./../crews/A_Crews.html" style="left: 58.2vw">Crews</a></div>
-      <div class="box"><a href="./../All_Bookings/calendar/A_calendar.html" style="left: 67.5vw" hidden>Calendar</a></div>
+      <div class="box"><a href="./A_Crews.html" style="left: 58.2vw">Crews</a></div>
     </div>
   </header>
 
@@ -195,7 +194,36 @@
                   `;
     document.getElementById("crews").innerHTML = crewInfo;
   }
-
+  
+  function logout(){
+	  const token = cookies['auth_token'];
+	  const url = window.location.origin+`/shotmaniacs2/api/login`
+	  fetch(url, {
+		  method: 'DELETE',
+		  headers: {
+			  'Authorization': `${token}`
+		  }
+	  })
+			  .then(response => {
+				  if (response.ok) {
+					  document.cookie = "account_id =;  Path=/";
+					  document.cookie = "account_username =;  Path=/";
+					  document.cookie = "auth_token =;  Path=/";
+					  window.location.href="http://localhost:8080/shotmaniacs2/";
+				  } else if (response.status === 304) {
+					  throw new Error('The given account was not logged in.');
+				  } else {
+					  throw new Error('Failed to log out. Status: ' + response.status);
+				  }
+			  })
+			  .then(data => {
+				  console.log(data); // Logged out successfully
+			  })
+			  .catch(error => {
+				  console.error(error);
+			  });
+	  
+  }
   //TODO: update in the database
   function toggleRemove() {
 
