@@ -282,9 +282,9 @@
                                 <label for="editor">Number</label>
                                 <input class="number-type" id="editor" type="number">
                             </div>
-                            <div class="input-section">
+                            <div class="input-section" id="searchbar">
                                 <label for="editor">Manager</label>
-                                <input class="number-type" id="prod-manager" type="text">
+                                <input class="number-type" id="prod-manager" type="text" onclick="getAllCrew(this)">
                             </div>
                             <div class="footer" id="footer">
                                 <div class="save-data-and-accept" id="save-data" onclick="saveData()">Save Data And Accept Booking</div>
@@ -315,7 +315,10 @@
         loadingButton.style.display = "block";
         clientInfo.style.opacity = "0.05";
         refuseButton.style.opacity = "0.05";
-        setTimeout(function() {
+	    
+	    
+		
+		setTimeout (function() {
             coffeeAnimation.style.display = "none";
             loadingButton.style.display = "none";
             clientInfo.style.opacity = "1";
@@ -341,6 +344,170 @@
         }, 8000);
     }
 
+	/*Product Manager Search feature*/
+    let crewMemberList = [];
+    let productManagerElement;
+    
+    function getAllCrew(item) {
+	    console.log("get all crew called")
+	    const url = `http://localhost:8080/shotmaniacs2/api/admin/allcrew`;
+	    
+	    fetch(url, {
+		    headers: {
+			    'Authorization': `${token}`
+		    }
+	    })
+	    .then(response => response.json())
+	    .then(data => {
+		    crewMemberList = data.map((crew) => {
+			    return crew.username;
+		    })
+		    productManagerElement = document.getElementById(`${item.id}`);
+			console.log(productManagerElement);
+		    productManagerElement.addEventListener("input", onSingleInputChange);
+		    
+	    })
+    }
+    
+    function  onSingleInputChange() {
+	    console.log("input found");
+	    removeAutocompleteDropdown();
+	    
+	    const value = productManagerElement.value.toLowerCase();
+	    
+	    if (value.length === 0) return;
+	    
+	    const filteredNames = [];
+	    
+	    
+	    crewMemberList.forEach((crewName) => {
+		    if (crewName.substring(0, value.length).toLowerCase() === value) {
+			    filteredNames.push(crewName);
+		    }
+	    })
+	    createSingleAutocompleteDropdown(filteredNames);
+    }
+    
+    function createSingleAutocompleteDropdown(list) {
+	    console.log("creating list")
+	    const listEl = document.createElement("ul");
+	    listEl.className = "autocomplete-list";
+	    listEl.id =  "autocomplete-list";
+	    list.forEach((crew) => {
+		    const listItem = document.createElement("li");
+		    
+		    const bookingButton = document.createElement("button");
+		    bookingButton.innerHTML = crew;
+		    bookingButton.addEventListener("click", onSingleBookingButtonClick)
+		    listItem.appendChild(bookingButton);
+		    
+		    listEl.appendChild(listItem);
+	    })
+	    document.querySelector("#searchbar").appendChild(listEl);
+    }
+    
+    function onSingleBookingButtonClick(event) {
+	    console.log("input found")
+	    event.preventDefault(); //cancels default event (submitting the form)
+	    
+	    const buttonEl = event.target; //element that triggered the event (the button itself)
+	    productManagerElement.value = buttonEl.innerHTML; //should be a string of the booking name
+	    
+	    removeAutocompleteDropdown();
+    }
+    
+    
+    /*Search all events*/
+    let AllBookings = [];
+    let inputElement = document.getElementById("search");
+    
+    inputElement.addEventListener("input", ALL_onInputChange);
+    
+    function getAllBookings() {
+	    console.log("getting all bookings")
+	    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
+	    console.log(url);
+	    fetch(url, {
+		    headers: {
+			    'Authorization': `${token}`
+		    }
+	    })
+			    .then(response => response.json())
+			    .then(data => {
+				    AllBookings = data.map((booking) => {
+					    return booking.name;
+				    })
+			    })
+    }
+    
+    function  ALL_onInputChange() {
+	    console.log("All input event listener activated")
+	    removeAutocompleteDropdown();
+	    
+	    const value = inputElement.value.toLowerCase();
+	    
+	    if (value.length === 0) return;
+	    
+	    const filteredNames = [];
+	    
+	    
+	    AllBookings.forEach((BookingName) => {
+		    if (BookingName.substring(0, value.length).toLowerCase() === value) {
+			    filteredNames.push(BookingName);
+		    }
+	    })
+	    ALL_createAutocompleteDropdown(filteredNames);
+    }
+    
+    function ALL_createAutocompleteDropdown(list) {
+	    console.log("all input create dropdown")
+	    const listEl = document.createElement("ul");
+	    listEl.className = "All-autocomplete-list";
+	    listEl.id =  "autocomplete-list";
+	    list.forEach((booking) => {
+		    const listItem = document.createElement("li");
+		    
+		    const bookingButton = document.createElement("button");
+		    bookingButton.innerHTML = booking;
+		    bookingButton.addEventListener("click", ALL_onBookingButtonClick)
+		    listItem.appendChild(bookingButton);
+		    
+		    listEl.appendChild(listItem);
+	    })
+	    document.querySelector("#search_ALL").appendChild(listEl);
+    }
+    
+    function ALL_onBookingButtonClick(event) {
+	    console.log("All input create button")
+	    event.preventDefault(); //cancels default event (submitting the form)
+	    
+	    
+	    document.querySelector("#search-icon-btn").addEventListener("click", ALL_sendInput);
+	    
+	    const buttonEl = event.target; //element that triggered the event (the button itself)
+	    inputElement.value = buttonEl.innerHTML; //should be a string of the booking name
+	    
+	    removeAutocompleteDropdown();
+	    
+    }
+    
+    function ALL_sendInput(event) {
+	    console.log("All input sent" + inputElement.value);
+	    event.preventDefault();
+	    
+	    if (inputElement.value.length === 0) performQueryAndUpdateBookings(" ");
+	    else {
+		    const url = window.location.origin + `/shotmaniacs2/api/admin/bookings/search?searchtext="${inputElement.value}"`
+		    performQueryAndUpdateBookings(url);
+	    }
+    }
+    
+    function removeAutocompleteDropdown() {
+	    const listEl = document.querySelector("#autocomplete-list");
+	    if (listEl) listEl.remove(); //checks if it exists and then removes it
+    }
+    
+    /*End */
     function refuseBooking() {
         const cancelForm = document.getElementById("cancel-container"),
             rightSide = document.getElementById("right-side"),

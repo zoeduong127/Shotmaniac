@@ -555,7 +555,7 @@ body {
     width: 4.5vw;
     height: 4.5vh;
     font-size: 17px;
-    font-family: Kiona Semibold;
+    font-family: "Kiona Semibold", "Times New Roman", serif;
     border: 2.35px solid #f58024;
     background: rgba(245, 128, 36, 0.5);
     border-radius: 13px;
@@ -660,6 +660,7 @@ body {
     background-color: white;
     left: 59vh;
     top: 41vh;
+    z-index: 3;
 
     -ms-overflow-style: none;  /* hides scrollbar */
     scrollbar-width: none;  /* hides scrollbar */
