@@ -83,7 +83,7 @@ function parseCookie(cookieString) {
 function performQueryAndUpdateBookings(input) {
     let url;
     if (input === " ") {
-        url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+        url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
     } else {
         url = input;
     }
@@ -142,7 +142,7 @@ function displaySortedBookings(list) {
 }
 
 function displayInformation(id) {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${id}`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/booking/${id}`;
 
     fetch(url, {
         headers: {
@@ -192,8 +192,7 @@ function displayInformation(id) {
 
 
 function addUpcomingEvents() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
-    let booking_list = [];
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
 
     fetch(url, {
@@ -225,9 +224,39 @@ function addUpcomingEvents() {
                             ${new Date(event.date).getFullYear()}
                         </span>
                     </div>
-                `
+                `;
             })
             document.getElementById("upcoming-container").innerHTML = output;
+        })
+}
+
+
+function fillAnnouncements(input) {
+    let url;
+    if (input === " ") {
+        url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`;
+    } else {
+        url = input;
+    }
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            data.sort(function (a, b) {
+                return a.id - b.id;
+            }).reverse();
+
+
+            let element = "<h1>Latest News</h1>";
+            data.forEach(item => {
+                element += `
+                <div id="L${item.id}" class="announcement">${item.title}</div>
+            `;
+            })
+            document.getElementById("announcement-wrapper").innerHTML = element;
         })
 }
 
@@ -239,7 +268,7 @@ productManagerElement.addEventListener("input", onSingleInputChange);
 
 function getAllCrew() {
     console.log("get all crew called")
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/allcrew`;
+    const url = window.location.origin + `/shotmaniacs2/api/admin/allcrew`;
 
     fetch(url, {
         headers: {
@@ -306,7 +335,7 @@ let inputElement = document.getElementById("search");
 inputElement.addEventListener("input", ALL_onInputChange);
 
 function getAllBookings() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
     fetch(url, {
         headers: {
@@ -375,7 +404,7 @@ function ALL_sendInput(event) {
 
     if (inputElement.value.length === 0) performQueryAndUpdateBookings(" ");
     else {
-        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
+        const url = window.location.origin + `/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
         performQueryAndUpdateBookings(url);
     }
 }
@@ -388,7 +417,7 @@ let AnnouncementInputElement = document.getElementById("search-input");
 
 AnnouncementInputElement.addEventListener("input", Announcement_onInputChange);
 function getAllAnnouncements() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`; //TODO CHANGE THE URL TO ALL ANNOUNCEMENTS
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`; //TODO CHANGE THE URL TO ALL ANNOUNCEMENTS
 
     fetch(url, {
         headers: {
@@ -398,7 +427,7 @@ function getAllAnnouncements() {
         .then(response => response.json())
         .then(data => {
             Announcements = data.map((announcement) => {
-                return announcement.name;
+                return announcement.title;
             })
         })
 }
@@ -413,9 +442,9 @@ function  Announcement_onInputChange() {
     const filteredNames = [];
 
 
-    Announcements.forEach((BookingName) => {
-        if (BookingName.substring(0, value.length).toLowerCase() === value) {
-            filteredNames.push(BookingName);
+    Announcements.forEach((announcement) => {
+        if (announcement.substring(0, value.length).toLowerCase() === value) {
+            filteredNames.push(announcement);
         }
     })
     Announcement_createAutocompleteDropdown(filteredNames);
@@ -455,10 +484,10 @@ function Announcement_sendInput(event) {
     console.log("input called")
     event.preventDefault();
 
-    if (AnnouncementInputElement.value.length === 0) performQueryAndUpdateBookings(" ");
+    if (AnnouncementInputElement.value.length === 0) fillAnnouncements(" ");
     else {
-        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext=${AnnouncementInputElement.value}`
-        performQueryAndUpdateBookings(url);
+        const url = window.location.origin + `/shotmaniacs2/api/admin/announcements/search?searchtext=${AnnouncementInputElement.value}`
+        fillAnnouncements(url);
     }
 }
 
@@ -470,7 +499,118 @@ function removeAutocompleteDropdown() {
 }
 
 
+//TODO change filter to incoming bookings or pending cancelled approved or something to do with admin
+function graph(){
+    const filter = "DONE";
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(bookings => {
+            var bookingCounts = {};
+
+            bookings.forEach(function (booking) {
+                var timestamp = new Date(parseInt(booking.date));
+
+                if (!isNaN(timestamp)) { // Check if timestamp is valid
+                    var date = new Date(timestamp); // Convert to Date object
+
+                    var monthh = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0');
+
+                    if (bookingCounts[monthh]) {
+                        bookingCounts[monthh]++;
+                    } else {
+                        bookingCounts[monthh] = 1;
+                    }
+                }});
+
+            // Convert the booking counts object to arrays
+            var monthss = Object.keys(bookingCounts);
+            var counts = monthss.map(function(month) {
+                return bookingCounts[month];
+            });
+
+            // Get the canvas element
+            const canvas = document.getElementById('chart');
+            const ctx = canvas.getContext('2d');
+
+            // Chart configuration
+            const chartConfig = {
+                type: 'line',
+                data: {
+                    labels: monthss,
+                    datasets: [{
+                        label: 'Number of Bookings',
+                        data: counts,
+                        borderColor: 'blue',
+                        backgroundColor: 'transparent'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                            },
+                            min: monthss[0],  // Specify the minimum value on the x-axis
+                            max: monthss[4]
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                            },
+                        }
+                    }
+                }
+            };
+
+            // Create the chart graph
+            const chart = new Chart(ctx, chartConfig);
+        })
+}
+
+function logout(){
+    const token = cookies['auth_token'];
+    const url = window.location.origin+`/shotmaniacs2/api/login`
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                document.cookie = "account_id =;  Path=/";
+                document.cookie = "account_username =;  Path=/";
+                document.cookie = "auth_token =;  Path=/";
+                window.location.href="http://localhost:8080/shotmaniacs2/";
+            } else if (response.status === 304) {
+                throw new Error('The given account was not logged in.');
+            } else {
+                throw new Error('Failed to log out. Status: ' + response.status);
+            }
+        })
+        .then(data => {
+            console.log(data); // Logged out successfully
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+}
+
 
 /*Startup*/
 performQueryAndUpdateBookings(" ")
-addUpcomingEvents();
+addUpcomingEvents(" ");
+fillAnnouncements(" ");
+graph();

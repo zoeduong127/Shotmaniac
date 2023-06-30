@@ -71,16 +71,19 @@ body {
 }
 
 .left {
-    transform: translateX(30px);
+    height: 10vh;
 }
 
 .search-area img {
-    transform: translateY(20px);
     width: 4vw;
+    padding: 0.5vh 1vw;
 }
 
-.left .text {
-    transform: translate(100px, -50px);
+.text {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: justify;
+    width: 56%;
 }
 
 .search-area .slogan {
@@ -92,6 +95,7 @@ body {
 .search {
     float: right;
     margin: 0 7vw 0 0;
+    position: relative;
 
     display: flex;
     justify-content: center;
@@ -122,7 +126,7 @@ body {
     background-image: url("./../../Brand_Identity/images/icons/search_icon_black.png");
     background-position: 5px 3px;
     background-repeat: no-repeat;
-    background-size: 3vh;
+    background-size: 2.8vh;
 }
 
 
@@ -158,7 +162,7 @@ body {
 
 .box {
     width: 10vw;
-    height: 10vh;
+    height: auto;
     text-align: center;
     border-left: 1px solid white;
     font-size: 1.3rem;
@@ -170,38 +174,32 @@ body {
     background-image: url("./../../Brand_Identity/images/icons/white_house.png");
     background-size: 5vh;
     border-left: 0;
+    height: 10vh;
 }
-.box p {
+
+.box a {
     margin: 3.5vh 0;
+    text-decoration: none;
+    color: white;
 }
 
 .navigation img {
     scale: 0.27;
-
 }
 
-.main-container {
-    height: 80vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    align-content: center;
+/*Title page thing*/
+.page-title .image img{
+    height: 85%;
+    margin: 1vh 3vw 0 3vw;
 }
 
-.heading {
-    width: 100%;
-}
-
-.heading h1{
-    height: 3.5vh;
-    color: #1696D2;
+.main-text {
+    font-size: 3rem;
     text-align: center;
-    text-decoration: underline;
+    font-weight: 500;
+    font-style: italic;
+    padding-top: 5vh;
 }
-
 
 /*End of Navigational Dashboard*/
 .announcement-container {
@@ -213,7 +211,7 @@ body {
     border: 1px solid #ccc;
     margin: 2% 4% 5% 4%;
     width: 90%;
-    height: 57%;
+    height: 63%;
 }
 
 .announcement-list {
@@ -237,18 +235,30 @@ body {
     display: none;
 }
 
+.announcement-wrapper {
+    height: 80%;
+    padding: 3vh 1vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
 .announcement-list-item {
-    padding: 10px;
+    padding: 0;
     cursor: pointer;
+    width: 100%;
+    height: 5vh;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+    text-align: center;
 }
 
 .announcement-list-item:hover {
     background-color: #f0f0f0;
-}
-
-.announcement-icon {
-    display: inline-block;
-    margin-right: 5px;
 }
 
 .announcement-content {
@@ -256,11 +266,6 @@ body {
     padding: 0 10px;
     height: 90%;
 }
-
-.announcement-list-gap {
-    height: 20px; /* Adjust the height if needed */
-}
-
 
 .filter-container {
     height: 10%;
@@ -321,22 +326,22 @@ body {
 }
 
 .add-comment {
-    visibility: hidden;
-    position: fixed;
+    position: relative;
     float: right;
-    top: 94%;
-    right: 7.2vw;
     color: #007bff;
     cursor: pointer;
+    top: 70%;
+    right: 5%;
 }
 
 .pre-announcement {
     text-align: center;
     margin-top: 20%;
 }
+
 .comment-box {
     visibility: hidden;
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 
@@ -354,4 +359,58 @@ body {
     padding: 5px 10px;
     border: none;
     cursor: pointer;
+}
+.announcement-title {
+    font-weight: 600;
+}
+.announcement-description {
+    font-family: initial;
+}
+
+.description-wrapper {
+    visibility: hidden;
+    display: none;
+}
+
+.current_display {
+    visibility: visible;
+    display: block;
+}
+
+.autocomplete-list {
+    list-style: none;
+    padding: unset;
+    margin: unset;
+    position: absolute;
+    width: 63%;
+    background-color: white;
+    top: 4.2vh;
+
+
+    -ms-overflow-style: none;  /* hides scrollbar */
+    scrollbar-width: none;  /* hides scrollbar */
+}
+
+.autocomplete-list::-webkit-scrollbar {
+    display: none;
+}
+
+
+.autocomplete-list button {
+    border: unset;
+    background: unset;
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5em;
+}
+
+.autocomplete-list button:hover {
+    background-color: rgba(0, 0, 0, 0.13);
+}
+
+.autocomplete-list li {
+    border: 1px solid #e9e9e9;
+    border-top: unset;
+    border-radius: 6px;
 }

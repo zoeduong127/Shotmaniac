@@ -35,7 +35,7 @@ let role;
 console.log("account id: " + account_id);
 
 function calcAvailableSlots(slots, id) {
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew`;
+    const url = window.location.origin+ `/shotmaniacs2/api/admin/booking/${id}/crew`;
     console.log("slots: " + slots);
     console.log("id: " + id);
 
@@ -64,7 +64,7 @@ function openInfo(element) {
     maincontainer.style.pointerEvents = "none";
 
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`
+    const url = window.location.origin+ `/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`
     fetch(url, {
         headers: {
             'Authorization': `${token}`
@@ -119,7 +119,7 @@ function parseCookie(cookieString) {
 }
 
 function getEnrolled() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/enrolled`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/enrolled`;
 
     fetch(url, {
         headers: {
@@ -145,7 +145,7 @@ function getEnrolled() {
 
 /*Get all bookings*/
 function performQueryAndUpdateBookings(input) {
-    let url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    let url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
     if (input !== " ") {console.log(input); url = input;}
 
@@ -187,7 +187,7 @@ function enroll() {
     console.log("enroll clicked");
     const id = document.querySelector(".bookinginfo").id;
     console.log("crew role: " + role);
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew/${account_id}/enrol?role=${role}`;
+    const url = window.location.origin + `/shotmaniacs2/api/admin/booking/${id}/crew/${account_id}/enrol?role=${role}`;
 
     booking_container.style.opacity = "1";
     popup.style.visibility = "hidden";
@@ -212,7 +212,7 @@ let inputElement = document.getElementById("search-input");
 
 inputElement.addEventListener("input", onInputChange);
 function getAllBookings() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
     fetch(url, {
         headers: {
@@ -286,7 +286,7 @@ function sendInput(event) {
 
     if (inputElement.value.length === 0) performQueryAndUpdateBookings(" ");
     else {
-        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
+        const url = window.location.origin + `/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
         performQueryAndUpdateBookings(url);
     }
 }
@@ -295,7 +295,7 @@ function sendInput(event) {
 getAccount();
 
 function getAccount() {
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/account/${account_id}`;
+    const url = window.location.origin + `/shotmaniacs2/api/admin/account/${account_id}`;
     fetch(url, {
         headers: {
             'Authorization': `${token}`

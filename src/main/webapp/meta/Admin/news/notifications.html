@@ -7,7 +7,7 @@
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	-->
 </head>
-<body>  <!-- here's it bunch of announcements, each with a title
+<body onload="readAllAnnouncements(' ')">  <!-- here's it bunch of announcements, each with a title
  that needs to be edited regarding the actual announcements-->
 <div class="container">
 	
@@ -24,37 +24,38 @@
 				<div class="image">
 					<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_MT.png" alt="Shotmaniacs">
 				</div>
-				<div class="text">
-					<span class="slogan">Make Every Shot Count</span>
-				</div>
+			</div>
+			<div class="text">
+				<span class="slogan">Make Every Shot Count</span>
 			</div>
 			
-			<div class="search">
+			<div class="search" id="search_ALL">
 				<label for="search"></label>
-				<input type="text" class="input" id="search" placeholder="Search...">
-				<button class="search-icon-btn">
+				<input type="text" class="input" id="search" placeholder="Search for Bookings..."
+				       onfocus="getAllAnnouncements()">
+				<button class="search-icon-btn" id="search-icon-btn">
 				</button>
 			</div>
 		</div>
 		
 		<div class="navigation">
-			<div class="box" id="img"></div>
-			<div class="box"><p>Announcement</p></div>
-			<div class="box"><p>Bookings</p></div>
-			<div class="box"><p>Crews</p></div>
-			<div class="box"><p>Calendar</p></div>
-			<div class="box"><p>Client</p></div>
+			<a href="./../dashboard/A_Dashboard.html">
+				<div class="box" id="img" onclick=""></div>
+			</a>
+			<div class="box"><a href="./../news/notifications.html">Announcement</a></div>
+			<div class="box"><a href="./../All_Bookings/booking/">Bookings</a></div>
+			<div class="box"><a href="./../accounts/crew">Crews</a></div>
+			<div class="box"><a href="./../All_Bookings/calendar/A_calendar.html">Calendar</a></div>
 		</div>
 	</header>
 	
 	
 	<main>
-		<div class="main-container">
-			<div class="heading">
-				<h1><strong><em>Announcements</em></strong></h1>
-			</div>
-			
-			<div class="announcement-container">
+		<div class="page-title">
+			<div class="main-text">Notifications</div>
+		</div>
+		
+		<div class="announcement-container">
 			
 			
 			<div class="announcement-list">
@@ -64,70 +65,301 @@
 							<img id="filter_img" src="./../../Brand_Identity/images/icons/black_filter_icon.png" alt="">
 							Filter
 						</button>
-						<div class="filter-options">
-							<a href="#" class="filter-option">Read</a>
-							<a href="#" class="filter-option">Unread</a>
+						<div class="filter-options" id="filter-dropdown">
+							<a class="filter-option" onclick="filterAnnouncement('1')">Read</a>
+							<a class="filter-option" onclick="filterAnnouncement('0')">Unread</a>
 						</div>
 					</div>
 				</div>
 				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 1
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 2
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 3
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 4
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				
-				<div class="announcement-list-item" onclick="display(this)">
-					<span class="announcement-icon"><i class="fas fa-user"></i></span>
-					Announcement 5
-				</div>
-				
-				<div class="announcement-list-gap"></div>
-				<!-- Add more announcement list items here -->
-			
+				<div class="announcement-wrapper" id="announcement-wrapper"></div>
 			</div>
 			
 			
-			<div class="announcement-content">
-				<h3 id="announcement-title"></h3>
-				<div id="pre-announcement">
-					<img src="./../../Brand_Identity/images/icons/" alt="">
-					<p>Select from the list of notifications on the side to view more details</p>
-				</div>
-				<div id="announcement-description"></div>
-				<div class="add-comment" id="add-comment" onclick="showComment()">Add a comment</div>
-				<div class="comment-box" id="comment-box">
-					<label for="comment-input"></label>
-					<textarea id="comment-input" placeholder="Type your comment here"></textarea>
-					<button id="comment-submit" type="submit">Submit</button>
-				</div>
-			</div>
+			<div class="announcement-content" id="description"></div>
 		</div>
 	</main>
 </div>
 
-<script src="notify.js"></script>
+<script defer>
+	let commentBox;
+	let commentInput;
+	let submitbutton;
+	
+	const cookies = parseCookie(document.cookie);
+	const token = cookies['auth_token'];
+	const account_id = cookies['account_id'];
+	
+	function parseCookie(cookieString) {
+		const cookies = {};
+		cookieString.split(';').forEach(cookie => {
+			const [name, value] = cookie.trim().split('=');
+			cookies[name] = decodeURIComponent(value);
+		});
+		return cookies;
+	}
+	
+	function readAllAnnouncements(input) {
+		let url;
+		
+		if (input === " ") {
+			url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`;
+		} else {
+			url = input;
+		}
+
+		console.log(url);
+		fetch(url, {
+			headers: {
+				'Authorization': `${token}`
+			}
+		})
+				.then(response => response.json())
+				.then(data => {
+					let container = "";
+					let description = "";
+					let check = true;
+					
+					data.forEach(a => {
+						container += `<div class="announcement-list-item" id="A_${a.id}" onclick="display(${a.id})">${a.title}</div>`;
+						
+						if (check) {
+							description += `
+							<div class="description-wrapper current_display" id="${a.id}">
+			                    <h3 class="announcement-title">${a.title}</h3>
+			
+			                    <div class="announcement-description" id="announcement-description">${a.body}</div>
+		                    </div>
+		                    `;
+							
+							check = false;
+						} else {
+							description += `
+							<div class="description-wrapper" id="${a.id}">
+			                    <h3 class="announcement-title">${a.title}</h3>
+			
+			                    <div id="announcement-description">${a.body}</div>
+			
+		                    </div>
+                            `;
+						}
+					})
+					/*
+					const submit = document.createElement("div");
+					const label = document.createElement("label");
+					const textarea = document.createElement("textarea");
+					const button = document.createElement("button");
+					const stupidWrapper = document.createElement("div");
+					
+					submit.className = "comment-box";
+					submit.id = "comment-box";
+					
+					label.setAttribute("for", "comment-input");
+					
+					textarea.id = "comment-input";
+					textarea.placeholder = "Type your comment here";
+					
+					button.id = "comment-submit";
+					button.type = "submit";
+					button.innerText = "Submit";
+					button.addEventListener('click', closeComment);
+					
+					submit.appendChild(label)
+					submit.appendChild(textarea)
+					submit.appendChild(button);
+					stupidWrapper.appendChild(submit);
+					description += `<div class="add-comment" id="add-comment" onclick="showComment()">Add a comment</div>`
+					+ stupidWrapper.innerHTML;
+					*/
+					
+					console.log(container + ", " + description)
+					document.getElementById("announcement-wrapper").innerHTML = container;
+					document.getElementById("description").innerHTML = description;
+				})
+	}
+	
+	
+	/*function showComment() {
+		const comment = document.getElementById("add-comment");
+		if (comment.innerHTML === "Add a comment") {
+			comment.innerHTML = "Close comment box";
+			commentInput = document.getElementById("comment-input");
+			submitbutton = document.getElementById("comment-submit");
+			submitbutton.addEventListener('click', closeComment);
+			commentBox = document.getElementById("comment-box");
+			
+			
+			commentBox.style.visibility = "visible";
+			commentBox.style.display = "flex";
+		} else {
+			comment.innerHTML = "Add a comment";
+			commentBox = document.getElementById("comment-box")
+			commentBox.style.visibility = "hidden";
+			commentBox.style.visibility = "none";
+		}
+	}
+	
+	
+	function closeComment() {
+		console.log("close Comment")
+		
+		const comment = commentInput.value.trim();
+		if (comment !== "") {
+			// Logic to handle the submitted comment
+			console.log("Submitted comment:", comment);
+			commentInput.value = "";
+			
+			document.getElementById("add-comment").innerHTML = "Add a comment";
+			commentBox.style.visibility = "hidden";
+			commentBox.style.display = "none";
+		}
+	}
+	*/
+	function display(id) {
+		/*document.getElementById("add-comment").innerHTML = "Add a comment";
+		commentBox.style.visibility = "hidden";
+		commentBox.style.display = "none";*/
+		document.querySelector(".current_display").className = "description-wrapper";
+		document.getElementById(id).classList.add("current_display");
+		
+/*
+		changeState(id);
+*/
+	}
+	
+	
+	
+	/*Filter*/
+	
+	function filterAnnouncement(state) {
+		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/filter?status=${state}`;
+		//TODO possibly have to switch this to 0's and 1's, check DB for which is which.
+		if (state === 0) {
+			state = "UNREAD"
+		} else {
+			state = "READ";
+		}
+		document.getElementById("filter-dropdown").innerText = state;
+		
+		readAllAnnouncements(url)
+	}
+	
+	/*SEARCH */
+	
+	let allBookings = [];
+	let inputElement = document.getElementById("search");
+	
+	inputElement.addEventListener("input", onInputChange);
+	function getAllAnnouncements() {
+		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`
+		
+		fetch(url, {
+			headers: {
+				'Authorization': `${token}`
+			}
+		})
+				.then(response => response.json())
+				.then(data => {
+					allBookings = data.map((announcement) => {
+						return announcement.title;
+					})
+				})
+	}
+	
+	function  onInputChange() {
+		removeAutocompleteDropdown();
+		
+		const value = inputElement.value.toLowerCase();
+		
+		if (value.length === 0) return;
+		
+		const filteredNames = [];
+		
+		
+		allBookings.forEach((announcement) => {
+			if (announcement.substring(0, value.length).toLowerCase() === value) {
+				filteredNames.push(announcement);
+			}
+		})
+		createAutocompleteDropdown(filteredNames);
+	}
+	
+	function createAutocompleteDropdown(list) {
+		const listEl = document.createElement("ul");
+		listEl.className = "autocomplete-list";
+		listEl.id =  "autocomplete-list";
+		list.forEach((booking) => {
+			const listItem = document.createElement("li");
+			
+			const bookingButton = document.createElement("button");
+			bookingButton.innerHTML = booking;
+			bookingButton.addEventListener("click", onBookingButtonClick)
+			listItem.appendChild(bookingButton);
+			
+			listEl.appendChild(listItem);
+		})
+		document.querySelector("#search_ALL").appendChild(listEl);
+	}
+	
+	function removeAutocompleteDropdown() {
+		const listEl = document.querySelector("#autocomplete-list");
+		if (listEl) listEl.remove(); //checks if it exists and then removes it
+	}
+	
+	function onBookingButtonClick(event) {
+		event.preventDefault(); //cancels default event (submitting the form)
+		
+		
+		document.querySelector("#search-icon-btn").addEventListener("click", sendInput);
+		
+		const buttonEl = event.target; //element that triggered the event (the button itself)
+		inputElement.value = buttonEl.innerHTML; //should be a string of the booking name
+		
+		removeAutocompleteDropdown();
+		
+	}
+	
+	
+	function sendInput(event) {
+		console.log("input called")
+		event.preventDefault();
+		
+		if (inputElement.value.length === 0) readAllAnnouncements(" ");
+		else {
+			const url = window.location.origin + `/shotmaniacs2/api/admin/announcements/search?searchText="${inputElement.value}"`
+			readAllAnnouncements(url);
+		}
+	}
+	
+	
+	function logout(){
+		const token = cookies['auth_token'];
+		const url = window.location.origin+`/shotmaniacs2/api/login`
+		fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Authorization': `${token}`
+			}
+		})
+			.then(response => {
+				if (response.ok) {
+					document.cookie = "account_id =;  Path=/";
+					document.cookie = "account_username =;  Path=/";
+					document.cookie = "auth_token =;  Path=/";
+					window.location.href="http://localhost:8080/shotmaniacs2/";
+				} else if (response.status === 304) {
+					throw new Error('The given account was not logged in.');
+				} else {
+					throw new Error('Failed to log out. Status: ' + response.status);
+				}
+			})
+			.then(data => {
+				console.log(data); // Logged out successfully
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	}
+</script>
 </body>
 </html>

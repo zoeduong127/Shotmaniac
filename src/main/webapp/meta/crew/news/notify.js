@@ -47,7 +47,7 @@ function showComment() {
 
 
 function readAllAnnouncements() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/news`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`;
 
     fetch(url, {
         headers: {
