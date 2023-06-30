@@ -82,24 +82,15 @@
 		<div class="create-announcement">
 			<div class="title-section-name"><h3>Create Announcement</h3></div>
 			<div class="main-body">
-				<form action="" autocomplete="off">
-					<div class="search" id="searchbar">
-						<label for="search-input"></label>
-						<input type="text" class="input" id="search-input" placeholder="add crew name or leave empty for a broadcast"
-						       onfocus="getAllBookings()">
-						
-						<button class="search-icon-btn" id="search-button">
-							<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png"
-							     alt="search">
-						</button>
-					</div>
-				</form>
-				
-				<label for="announcement-input"></label>
-				<textarea id="announcement-input" placeholder="Add announcement here..."></textarea>
+				<label for="urgency">Urgency: </label>
+				<input id="urgency" type="text" placeholder="CRITICAL, MAJOR, MEDIUM, MINOR">
+				<label for="title">Title: </label>
+				<input id="title" type="text" placeholder="Title...">
+				<label for="body"></label>
+				<textarea id="body" placeholder="Body..."></textarea>
 			</div>
 			<div class="post">
-				<button>Send Announcement</button>
+				<button onclick="createAnnouncement()">Send Announcement</button>
 			</div>
 		</div>
 	</main>
@@ -401,25 +392,43 @@
 	
 	
 	function createAnnouncement() {
-		const input = document.getElementById("announcement-input");
-		const recipient = document.getElementById("search-input");
-		let url;
-		
-		if (input.innerText === "") {
+		let url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/createnews`;
+		let announcement_id = '';
+		let title = document.getElementById("title").value;
+		let body = document.getElementById("body").value;
+		let publisher = account_id;
+		let urgency = document.getElementById("urgency").value.toUpperCase();
+		let date = new Date().getTime();
+		if (!(urgency === "CRITICAL" || urgency === "MAJOR"|| urgency === "MEDIUM"|| urgency === "MINOR")) {
+			alert("Entered wrong urgency, check your spelling!")
+		}
+		console.log(url);
+		console.log(announcement_id);
+		console.log(title);
+		console.log(body);
+		console.log(publisher);
+		console.log(urgency);
+		console.log(date);
+		if (body === "") {
 			alert("You are unable to send an empty announcement!")
 		}
 		
-		if (recipient === "") {
-			url = window.location.origin + `/shotmaniacs2/api/admin/announcement`;
-		} else {
-			url = window.location.origin + ``;
+		let JSONObject =  {
+			"id" : `${announcement_id}`,
+			"title" : `${title}`,
+			"body" : `${body}`,
+			"publisher" : `${publisher}`,
+			"urgency" : `${urgency}`,
+			"date" : `${date}`
 		}
 		
 		fetch(url, {
 			method: 'PUT',
 			headers: {
-				'Authorization': `${token}`
-			}
+				'Authorization': `${token}`,
+				'content-Type': 'application/json'
+			},
+			body: JSON.stringify(JSONObject)
 		})
 		.catch(error => {
 			console.error(error);
