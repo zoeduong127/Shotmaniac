@@ -24,6 +24,11 @@ main {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Kiona', 'Quicksand', sans-serif;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
 }
 
 body {
@@ -188,6 +193,10 @@ body {
 }
 
 /*Title page thing*/
+.page-title {
+    width: 100%;
+}
+
 .page-title .image img{
     height: 85%;
     margin: 1vh 3vw 0 3vw;
@@ -210,7 +219,7 @@ body {
     align-items: center;
     border: 1px solid #ccc;
     margin: 2% 4% 5% 4%;
-    width: 90%;
+    width: 60%;
     height: 63%;
 }
 
@@ -413,4 +422,8 @@ body {
     border: 1px solid #e9e9e9;
     border-top: unset;
     border-radius: 6px;
+}
+
+.create-announcement {
+    width: 30%;
 }

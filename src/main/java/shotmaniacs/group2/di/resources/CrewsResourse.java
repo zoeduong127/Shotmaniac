@@ -35,7 +35,9 @@ public class CrewsResourse {
     private static String password = "yummybanana";
 
     @RolesAllowed({"Administrator"})
-    @Path("createnews")
+    @Path("/createnews")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @PUT
     public Response createNew(Announcement announcement) {
         if(AnnouncementDao.instance.addAnnouncement(announcement) == 1){
             return Response.accepted().build();
