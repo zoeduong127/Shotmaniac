@@ -70,7 +70,7 @@ function addCrew(id) {
 
 
 function addProductManager(id) {
-    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/${id}/productmanager`
+    const url = window.location.origin + `/shotmaniacs2/api/admin/booking/${id}/productmanager`
 
     fetch(url, {
         headers: {
@@ -88,7 +88,7 @@ function addProductManager(id) {
 }
 
 function setLabel(id) {
-    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
 
     fetch(url, {
         headers: {
@@ -119,7 +119,7 @@ function toggleStyleAndPage(element) {
     console.log('new theme changed to: ' + currentTheme.getAttribute('href'));
 
 
-    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`;
 
     fetch(url, {
         headers: {
@@ -289,7 +289,7 @@ function addLabel(list) {
 
     for (let i = 0; i < list.length; i++) {
         let id = list[i];
-        const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
+        const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
         fetch(url, {
             headers: {
                 'Authorization': `${token}`
@@ -328,43 +328,43 @@ function updateBookings(filterType) {
         case 'in_progress': {
             filter = "IN_PROGRESS";
             filterButton.textContent = "Filter: In progress";
-            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+            url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
             break;
         }
         case "todo": {
             filter = "TODO";
             filterButton.textContent = "Filter: TODO";
-            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+            url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
             break;
         }
         case "review": {
             console.log("Entered Review Section");
             filter = "REVIEW";
             filterButton.textContent = "Filter: REVIEW";
-            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/REVIEW`;
+            url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/REVIEW`;
             break;
         }
         case "done": {
             filter = "DONE";
             filterButton.textContent = "Filter: DONE";
-            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+            url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
             break;
         }
         case 'future': {
             filter = "ongoing";
             filterButton.textContent = "Filter: Upcoming";
-            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+            url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
             break;
         }
         case 'past': {
             filter = "past";
             filterButton.textContent = "Filter: Past";
-            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+            url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
             break;
         }
         default: {
             filterButton.textContent = "All Bookings";
-            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybookings`;
+            url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybookings`;
         }
     }
 
@@ -377,7 +377,7 @@ function updateBookings(filterType) {
 /*
 function searchBookings(searchText) {
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext=\"${searchText}\"`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext=\"${searchText}\"`;
     performQueryAndUpdateBookings(url);
 }
 */
@@ -415,7 +415,7 @@ function updateLabel(label, id) {
     }
 
 
-    const url = window.location.origin +`/shotmaniacs2/api/crew/${account_id}/booking/${id}/label?label=${label.innerText.replace("-"," ").toUpperCase()}`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/booking/${id}/label?label=${label.innerText.replace("-"," ").toUpperCase()}`;
     fetch(url, {
             method: 'PUT',
             headers: {
@@ -445,7 +445,7 @@ inputElement.addEventListener("input", onInputChange);
 
 //TODO double check filter use (link is mybookings, name is all bookings)
 function getAllBookings() {
-    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybookings`
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybookings`
 
     fetch(url, {
         headers: {
@@ -520,7 +520,7 @@ function sendInput(event) {
 
     if (inputElement.value.length === 0) updateBookings("");
     else {
-        const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
+        const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
         performQueryAndUpdateBookings(url);
     }
 }

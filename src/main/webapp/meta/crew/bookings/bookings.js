@@ -34,8 +34,8 @@ let role;
 
 console.log("account id: " + account_id);
 
-function calcAvailableSlots(slots, id) {
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew`;
+function calcAvailableSlots(slots, id, check, name) {
+    const url = window.location.origin+ `/shotmaniacs2/api/admin/booking/${id}/crew`;
     console.log("slots: " + slots);
     console.log("id: " + id);
 
@@ -47,24 +47,60 @@ function calcAvailableSlots(slots, id) {
     })
         .then(response => response.json())
         .then(data => {
-            let slotCount = 0;
-            data.forEach(crew => {
-                if (crew.accountType === "Crew") slotCount++;
-            })
-            console.log("slotCount: " + slotCount);
-            document.getElementById("slot").innerHTML = ` 
+            if (check) {
+                let takenSlots = [];
+                data.forEach(crewMember => {
+                    if (crewMember.accountType === "Crew") takenSlots++;
+                })
+
+                if (takenSlots.length === slots) {
+                    console.log(id);
+                    document.getElementById(name + id).style.backgroundColor = "rgba(31, 31, 31, 0.35)";
+                    document.getElementById(name + id).style.border = "1px solid rgba(31, 31, 31, 0.35)";
+                    document.getElementById(id).style.pointerEvents = "none";
+                    document.getElementById(id).style.border = "1px solid rgba(82, 82, 82, 0.5)";
+                }
+
+                checkDate();
+            } else {
+                let slotCount = 0;
+                data.forEach(crew => {
+                    if (crew.accountType === "Crew") slotCount++;
+                })
+                console.log("slotCount: " + slotCount);
+                document.getElementById("slot").innerHTML = ` 
                 <strong>Available slots: </strong>${slots - slotCount}/${slots}`;
+            }
         })
 }
 
+function checkDate() {
+    filter = "past";
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
 
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(booking => {
+                console.log(booking.name);
+                document.getElementById(booking.name + booking.id).style.backgroundColor = "rgba(31, 31, 31, 0.35)";
+                document.getElementById(booking.name + booking.id).style.border = "1px solid rgba(31, 31, 31, 0.35)";
+                document.getElementById(booking.id).style.pointerEvents = "none";
+                document.getElementById(booking.id).style.border = "1px solid rgba(82, 82, 82, 0.5)";
+            })
+        })
+}
 function openInfo(element) {
     booking_container.style.opacity = "0.2";
     popup.style.visibility = "visible";
     maincontainer.style.pointerEvents = "none";
 
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`
+    const url = window.location.origin+ `/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`
     fetch(url, {
         headers: {
             'Authorization': `${token}`
@@ -119,7 +155,7 @@ function parseCookie(cookieString) {
 }
 
 function getEnrolled() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/enrolled`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/enrolled`;
 
     fetch(url, {
         headers: {
@@ -138,6 +174,7 @@ function getEnrolled() {
                     document.getElementById(booking.id).style.pointerEvents = "none";
                     document.getElementById(booking.id).style.border = "1px solid rgba(82, 82, 82, 0.5)";
                 }
+                calcAvailableSlots(booking.slots, booking.id, true, booking.name);
             })
         })
 }
@@ -145,7 +182,7 @@ function getEnrolled() {
 
 /*Get all bookings*/
 function performQueryAndUpdateBookings(input) {
-    let url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    let url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
     if (input !== " ") {console.log(input); url = input;}
 
@@ -187,7 +224,7 @@ function enroll() {
     console.log("enroll clicked");
     const id = document.querySelector(".bookinginfo").id;
     console.log("crew role: " + role);
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/crew/${account_id}/enrol?role=${role}`;
+    const url = window.location.origin + `/shotmaniacs2/api/admin/booking/${id}/crew/${account_id}/enrol?role=${role}`;
 
     booking_container.style.opacity = "1";
     popup.style.visibility = "hidden";
@@ -212,7 +249,7 @@ let inputElement = document.getElementById("search-input");
 
 inputElement.addEventListener("input", onInputChange);
 function getAllBookings() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
     fetch(url, {
         headers: {
@@ -286,7 +323,7 @@ function sendInput(event) {
 
     if (inputElement.value.length === 0) performQueryAndUpdateBookings(" ");
     else {
-        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
+        const url = window.location.origin + `/shotmaniacs2/api/admin/bookings/search?searchtext=${inputElement.value}`
         performQueryAndUpdateBookings(url);
     }
 }
@@ -295,7 +332,7 @@ function sendInput(event) {
 getAccount();
 
 function getAccount() {
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/account/${account_id}`;
+    const url = window.location.origin + `/shotmaniacs2/api/admin/account/${account_id}`;
     fetch(url, {
         headers: {
             'Authorization': `${token}`

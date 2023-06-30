@@ -200,7 +200,7 @@ public class AdministratorsResource {
     @RolesAllowed({"Administrator", "Crew"})
     @Produces(MediaType.APPLICATION_JSON)
     @GET
-    public List<Announcement> searchAllAnnouncementsByTitleText(@QueryParam("searchtext") String searchText) {
+    public List<Announcement> searchAllAnnouncementsByTitleText(@QueryParam("searchText") String searchText) {
 
         List<Announcement> announcementList = new ArrayList<>();
 
@@ -219,30 +219,6 @@ public class AdministratorsResource {
             System.out.println("Error searching all announcements by title text: " + e.getMessage());
         }
         return announcementList;
-    }
-
-    @RolesAllowed({"Administrator"})
-    @Path("/crews")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-
-    public List<Account> getAllCrewMembers() {
-        List<Account> accountList = new ArrayList<>();
-        try {
-            Connection connection = DriverManager.getConnection(url, dbName, password);
-            Statement statement = connection.createStatement();
-            String query = "SELECT a.* FROM account a WHERE a.account_type = 'Crew'";
-            ResultSet rs = statement.executeQuery(query);
-            while(rs.next()){
-                accountList.add(new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), AccountType.valueOf(rs.getString(5)), rs.getString(6), rs.getString(7), rs.getString(8)));
-            }
-            rs.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            System.err.println("Error connecting: "+e);
-        }
-        return accountList;
     }
 
     @RolesAllowed({"Administrator", "Crew", "Client"})

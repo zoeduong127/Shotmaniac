@@ -454,7 +454,7 @@ body {
     border-width: 1.5px;
     width: 21vw;
     height: 39vh;
-    margin-top: -38vh;
+    margin-top: -30vh;
     margin-left: 72.5vw;
 }
 
@@ -516,23 +516,16 @@ body {
 
 #normal-role {
     color: #1696d2;
-    margin-top: 2.28vh;
+    margin-top: 2vh;
     position: absolute;
-    margin-left: 0.7vw;
-    text-align: center;
-}
-
-#prod {
-    color: #e70f0f;
-    margin-top: 1.5vh;
-    margin-left: 10.7vw;
+    margin-left: 5.45vw;
     text-align: center;
 }
 
 .adding-as-role {
     font-family: Kiona Semibold;
     font-style: oblique;
-    font-size: 13px;
+    font-size: 17px;
     font-weight: bolder;
     cursor: pointer;
 }
