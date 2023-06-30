@@ -198,6 +198,33 @@ public class CrewsResourse {
         List<Booking> listbooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query = "SELECT b.* FROM booking b";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        EventType.valueOf(rs.getString(4).toUpperCase()),rs.getTimestamp(5),rs.getString(6),
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11).toUpperCase()), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                listbooking.add(booking);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return listbooking;
+    }
+
+    @RolesAllowed({"Administrator","Crew"})
+    @Path("/on-goingbookings")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Get all bookings from Bookings site
+     */
+    public List<Booking> getFutureBookings() {
+        List<Booking> listbooking = new ArrayList<>();
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
             String query = "SELECT b.* FROM booking b WHERE b.date_and_time >= NOW() ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();

@@ -274,7 +274,7 @@ function cancelBooking(){
 
 function addUpcomingEvents() {
     const filter = "ongoing";
-    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/on-goingbookings`;
     let booking_list = [];
 
     fetch(url, {
