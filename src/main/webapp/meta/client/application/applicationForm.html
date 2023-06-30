@@ -302,9 +302,13 @@
 			renameKey(jsonObj, 'BOOKING TYPE', 'bookingType');
 			renameKey(jsonObj, 'DURATION', 'duration');
 			renameKey(jsonObj, 'DESCRIPTION', 'description');
-			renameKey(jsonObj, "CLIENT'S NAME", 'clientName');
-			renameKey(jsonObj, "CLIENT'S EMAIL ADDRESS", 'clientEmail');
-			renameKey(jsonObj, 'TEL. (optional)', 'phoneNumber');
+
+			if (jsonObj['name'] === null || jsonObj['eventType'] == null
+					|| jsonObj['date'] == null || jsonObj['time'] == null
+					|| jsonObj['location'] == null || jsonObj['bookingType'] == null
+					|| jsonObj['duration'] == null || jsonObj['description'] == null) {
+				continue;
+			}
 			promises.push(jsonObj)
 		}
 		console.log(promises)

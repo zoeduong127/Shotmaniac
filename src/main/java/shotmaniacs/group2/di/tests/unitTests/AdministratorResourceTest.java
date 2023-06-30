@@ -10,6 +10,7 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import shotmaniacs.group2.di.dto.LoginInfor;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.AccountType;
 import shotmaniacs.group2.di.model.RootElementWrapper;
@@ -52,7 +53,6 @@ public class AdministratorResourceTest extends JerseyTest {
                 .request()
                 .header("Authorization", authToken)
                 .delete();
-
         Assertions.assertEquals(200, response.getStatus());
 
         response = target("/admin/accounts")
