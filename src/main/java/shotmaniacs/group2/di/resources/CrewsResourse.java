@@ -33,7 +33,14 @@ public class CrewsResourse {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
-
+    @RolesAllowed({"Administrator"})
+    @Path("createnews")
+    public Response createNew(Announcement announcement) {
+        if(AnnouncementDao.instance.addAnnouncement(announcement) == 1){
+            return Response.accepted().build();
+        }
+        return Response.notModified().build();
+    }
     @RolesAllowed({"Administrator","Crew"})
     @Path("/mybookings")
     @GET
@@ -215,6 +222,33 @@ public class CrewsResourse {
     }
 
     @RolesAllowed({"Administrator","Crew"})
+    @Path("/on-goingbookings")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Get all bookings from Bookings site
+     */
+    public List<Booking> getFutureBookings() {
+        List<Booking> listbooking = new ArrayList<>();
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String query = "SELECT b.* FROM booking b WHERE b.date_and_time >= NOW() ";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
+                        EventType.valueOf(rs.getString(4).toUpperCase()),rs.getTimestamp(5),rs.getString(6),
+                        rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
+                        BookingType.valueOf(rs.getString(11).toUpperCase()), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                listbooking.add(booking);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting: "+e);
+        }
+        return listbooking;
+    }
+
+    @RolesAllowed({"Administrator","Crew"})
     @Path("/booking/{booking_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     /**
@@ -257,15 +291,15 @@ public class CrewsResourse {
     /**
      * Filter based on read or unread announcements
      */
-    public List<Announcement> getNewsWithFilter(@QueryParam("status") int status) {
+    public List<Announcement> getNewsWithFilter(@QueryParam("status") int status ,@PathParam("crewid") int id) {
         List<Announcement> announcementList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query;
             if(status == 0) { //Unread announcement
-                query = "SELECT DISTINCT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 'UNREAD'";
+                query = "SELECT DISTINCT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND ma.read_status = 'UNREAD' AND employee_id ="+id;
             } else {
-                query = "SELECT DISTINCT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND read_status = 'READ'";
+                query = "SELECT DISTINCT a.* FROM announcement a, mark_announcement ma WHERE a.announcement_id = ma.announcement_id AND ma.read_status = 'READ' AND employee_id ="+id;
             }
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -339,8 +373,30 @@ public class CrewsResourse {
         }
         return announcementList;
     }
+    /*Mark read_news*/
 
-
+    @RolesAllowed({"Administrator", "Crew"})
+    @Path("/news/{new_id}/mark_read")
+    @PUT
+    public Response setReadnew(@PathParam("new_id") int newId,@PathParam("crewid") int crew_id) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "UPDATE mark_announcement SET read_status = ? WHERE announcement_id = ? AND employee_id = ? ";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, String.valueOf(AnnouncementState.READ));
+            ps.setInt(2, newId);
+            ps.setInt(3, crew_id);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while setting booking product manager: " + e.getMessage());
+        }
+        return Response.serverError().build();
+    }
     @RolesAllowed({"Administrator", "Crew"})
     @Path("/mybooking/statistics/hoursworked")
     @Produces(MediaType.APPLICATION_JSON)
@@ -413,6 +469,6 @@ public class CrewsResourse {
     }
     public static void main (String args[]) throws ParseException {
         CrewsResourse crew = new CrewsResourse();
-        crew.getAllAnnouncements(17);
+         System.out.println(crew.setReadnew(42,231));
     }
 }

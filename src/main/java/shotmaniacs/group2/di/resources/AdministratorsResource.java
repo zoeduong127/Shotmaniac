@@ -36,8 +36,9 @@ public class AdministratorsResource {
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
 
+
     @RolesAllowed({"Administrator"})
-    @Path("enrolment/{enrolmentId}")
+    @Path("createnews/{enrolmentId}")
     public EnrolmentResource modifySpecificEnrolment(@PathParam("enrolmentId") int enrolmentId) {
         return new EnrolmentResource(uriInfo, request, enrolmentId);
     }
