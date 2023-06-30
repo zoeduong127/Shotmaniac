@@ -83,7 +83,7 @@ function calcAvailableSlots(slots, id, name, description) {
                 element += `
                     <div class="bookings-info" id="${id}" onclick="accessApprovedBooking(this)">
                         <div class="cover-box">
-                            <p>${name}</p>
+                            <p class="title-name-in-right-side">${name}</p>
                         </div>
                         <div class="Short-Description">${description}</div>
                     </div>
@@ -165,7 +165,7 @@ function allBookings() {
                         main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -181,7 +181,7 @@ function allBookings() {
                         main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -200,7 +200,7 @@ function allBookings() {
                             main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -216,7 +216,7 @@ function allBookings() {
                             main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -235,7 +235,7 @@ function allBookings() {
                                 main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -251,7 +251,7 @@ function allBookings() {
                                 main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -269,7 +269,7 @@ function allBookings() {
                                 main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -285,7 +285,7 @@ function allBookings() {
                                 main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -304,7 +304,7 @@ function allBookings() {
                             main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -320,7 +320,7 @@ function allBookings() {
                             main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -339,7 +339,7 @@ function allBookings() {
                         main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
@@ -355,7 +355,7 @@ function allBookings() {
                         main += `
                             <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
-                                <div class="label-for-booking-${booking.state.toLowerCase}">
+                                <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">

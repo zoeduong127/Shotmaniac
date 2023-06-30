@@ -10,7 +10,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body onload = "getCrews(), getAllCrews()">
+<body onload = "getBooking(), getCrews(), getAllCrews()">
 <div class="container">
   <header>
     <div class="top">
@@ -39,22 +39,16 @@
 
     <div class="navigation">
       <div class="box" id="img"></div>
-      <div class="box"><p>Announcements</p></div>
-      <div class="box"><p>Bookings</p></div>
-      <div class="box"><p>Crews</p></div>
-      <div class="box"><p>Calendar</p></div>
+      <div class="box"><a href="./../news/notifications.html">Announcement</a></div>
+      <div class="box"><a href="./../All_Bookings/bookings/A_bookings.html">Bookings</a></div>
+      <div class="box"><a href="./../crews/A_Crews.html">Crews</a></div>
+      <div class="box"><a href="./../All_Bookings/calendar/A_calendar.html">Calendar</a></div>
     </div>
   </header>
 
   <main>
     <div class="main-container">
-      <div class="heading">
-        <span style="padding-left: 28vw">
-          <span class="booking-heading">Bookings / </span>
-          <span class="booking-name-title">Booking’s name</span>
-          <span class="booking-heading"> / </span>
-          <span class="booking-name-title">Manage Crew</span>
-        </span>
+      <div class="heading" id="heading">
       </div>
       <div class="left-side" id="left-side">
         <div id="scrollbar">
@@ -92,27 +86,6 @@
           <ul id="myUL">
           </ul>
           <div class="addingCrew" id="addingCrew" hidden>
-            <!--<div class="title-client-info">
-              <p id="client-title">Client's Information</p>
-            </div>
-            <div class="client-name">
-              <p class="client-info-title">Name:</p>
-              <p class="info"> Client Shotmaniacs Group 2</p>
-            </div>
-            <hr class="break-line">
-            <div class="client-email">
-              <p class="client-info-title">Email:</p>
-              <p class="info"> ShotmaniacsGroup2@gmail.com</p>
-            </div>
-            <hr class="break-line">
-            <div class="client-phone" style="padding-bottom: 4vh">
-              <p class="client-info-title">Tel.:</p>
-              <p class="info"> +31 123456789</p>
-            </div>
-            <div class="title-client-info">
-              <p class="adding-as-role" id="normal-role">Add as abc</p>
-              <p class="adding-as-role" id="prod">Add as production manager</p>
-            </div>-->
           </div>
           <script>
             function searchName() {
@@ -162,11 +135,37 @@
   console.log(id);
   console.log(cookies);
   const url = window.location.origin+`/shotmaniacs2/api/admin/booking/${id}/crew`;
-  const url1 = window.location.origin + `/shotmaniacs2/api/admin/crews`
+  const url1 = window.location.origin + `/shotmaniacs2/api/admin/allcrew`
   let crewInfo = "";
   let listOfNames = "";
   let addedCrew = "";
   const addingCrewContainer = document.getElementById("addingCrew");
+
+  function getBooking() {
+    const urlBooking = window.location.origin+"/shotmaniacs2/api/crew/"+account_id+"/booking/"+id;
+    fetch(urlBooking, {
+      headers: {
+        'Authorization': `${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(booking => {
+              let heading = "";
+              heading += `
+                        <span style="padding-left: 28vw">
+                          <span class="booking-heading">Bookings / </span>
+                          <span class="booking-name-title">${booking.name}</span>
+                          <span class="booking-heading"> / </span>
+                          <span class="booking-name-title">Manage Crew</span>
+                        </span>
+                        `;
+              document.getElementById("heading").innerHTML = heading;
+            })
+            .catch(error => {
+              // Handle any errors
+              console.error(error);
+            });
+  }
 
   function getCrews() {
     fetch(url, {
@@ -184,7 +183,7 @@
                                 <p class="role-specifying">${crew.role}</p>
                               </div>
                               <div class="remove-rectangle">
-                                <p class="remove-word" onclick="toggleRemove(crew.id)">Remove</p>
+                                <p class="remove-word" onclick="toggleRemove()">Remove</p>
                               </div>
                             </div>
                             `;
@@ -206,7 +205,7 @@
             .then(response => response.json())
             .then(data => {
               data.forEach(crew => {
-                listOfNames += `<li><a href="#" onclick="addCrew(${crew.id})">${crew.username}</a></li>`;
+                listOfNames += `<li><a onclick="addCrew(this)">${crew.username}</a></li>`;
                 document.getElementById("myUL").innerHTML = listOfNames;
               })
             })
@@ -216,22 +215,27 @@
             });
   }
 
-  function addCrew(id) {
-    const url2 = window.location.origin + `/shotmaniacs2/api/admin/accounts/Crew?username=${id.username}`;
+  function addCrew(input) {
+    let username=input.innerText;
+    console.log(username);
+    const url2 = window.location.origin + `/shotmaniacs2/api/admin/accounts/Crew?username=${username}`;
+    console.log(url2);
     fetch(url2, {
       headers: {
         'Authorization': `${token}`
       }
     })
             .then(response => response.json())
-            .then(crew => {
-              addedCrew += `
+            .then(data => {
+              data.forEach(crew => {
+                console.log(crew);
+                addedCrew += `
                             <div class="title-client-info">
                               <p id="client-title">Crew's Information</p>
                             </div>
                             <div class="client-name">
                               <p class="client-info-title">Name:</p>
-                              <p class="info"> ${crew.username}</p>
+                              <p class="info"> ${username}</p>
                             </div>
                             <hr class="break-line">
                             <div class="client-email">
@@ -244,15 +248,15 @@
                               <p class="info"> ${crew.role}</p>
                             </div>
                             <div class="title-client-info">
-                              <p class="adding-as-role" id="normal-role" onclick="addAsNormalRole(crew.id)">Add as ${crew.role}</p>
-                              <p class="adding-as-role" id="prod" onclick="addAsProd(this)">Add as production manager</p>
+                              <p class="adding-as-role" id="normal-role" onclick="addAsNormalRole('${crew.username}')">Add as ${crew.role}</p>
                             </div>
                             `;
-              addingCrewContainer.innerHTML = addedCrew;
-              document.getElementById("search-icon-for-name").style.display = "none";
-              document.getElementById("myInput").style.display = "none";
-              document.getElementById("myUL").style.display = "none";
-              addingCrewContainer.style.display = "block";
+                addingCrewContainer.innerHTML = addedCrew;
+                document.getElementById("search-icon-for-name").style.display = "none";
+                document.getElementById("myInput").style.display = "none";
+                document.getElementById("myUL").style.display = "none";
+                addingCrewContainer.style.display = "block";
+              })
             })
             .catch(error => {
               // Handle any errors
@@ -260,31 +264,36 @@
             });
   }
 
-  function addAsNormalRole(id) {
-    const url3 = window.location.origin + `/shotmaniacs2/api/admin/accounts/Crew?username=${id.username}`;
+  function addAsNormalRole(username) {
+    const url3 = window.location.origin + `/shotmaniacs2/api/admin/accounts/Crew?username=${username}`;
+    console.log(url3);
     fetch(url3, {
       headers: {
         'Authorization': `${token}`
       }
     })
             .then(response => response.json())
-            .then(crew => {
-              crewInfo += `
+            .then(data => {
+              data.forEach(crew => {
+                crewInfo += `
                             <div class="crew-rectangle pad" id="${crew.id}">
                               <div class="crew-name">${crew.username}</div>
                               <div class="role-rectangle">
                                 <p class="role-specifying">${crew.role}</p>
                               </div>
                               <div class="remove-rectangle">
-                                <p class="remove-word" onclick="toggleRemove(crew.id)">Remove</p>
+                                <p class="remove-word" onclick="toggleRemove()">Remove</p>
                               </div>
                             </div>
                             `;
-              document.getElementById("crews").innerHTML = crewInfo;
-              addingCrewContainer.style.display = "none";
-              document.getElementById("search-icon-for-name").style.display = "block";
-              document.getElementById("myInput").style.display = "block";
-              document.getElementById("myUL").style.display = "block";
+                document.getElementById("crews").innerHTML = crewInfo;
+                addingCrewContainer.innerHTML = "";
+                addingCrewContainer.style.display = "none";
+                console.log(addingCrewContainer.innerHTML)
+                document.getElementById("search-icon-for-name").style.display = "block";
+                document.getElementById("myInput").style.display = "block";
+                document.getElementById("myUL").style.display = "block";
+              })
             })
             .catch(error => {
               // Handle any errors
@@ -292,11 +301,7 @@
             });
   }
 
-  function addAsProd(id) {
-
-  }
-
-  function toggleRemove(id) {
+  function toggleRemove() {
 
   }
 </script>

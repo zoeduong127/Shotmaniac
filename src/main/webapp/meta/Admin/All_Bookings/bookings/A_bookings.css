@@ -156,7 +156,7 @@ body {
     border-radius: 0 20px 20px 0 ;
     width: 2.5vw;
     cursor: pointer;
-    background-image: url("./../Brand_Identity/images/icons/search_icon_black.png");
+    background-image: url("./../../../Brand_Identity/images/icons/search_icon_black.png");
     background-position: 5px 3px;
     background-repeat: no-repeat;
     background-size: 3vh;
@@ -199,6 +199,14 @@ body {
 
 .box:hover {
     cursor: pointer;
+}
+
+.box a {
+    color: white;
+    font-family: Kiona Semibold;
+    font-size: 17px;
+    position: absolute;
+    top: 17.6vh;
 }
 
 #img {
@@ -294,6 +302,7 @@ body {
     height: 16vh;
     margin-left: 1.6vw;
     margin-top: 2.75vh;
+    margin-bottom: 2vh;
 }
 
 .cover-box {
@@ -318,10 +327,22 @@ body {
 .Short-Description {
     color: #000000;
     font: 400 16px Kiona, cursive;
-    width: 165px;
-    height: 24px;
+    width: 11vw;
+    height: 8vh;
     margin-left: 2.25vw;
-    margin-top: 4vh
+    margin-top: 4vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.Short-Description:hover {
+    word-break: break-all;
+    overflow: visible;
+    white-space: normal;
+    margin-top: 0vh;
+    text-align: center;
+    margin-left: 2vw;
 }
 
 .filter-box {
@@ -330,7 +351,7 @@ body {
     border-style: solid;
     border-color: rgba(82, 82, 82, 0.9);
     border-width: 2px;
-    width: 9.25vw;
+    width: 12.25vw;
     height: 5.5vh;
     margin-top: -31vh;
     margin-left: 6vw;
@@ -355,7 +376,7 @@ body {
 
 .polygon {
     margin-left: 7vw;
-    transform: translate(-3px, -28.5px);
+    transform: translate(40px, -28.5px);
 }
 
 .search-for-booking {
@@ -428,6 +449,7 @@ body {
     width: 55vw;
     height: 9.5vh;
     margin-left: 3.5vw;
+    cursor: pointer;
 }
 
 .past-booking {
@@ -439,6 +461,7 @@ body {
     width: 55vw;
     height: 9.5vh;
     margin-left: 3.5vw;
+    cursor: pointer;
 }
 
 .booking-name {
@@ -449,6 +472,10 @@ body {
     margin-left: 1vw;
     margin-top: 2.4vh;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 23vw;
 }
 
 .label-for-booking-approved {
@@ -460,6 +487,8 @@ body {
     height: 5vh;
     margin-left: 27vw;
     margin-top: -3.5vh;
+    position: relative;
+    z-index: 2;
 }
 
 .label-for-booking-pending {
@@ -471,13 +500,15 @@ body {
     height: 5vh;
     margin-left: 27vw;
     margin-top: -3.5vh;
+    position: relative;
+    z-index: 2;
 }
 
 .status {
     color: #1f1f1f;
     text-align: center;
     font: 17px Kiona, cursive;
-    margin-top: 0.9vh;
+    margin-top: 0.6vh;
     margin-left: 0.2vw;
     font-weight: bold;
 }
@@ -512,6 +543,7 @@ body {
     font: 16px Kiona, cursive;
     margin-left: -0.01vw;
     margin-top: 3vh;
+    font-weight: bold;
 }
 
 .pad {
@@ -655,3 +687,15 @@ body {
     border-top: unset;
     border-radius: 6px;
 }
+
+.title-name-in-right-side {
+    font-family: Kiona Semibold;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 11vw;
+    padding-top: 0.6vh;
+    margin-left: 2.4vw;
+}
+
