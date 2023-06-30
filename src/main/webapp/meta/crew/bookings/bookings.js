@@ -142,6 +142,7 @@ function getEnrolled() {
         })
 }
 
+
 /*Get all bookings*/
 function performQueryAndUpdateBookings(input) {
     let url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;

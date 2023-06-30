@@ -115,7 +115,6 @@ function setLabel(id) {
 }
 
 function toggleStyleAndPage(element) {
-
     currentTheme.setAttribute('href', 'singleEventHomePage.css');
     console.log('new theme changed to: ' + currentTheme.getAttribute('href'));
 
@@ -443,6 +442,8 @@ let allBookings = [];
 let inputElement = document.getElementById("search-input");
 
 inputElement.addEventListener("input", onInputChange);
+
+//TODO double check filter use (link is mybookings, name is all bookings)
 function getAllBookings() {
     const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybookings`
 
