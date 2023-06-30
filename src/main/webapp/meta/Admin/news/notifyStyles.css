@@ -54,7 +54,7 @@ body {
 .logout {
     color: white;
     float: right;
-
+    cursor: pointer;
     padding-right: 26px;
 }
 
