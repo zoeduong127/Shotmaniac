@@ -219,18 +219,14 @@ public class Mailer {
             System.out.println("Error parsing email HTML file: " + e.getMessage());
         }    }
 
-    public static void sendBookingDeenrolment(int enrolmentId) throws MessagingException {
-        EnrolmentDto enrolmentDetails = getEnrolmentDetails(enrolmentId);
-        if (enrolmentDetails == null) {
-            throw new MessagingException();
-        }
-
-        Booking booking = BookingDao.instance.getABooking(enrolmentDetails.getBookingId());
-        Account account = AccountDao.instance.getAccountById(enrolmentDetails.getCrewMemberId());
+    public static void sendBookingDeenrolment(int bookingId, int accountId) throws MessagingException {
+        Booking booking = BookingDao.instance.getABooking(bookingId);
+        Account account = AccountDao.instance.getAccountById(accountId);
 
         if (booking == null || account == null) {
             throw new MessagingException();
         }
+
         try {
             Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\deenrolmentNotification.html"));
 
