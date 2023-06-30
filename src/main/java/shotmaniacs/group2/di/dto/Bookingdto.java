@@ -65,7 +65,7 @@ public class Bookingdto {
     }
 
     public Bookingdto(int user_id,String name,String eventType, String date, String time,
-                      String location,String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber) {
+                      String location,String bookingType, int duration, String description) {
         setUser_id(user_id);
         setName(name);
         setDescription(description);
@@ -93,9 +93,6 @@ public class Bookingdto {
         this.slots = slots;
     }
 
-    public Bookingdto(int user_id) {
-        this.user_id = user_id;
-    }
 
     public int getUser_id(){
         return this.user_id;
@@ -129,8 +126,6 @@ public class Bookingdto {
                 } catch (MessagingException e) {
                     System.out.println("Error sending new booking notification: " + e.getMessage());
                 }
-
-
                 return true;
             }
         } catch (SQLException e) {
