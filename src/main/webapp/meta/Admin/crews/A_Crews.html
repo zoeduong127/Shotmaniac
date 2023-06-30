@@ -10,7 +10,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body onload = "getAllCrews()">
+<body onload = "getAllCrews(), addCrew()">
 <div class="container">
   <header>
     <div class="top">
@@ -83,6 +83,7 @@
         <div id="add-crew">
           <p>Add Crew</p>
         </div>
+        <div id="adding-crew-here" style="margin-left: 1.5vh; margin-top: 5vh"></div>
       </div>
     </div>
   </main>
@@ -108,7 +109,6 @@
 
   const url1 = window.location.origin + `/shotmaniacs2/api/admin/allcrew`
   let crewInfo = "";
-  let addedCrew = "";
 
   function getAllCrews() {
     fetch(url1, {
@@ -126,7 +126,7 @@
                                 <p class="role-specifying">${crew.role}</p>
                               </div>
                               <div class="real-work-hours-rectangle">
-                                <p class="real-hours">Working Hours: ${crew.workHour}</p>
+                                <p class="real-hours">Working Hours: </p>
                               </div>
                               <div class="work-hours-rectangle">
                                 <p class="hours" onclick="toggleRemove()">Remove</p>
@@ -142,23 +142,59 @@
             });
   }
 
-  /*function addCrew(input) {
-    fetch(url, {
-      headers: {
-        'Authorization': `${token}`
-      }
-    })
-            .then(response => response.json())
-            .then(data => {
-              data.forEach(crew => {
+  function addCrew() {
+    let addingContainer = "";
+    addingContainer += `<div class="small-rectangle-crews-setting">
+                                <p id="crews-in-box">New Crew's Information</p>
+                            </div>
+                            <div class="input-section">
+                                <label for="editor">Username</label>
+                                <input class="number-type" id="username" type="text">
+                            </div>
+                            <div class="input-section">
+                                <label for="editor">Email</label>
+                                <input class="number-type" id="email" type="text">
+                            </div>
+                            <div class="input-section">
+                                <label for="editor">Password</label>
+                                <input class="number-type" id="passwordForNewCrew" type="text">
+                            </div>
+                            <div class="input-section">
+                                <label for="editor">Account Type</label>
+                                <input class="number-type" id="accountType" type="text">
+                            </div>
+                            <div class="input-section">
+                                <label for="editor">Role</label>
+                                <input class="number-type" id="role" type="text">
+                            </div>
+                            <div class="footer" id="footer">
+                                <div class="save-data-and-accept" id="save-data" onclick="saveData()">Save Data And Add Crew</div>
+                            </div>
+                          `;
+    document.getElementById("adding-crew-here").innerHTML = addingContainer;
+  }
 
-              })
-            })
-            .catch(error => {
-              // Handle any errors
-              console.error(error);
-            });
-  }*/
+  //TODO: change this due to the input in the form
+  //TODO: add new account to database (update data to the database)
+  //TODO: make it appear in the left side
+  //REMEMBER to make innerHTML of crewInfo empty so that it can clear data, otherwise, a new form will appear right below the previous form
+  function saveData() {
+    crewInfo += `
+                  <div class="crew-rectangle pad" id="${crew.id}">
+                    <div class="crew-name">${crew.username}</div>
+                    <div class="role-rectangle">
+                      <p class="role-specifying">${crew.role}</p>
+                    </div>
+                    <div class="real-work-hours-rectangle">
+                      <p class="real-hours">Working Hours: </p>
+                    </div>
+                    <div class="work-hours-rectangle">
+                      <p class="hours" onclick="toggleRemove()">Remove</p>
+                    </div>
+                  </div>
+                  `;
+    document.getElementById("crews").innerHTML = crewInfo;
+  }
 
   //TODO: update in the database
   function toggleRemove() {
