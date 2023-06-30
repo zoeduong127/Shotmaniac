@@ -1,16 +1,16 @@
 const months = [
-    "January",
-    "February",
-    "March",
-    "April",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
 ];
 const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
@@ -70,7 +70,7 @@ function addCrew(id) {
 
 
 function addProductManager(id) {
-    const url = `http://localhost:8080/shotmaniacs2/api/admin/booking/${id}/productmanager`
+    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/${id}/productmanager`
 
     fetch(url, {
         headers: {
@@ -88,7 +88,7 @@ function addProductManager(id) {
 }
 
 function setLabel(id) {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
 
     fetch(url, {
         headers: {
@@ -115,12 +115,11 @@ function setLabel(id) {
 }
 
 function toggleStyleAndPage(element) {
-
     currentTheme.setAttribute('href', 'singleEventHomePage.css');
     console.log('new theme changed to: ' + currentTheme.getAttribute('href'));
 
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`;
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${element.id}`;
 
     fetch(url, {
         headers: {
@@ -177,7 +176,7 @@ function toggleStyleAndPage(element) {
                 </div> 
                    
                 <div class="event-info" id="date"> <!-- TODO CHANGE THESE TWO ID's WITH event-{id} incl. JS -->
-                    <p><strong>Date: </strong> 
+                    <p><strong>Date: </strong>
                         ${new Date(booking.date).getDate()}
                         ${months[new Date(booking.date).getMonth()]}
                         ${new Date(booking.date).getFullYear()}</p>
@@ -290,7 +289,7 @@ function addLabel(list) {
 
     for (let i = 0; i < list.length; i++) {
         let id = list[i];
-        const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
+        const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${id}/label`;
         fetch(url, {
             headers: {
                 'Authorization': `${token}`
@@ -329,43 +328,43 @@ function updateBookings(filterType) {
         case 'in_progress': {
             filter = "IN_PROGRESS";
             filterButton.textContent = "Filter: In progress";
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
             break;
         }
         case "todo": {
             filter = "TODO";
             filterButton.textContent = "Filter: TODO";
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
             break;
         }
         case "review": {
             console.log("Entered Review Section");
             filter = "REVIEW";
             filterButton.textContent = "Filter: REVIEW";
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/REVIEW`;
+            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/REVIEW`;
             break;
         }
         case "done": {
             filter = "DONE";
             filterButton.textContent = "Filter: DONE";
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
             break;
         }
         case 'future': {
             filter = "ongoing";
             filterButton.textContent = "Filter: Upcoming";
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
             break;
         }
         case 'past': {
             filter = "past";
             filterButton.textContent = "Filter: Past";
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
             break;
         }
         default: {
             filterButton.textContent = "All Bookings";
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybookings`;
+            url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybookings`;
         }
     }
 
@@ -416,7 +415,7 @@ function updateLabel(label, id) {
     }
 
 
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${id}/label?label=${label.innerText.replace("-"," ").toUpperCase()}`;
+    const url = window.location.origin +`/shotmaniacs2/api/crew/${account_id}/booking/${id}/label?label=${label.innerText.replace("-"," ").toUpperCase()}`;
     fetch(url, {
             method: 'PUT',
             headers: {
@@ -443,8 +442,10 @@ let allBookings = [];
 let inputElement = document.getElementById("search-input");
 
 inputElement.addEventListener("input", onInputChange);
+
+//TODO double check filter use (link is mybookings, name is all bookings)
 function getAllBookings() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybookings`
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybookings`
 
     fetch(url, {
         headers: {
@@ -519,10 +520,115 @@ function sendInput(event) {
 
     if (inputElement.value.length === 0) updateBookings("");
     else {
-        const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
+        const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
         performQueryAndUpdateBookings(url);
     }
 }
 
 
 updateBookings("");
+function logout(){
+    const token = cookies['auth_token'];
+    const url = window.location.origin+`/shotmaniacs2/api/login`
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                document.cookie = "account_id =;  Path=/";
+                document.cookie = "account_username =;  Path=/";
+                document.cookie = "auth_token =;  Path=/";
+                window.location.href="http://localhost:8080/shotmaniacs2/";
+            } else if (response.status === 304) {
+                throw new Error('The given account was not logged in.');
+            } else {
+                throw new Error('Failed to log out. Status: ' + response.status);
+            }
+        })
+        .then(data => {
+            console.log(data); // Logged out successfully
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+}
+function graph(){
+    const filter = "DONE";
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/mybooking/labelfilter/${filter}`;
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(bookings => {
+            var bookingCounts = {};
+
+            bookings.forEach(function (booking) {
+                var timestamp = new Date(parseInt(booking.date));
+
+                if (!isNaN(timestamp)) { // Check if timestamp is valid
+                    var date = new Date(timestamp); // Convert to Date object
+
+                    var monthh = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0');
+
+                    if (bookingCounts[monthh]) {
+                        bookingCounts[monthh]++;
+                    } else {
+                        bookingCounts[monthh] = 1;
+                    }
+                }});
+
+            // Convert the booking counts object to arrays
+            var monthss = Object.keys(bookingCounts);
+            var counts = monthss.map(function(month) {
+                return bookingCounts[month];
+            });
+
+            // Get the canvas element
+            var canvas = document.getElementById('chart');
+            var ctx = canvas.getContext('2d');
+
+            // Chart configuration
+            var chartConfig = {
+                type: 'line',
+                data: {
+                    labels: monthss,
+                    datasets: [{
+                        label: 'Number of Bookings',
+                        data: counts,
+                        borderColor: 'blue',
+                        backgroundColor: 'transparent'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                            },
+                            min: monthss[0],  // Specify the minimum value on the x-axis
+                            max: monthss[4]
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                            },
+                        }
+                    }
+                }
+            };
+
+            // Create the chart graph
+            var chart = new Chart(ctx, chartConfig);})
+}

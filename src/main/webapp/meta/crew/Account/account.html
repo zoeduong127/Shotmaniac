@@ -1,28 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Client Account</title>
-  <link href="account.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet" type="text/css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <title>Announcement Scroll</title>
+  <link rel="stylesheet" type="text/css" href="accountStyle.css">
+  <!--
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  -->
 </head>
-
-<body>
+<body onload="readAllAnnouncements()">  <!-- here's it bunch of announcements, each with a title
+ that needs to be edited regarding the actual announcements-->
 <div class="container">
+
   <header>
-    <div class="page-title">
-      <div class="text">
-        <label>Hello <span id ="client-name">Client</span>, Welcome to Shotmaniac2 EDIT Profile</label></div>
-      <hr>
-      <div class="dropdown">
-        <button class="dropdownBtn" onclick="logout()">
-          <img id="avatar" src="../../Brand_Identity/images/icons/logOut-Black.png" alt="dropdown">
-        </button>
+    <div class="dropdown">
+      <button class="dropdownBtn">
+        <img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
+      </button>
+
+      <div class="dropdown-content">
+        <div class="item">
+          <a href="./../profile/profile.html">Profile</a>
+        </div>
+
+        <div class="item">
+          <a onclick="logout()">Log Out</a>  <!--missing HREF-->
+        </div>
       </div>
     </div>
+  </header>
 
+
+  <nav>
+    <div class="text">
+      <img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
+    </div>
+    <div class="dash-box">
+      <a href="./../dashboard/dashboard.html" target="_self">
+        <div class="box" id="dashboard">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label> Dashboard</label>
+        </div>
+      </a>
+      <a href="./notifications.html" target="_self">
+        <div class="box" id="News">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>News</label>
+        </div>
+      </a>
+      <a href="./../calendar/calendar.html" target="_self">
+        <div class="box" id="calendar">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label> Calendar</label>
+        </div>
+      </a>
+      <a href="./../bookings/Booking.html" target="_self">
+        <div class="box" id="booking">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>Bookings</label>
+        </div>
+      </a>
+      <a href="../../help/help.html" target="_self">
+        <div class="box" id="help">
+          <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+          <label>Help</label>
+        </div>
+      </a>
+    </div>
+  </nav>
+
+
+  <main>
     <div class="navigation">
       <div class ="left-nav">
         <img src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
@@ -31,44 +78,7 @@
           <div class ="navigate"><a href="account.html"><span>Account  </span></a>  / Edit Profile</div>
         </div>
       </div>
-      <div class ="right-nav">
-          <a href="modify.html"><span>EDIT PROFILE </span></a>
-      </div>
     </div>
-  </header>
-
-  <nav>
-    <div class="logo">
-      <img src="../../Brand_Identity/images/Logo/Shotmaniacs_Logo_White_MT.png" alt="Shotmaniacs White Logo Without Text">
-    </div>
-    <div class="dash-box">
-      <a href="../clientBooking/applicationForm.html" target="_self">
-        <div class="box" id="dashboard">
-          <img id="icon-1" src="../../Brand_Identity/images/icons/create_file.png" alt="">
-          <label>New Booking</label>
-        </div>
-      </a>
-      <a href="../clientBooking/dashboard.html" target="_self">
-        <div class="box" id="News">
-          <img id="icon-2" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="">
-          <label>My Bookings</label>
-        </div>
-      </a>
-      <a href="account.html" target="_self">
-        <div class="box" id="calendar">
-          <img id="icon-3" src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
-          <label>Account</label>
-        </div>
-      </a>
-      <a href="../../help/help.html" target="_self">
-        <div class="box" id="booking">
-          <img id="icon-4" src="../../Brand_Identity/images/icons/black_help_icon.png" alt="">
-          <label>Help</label>
-        </div>
-      </a>
-    </div>
-  </nav>
-  <main>
     <div id ="profile">
       <div class="id">
         <p>User ID<p>
@@ -83,18 +93,13 @@
         <div class ="display" id="email"></div>
       </div>
       <div class="password">
-        <p>Tel.<p>
+        <p>Password<p>
         <div class ="display" id="password"></div>
       </div>
-
-
     </div>
   </main>
-  <aside>
-
-  </aside>
-
 </div>
+
 <script>
 
   const cookies = parseCookie(document.cookie);
@@ -151,5 +156,6 @@
   }
 
 </script>
+
 </body>
 </html>

@@ -1,0 +1,538 @@
+.container {
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: 24vh 1fr;
+    grid-template-areas:
+        "header"
+        "content";
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: hidden;
+}
+
+
+header {
+    grid-area: header;
+    background-color: transparent;
+}
+
+main {
+    grid-area: content;
+    background-color: rgb(255, 255, 255);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kiona', 'Quicksand', sans-serif;
+}
+
+body {
+    margin: 0;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+
+
+.top {
+    background-color: rgba(82, 82, 82, 0.8);
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image {
+    margin-top: 0;
+}
+
+.user-icon {
+    color: white;
+    scale: 1.7;
+    float: left;
+    transform: translateX(20px);
+    margin-left: 0.9vw;
+    margin-top: 0.25vh;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+#Username {
+    color:white;
+    font-family: "Kiona SemiBold";
+    width: 296px;
+    height: 24px;
+    margin-top: 2.8vh;
+    margin-left: -62vw;
+}
+
+#LogOutIcon {
+    width: 34px;
+    height: 32px;
+    margin-right: -65vw;
+    cursor: pointer;
+}
+
+#LogOut {
+    color: white;
+    float: right;
+    padding-right: 48px;
+    text-decoration: underline;
+    font-family: "Kiona SemiBold";
+    cursor: pointer;
+}
+
+.search-area {
+    background-color: white;
+    height: 10.8vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.left {
+    transform: translateX(30px);
+}
+
+.search-area img {
+    transform: translateY(20px);
+    width: 4.15vw;
+    padding-top: 2vh;
+    padding-left: 1vw;
+    margin-left: 1vw;
+}
+
+.left .text {
+    transform: translate(100px, -50px);
+    margin-top: 1vh;
+}
+
+.search-area .slogan {
+    font-size: 2rem;
+    font-family: "Kiona", "Times New Roman", serif;
+    color: #525252;
+    margin-left: 2vw;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+/*TODO figure out a way to change the button colour*/
+.search {
+    float: right;
+    margin: 0 7vw 0 0;
+
+    display: flex;
+    justify-content: center;
+    width: 30vw;
+    height: 4vh;
+}
+
+.search  input{
+    border-radius: 20px 0 0 20px;
+    border: none;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+    width: 17.5vw;
+    padding: 0 0 0 1vw;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#search::placeholder {
+    font-family: Kiona, cursive;
+}
+
+.search-icon-btn {
+    background-color: white;
+    border: none;
+    border-right: 2px solid #000;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-radius: 0 20px 20px 0 ;
+    width: 2.5vw;
+    cursor: pointer;
+    background-image: url("./../Brand_Identity/images/icons/search_icon_black.png");
+    background-position: 5px 3px;
+    background-repeat: no-repeat;
+    background-size: 3vh;
+}
+
+.search input:focus {
+    color: black;
+    outline: none;
+    background-color: rgba(81,81,81,0.2);
+}
+
+#search:focus .search .search-icon-btn {
+    outline: none;
+    background-color: rgba(81,81,81,0.2);
+}
+
+.search input:focus::placeholder {
+    color: transparent;
+}
+
+.navigation {
+    background-color: rgba(22, 150, 210, 0.75);
+    height: 7vh;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    width: 10vw;
+    height: 10vh;
+    text-align: center;
+    border-left: 2.2px solid white;
+    font-size: 1.3rem;
+}
+
+.box:hover {
+    cursor: pointer;
+}
+
+#img {
+    background-repeat: no-repeat;
+    background-position: 5vw 2.5vh;
+    background-image: url("./../../../Brand_Identity/images/icons/white_house.png");
+    background-size: 5vh;
+    border-left: 0;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+.box p {
+    margin: 3.5vh 0;
+}
+
+.navigation img {
+    scale: 0.27;
+
+}
+
+.main-container {
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.heading {
+    width: 100%;
+}
+
+.booking-heading {
+    height: 3.5vh;
+    color: #000000;
+    font: 2em Kiona, cursive;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.booking-name-title {
+    height: 3.5vh;
+    color: #1696d2;
+    font: 2em "Kiona SemiBold";
+    text-decoration: underline;
+    font-weight: bolder;
+    cursor: pointer;
+    font-style: italic;
+}
+
+.left-side {
+    width: 70%;
+    margin-top: 2vh;
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;  /* hides scrollbar */
+    scrollbar-width: none;  /* hides scrollbar */
+    position: relative;
+}
+
+/*hides scrollbar*/
+.left-side::-webkit-scrollbar {
+    display: none;
+}
+
+#scrollbar {
+    width: 1%;
+    height: 100vh;
+    padding: 0px;
+    margin: 0 0 0px auto;
+    right: 3.5vw;
+    top: 2.5vh;
+    position: absolute;
+    background-color: #82d9c5;
+    transition: height 0.2s;
+}
+
+#scrollbar #bar {
+    width: 100%;
+    height: 0%;
+    background-color: #218b82;
+}
+
+.crew-rectangle {
+    background: #ffffff;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: #525252;
+    border-width: 2px;
+    width: 55vw;
+    height: 9.5vh;
+    margin-left: 3.5vw;
+}
+
+.crew-name {
+    color: #1f1f1f;
+    text-align: left;
+    font: 18px Kiona Semibold;
+    text-decoration: underline;
+    margin-left: 1vw;
+    margin-top: 2.4vh;
+    cursor: pointer;
+}
+
+.role-rectangle {
+    background: rgba(177, 156, 216, 0.74);
+    border-style: solid;
+    border-color: #b19cd8;
+    border-width: 2px;
+    width: 12vw;
+    height: 4vh;
+    margin-left: 27vw;
+    margin-top: -3.5vh;
+}
+
+.role-specifying {
+    color: #1f1f1f;
+    text-align: center;
+    font: 17px Kiona, cursive;
+    margin-top: 0.4vh;
+    margin-left: -1.8vw;
+    font-weight: bold;
+}
+
+.polygon {
+    margin-left: 10vw;
+    transform: translate(1px, -36.5px);
+}
+
+.choices {
+    background: rgba(255, 255, 255, 0.8);
+    border-style: solid;
+    border-color: rgba(82, 82, 82, 0.68);
+    border-width: 1.75px;
+    width: 7.5vw;
+    height: 18.7vh;
+    position: absolute;
+    z-index: 1;
+    left: 32.6vw;
+}
+
+.choice {
+    color: #000000;
+    font: 11px "Kiona SemiBold";
+    margin-left: 0.75vw;
+    margin-top: 0.7vh;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.work-hours-rectangle {
+    background: #ffffff;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: #ff0000;
+    border-width: 2px;
+    width: 8vw;
+    height: 9.5vh;
+    margin-top: -6.715vh;
+    margin-left: 46.9vw;
+}
+
+.hours {
+    text-align: center;
+    font: 18px "Kiona SemiBold";
+    margin-left: -0.01vw;
+    margin-top: 3vh;
+    font-weight: bolder;
+    text-decoration: underline;
+    font-style: oblique;
+    color: #e70f0f;
+    cursor: pointer;
+}
+
+.pad {
+    margin-bottom: 2.6vh;
+}
+
+#search-icon-for-name {
+    width: 2vw;
+    height: 4vh;
+    position: fixed;
+    top: 44.7vh;
+    left: 72.5vw;
+    z-index: 1;
+}
+
+#myInput {
+    width: 37vh;
+    font-size: 15px;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    padding: 12px 20px 12px 40px;
+    border: 2px solid slategrey;
+    position: fixed;
+    top: 43.5vh;
+    left: 72vw;
+}
+
+#myUL {
+    list-style-type: none;
+    padding: 0;
+    position: fixed;
+    top: 48.5vh;
+    right: 10.55vw;
+    overflow-y: hidden;
+    transition: max-height 0.2s;
+    max-height: 100%;
+}
+
+#myUL[style*="display: none"] {
+    max-height: 0;
+}
+
+#myUL li a {
+    width: 34vh;
+    font-size: 15px;
+    font-family: Kiona, cursive;
+    font-weight: bold;
+    border: 1px solid lightgrey;
+    background-color: rgba(241, 241, 241, 1);
+    padding: 12px;
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+#myUL li a:hover:not(.header) {
+    background-color: rgba(82, 82, 82, 0.25);
+}
+
+#add-crew {
+    font: 24px "Kiona SemiBold";
+    margin-left: 8vw;
+    margin-top: -34vh;
+    font-weight: bolder;
+    text-decoration: underline;
+    color: #e70f0f;
+}
+
+.addingCrew {
+    background: rgba(241, 241, 241, 1);
+    border-style: solid;
+    border-color: rgba(82, 82, 82, 0.5);
+    border-width: 1.5px;
+    width: 21vw;
+    height: 39vh;
+    margin-top: -38vh;
+    margin-left: 72.5vw;
+}
+
+.title-client-info {
+    background: #ffffff;
+    border-style: solid;
+    border-color: rgba(82, 82, 82, 0.5);
+    border-width: 1.5px;
+    width: 21vw;
+    height: 7vh;
+    margin-left: -0.04vw;
+    margin-top: -0.04vw;
+}
+
+#client-title {
+    color: #000000;
+    font: 20px "Kiona Semibold";
+    font-weight: bold;
+    margin-top: 1.8vh;
+    padding-left: 3.2vw;
+}
+
+.client-info-title {
+    color: #000000;
+    font: 19px "Kiona SemiBold";
+    margin-top: 1.5vh;
+    margin-bottom: 0;
+    margin-left: 1.1vw;
+    text-decoration: underline;
+}
+
+.info {
+    color: #000000;
+    font: 19px "Kiwi Maru", sans-serif;
+    margin-top: -2.9vh;
+    margin-bottom: 0;
+    margin-left: 5.2vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 15vw;
+}
+
+.info:hover {
+    word-break: break-all;
+    overflow: visible;
+    white-space: normal;
+}
+
+.break-line {
+    background-color: #1fd1f9;
+    background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
+    width: 16vw;
+    height: 1.3px;
+    margin-top: 4vh;
+    margin-left: 2.4vw;
+    margin-bottom: 3vh;
+}
+
+#normal-role {
+    color: #1696d2;
+    margin-top: 2.28vh;
+    position: absolute;
+    margin-left: 0.7vw;
+    text-align: center;
+}
+
+#prod {
+    color: #e70f0f;
+    margin-top: 1.5vh;
+    margin-left: 10.7vw;
+    text-align: center;
+}
+
+.adding-as-role {
+    font-family: Kiona Semibold;
+    font-style: oblique;
+    font-size: 13px;
+    font-weight: bolder;
+    cursor: pointer;
+}
