@@ -142,3 +142,239 @@ function display(id) {
 }
 
 readAllAnnouncements();
+
+
+
+/*FROM ADMIN*/
+
+let commentBox;
+let commentInput;
+let submitbutton;
+
+const cookies = parseCookie(document.cookie);
+const token = cookies['auth_token'];
+const account_id = cookies['account_id'];
+
+function parseCookie(cookieString) {
+    const cookies = {};
+    cookieString.split(';').forEach(cookie => {
+        const [name, value] = cookie.trim().split('=');
+        cookies[name] = decodeURIComponent(value);
+    });
+    return cookies;
+}
+
+function readAllAnnouncements(input) {
+    let url;
+
+    if (input === " ") {
+        url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`;
+    } else {
+        url = input;
+    }
+
+    console.log(url);
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            let container = "";
+            let description = "";
+            let check = true;
+
+            data.forEach(a => {
+                container += `<div class="announcement-list-item" id="A_${a.id}" onclick="display(${a.id})">${a.title}</div>`;
+
+                if (check) {
+                    description += `
+							<div class="description-wrapper current_display" id="${a.id}">
+			                    <h3 class="announcement-title">${a.title}</h3>
+			
+			                    <div class="announcement-description" id="announcement-description">${a.body}</div>
+		                    </div>
+		                    `;
+
+                    check = false;
+                } else {
+                    description += `
+							<div class="description-wrapper" id="${a.id}">
+			                    <h3 class="announcement-title">${a.title}</h3>
+			
+			                    <div id="announcement-description">${a.body}</div>
+			
+		                    </div>
+                            `;
+                }
+            })
+
+            console.log(container + ", " + description)
+            document.getElementById("announcement-wrapper").innerHTML = container;
+            document.getElementById("description").innerHTML = description;
+        })
+}
+
+
+function display(id) {
+    /*document.getElementById("add-comment").innerHTML = "Add a comment";
+    commentBox.style.visibility = "hidden";
+    commentBox.style.display = "none";*/
+    document.querySelector(".current_display").className = "description-wrapper";
+    document.getElementById(id).classList.add("current_display");
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/news/${id}/mark_read`;
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Authorization': `${token}`
+        }
+    }
+    fetch(url,options)
+        .then(response=>console.log(response))
+
+    /*
+            changeState(id);
+    */
+}
+
+
+
+/*Filter*/
+
+function filterAnnouncement(state) {
+    let url;
+    //TODO possibly have to switch this to 0's and 1's, check DB for which is which.
+    if (Number(state) === 0) {
+        url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/filter?status=${state}`;
+        state = "UNREAD";
+    } else if (Number(state) === 1){
+        url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/filter?status=${state}`;
+        state = "READ";
+    } else {
+        state = "ALL";
+        url = " ";
+    }
+    document.getElementById("filter-text").innerText = state;
+
+    readAllAnnouncements(url)
+}
+
+/*SEARCH */
+
+let allBookings = [];
+let inputElement = document.getElementById("search");
+
+inputElement.addEventListener("input", onInputChange);
+function getAllAnnouncements() {
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`
+
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            allBookings = data.map((announcement) => {
+                return announcement.title;
+            })
+        })
+}
+
+function  onInputChange() {
+    removeAutocompleteDropdown();
+
+    const value = inputElement.value.toLowerCase();
+
+    if (value.length === 0) return;
+
+    const filteredNames = [];
+
+
+    allBookings.forEach((announcement) => {
+        if (announcement.substring(0, value.length).toLowerCase() === value) {
+            filteredNames.push(announcement);
+        }
+    })
+    createAutocompleteDropdown(filteredNames);
+}
+
+function createAutocompleteDropdown(list) {
+    const listEl = document.createElement("ul");
+    listEl.className = "autocomplete-list";
+    listEl.id =  "autocomplete-list";
+    list.forEach((booking) => {
+        const listItem = document.createElement("li");
+
+        const bookingButton = document.createElement("button");
+        bookingButton.innerHTML = booking;
+        bookingButton.addEventListener("click", onBookingButtonClick)
+        listItem.appendChild(bookingButton);
+
+        listEl.appendChild(listItem);
+    })
+    document.querySelector("#search_ALL").appendChild(listEl);
+}
+
+function removeAutocompleteDropdown() {
+    const listEl = document.querySelector("#autocomplete-list");
+    if (listEl) listEl.remove(); //checks if it exists and then removes it
+}
+
+function onBookingButtonClick(event) {
+    event.preventDefault(); //cancels default event (submitting the form)
+
+
+    document.querySelector("#search-icon-btn").addEventListener("click", sendInput);
+
+    const buttonEl = event.target; //element that triggered the event (the button itself)
+    inputElement.value = buttonEl.innerHTML; //should be a string of the booking name
+
+    removeAutocompleteDropdown();
+
+}
+
+
+function sendInput(event) {
+    console.log("input called")
+    event.preventDefault();
+
+    if (inputElement.value.length === 0) readAllAnnouncements(" ");
+    else {
+        const url = window.location.origin + `/shotmaniacs2/api/admin/announcements/search?searchText="${inputElement.value}"`
+        readAllAnnouncements(url);
+    }
+}
+
+
+function logout(){
+    const token = cookies['auth_token'];
+    const url = window.location.origin+`/shotmaniacs2/api/login`
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                document.cookie = "account_id =;  Path=/";
+                document.cookie = "account_username =;  Path=/";
+                document.cookie = "auth_token =;  Path=/";
+                window.location.href="http://localhost:8080/shotmaniacs2/";
+            } else if (response.status === 304) {
+                throw new Error('The given account was not logged in.');
+            } else {
+                throw new Error('Failed to log out. Status: ' + response.status);
+            }
+        })
+        .then(data => {
+            console.log(data); // Logged out successfully
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+

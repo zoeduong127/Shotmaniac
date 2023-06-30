@@ -38,7 +38,7 @@ public class AdministratorsResource {
 
 
     @RolesAllowed({"Administrator"})
-    @Path("createnews/{enrolmentId}")
+    @Path("enrolment/{enrolmentId}")
     public EnrolmentResource modifySpecificEnrolment(@PathParam("enrolmentId") int enrolmentId) {
         return new EnrolmentResource(uriInfo, request, enrolmentId);
     }
