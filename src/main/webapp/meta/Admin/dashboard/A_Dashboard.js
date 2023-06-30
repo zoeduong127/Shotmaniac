@@ -6,6 +6,7 @@ const cancel = document.getElementById("cancel-container");
 const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
 const account_id = cookies['account_id'];
+const booking_id = cookies['booking_id'];
 console.log("account id: " + account_id);
 
 const months = [
@@ -147,7 +148,7 @@ function displaySortedBookings(list) {
 }
 
 function displayInformation(id) {
-    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${id}`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/booking/${id}`;
     document.cookie = "booking_id=" + id + "; path=/";
 
     fetch(url, {
@@ -230,6 +231,7 @@ function addProductManager(id) {
             console.log("product Manager: " + productManager);
         })
 }
+
 // function acceptBooking(){
 //     const state = 'APPROVED'
 //     const booking_id = cookies['booking_id'];
@@ -271,7 +273,7 @@ function addProductManager(id) {
 //             }
 //         })
 // }
-function acceptBooking(){
+function acceptBooking() {
     var crewNeededInput = document.getElementById("crew-needed");
     var productManagerInput = document.getElementById("product-manager");
 
@@ -287,39 +289,39 @@ function acceptBooking(){
     const state = 'APPROVED'
     const booking_id = cookies['booking_id'];
     console.log(booking_id)
-    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
-    const url1 = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/slots?slots=`+crewNeededInput.value;
-    const url2 = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/setproductmanager?username=`+productManagerInput.value;
+    const url = window.location.origin + `/shotmaniacs2/api/admin/booking/` + booking_id + `/state?state=` + state;
+    const url1 = window.location.origin + `/shotmaniacs2/api/admin/booking/` + booking_id + `/slots?slots=` + crewNeededInput.value;
+    const url2 = window.location.origin + `/shotmaniacs2/api/admin/booking/` + booking_id + `/setproductmanager?username=` + productManagerInput.value;
     const options = {
         method: 'PUT',
         headers: {
             'Authorization': `${token}`
         }
     }
-    fetch(url1,options)
+    fetch(url1, options)
         .then(response => {
             console.log(response)
-            if(response.ok){
-                fetch(url2,options)
+            if (response.ok) {
+                fetch(url2, options)
                     .then(response => {
                         console.log(response)
-                        if(response.ok){
-                            fetch(url,options)
+                        if (response.ok) {
+                            fetch(url, options)
                                 .then(response => {
                                     console.log(response)
-                                    if(response.ok){
+                                    if (response.ok) {
                                         document.cookie = "booking_id=; path=/";
                                         performQueryAndUpdateBookings(" ");
                                         toggleOff();
-                                    }else{
+                                    } else {
                                         alert("Something wrong! Please try again")
                                     }
                                 })
-                        }else{
+                        } else {
                             alert("Something wrong with manager input! Please try again")
                         }
                     })
-            }else{
+            } else {
                 alert("Something wrong with crew input! Please try again")
             }
         })
@@ -327,7 +329,7 @@ function acceptBooking(){
 
 
 function addUpcomingEvents() {
-    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/on-goingbookings`;
+    const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/on-goingbookings`;
     let booking_list = [];
 
     fetch(url, {
@@ -345,7 +347,7 @@ function addUpcomingEvents() {
             });
             //TODO FIX THIS BS, its supposed to sort and filter but it does neither
             console.log(data);
-            const earliestEvents = data.slice(0,5);
+            const earliestEvents = data.slice(0, 5);
             console.log(earliestEvents);
             let output = "<h1>Upcoming Events</h1>";
             earliestEvents.forEach(function (event) {
@@ -418,7 +420,7 @@ function getAllCrew() {
         })
 }
 
-function  onSingleInputChange() {
+function onSingleInputChange() {
     console.log("input found");
     removeAutocompleteDropdown();
 
@@ -441,7 +443,7 @@ function createSingleAutocompleteDropdown(list) {
     console.log("creating list")
     const listEl = document.createElement("ul");
     listEl.className = "autocomplete-list";
-    listEl.id =  "autocomplete-list";
+    listEl.id = "autocomplete-list";
     list.forEach((crew) => {
         const listItem = document.createElement("li");
 
@@ -489,7 +491,7 @@ function getAllBookings() {
         })
 }
 
-function  ALL_onInputChange() {
+function ALL_onInputChange() {
     console.log("All input event listener activated")
     removeAutocompleteDropdown();
 
@@ -512,7 +514,7 @@ function ALL_createAutocompleteDropdown(list) {
     console.log("all input create dropdown")
     const listEl = document.createElement("ul");
     listEl.className = "All-autocomplete-list";
-    listEl.id =  "autocomplete-list";
+    listEl.id = "autocomplete-list";
     list.forEach((booking) => {
         const listItem = document.createElement("li");
 
@@ -558,6 +560,7 @@ let Announcements = [];
 let AnnouncementInputElement = document.getElementById("search-input");
 
 AnnouncementInputElement.addEventListener("input", Announcement_onInputChange);
+
 function getAllAnnouncements() {
     const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`; //TODO CHANGE THE URL TO ALL ANNOUNCEMENTS
 
@@ -574,7 +577,7 @@ function getAllAnnouncements() {
         })
 }
 
-function  Announcement_onInputChange() {
+function Announcement_onInputChange() {
     removeAutocompleteDropdown();
 
     const value = AnnouncementInputElement.value.toLowerCase();
@@ -595,8 +598,8 @@ function  Announcement_onInputChange() {
 function Announcement_createAutocompleteDropdown(list) {
     const listEl = document.createElement("ul");
     listEl.className = "Announcement-autocomplete-list";
-    listEl.id =  "autocomplete-list";
-    listEl.id =  "autocomplete-list";
+    listEl.id = "autocomplete-list";
+    listEl.id = "autocomplete-list";
     list.forEach((booking) => {
         const listItem = document.createElement("li");
 
@@ -633,8 +636,7 @@ function Announcement_sendInput(event) {
     if (AnnouncementInputElement.value.length === 0) {
         console.log(inputElement);
         fillAnnouncements(" ");
-    }
-    else {
+    } else {
         const url = window.location.origin + `/shotmaniacs2/api/admin/announcements/search?searchText=${AnnouncementInputElement.value}`
         console.log(url);
         fillAnnouncements(url);
@@ -647,9 +649,10 @@ function removeAutocompleteDropdown() {
     const listEl = document.querySelector("#autocomplete-list");
     if (listEl) listEl.remove(); //checks if it exists and then removes it
 }
-function graph(){
+
+function graph() {
     const filter = "DONE";
-    const url = window.location.origin+`/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
+    const url = window.location.origin + `/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
     fetch(url, {
         headers: {
             'Authorization': `${token}`
@@ -679,11 +682,12 @@ function graph(){
                     } else {
                         bookingCounts[monthh] = 1;
                     }
-                }});
+                }
+            });
 
             // Convert the booking counts object to arrays
             var monthss = Object.keys(bookingCounts);
-            var counts = monthss.map(function(month) {
+            var counts = monthss.map(function (month) {
                 return bookingCounts[month];
             });
 
@@ -714,8 +718,8 @@ function graph(){
                             title: {
                                 display: true,
                             },
-                            min: monthss[(monthss.length)-5],  // Specify the minimum value on the x-axis
-                            max: monthss[(monthss.length)-1]
+                            min: monthss[(monthss.length) - 5],  // Specify the minimum value on the x-axis
+                            max: monthss[(monthss.length) - 1]
                         },
                         y: {
                             display: true,
@@ -728,9 +732,35 @@ function graph(){
             };
 
             // Create the chart graph
-            var chart = new Chart(ctx, chartConfig);})
+            var chart = new Chart(ctx, chartConfig);
+        })
 }
 
+function cancelBooking() {
+    const url = window.location.origin + `/shotmaniacs2/api/admin/booking/${booking_id}/cancel`;
+    let options;
+    const input = document.getElementById("text_box");
+    if (input === "") {
+        alert("Please enter a reason for the cancellation!")
+    } else {
+        options = {
+            method: 'POST',
+            headers: {
+                'Authorization': `${token}`
+            },
+            body: {
+                'reason': `${input}`
+            }
+        }
+    }
+    console.log("option: " + options);
+    console.log("url" + url);
+    fetch(url, options)
+        .then(response => {
+            if (response.ok) console.log(response);
+        })
+        .catch(err => console.log(err));
+}
 
 /*Startup*/
 performQueryAndUpdateBookings(" ")

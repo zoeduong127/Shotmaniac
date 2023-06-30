@@ -78,6 +78,30 @@
 			
 			<div class="announcement-content" id="description"></div>
 		</div>
+		
+		<div class="create-announcement">
+			<div class="title-section-name"><h3>Create Announcement</h3></div>
+			<div class="main-body">
+				<form action="" autocomplete="off">
+					<div class="search" id="searchbar">
+						<label for="search-input"></label>
+						<input type="text" class="input" id="search-input" placeholder="add crew name or leave empty for a broadcast"
+						       onfocus="getAllBookings()">
+						
+						<button class="search-icon-btn" id="search-button">
+							<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png"
+							     alt="search">
+						</button>
+					</div>
+				</form>
+				
+				<label for="announcement-input"></label>
+				<textarea id="announcement-input" placeholder="Add announcement here..."></textarea>
+			</div>
+			<div class="post">
+				<button>Send Announcement</button>
+			</div>
+		</div>
 	</main>
 </div>
 
@@ -365,6 +389,35 @@
 				console.error(error);
 			});
 	}
+	
+	
+	function createAnnouncement() {
+		const input = document.getElementById("announcement-input");
+		const recipient = document.getElementById("search-input");
+		let url;
+		
+		if (input.innerText === "") {
+			alert("You are unable to send an empty announcement!")
+		}
+		
+		if (recipient === "") {
+			url = window.location.origin + `/shotmaniacs2/api/admin/announcement`;
+		} else {
+			url = window.location.origin + ``;
+		}
+		
+		fetch(url, {
+			method: 'PUT',
+			headers: {
+				'Authorization': `${token}`
+			}
+		})
+		.catch(error => {
+			console.error(error);
+		});
+	}
+	
+	
 </script>
 </body>
 </html>
