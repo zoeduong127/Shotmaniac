@@ -119,21 +119,32 @@
             .then(response => response.json())
             .then(data => {
               data.forEach(crew => {
-                crewInfo += `
+                const url2 = window.location.origin + `/shotmaniacs2/api/crew/${crew.id}/mybooking/statistics/hoursworked`;
+                fetch(url2,{
+                  headers: {
+                    'Authorization': `${token}`
+                  }
+                })
+                        .then(async response1 => {
+                          const json = JSON.parse(await response1.text())
+                          console.log(json)
+                          crewInfo += `
                             <div class="crew-rectangle pad" id="${crew.id}">
                               <div class="crew-name">${crew.username}</div>
                               <div class="role-rectangle">
                                 <p class="role-specifying">${crew.role}</p>
                               </div>
                               <div class="real-work-hours-rectangle">
-                                <p class="real-hours">Working Hours: </p>
+                                <p class="real-hours">Working Hours:<br><br>${json}</p>
                               </div>
                               <div class="work-hours-rectangle">
                                 <p class="hours" onclick="toggleRemove()">Remove</p>
                               </div>
                             </div>
                             `;
-                document.getElementById("crews").innerHTML = crewInfo;
+                          document.getElementById("crews").innerHTML = crewInfo;
+                        })
+
               })
             })
             .catch(error => {
@@ -161,11 +172,25 @@
                             </div>
                             <div class="input-section">
                                 <label for="editor">Account Type</label>
-                                <input class="number-type" id="accountType" type="text">
+
+                                <select class="number-type" id="accountType" type="text">
+                                  <option value="Administrator">Administrator</option>
+                                  <option value="Crew">Crew</option>
+                                  <option value="Client">Client</option>
+                               </select>
+
+
                             </div>
                             <div class="input-section">
                                 <label for="editor">Role</label>
-                                <input class="number-type" id="role" type="text">
+
+                                <select class="number-type" id="role" type="text">
+                                  <option value=" PHOTOGRAPHER"> PHOTOGRAPHER</option>
+                                  <option value="PRODUCER">PRODUCER</option>
+                                  <option value=" FILMMAKER">FILMMAKER</option>
+
+                                  <option value="OTHER">OTHER</option>
+                               </select>
                             </div>
                             <div class="footer" id="footer">
                                 <div class="save-data-and-accept" id="save-data" onclick="saveData()">Save Data And Add Crew</div>
@@ -179,27 +204,83 @@
   //TODO: make it appear in the left side
   //REMEMBER to make innerHTML of crewInfo empty so that it can clear data, otherwise, a new form will appear right below the previous form
   function saveData() {
-    crewInfo += `
-                  <div class="crew-rectangle pad" id="${crew.id}">
-                    <div class="crew-name">${crew.username}</div>
+    const url = window.location.origin + `/shotmaniacs2/api/admin/accounts`;
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("passwordForNewCrew").value;
+    const accountType = document.getElementById("accountType").value;
+    const role = document.getElementById("role").value;
+
+    // Create JSON object
+    const jsonObject = {
+      id:'' ,
+      username: username,
+      email: email,
+      passwordHash: password,
+      accountType: accountType,
+      salt:'',
+      telephone:'',
+      role: role
+    };
+    const options = {
+      method: 'POST',
+      headers: {
+        'Authorization': `${token}`,
+        'Content-Type': 'application/json'
+
+      },
+      body:JSON.stringify(jsonObject)
+    }
+
+    // Print JSON object
+    console.log(jsonObject);
+    fetch(url,options)
+            .then(response =>{
+              console.log(response)
+              if(response.ok){
+                crewInfo += `
+                  <div class="crew-rectangle pad" id="${response.text()}">
+                    <div class="crew-name">${username}</div>
                     <div class="role-rectangle">
-                      <p class="role-specifying">${crew.role}</p>
+                      <p class="role-specifying">${role}</p>
                     </div>
                     <div class="real-work-hours-rectangle">
-                      <p class="real-hours">Working Hours: </p>
+                      <p class="real-hours">Working Hours:  </p>
                     </div>
                     <div class="work-hours-rectangle">
                       <p class="hours" onclick="toggleRemove()">Remove</p>
                     </div>
                   </div>
                   `;
-    document.getElementById("crews").innerHTML = crewInfo;
+                document.getElementById("username").innerHTML='';
+                document.getElementById("email").innerHTML='';
+                document.getElementById("passwordForNewCrew").innerHTML='';
+                document.getElementById("accountType").innerHTML='';
+                document.getElementById("role").innerHTML='';
+                document.getElementById("crews").innerHTML='';
+              }else{
+                return response.text()
+              }
+            })
+
   }
 
   //TODO: update in the database
-  function toggleRemove() {
+  function toggleRemove(accountID) {
+    const url = window.location.origin + `/shotmaniacs2/api/admin/booking/${id}/crew/${accountID}/enrolment`;
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `${token}`
+      }
+    }).catch(error => {
+      // Handle any errors
+      console.error(error);
+    });
 
+    getCrews();
   }
+
 </script>
 </body>
 </html>
