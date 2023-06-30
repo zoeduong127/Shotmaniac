@@ -2,6 +2,7 @@ package shotmaniacs.group2.di.dto;
 
 import jakarta.mail.MessagingException;
 import jakarta.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import shotmaniacs.group2.di.dao.BookingDao;
 import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.Booking;
@@ -14,33 +15,39 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+@XmlRootElement
 public class Bookingdto {
+    @XmlAnyElement
     private int user_id;
+    @XmlAnyElement
     private String name;
-
+    @XmlAnyElement
     private String eventType;
-
+    @XmlAnyElement
     private String date;
+    @XmlAnyElement
     private String time;
-
+    @XmlAnyElement
     private String location;
+    @XmlAnyElement
     private String bookingType;
-
+    @XmlAnyElement
     private int duration;
+    @XmlAnyElement
     private String description;
-
+    @XmlAnyElement
     private String clientName;
-
+    @XmlAnyElement
     private String clientEmail;
-
+    @XmlAnyElement
     private String phoneNumber;
-
+    @XmlAnyElement
     private int slots;
     private static String host = "bronto.ewi.utwente.nl";
     private static String dbName ="dab_dsgnprj_50";
     private static String url = "jdbc:postgresql://" + host + ":5432/" +dbName+"?currentSchema=dab_dsgnprj_50";
     private static String password = "yummybanana";
-    public Bookingdto(){
+    public Bookingdto() {
     }
     public Bookingdto(String name,String eventType, String date, String time,
                       String location,String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber) {
@@ -56,8 +63,9 @@ public class Bookingdto {
         setDate(date);
         setTime(time);
     }
+
     public Bookingdto(int user_id,String name,String eventType, String date, String time,
-                      String location,String bookingType, int duration, String description) {
+                      String location,String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber) {
         setUser_id(user_id);
         setName(name);
         setDescription(description);
@@ -68,6 +76,27 @@ public class Bookingdto {
         setDate(date);
         setTime(time);
     }
+
+    public Bookingdto(int user_id, String name, String eventType, String date, String time, String location, String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber, int slots) {
+        this.user_id = user_id;
+        this.name = name;
+        this.eventType = eventType;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.bookingType = bookingType;
+        this.duration = duration;
+        this.description = description;
+        this.clientName = clientName;
+        this.clientEmail = clientEmail;
+        this.phoneNumber = phoneNumber;
+        this.slots = slots;
+    }
+
+    public Bookingdto(int user_id) {
+        this.user_id = user_id;
+    }
+
     public int getUser_id(){
         return this.user_id;
     }
@@ -199,7 +228,6 @@ public class Bookingdto {
     public void setDescription(String description) {
         this.description = description;
     }
-
     public String getClientName() {
         return clientName;
     }
