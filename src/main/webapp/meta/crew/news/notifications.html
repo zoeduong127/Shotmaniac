@@ -35,13 +35,13 @@
 			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
 		</div>
 		<div class="dash-box">
-			<a href="dashboard.html" target="_self">
+			<a href="./../dashboard/dashboard.html" target="_self">
 				<div class="box" id="dashboard">
 					<img id="dashboard-icon" src="../../Brand_Identity/images/icons/black-note.png" alt="Note-Icon">
 					<label> Dashboard</label>
 				</div>
 			</a>
-			<a href="./../news/notifications.html" target="_self">
+			<a href="./notifications.html" target="_self">
 				<div class="box" id="News">
 					<img id="news-icon" src="../../Brand_Identity/images/icons/announcement_white.png" alt="Announcements-Icon">
 					<label>News</label>
@@ -374,14 +374,24 @@
 						} else {
 							description += `
 							<div class="description-wrapper" id="${a.id}">
+			                    <div class="urgency">URGENCY: ${a.urgency}</div>
+			                    <div class="publisher" id="publisher"></div>
 			                    <h3 class="announcement-title">${a.title}</h3>
 			
-			                    <div id="announcement-description">${a.body}</div>
-			
-		                    </div>
+			                    <div class="announcement-description" id="announcement-description">${a.body}</div>
+			                    <div class="announcement-date">
+									Date:
+									${BackDay}
+							   		${months[BackMonth]}
+							   		${BackYear},
+							   		${BackHours}:
+							   		${BackMins}:
+							   		${BackSecs}
+								</div>
+							</div>
                             `;
-							getAccount(a.publisher);
 						}
+						getAccount(a.publisher);
 					})
 					/*
 					const submit = document.createElement("div");
