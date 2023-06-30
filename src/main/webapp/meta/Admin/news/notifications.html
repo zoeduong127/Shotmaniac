@@ -7,7 +7,7 @@
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	-->
 </head>
-<body onload="readAllAnnouncements()">  <!-- here's it bunch of announcements, each with a title
+<body onload="readAllAnnouncements(" ")>  <!-- here's it bunch of announcements, each with a title
  that needs to be edited regarding the actual announcements-->
 <div class="container">
 	
@@ -32,7 +32,7 @@
 			<div class="search" id="search_ALL">
 				<label for="search"></label>
 				<input type="text" class="input" id="search" placeholder="Search for Bookings..."
-				       onfocus="getAllBookings()">
+				       onfocus="getAllAnnouncements()">
 				<button class="search-icon-btn" id="search-icon-btn">
 				</button>
 			</div>
@@ -52,7 +52,7 @@
 	
 	<main>
 		<div class="page-title">
-			<div class="text">Notifications</div>
+			<div class="main-text">Notifications</div>
 		</div>
 		
 		<div class="announcement-container">
@@ -65,9 +65,9 @@
 							<img id="filter_img" src="./../../Brand_Identity/images/icons/black_filter_icon.png" alt="">
 							Filter
 						</button>
-						<div class="filter-options">
-							<a href="#" class="filter-option">Read</a>
-							<a href="#" class="filter-option">Unread</a>
+						<div class="filter-options" id="filter-dropdown">
+							<a class="filter-option" onclick="filterAnnouncement('READ')">Read</a>
+							<a class="filter-option" onclick="filterAnnouncement('UNREAD')">Unread</a>
 						</div>
 					</div>
 				</div>
@@ -99,8 +99,14 @@
 		return cookies;
 	}
 	
-	function readAllAnnouncements() {
-		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`;
+	function readAllAnnouncements(input) {
+		let url;
+		
+		if (input === " ") {
+			url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`;
+		} else {
+			url = input;
+		}
 		
 		fetch(url, {
 			headers: {
@@ -121,7 +127,7 @@
 							<div class="description-wrapper current_display" id="${a.id}">
 			                    <h3 class="announcement-title">${a.title}</h3>
 			
-			                    <div id="announcement-description">${a.body}</div>
+			                    <div class="announcement-description" id="announcement-description">${a.body}</div>
 		                    </div>
 		                    
 		                     <div class="add-comment" id="add-comment" onclick="showComment()">Add a comment</div>
@@ -213,10 +219,105 @@
 		document.getElementById(id).classList.add("current_display");
 	}
 	
+	/*Filter*/
 	
 	function filterAnnouncement(state) {
-		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/filter?status=${state};
+		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/filter?status=${state}`;
+		//TODO possibly have to switch this to 0's and 1's, check DB for which is which.
+		
+		document.getElementById("filter-dropdown").innerText = state;
+		
+		readAllAnnouncements(url)
 	}
+	
+	/*SEARCH */
+	
+	let allBookings = [];
+	let inputElement = document.getElementById("search");
+	
+	inputElement.addEventListener("input", onInputChange);
+	function getAllAnnouncements() {
+		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybookings`
+		
+		fetch(url, {
+			headers: {
+				'Authorization': `${token}`
+			}
+		})
+				.then(response => response.json())
+				.then(data => {
+					allBookings = data.map((announcement) => {
+						return announcement.title;
+					})
+				})
+	}
+	
+	function  onInputChange() {
+		removeAutocompleteDropdown();
+		
+		const value = inputElement.value.toLowerCase();
+		
+		if (value.length === 0) return;
+		
+		const filteredNames = [];
+		
+		
+		allBookings.forEach((announcement) => {
+			if (announcement.substring(0, value.length).toLowerCase() === value) {
+				filteredNames.push(announcement);
+			}
+		})
+		createAutocompleteDropdown(filteredNames);
+	}
+	
+	function createAutocompleteDropdown(list) {
+		const listEl = document.createElement("ul");
+		listEl.className = "autocomplete-list";
+		listEl.id =  "autocomplete-list";
+		list.forEach((booking) => {
+			const listItem = document.createElement("li");
+			
+			const bookingButton = document.createElement("button");
+			bookingButton.innerHTML = booking;
+			bookingButton.addEventListener("click", onBookingButtonClick)
+			listItem.appendChild(bookingButton);
+			
+			listEl.appendChild(listItem);
+		})
+		document.querySelector("#search_ALL").appendChild(listEl);
+	}
+	
+	function removeAutocompleteDropdown() {
+		const listEl = document.querySelector("#autocomplete-list");
+		if (listEl) listEl.remove(); //checks if it exists and then removes it
+	}
+	
+	function onBookingButtonClick(event) {
+		event.preventDefault(); //cancels default event (submitting the form)
+		
+		
+		document.querySelector("#search-icon-btn").addEventListener("click", sendInput);
+		
+		const buttonEl = event.target; //element that triggered the event (the button itself)
+		inputElement.value = buttonEl.innerHTML; //should be a string of the booking name
+		
+		removeAutocompleteDropdown();
+		
+	}
+	
+	
+	function sendInput(event) {
+		console.log("input called")
+		event.preventDefault();
+		
+		if (inputElement.value.length === 0) readAllAnnouncements(" ");
+		else {
+			const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
+			readAllAnnouncements(url);
+		}
+	}
+
+
 
 </script>
 </body>

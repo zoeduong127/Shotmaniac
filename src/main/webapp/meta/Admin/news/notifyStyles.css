@@ -71,16 +71,19 @@ body {
 }
 
 .left {
-    transform: translateX(30px);
+    height: 10vh;
 }
 
 .search-area img {
-    transform: translateY(20px);
     width: 4vw;
+    padding: 0.5vh 1vw;
 }
 
 .left .text {
-    transform: translate(100px, -50px);
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: justify;
+    width: 56%;
 }
 
 .search-area .slogan {
@@ -190,10 +193,11 @@ body {
     margin: 1vh 3vw 0 3vw;
 }
 
-.text {
+.main-text {
     font-size: 3rem;
-    font-weight: bold;
     text-align: center;
+    font-weight: 500;
+    font-style: italic;
     padding-top: 5vh;
 }
 
@@ -355,6 +359,12 @@ body {
     padding: 5px 10px;
     border: none;
     cursor: pointer;
+}
+.announcement-title {
+    font-weight: 600;
+}
+.announcement-description {
+    font-family: initial;
 }
 
 .description-wrapper {
