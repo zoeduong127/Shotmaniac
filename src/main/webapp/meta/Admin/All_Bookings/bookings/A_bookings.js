@@ -271,12 +271,12 @@ function allBookings(url) {
                         } else { //past bookings
                             if (booking.state === "APPROVED") {
                                 main += `
-                            <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
+                            <div class="past-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
                                 <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
-                                <div class="date-info-rectangle-ongoing-booking">
+                                <div class="date-info-rectangle-past-booking">
                                     <p class="date"> 
                                        ${BackDay} 
                                        ${months[BackMonth]} 
@@ -287,12 +287,12 @@ function allBookings(url) {
                         `;
                             } else if (booking.state === "PENDING") {
                                 main += `
-                            <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
+                            <div class="past-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
                                 <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
-                                <div class="date-info-rectangle-ongoing-booking">
+                                <div class="date-info-rectangle-past-booking">
                                     <p class="date"> 
                                        ${BackDay} 
                                        ${months[BackMonth]} 
@@ -306,12 +306,12 @@ function allBookings(url) {
                     } else { //past bookings
                         if (booking.state === "APPROVED") {
                             main += `
-                            <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
+                            <div class="past-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
                                 <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
-                                <div class="date-info-rectangle-ongoing-booking">
+                                <div class="date-info-rectangle-past-booking">
                                     <p class="date"> 
                                        ${BackDay} 
                                        ${months[BackMonth]} 
@@ -322,12 +322,12 @@ function allBookings(url) {
                         `;
                         } else if (booking.state === "PENDING") {
                             main += `
-                            <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
+                            <div class="past-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
                                 <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
-                                <div class="date-info-rectangle-ongoing-booking">
+                                <div class="date-info-rectangle-past-booking">
                                     <p class="date"> 
                                        ${BackDay} 
                                        ${months[BackMonth]} 
@@ -341,12 +341,12 @@ function allBookings(url) {
                 } else { //100% past bookings
                     if (booking.state === "APPROVED") {
                         main += `
-                            <div class="ongoing-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
+                            <div class="past-booking pad" id="${booking.id}" onclick="accessApprovedBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
                                 <div class="label-for-booking-approved">
                                     <p class="status">${booking.state}</p>
                                 </div>
-                                <div class="date-info-rectangle-ongoing-booking">
+                                <div class="date-info-rectangle-past-booking">
                                     <p class="date"> 
                                        ${BackDay} 
                                        ${months[BackMonth]} 
@@ -357,12 +357,12 @@ function allBookings(url) {
                         `;
                     } else if (booking.state === "PENDING") {
                         main += `
-                            <div class="ongoing-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
+                            <div class="past-booking pad" id="${booking.id}" onclick="accessPendingBooking(this)">
                                 <div class="booking-name">${booking.name}</div>
                                 <div class="label-for-booking-pending">
                                     <p class="status">${booking.state}</p>
                                 </div>
-                                <div class="date-info-rectangle-ongoing-booking">
+                                <div class="date-info-rectangle-past-booking">
                                     <p class="date"> 
                                        ${BackDay} 
                                        ${months[BackMonth]} 
@@ -469,13 +469,13 @@ function updateBookingsByFilter(filterType) {
         case 'on-going': {
             filter = "ongoing";
             filterButton.textContent = filter;
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+            url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
             break;
         }
         case 'past': {
             filter = "past";
             filterButton.textContent = filter;
-            url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+            url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
             break;
         }
         default: {
