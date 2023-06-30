@@ -198,7 +198,7 @@ public class CrewsResourse {
         List<Booking> listbooking = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT b.* FROM booking b";
+            String query = "SELECT b.* FROM booking b WHERE b.date_and_time >= NOW() ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){

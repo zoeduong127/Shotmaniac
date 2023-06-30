@@ -9,13 +9,15 @@
 	      rel="stylesheet" type='text/css'>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="./A_Dashboard.js" defer></script>
 </head>
-<body>
+<body onload="graph()">
 <div class="container">
 	<header>
 		<div class="top">
 			<i class="fas fa-user user-icon"></i>
-			<p class="logout" onclick="logout()">
+			<p class="logout">
 				<span class="fas fa-arrow-right-from-bracket exit"> <!-- TODO: FIND WORKING ICON -->
 				Log out
 			</span>
@@ -25,9 +27,9 @@
 				<div class="image">
 					<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_MT.png" alt="Shotmaniacs">
 				</div>
-			</div>
-			<div class="text">
-				<span class="slogan">Make Every Shot Count</span>
+				<div class="text">
+					<span class="slogan">Make Every Shot Count</span>
+				</div>
 			</div>
 			
 			<div class="search" id="search_ALL">
@@ -58,11 +60,11 @@
 				<div class="event-container" id="event-container">
 				</div>
 				<div class="statistics">
-					<div class="title">
+					<!--<div class="title">
 						<h3 id="stats">Statistics</h3>
-					</div>
-					<div class="graph" id="graph">
-						<canvas id="chart" style="position:relative;width:100%;height:100%"></canvas>
+					</div>-->
+					<div class="graph" >
+						<canvas id="chart" style="position:relative;width:150%;height:150%"></canvas>
 					</div>
 					<div class="numbers">
 						<p id="1">1st number: 28</p>
@@ -82,7 +84,12 @@
 					<button class="search-icon-btn" id="announcement-search-button">
 					</button>
 				</div>
-				<div class="announcement-container" id="announcement-wrapper"></div>
+				<div class="announcement-container">
+					<h1>Latest News</h1>
+					<div id="L1" class="announcement">Title 1</div>
+					<div id="L2" class="announcement">Title 2</div>
+					<div id="L3" class="announcement">Title 3</div>
+				</div>
 				<div class="upcoming-container" id="upcoming-container"></div>
 			</div>
 		</div>
@@ -117,7 +124,7 @@
 				
 				<div class="footer">
 					<p onclick="callCancel()" class="link" id="cancel">Cancel Booking</p>
-					<p class="link" id="accept">Accept booking</p>
+					<p onclick="acceptBooking()" class="link" id="accept">Accept booking</p>
 				</div>
 			</div>
 		</div>
@@ -145,12 +152,11 @@
 			
 			<div class="foot_note">
 				<button onclick="toggleCancel()" id="return">Return</button>
-				<button id="cancel_booking" type="submit">Cancel Booking</button>
+				<button id="cancel_booking" type="submit" onclick="cancelBooking()">Cancel Booking</button>
 			</div>
 		</form>
 	</main>
 </div>
 
-<script src="./A_Dashboard.js" defer></script>
 </body>
 </html>

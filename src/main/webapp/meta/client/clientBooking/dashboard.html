@@ -179,7 +179,7 @@
 		fetch(url)
 				.then(response => response.json())
 				.then(data => {
-
+					console.log(data)
 					data.forEach(booking => {
 						console.log(booking)
 						let bookingElementCopy = bookingElement.cloneNode(true);
@@ -225,11 +225,13 @@
 
 					});
 					var index = 1;
-					data.sort(function (a, b) {
-						return a.timestamp - b.timestamp;
+					data = data.sort((a, b) => {
+						const dateA = new Date(a.date);
+						const dateB = new Date(b.date);
+						return dateA - dateB;
 					});
+					console.log(data)
 					var earliestEvents = data.slice(0, 2);
-					console.log("Earliest Events: " + earliestEvents);
 					earliestEvents.forEach(function (event) {
 						console.log(index);
 						if(index === 1){

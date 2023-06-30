@@ -565,7 +565,12 @@ function graph(){
         }
     })
         .then(response => response.json())
-        .then(bookings => {
+        .then(booking => {
+            const bookings = booking.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA - dateB;
+            });
             var bookingCounts = {};
 
             bookings.forEach(function (booking) {
