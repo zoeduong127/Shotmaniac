@@ -14,6 +14,7 @@ import shotmaniacs.group2.di.model.*;
 import java.sql.*;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -405,47 +406,60 @@ public class CrewsResourse {
      * Gets the sum of the hours per booking aggregated by day. Gets all the days with bookings between startDate and endDate.
      * NOTE: Format for input dates is yyyy-MM-dd
      */
-    public Response getHoursWorkedPerDay(@PathParam("crewid") int crewid, @QueryParam("startDate") String start, @QueryParam("endDate") String end) {
-        String pattern = "yyyy-MM-dd";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        LocalDate startDate;
-        LocalDate endDate;
-        try {
-            startDate = LocalDate.parse(start, formatter);
-            endDate = LocalDate.parse(end, formatter);
-        } catch (DateTimeParseException e) {
-            return Response.serverError().entity(e.getMessage()).build();
-        }
+    public Response getHoursWorkedPerDay(@PathParam("crewid") int id) {
+        List<Booking> bookings = getBookingById(id);
+        LocalDateTime currentTime = LocalDateTime.now();
+        int currentMonth = currentTime.getMonthValue();
+        int currentYear = currentTime.getYear();
 
-        try {
-            Connection connection = DriverManager.getConnection(url, dbName, password);
-            String sql = "SELECT DATE_TRUNC('day', b.date_and_time), SUM(b.duration_hours) \n" +
-                    "FROM booking b, enrolment e \n" +
-                    "WHERE e.crew_member_id = ? AND b.booking_id = e.booking_id \n" +
-                    "AND DATE_TRUNC('day', b.date_and_time) >= ?::date\n" +
-                    "AND DATE_TRUNC('day', b.date_and_time) <= ?::date\n" +
-                    "GROUP BY DATE_TRUNC('day', b.date_and_time);";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, crewid);
-            ps.setString(2,  startDate.toString());
-            ps.setString(3,  endDate.toString());
+        // Filter bookings for the current month
+        List<Booking> bookingsThisMonth = new ArrayList<>();
+        for (Booking booking : bookings) {
+            LocalDateTime bookingDateTime = booking.getDate().toLocalDateTime();
+            int bookingMonth = bookingDateTime.getMonthValue();
+            int bookingYear = bookingDateTime.getYear();
 
-            ResultSet rs = ps.executeQuery();
-
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            ObjectNode jsonObject = objectMapper.createObjectNode();
-            while (rs.next()) {
-                jsonObject.put(rs.getString(1), rs.getInt(2));
+            if (bookingMonth == currentMonth && bookingYear == currentYear) {
+                bookingsThisMonth.add(booking);
             }
-
-            return Response.ok(jsonObject.toString()).build();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        int count = 0;
+        // Print the filtered bookings
+        for (Booking booking : bookingsThisMonth) {
+           count = count + booking.getDuration();
         }
 
-        return Response.serverError().build();
+//        try {
+//            Connection connection = DriverManager.getConnection(url, dbName, password);
+//            String sql = "SELECT DATE_TRUNC('day', b.date_and_time), SUM(b.duration_hours) \n" +
+//                    "FROM booking b, enrolment e \n" +
+//                    "WHERE e.crew_member_id = ? AND b.booking_id = e.booking_id \n" +
+//                    "AND DATE_TRUNC('day', b.date_and_time) >= ?::date\n" +
+//                    "AND DATE_TRUNC('day', b.date_and_time) <= ?::date\n" +
+//                    "GROUP BY DATE_TRUNC('day', b.date_and_time);";
+//            PreparedStatement ps = connection.prepareStatement(sql);
+//            ps.setInt(1, crewid);
+//            ps.setString(2,  startDate.toString());
+//            ps.setString(3,  endDate.toString());
+//
+//            ResultSet rs = ps.executeQuery();
+//
+//            ObjectMapper objectMapper = new ObjectMapper();
+//
+//            ObjectNode jsonObject = objectMapper.createObjectNode();
+//            while (rs.next()) {
+//                jsonObject.put(rs.getString(1), rs.getInt(2));
+//            }
+//
+//            return Response.ok(jsonObject.toString()).build();
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+        return Response.ok()
+                .entity(String.valueOf(count))
+                .build();
     }
     @RolesAllowed({"Administrator", "Crew"})
     @Path("/profile")
