@@ -251,14 +251,13 @@
                     </div>
                   </div>
                   `;
-                document.getElementById("username").innerHTML='';
-                document.getElementById("email").innerHTML='';
-                document.getElementById("passwordForNewCrew").innerHTML='';
-                document.getElementById("accountType").innerHTML='';
-                document.getElementById("role").innerHTML='';
-                document.getElementById("crews").innerHTML='';
+                document.getElementById('username').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('passwordForNewCrew').value = '';
+                document.getElementById('accountType').value = '';
+                document.getElementById('role').value = '';
               }else{
-                return response.text()
+                alert(response.text());
               }
             })
 
