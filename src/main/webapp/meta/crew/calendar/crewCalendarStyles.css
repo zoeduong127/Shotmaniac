@@ -249,7 +249,7 @@ button {
 
 .days div {
     font-size: 1rem;
-    width: 7.03vw;
+    width: calc(49.2vw / 7);
     height: calc(38vh / 4.5);
     max-height: 7.45vh;
     display: flex;
