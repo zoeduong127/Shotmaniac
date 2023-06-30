@@ -156,7 +156,7 @@ body {
     border-radius: 0 20px 20px 0 ;
     width: 2.5vw;
     cursor: pointer;
-    background-image: url("./../Brand_Identity/images/icons/search_icon_black.png");
+    background-image: url("./../../../Brand_Identity/images/icons/search_icon_black.png");
     background-position: 5px 3px;
     background-repeat: no-repeat;
     background-size: 3vh;
@@ -201,6 +201,14 @@ body {
     cursor: pointer;
 }
 
+.box a {
+    color: white;
+    font-family: Kiona Semibold;
+    font-size: 17px;
+    position: absolute;
+    top: 17.6vh;
+}
+
 #img {
     background-repeat: no-repeat;
     background-position: 5vw 2.5vh;
@@ -211,6 +219,7 @@ body {
     position: relative;
     z-index: 1;
 }
+
 .box p {
     margin: 3.5vh 0;
 }
@@ -233,6 +242,7 @@ body {
 
 .heading {
     width: 100%;
+    overflow: hidden;
 }
 
 .heading h1{
@@ -253,7 +263,8 @@ body {
 
 .heading {
     margin-top: 1.5vh;
-    margin-left: 34vw;
+    margin-left: 29vw;
+    overflow-x: hidden;
 }
 
 .booking-heading {
@@ -265,13 +276,18 @@ body {
 }
 
 .booking-name {
-    height: 3.5vh;
+    height: 4.5vh;
     color: #1696d2;
     font: 2em "Kiona SemiBold";
     text-decoration: underline;
     font-weight: bolder;
     cursor: pointer;
     font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 23vw;
+    display: inline-block;
 }
 
 .cover-rectangle {
@@ -297,7 +313,11 @@ body {
     color: #160000;
     font: 20px "Kiona SemiBold";
     padding-top: 1.7vh;
-    padding-left: 9.8vw;
+    padding-left: 8.9vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 25vw;
 }
 
 .clock-icon {
@@ -804,35 +824,15 @@ body {
 }
 
 .number-type {
-    width: 5vw;
+    width: 8vw;
 }
 
-#photographer {
-    margin-left: 1.25vw;
-}
-
-#videographer {
-    margin-left: 1.7vw;
-}
-
-#producer {
-    margin-left: 4.1vw;
-}
-
-#assistant {
-    margin-left: 4vw;
-}
-
-#data-handler {
-    margin-left: 2.05vw;
-}
-
-#planner {
-    margin-left: 4.9vw;
+#prod-manager {
+    margin-left: 4.25vw;
 }
 
 #editor {
-    margin-left: 5.98vw;
+    margin-left: 4.98vw;
 }
 
 .footer {
@@ -841,7 +841,7 @@ body {
     height: 7vh;
     position: relative;
     z-index: 1;
-    margin-top: 1.8vh;
+    margin-top: 35.6vh;
 }
 
 .save-data-and-accept {
@@ -878,8 +878,8 @@ body {
     z-index: 2;
     height: 51.5vh;
     width: 30vw;
-    top: -37vh;
-    left: 34.5vw;
+    top: -51vh;
+    left: 34vw;
     margin: 0;
     padding: 0;
     background-color: white;

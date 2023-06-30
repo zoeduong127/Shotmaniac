@@ -30,7 +30,7 @@ function parseCookie(cookieString) {
 
 //Upcoming approved bookings with 0 assigned crew
 function UnassignedBookings() {
-    let url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    let url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
     fetch(url, {
         headers: {
@@ -108,6 +108,8 @@ function fetchBookings(input) {
     } else {
         url = input;
     }
+
+    console.log(url);
     fetch(url, {
         headers: {
             'Authorization': `${token}`
@@ -115,8 +117,10 @@ function fetchBookings(input) {
     })
         .then(response => response.json())
         .then(loadedData => {
+            console.log(loadedData);
             bookingsArr = loadedData.filter(booking => booking.state === "APPROVED" || booking.state === "PENDING");
-            allBookings();
+            console.log(bookingsArr);
+            allBookings(url);
         })
         .catch(error => {
             // Handle any errors
@@ -124,8 +128,8 @@ function fetchBookings(input) {
         });
 }
 
-function allBookings() {
-    let url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+function allBookings(url) {
+
 
     fetch(url, {
         headers: {
@@ -186,7 +190,7 @@ function allBookings() {
                                 </div>
                                 <div class="date-info-rectangle-ongoing-booking">
                                     <p class="date"> 
-                                       ${BackDay} 
+                                       ${BackDay}
                                        ${months[BackMonth]} 
                                        ${BackYear}
                                    </p>
@@ -561,7 +565,7 @@ function sendInput(event) {
 
     if (inputElement.value.length === 0) fetchBookings(" ");
     else {
-        const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybooking/search?searchtext="${inputElement.value}"`
+        const url = `http://localhost:8080/shotmaniacs2/api/admin/bookings/search?searchtext="${inputElement.value}"`
         fetchBookings(url);
     }
 }

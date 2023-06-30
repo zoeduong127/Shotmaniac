@@ -49,9 +49,9 @@ public class CrewsResourse {
 
             while(rs.next()) {
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        EventType.valueOf(rs.getString(4).toUpperCase()),rs.getTimestamp(5),rs.getString(6),
                         rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
-                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                        BookingType.valueOf(rs.getString(11).toUpperCase()), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listBooking.add(booking);
             }
         } catch (SQLException e) {
@@ -77,9 +77,9 @@ public class CrewsResourse {
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        EventType.valueOf(rs.getString(4).toUpperCase()),rs.getTimestamp(5),rs.getString(6),
                         rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
-                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                        BookingType.valueOf(rs.getString(11).toUpperCase()), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -103,9 +103,9 @@ public class CrewsResourse {
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        EventType.valueOf(rs.getString(4).toUpperCase()),rs.getTimestamp(5),rs.getString(6),
                         rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
-                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                        BookingType.valueOf(rs.getString(11).toUpperCase()), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -138,9 +138,9 @@ public class CrewsResourse {
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        EventType.valueOf(rs.getString(4).toUpperCase()),rs.getTimestamp(5),rs.getString(6),
                         rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
-                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                        BookingType.valueOf(rs.getString(11).toUpperCase()), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -176,9 +176,9 @@ public class CrewsResourse {
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        EventType.valueOf(rs.getString(4).toUpperCase()),rs.getTimestamp(5),rs.getString(6),
                         rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
-                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                        BookingType.valueOf(rs.getString(11).toUpperCase()), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {
@@ -203,9 +203,9 @@ public class CrewsResourse {
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
                 Booking booking = new Booking(rs.getInt(1), rs.getString(2),rs.getString(3),
-                        EventType.valueOf(rs.getString(4)),rs.getTimestamp(5),rs.getString(6),
+                        EventType.valueOf(rs.getString(4).toUpperCase()),rs.getTimestamp(5),rs.getString(6),
                         rs.getInt(7),rs.getString(8),rs.getString(9),rs.getString(10),
-                        BookingType.valueOf(rs.getString(11)), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
+                        BookingType.valueOf(rs.getString(11).toUpperCase()), BookingState.valueOf(rs.getString(12)), rs.getInt(13), rs.getInt(14));
                 listbooking.add(booking);
             }
         } catch (SQLException e) {

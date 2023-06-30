@@ -656,9 +656,10 @@ body {
     padding: unset;
     margin: unset;
     position: absolute;
-    width: 100%;
+    width: 25.3vw;
     background-color: white;
-    top: 4vh;
+    left: 59vh;
+    top: 41vh;
 
     -ms-overflow-style: none;  /* hides scrollbar */
     scrollbar-width: none;  /* hides scrollbar */
