@@ -190,14 +190,9 @@ public class Mailer {
         }
     }
 
-    public static void sendBookingCancellation(int enrolmentId, String reason) throws MessagingException {
-        EnrolmentDto enrolmentDetails = getEnrolmentDetails(enrolmentId);
-        if (enrolmentDetails == null) {
-            throw new MessagingException();
-        }
-
-        Booking booking = BookingDao.instance.getABooking(enrolmentDetails.getBookingId());
-        Account account = AccountDao.instance.getAccountById(enrolmentDetails.getCrewMemberId());
+    public static void sendBookingCancellation(int booking_id, int account_id, String reason) throws MessagingException {
+        Booking booking = BookingDao.instance.getABooking(booking_id);
+        Account account = AccountDao.instance.getAccountById(account_id);
         if (booking == null || account == null) {
             throw new MessagingException();
         }

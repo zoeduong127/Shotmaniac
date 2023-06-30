@@ -1,8 +1,11 @@
 package shotmaniacs.group2.di.resources;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
+import org.json.JSONObject;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dao.AnnouncementDao;
 import shotmaniacs.group2.di.emails.Mailer;
@@ -531,6 +534,38 @@ public class AdministratorsResource {
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error deleting booking: " + e.getMessage());
+        }
+        return  Response.serverError().build();
+    }
+
+    @RolesAllowed({"Administrator", "Client"})
+    @Path("/booking/{booking_id}/cancel")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response cancelBookingByIdWithReason(@PathParam("booking_id") int bookingId, String reason) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "UPDATE booking SET state = 'CANCELED' WHERE booking_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, bookingId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                try {
+                    List<Account> accounts = getEnrolledCrewMembersByBookingId(bookingId);
+                    JSONObject json = new JSONObject(reason);
+                    for (Account a : accounts) {
+                        Mailer.sendBookingCancellation(bookingId, a.getId(), json.getString("reason"));
+                    }
+                } catch (MessagingException e) {
+                    System.out.println("Error sending booking cancellation notification: " + e.getMessage());
+                }
                 return Response.ok().build();
             } else {
                 return Response.notModified().build();
