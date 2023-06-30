@@ -51,12 +51,7 @@ public class ClientsResource {
     public Response createBooking_noid(Bookingdto booking) {
        boolean response = booking.addBooking(booking);
        if(response){
-           try {
-               Mailer.sendNewBookingNotification(booking);
                return Response.ok().build();
-           } catch (MessagingException e) {
-               System.out.println("Error while sending new booking email notification: " + e.getMessage());
-           }
        }
         return Response.serverError().build();
     }
