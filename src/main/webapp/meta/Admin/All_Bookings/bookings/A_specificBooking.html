@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Specific Booking</title>
+    <link href="A_specificBooking.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+          rel="stylesheet" type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body onload="getInfo()">
+<div class="container">
+    <header>
+        <div class="top">
+            <i class="fas fa-user user-icon"></i>
+            <p id="Username">Admin Shotmaniacs Group 2</p>
+            <img id="LogOutIcon" src="./../../../Brand_Identity/images/icons/white_Logout.png" alt="LogOut-Icon">
+            <p id="LogOut">Log out</p>
+        </div>
+        <div class="search-area">
+            <div class="left">
+                <div class="image">
+                    <img src="./../../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_MT.png" alt="Shotmaniacs">
+                </div>
+                <div class="text">
+                    <span class="slogan">Make Every Shot Count</span>
+                </div>
+            </div>
+
+            <div class="search">
+                <label for="search"></label>
+                <input type="text" class="input" id="search" placeholder="Search...">
+                <button class="search-icon-btn">
+                </button>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <div class="box" id="img"></div>
+            <div class="box"><p>Announcements</p></div>
+            <div class="box"><p>Bookings</p></div>
+            <div class="box"><p>Crews</p></div>
+            <div class="box"><p>Calendar</p></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container" id="main">
+            <div class="heading" id="heading">
+            </div>
+            <div class="left-side">
+                <div class="cover-rectangle" id="cover-rectangle">
+                    <!--<form class="cancel-container" id="cancel-container" hidden>
+                        <div class="top_heading">
+                            <span id="image">
+                                <img src="./../../../Brand_Identity/images/icons/X-icon.png" alt="Close-Icon" onclick="toggleCancel()">
+                            </span>
+                            <h1>Cancel Booking</h1>
+                        </div>
+                        <div class="def">
+                            <p id="message" style="padding-left: 13px; font-family: 'Kiona SemiBold'; opacity: 0.8">
+                                Are you sure you want to cancel the <span id="booking_name">[Booking Name]</span> booking?
+                            </p>
+                        </div>
+                        <div class="input_section" style="margin-top: 2vh">
+                            <label for="text_box" style="font-family: 'Kiona Semibold'; opacity: 0.8; padding-left: 13px">
+                                Reason for cancellation:
+                            </label>
+                            <textarea id="text_box" type="text" wrap="soft" ></textarea>
+                        </div>
+                        <div class="foot_note">
+                            <button id="cancel_booking" type="submit" onclick="cancellationSubmit()">Cancel Booking</button>
+                        </div>
+                    </form>-->
+                    <!--<div class="refuse-button" id="refuse-button">
+                        <p class="refuse" id="refuse" onclick="refuseBooking()">Refuse Booking</p>
+                        <script>
+                            function refuseBooking() {
+                                const cancelForm = document.getElementById("cancel-container"),
+                                    rightSide = document.getElementById("right-side"),
+                                    clientInfo = document.getElementById("client-info"),
+                                    refuseButton = document.getElementById("refuse-button"),
+                                    bookingInfo = document.getElementById("booking-info");
+                                rightSide.style.opacity = "0.05";
+                                clientInfo.style.opacity = "0.05";
+                                refuseButton.style.opacity = "0.05";
+                                bookingInfo.style.opacity = "0.05";
+                                document.getElementById("cover-rectangle").style.borderColor = "rgba(82, 82, 82, 0.05)";
+                                cancelForm.style.display = "block";
+                            }
+                        </script>
+                    </div>-->
+                    <!--<button class="button-load" id="loading-button" hidden>
+                        <i class="fa fa-spinner fa-spin"></i>Saving Data
+                    </button>-->
+                </div>
+            </div>
+            <div class="right-side" id="right-side">
+                <div class="crews-setting" id="crews-setting">
+                    <!--<div class="small-rectangle-crews-setting">
+                        <p id="crews-in-box">Number of crews needed</p>
+                    </div>
+                    <div class="input-section">
+                        <label for="photographer">Photographer</label>
+                        <input class="number-type" id="photographer" type="number">
+                    </div>-->
+                    <!--<div class="input-section">
+                        <label for="videographer">Videographer</label>
+                        <input class="number-type" id="videographer" type="number">
+                    </div>
+                    <div class="input-section">
+                        <label for="producer">Producer</label>
+                        <input class="number-type" id="producer" type="number">
+                    </div>
+                    <div class="input-section">
+                        <label for="assistant">Assistant</label>
+                        <input class="number-type" id="assistant" type="number">
+                    </div>
+                    <div class="input-section">
+                        <label for="data-handler">Data Handler</label>
+                        <input class="number-type" id="data-handler" type="number">
+                    </div>
+                    <div class="input-section">
+                        <label for="planner">Planner</label>
+                        <input class="number-type" id="planner" type="number">
+                    </div>
+                    <div class="input-section">
+                        <label for="editor">Editor</label>
+                        <input class="number-type" id="editor" type="number">
+                    </div>-->
+                    <!--<div class="footer" id="footer">
+                        <div class="save-data-and-accept" id="save-data" onclick="saveData()">Save Data And Accept Booking</div>
+                        <script>
+                            function saveData() {
+                                const coffeeAnimation = document.getElementById("coffee-animation"),
+                                    loadingButton = document.getElementById("loading-button"),
+                                    clientInfo = document.getElementById("client-info"),
+                                    refuseButton = document.getElementById("refuse-button"),
+                                    refuseWord = document.getElementById("refuse"),
+                                    saveData = document.getElementById("save-data");
+                                coffeeAnimation.style.display = "block";
+                                loadingButton.style.display = "block";
+                                clientInfo.style.opacity = "0.05";
+                                refuseButton.style.opacity = "0.05";
+                                setTimeout(function() {
+                                    coffeeAnimation.style.display = "none";
+                                    loadingButton.style.display = "none";
+                                    clientInfo.style.opacity = "1";
+                                    refuseButton.style.opacity = "1";
+                                    refuseWord.innerText = "APPROVED";
+                                    refuseWord.style.cursor = "not-allowed";
+                                    refuseWord.onclick = null;
+                                    refuseWord.style.color = "#1696D2";
+                                    refuseWord.style.marginLeft = "2.45vw";
+                                    refuseWord.style.marginTop = "1vh";
+                                    refuseButton.style.borderColor = "#1696D2";
+                                    document.getElementById("footer").style.background = "#ffffff";
+                                    document.getElementById("footer").style.marginTop = "1vh";
+                                    saveData.innerText = "Manage Crew";
+                                    saveData.style.marginLeft = "5vw";
+                                    saveData.style.color = "#e70f0f";
+                                    saveData.style.fontSize = "20px";
+                                    //Change link when clicking "Manage Crew"
+                                }, 8000);
+                            }
+                        </script>
+                    </div>-->
+                </div>
+                <div class="crew-link" hidden>
+                    <p id="Crew">Manage Crew</p>
+                </div>
+                <div class="animation-container" id="coffee-animation" hidden>
+                    <div class="coffee-header">
+                        <div class="coffee-header__buttons coffee-header__button-one"></div>
+                        <div class="coffee-header__buttons coffee-header__button-two"></div>
+                        <div class="coffee-header__display"></div>
+                        <div class="coffee-header__details"></div>
+                    </div>
+                    <div class="coffee-medium">
+                        <div class="coffee-medium__exit"></div>
+                        <div class="coffee-medium__arm"></div>
+                        <div class="coffee-medium__liquid"></div>
+                        <div class="coffee-medium__smoke coffee-medium__smoke-one"></div>
+                        <div class="coffee-medium__smoke coffee-medium__smoke-two"></div>
+                        <div class="coffee-medium__smoke coffee-medium__smoke-three"></div>
+                        <div class="coffee-medium__smoke coffee-medium__smoke-four"></div>
+                        <div class="coffee-medium__cup"></div>
+                    </div>
+                    <div class="coffee-footer"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    window.addEventListener('beforeunload', function (event) {
+        // Cancel the event to prevent the browser from closing immediately
+        event.preventDefault();
+        document.cookie ="booking_id =;  Path=/";
+        return;
+    });
+
+    function parseCookie(cookieString) {
+        const cookies = {};
+        cookieString.split(';').forEach(cookie => {
+            const [name, value] = cookie.trim().split('=');
+            cookies[name] = decodeURIComponent(value);
+        });
+        return cookies;
+    }
+
+    const cookies = parseCookie(document.cookie);
+    const token = cookies['auth_token'];
+    const account_id = cookies['account_id'];
+    const id = cookies['booking_id'];
+    const url = window.location.origin+"/shotmaniacs2/api/crew/"+account_id+"/booking/"+id;
+    const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ];
+
+    function getInfo() {
+        fetch(url, {
+            headers: {
+                'Authorization': `${token}`
+            }
+        })
+            .then(response => response.json())
+            .then(booking => {
+                let BackDay = new Date(booking.date).getDate();
+                let BackMonth = new Date(booking.date).getMonth();
+                let BackYear = new Date(booking.date).getFullYear();
+                let BackHour = new Date(booking.date).getHours();
+                let BackMinute = new Date(booking.date).getMinutes();
+                let heading = "";
+                heading += `
+                            <span style="padding-left: 5vw">
+                                <span class="booking-heading">Bookings / </span>
+                                <span class="booking-name">${booking.name}</span>
+                            </span>
+                            `;
+                let info = "";
+                info += `
+                        <div id="booking-info">
+                            <div class="name-rectangle">
+                                <div id="booking-name-in-box">${booking.name}</div>
+                            </div>
+                            <div class="time">
+                                <img class="clock-icon" src="./../../../Brand_Identity/images/icons/black-clock.png" alt="Clock-Icon">
+                                <p id="date-and-time">
+                                   ${BackDay}
+                                   ${months[BackMonth]}
+                                   ${BackYear},
+                                   ${BackHour}:${BackMinute}
+                               </p>
+                            </div>
+                            <div class="event-type">
+                                <img class="category-icon" src="./../../../Brand_Identity/images/icons/grey-category.png" alt="Category-Icon">
+                                <span style="padding-left: 1.5vw; top:53vh; position: absolute">
+                                    <span class="eventType">Event Type:</span>
+                                    <span class="type-of-event"> ${booking.eventType}</span>
+                                </span>
+                            </div>
+                            <div class="location">
+                                <img class="location-icon" src="./../../../Brand_Identity/images/icons/black-location-icon.png" alt="Location-Icon">
+                                <p id="location-text">${booking.location}</p>
+                            </div>
+                            <div class="detail">
+                                <img class="note-pencil" src="./../../../Brand_Identity/images/icons/black-note-with-pencil.png" alt="Note-With-Pencil-Icon">
+                                <span style="padding-left: 1.3vw; top: 70.5vh; position: absolute;">
+                                    <span class="eventType">Booking Type:</span>
+                                    <span class="type-of-event"> ${booking.bookingType}</span>
+                                </span>
+                                <span style="padding-left: 1.3vw; top: 75.5vh; position: absolute;">
+                                    <span class="eventType">Duration:</span>
+                                    <span class="type-of-event"> ${booking.duration} hours</span>
+                                </span>
+                                <span style="padding-left: 1.3vw; top: 80.5vh; position: absolute;">
+                                    <span class="eventType">Description:</span>
+                                    <span class="description"> ${booking.description}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="client-info" id="client-info">
+                            <div class="title-client-info">
+                                <p id="client-title">Client's Information</p>
+                            </div>
+                            <div class="client-name">
+                                <p class="client-info-title">Name:</p>
+                                <p class="info"> ${booking.clientName}</p>
+                            </div>
+                            <hr class="break-line">
+                            <div class="client-email">
+                                <p class="client-info-title">Email:</p>
+                                <p class="info"> ${booking.clientEmail}</p>
+                            </div>
+                            <hr class="break-line">
+                            <div class="client-phone">
+                                <p class="client-info-title">Tel.:</p>
+                                <p class="info"> ${booking.phoneNumber}</p>
+                            </div>
+                        </div>
+
+                        <div class="refuse-button" id="refuse-button">
+                            <p class="refuse" id="refuse" onclick="refuseBooking()">Refuse Booking</p>
+                        </div>
+
+                        <form class="cancel-container" id="cancel-container" hidden>
+                            <div class="top_heading">
+                                <span id="image">
+                                    <img src="./../../../Brand_Identity/images/icons/X-icon.png" alt="Close-Icon" onclick="toggleCancel()">
+                                </span>
+                                <h1>Cancel Booking</h1>
+                            </div>
+                            <div class="def">
+                                <p id="message" style="padding-left: 13px; font-family: 'Kiona SemiBold'; opacity: 0.8">
+                                    Are you sure you want to cancel the <span id="booking_name">${booking.name}</span> booking?
+                                </p>
+                            </div>
+                            <div class="input_section" style="margin-top: 2vh">
+                                <label for="text_box" style="font-family: 'Kiona Semibold'; opacity: 0.8; padding-left: 13px">
+                                    Reason for cancellation:
+                                </label>
+                                <textarea id="text_box" type="text" wrap="soft" ></textarea>
+                            </div>
+                            <div class="foot_note">
+                                <button id="cancel_booking" type="submit" onclick="cancellationSubmit()">Cancel Booking</button>
+                            </div>
+                        </form>
+
+                        <button class="button-load" id="loading-button" hidden>
+                            <i class="fa fa-spinner fa-spin"></i>Saving Data
+                        </button>
+                        `;
+                let crewsSet = "";
+                crewsSet += `
+                            <div class="small-rectangle-crews-setting">
+                                <p id="crews-in-box">Number of crews needed</p>
+                            </div>
+                            <div class="input-section">
+                                <label for="editor">Numbers</label>
+                                <input class="number-type" id="editor" type="number">
+                            </div>
+                            <div class="footer" id="footer">
+                                <div class="save-data-and-accept" id="save-data" onclick="saveData()">Save Data And Accept Booking</div>
+                            </div>
+                            `;
+                document.getElementById("heading").innerHTML = heading;
+                document.getElementById("cover-rectangle").innerHTML = info;
+                document.getElementById("crews-setting").innerHTML = crewsSet;
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error(error);
+            });
+    }
+
+    function saveData() {
+        const coffeeAnimation = document.getElementById("coffee-animation"),
+            loadingButton = document.getElementById("loading-button"),
+            clientInfo = document.getElementById("client-info"),
+            refuseButton = document.getElementById("refuse-button"),
+            refuseWord = document.getElementById("refuse"),
+            saveData = document.getElementById("save-data");
+        coffeeAnimation.style.display = "block";
+        loadingButton.style.display = "block";
+        clientInfo.style.opacity = "0.05";
+        refuseButton.style.opacity = "0.05";
+        setTimeout(function() {
+            coffeeAnimation.style.display = "none";
+            loadingButton.style.display = "none";
+            clientInfo.style.opacity = "1";
+            refuseButton.style.opacity = "1";
+            refuseWord.innerText = "APPROVED";
+            refuseWord.style.cursor = "not-allowed";
+            refuseWord.onclick = null;
+            refuseWord.style.color = "#1696D2";
+            refuseWord.style.marginLeft = "2.45vw";
+            refuseWord.style.marginTop = "1vh";
+            refuseButton.style.borderColor = "#1696D2";
+            document.getElementById("footer").style.background = "#ffffff";
+            document.getElementById("footer").style.marginTop = "1vh";
+            saveData.innerText = "Manage Crew";
+            saveData.addEventListener("click", function() {
+                console.log(id);
+                document.cookie = "booking_id=" + element.id + "; path=/";
+                window.location.href = "./A_CrewsForBooking.html";
+            })
+            saveData.style.marginLeft = "5vw";
+            saveData.style.color = "#e70f0f";
+            saveData.style.fontSize = "20px";
+        }, 8000);
+    }
+
+    function refuseBooking() {
+        const cancelForm = document.getElementById("cancel-container"),
+            rightSide = document.getElementById("right-side"),
+            clientInfo = document.getElementById("client-info"),
+            refuseButton = document.getElementById("refuse-button"),
+            bookingInfo = document.getElementById("booking-info");
+        rightSide.style.opacity = "0.05";
+        clientInfo.style.opacity = "0.05";
+        refuseButton.style.opacity = "0.05";
+        bookingInfo.style.opacity = "0.05";
+        document.getElementById("cover-rectangle").style.borderColor = "rgba(82, 82, 82, 0.05)";
+        cancelForm.style.display = "block";
+    }
+
+    function toggleCancel() {
+        const cancelForm = document.getElementById("cancel-container"),
+            rightSide = document.getElementById("right-side"),
+            clientInfo = document.getElementById("client-info"),
+            refuseButton = document.getElementById("refuse-button"),
+            bookingInfo = document.getElementById("booking-info");
+        rightSide.style.opacity = "1";
+        clientInfo.style.opacity = "1";
+        refuseButton.style.opacity = "1";
+        bookingInfo.style.opacity = "1";
+        document.getElementById("cover-rectangle").style.borderColor = "rgba(82, 82, 82, 0.8)";
+        cancelForm.style.display = "none";
+    }
+
+    function cancellationSubmit() {
+
+    }
+</script>
+</body>
+</html>

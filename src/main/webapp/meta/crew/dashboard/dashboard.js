@@ -443,6 +443,8 @@ let allBookings = [];
 let inputElement = document.getElementById("search-input");
 
 inputElement.addEventListener("input", onInputChange);
+
+//TODO double check filter use (link is mybookings, name is all bookings)
 function getAllBookings() {
     const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/mybookings`
 

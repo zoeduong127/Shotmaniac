@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Bookings Manage Crew</title>
+  <link href="A_CrewsForBooking.css" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+        rel="stylesheet" type='text/css'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body onload = "getCrews(), getAllCrews()">
+<div class="container">
+  <header>
+    <div class="top">
+      <i class="fas fa-user user-icon"></i>
+      <p id="Username">Admin Shotmaniacs Group 2</p>
+      <img id="LogOutIcon" src="./../../../Brand_Identity/images/icons/white_Logout.png" alt="LogOut-Icon">
+      <p id="LogOut">Log out</p>
+    </div>
+    <div class="search-area">
+      <div class="left">
+        <div class="image">
+          <img src="./../../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_MT.png" alt="Shotmaniacs">
+        </div>
+        <div class="text">
+          <span class="slogan">Make Every Shot Count</span>
+        </div>
+      </div>
+
+      <div class="search">
+        <label for="search"></label>
+        <input type="text" class="input" id="search" placeholder="Search...">
+        <button class="search-icon-btn">
+        </button>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <div class="box" id="img"></div>
+      <div class="box"><p>Announcements</p></div>
+      <div class="box"><p>Bookings</p></div>
+      <div class="box"><p>Crews</p></div>
+      <div class="box"><p>Calendar</p></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="main-container">
+      <div class="heading">
+        <span style="padding-left: 28vw">
+          <span class="booking-heading">Bookings / </span>
+          <span class="booking-name-title">Booking’s name</span>
+          <span class="booking-heading"> / </span>
+          <span class="booking-name-title">Manage Crew</span>
+        </span>
+      </div>
+      <div class="left-side" id="left-side">
+        <div id="scrollbar">
+          <div id="bar"></div>
+        </div>
+        <script>
+          var scrollBar = document.getElementById("scrollbar");
+          var bar = document.getElementById("bar");
+          var leftSide = document.getElementById("left-side");
+          leftSide.onscroll = function() {
+            scrollIndicator()
+          };
+
+          function scrollIndicator() {
+            var winScroll = leftSide.scrollTop;
+            var height = leftSide.scrollHeight - leftSide.clientHeight;
+            var scrolled = 0;
+            if (height > 0) {
+              scrollBar.style.height = (100 + (winScroll / height) * 100) + 'vh';
+              scrolled = (winScroll / height) * 100;
+            }
+            bar.style.height = scrolled + "%";
+          }
+        </script>
+        <div class="crews" id="crews" style="margin-left: 2vw; margin-top: 3vh">
+        </div>
+      </div>
+      <div class="right-side">
+        <div id="add-crew">
+          <p>Add Crew</p>
+        </div>
+        <div class="searching-area" id="searching-area">
+          <img id="search-icon-for-name" src="./../../../Brand_Identity/images/icons/search_icon_black.png" alt="Search-Icon">
+          <input type="text" id="myInput" onkeyup="searchName()" placeholder="Search for crew's name ..." title="Type in a name">
+          <ul id="myUL">
+          </ul>
+          <div class="addingCrew" id="addingCrew" hidden>
+            <!--<div class="title-client-info">
+              <p id="client-title">Client's Information</p>
+            </div>
+            <div class="client-name">
+              <p class="client-info-title">Name:</p>
+              <p class="info"> Client Shotmaniacs Group 2</p>
+            </div>
+            <hr class="break-line">
+            <div class="client-email">
+              <p class="client-info-title">Email:</p>
+              <p class="info"> ShotmaniacsGroup2@gmail.com</p>
+            </div>
+            <hr class="break-line">
+            <div class="client-phone" style="padding-bottom: 4vh">
+              <p class="client-info-title">Tel.:</p>
+              <p class="info"> +31 123456789</p>
+            </div>
+            <div class="title-client-info">
+              <p class="adding-as-role" id="normal-role">Add as abc</p>
+              <p class="adding-as-role" id="prod">Add as production manager</p>
+            </div>-->
+          </div>
+          <script>
+            function searchName() {
+              var input, filter, ul, li, a, i, txtValue;
+              input = document.getElementById("myInput");
+              filter = input.value.toUpperCase();
+              ul = document.getElementById("myUL");
+              li = ul.getElementsByTagName("li");
+              ul.style.marginTop = "2.25vh";
+              for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  li[i].style.display = "";
+                } else {
+                  li[i].style.display = "none";
+                }
+              }
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+  window.addEventListener('beforeunload', function (event) {
+    // Cancel the event to prevent the browser from closing immediately
+    event.preventDefault();
+    document.cookie ="booking_id =;  Path=/";
+    return;
+  });
+
+  function parseCookie(cookieString) {
+    const cookies = {};
+    cookieString.split(';').forEach(cookie => {
+      const [name, value] = cookie.trim().split('=');
+      cookies[name] = decodeURIComponent(value);
+    });
+    return cookies;
+  }
+
+  const cookies = parseCookie(document.cookie);
+  const token = cookies['auth_token'];
+  const account_id = cookies['account_id'];
+  const id = cookies['booking_id'];
+  console.log(id);
+  console.log(cookies);
+  const url = window.location.origin+`/shotmaniacs2/api/admin/booking/${id}/crew`;
+  const url1 = window.location.origin + `/shotmaniacs2/api/admin/crews`
+  let crewInfo = "";
+  let listOfNames = "";
+  let addedCrew = "";
+  const addingCrewContainer = document.getElementById("addingCrew");
+
+  function getCrews() {
+    fetch(url, {
+      headers: {
+        'Authorization': `${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(data => {
+              data.forEach(crew => {
+                crewInfo += `
+                            <div class="crew-rectangle pad" id="${crew.id}">
+                              <div class="crew-name">${crew.username}</div>
+                              <div class="role-rectangle">
+                                <p class="role-specifying">${crew.role}</p>
+                              </div>
+                              <div class="remove-rectangle">
+                                <p class="remove-word" onclick="toggleRemove(crew.id)">Remove</p>
+                              </div>
+                            </div>
+                            `;
+                document.getElementById("crews").innerHTML = crewInfo;
+              })
+            })
+            .catch(error => {
+              // Handle any errors
+              console.error(error);
+            });
+  }
+
+  function getAllCrews() {
+    fetch(url1, {
+      headers: {
+        'Authorization': `${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(data => {
+              data.forEach(crew => {
+                listOfNames += `<li><a href="#" onclick="addCrew(${crew.id})">${crew.username}</a></li>`;
+                document.getElementById("myUL").innerHTML = listOfNames;
+              })
+            })
+            .catch(error => {
+              // Handle any errors
+              console.error(error);
+            });
+  }
+
+  function addCrew(id) {
+    const url2 = window.location.origin + `/shotmaniacs2/api/admin/accounts/Crew?username=${id.username}`;
+    fetch(url2, {
+      headers: {
+        'Authorization': `${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(crew => {
+              addedCrew += `
+                            <div class="title-client-info">
+                              <p id="client-title">Crew's Information</p>
+                            </div>
+                            <div class="client-name">
+                              <p class="client-info-title">Name:</p>
+                              <p class="info"> ${crew.username}</p>
+                            </div>
+                            <hr class="break-line">
+                            <div class="client-email">
+                              <p class="client-info-title">Email:</p>
+                              <p class="info"> ${crew.email}</p>
+                            </div>
+                            <hr class="break-line">
+                            <div class="client-phone" style="padding-bottom: 4vh">
+                              <p class="client-info-title">Role:</p>
+                              <p class="info"> ${crew.role}</p>
+                            </div>
+                            <div class="title-client-info">
+                              <p class="adding-as-role" id="normal-role" onclick="addAsNormalRole(crew.id)">Add as ${crew.role}</p>
+                              <p class="adding-as-role" id="prod" onclick="addAsProd(this)">Add as production manager</p>
+                            </div>
+                            `;
+              addingCrewContainer.innerHTML = addedCrew;
+              document.getElementById("search-icon-for-name").style.display = "none";
+              document.getElementById("myInput").style.display = "none";
+              document.getElementById("myUL").style.display = "none";
+              addingCrewContainer.style.display = "block";
+            })
+            .catch(error => {
+              // Handle any errors
+              console.error(error);
+            });
+  }
+
+  function addAsNormalRole(id) {
+    const url3 = window.location.origin + `/shotmaniacs2/api/admin/accounts/Crew?username=${id.username}`;
+    fetch(url3, {
+      headers: {
+        'Authorization': `${token}`
+      }
+    })
+            .then(response => response.json())
+            .then(crew => {
+              crewInfo += `
+                            <div class="crew-rectangle pad" id="${crew.id}">
+                              <div class="crew-name">${crew.username}</div>
+                              <div class="role-rectangle">
+                                <p class="role-specifying">${crew.role}</p>
+                              </div>
+                              <div class="remove-rectangle">
+                                <p class="remove-word" onclick="toggleRemove(crew.id)">Remove</p>
+                              </div>
+                            </div>
+                            `;
+              document.getElementById("crews").innerHTML = crewInfo;
+              addingCrewContainer.style.display = "none";
+              document.getElementById("search-icon-for-name").style.display = "block";
+              document.getElementById("myInput").style.display = "block";
+              document.getElementById("myUL").style.display = "block";
+            })
+            .catch(error => {
+              // Handle any errors
+              console.error(error);
+            });
+  }
+
+  function addAsProd(id) {
+
+  }
+
+  function toggleRemove(id) {
+
+  }
+</script>
+</body>
+</html>

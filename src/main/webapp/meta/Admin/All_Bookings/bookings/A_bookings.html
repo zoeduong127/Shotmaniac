@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Bookings</title>
+    <link href="A_bookings.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/kiona-2" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+          rel="stylesheet" type='text/css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="A_bookings.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="top">
+            <i class="fas fa-user user-icon"></i>
+            <p id="Username">Admin Shotmaniacs Group 2</p>
+            <img id="LogOutIcon" src="./../../../Brand_Identity/images/icons/white_Logout.png" alt="LogOut-Icon">
+            <p id="LogOut">Log out</p>
+        </div>
+        <div class="search-area">
+            <div class="left">
+                <div class="image">
+                    <img src="./../../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_MT.png" alt="Shotmaniacs">
+                </div>
+                <div class="text">
+                    <span class="slogan">Make Every Shot Count</span>
+                </div>
+            </div>
+
+            <div class="search">
+                <label for="search"></label>
+                <input type="text" class="input" id="search" placeholder="Search...">
+                <button class="search-icon-btn">
+                </button>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <div class="box" id="img"></div>
+            <div class="box"><p>Announcements</p></div>
+            <div class="box"><p>Bookings</p></div>
+            <div class="box"><p>Crews</p></div>
+            <div class="box"><p>Calendar</p></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container">
+            <div class="heading">
+                <h1>Bookings</h1>
+            </div>
+            <div class="left-side">
+                <div class="filter-box" style="margin-left: 9vw">
+                    <img class="filter-icon" src="./../../../Brand_Identity/images/icons/black_filter_icon.png" alt="Filter-Icon"/>
+                    <p id="filter-choice">All</p>
+                    <svg
+                        class="polygon"
+                        width="26"
+                        height="18"
+                        viewBox="0 0 26 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        cursor="pointer"
+                        onclick="filterClicking()";
+                    >
+                        <path d="M13 18L1.74167 4.5L24.2583 4.5L13 18Z" fill="black" />
+                    </svg>
+                    <div class="choices" id="choices" hidden>
+                        <p class="choice" onclick="updateBookingsByFilter('all')">All</p>
+                        <div class="filter-breaking-line"></div>
+                        <h class="label-for-filter">
+                            Timestamp
+                            <p class="choice" onclick="updateBookingsByFilter('on-going')">On going</p>
+                            <p class="choice" onclick="updateBookingsByFilter('past')">Past</p>
+                        </h>
+                        <div class="filter-breaking-line"></div>
+                        <h class="label-for-filter">
+                            Status
+                            <p class="choice" onclick="updateBookingsByFilter('approved')">Approved</p>
+                            <p class="choice" onclick="updateBookingsByFilter('pending')">Pending</p>
+                        </h>
+                    </div>
+                    <script>
+                        var count = 0;
+                        function filterClicking() {
+                            var choices = document.getElementById("choices");
+                            var bookings = document.getElementById("bookings");
+                            var bookingNames = document.getElementsByClassName("booking-name");
+                            var filterLabels = document.getElementsByClassName("label-for-filter");
+                            if (count%2==0) {
+                                bookings.style.opacity = "0.2"; //or 0.06
+                                for(let i=0; i<bookingNames.length; i++) {
+                                    bookingNames[i].style.cursor = "default";
+                                }
+                                for(let j=0; j<filterLabels.length; j++) {
+                                    filterLabels[j].style.cursor = "not-allowed";
+                                }
+                                choices.style.display = "block";
+                                count++;
+                            } else {
+                                bookings.style.opacity = "1";
+                                for(let i=0; i<bookingNames.length; i++) {
+                                    bookingNames[i].style.cursor = "pointer";
+                                }
+                                choices.style.display = "none";
+                                count++;
+                            }
+                        }
+                    </script>
+                </div>
+                <div class="search-box" id="searchbar" style="margin-left: 8vw">
+                    <input type="text" class="search-for-booking" id="booking-input" placeholder="Booking's name"
+                           onfocus="getAllBookings()">
+                    <div class="rectangle-for-search-icon">
+                        <img class="search-icon" id="search-button" src="./../../../Brand_Identity/images/icons/white_search_icon.png" alt="Search-Icon">
+                    </div>
+                </div>
+                <div class="bookings" id="bookings" style="margin-left: 4vw">
+                </div>
+            </div>
+            <div class="right-side" style="margin-left: 3.3vw">
+                <div class="cover-rectangle" id="unassigned-wrapper">
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
