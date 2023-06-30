@@ -31,7 +31,7 @@ public enum AccountDao {
     public int addAccount(Account account) {
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "INSERT INTO account VALUES (DEFAULT,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO account VALUES (DEFAULT,?,?,?,?,?,?,?) RETURNING *";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getEmail());
@@ -40,9 +40,9 @@ public enum AccountDao {
             preparedStatement.setString(5, account.getSalt());
             preparedStatement.setString(6, account.getTelephone());
             preparedStatement.setString(7, String.valueOf(account.getRole()));
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                return rowsInserted;
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
             }
         } catch (SQLException e) {
             System.err.println("Error connecting: " + e);

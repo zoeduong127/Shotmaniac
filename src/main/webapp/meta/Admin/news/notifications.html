@@ -38,13 +38,10 @@
 		</div>
 		
 		<div class="navigation">
-			<a href="./../dashboard/A_Dashboard.html">
-				<div class="box" id="img" onclick=""></div>
-			</a>
-			<div class="box"><a href="./../news/notifications.html">Announcement</a></div>
-			<div class="box"><a href="./../All_Bookings/bookings/A_bookings.html">Bookings</a></div>
-			<div class="box"><a href="./../crews/A_Crews.html">Crews</a></div>
-			<div class="box"><a href="./../All_Bookings/calendar/A_calendar.html">Calendar</a></div>
+			<div class="box" id="img"><a href="./../dashboard/A_Dashboard.html"></a></div>
+			<div class="box"><a href="./notifications.html" style="left: 35.3vw">Announcement</a></div>
+			<div class="box"><a href="./../All_Bookings/bookings/A_bookings.html" style="left: 47.2vw">Bookings</a></div>
+			<div class="box"><a href="./../crews/A_Crews.html" style="left: 58.2vw">Crews</a></div>
 		</div>
 	</header>
 	
@@ -420,7 +417,7 @@
 					document.cookie = "account_id =;  Path=/";
 					document.cookie = "account_username =;  Path=/";
 					document.cookie = "auth_token =;  Path=/";
-					window.location.href="http://localhost:8080/shotmaniacs2/";
+					window.location.href= window.location.origin+"/shotmaniacs2/";
 				} else if (response.status === 304) {
 					throw new Error('The given account was not logged in.');
 				} else {

@@ -1,3 +1,4 @@
+/*
 const announcementListItems = document.querySelectorAll(".announcement-list-item");
 const announcementContent = document.querySelector(".announcement-content");
 const announcementTitle = document.querySelector("#announcement-title");
@@ -26,10 +27,10 @@ function parseCookie(cookieString) {
 
 
 
-/*announcementContent.addEventListener('click', function() {
+/!*announcementContent.addEventListener('click', function() {
     announcementTitle.textContent = '';
     announcementDescription.textContent = '';
-});*/
+});*!/
 
 
 function showComment() {
@@ -88,11 +89,11 @@ function readAllAnnouncements() {
                     
                 `;
 
-                    /*<div class="comment-box" id="comment-box">
+                    /!*<div class="comment-box" id="comment-box">
                         <label for="comment-input"></label>
                         <textarea id="comment-input" placeholder="Type your comment here"></textarea>
                         <button id="comment-submit" type="submit">Submit</button>
-                    </div>*/
+                    </div>*!/
                     let submit = document.createElement("div")
                     let label = document.createElement("label");
                     let textarea = document.createElement("textarea");
@@ -143,6 +144,7 @@ function display(id) {
 
 readAllAnnouncements();
 
+*/
 
 
 /*FROM ADMIN*/

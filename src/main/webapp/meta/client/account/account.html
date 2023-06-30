@@ -134,7 +134,7 @@
                 document.cookie = "account_id =;  Path=/";
                 document.cookie = "account_username =;  Path=/";
                 document.cookie = "auth_token =;  Path=/";
-                window.location.href="http://localhost:8080/shotmaniacs2/";
+                window.location.href= window.location.origin+"/shotmaniacs2/";
               } else if (response.status === 304) {
                 throw new Error('The given account was not logged in.');
               } else {
