@@ -13,6 +13,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.*;
+
 @Path("/client")
 public class ClientsResource {
     @Context
@@ -272,13 +274,13 @@ public class ClientsResource {
     @Path("{booking_id}/crews")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Account> getCrews(@PathParam("booking_id") int id) {
+    public List<Account> getCrews() {
         List<Account> listcrews = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, enrolment e WHERE e.booking_id = ? AND a.account_id = e.crew_member_id";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a WHERE account_type = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setString(1,String.valueOf(AccountType.Administrator));
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()) {
@@ -300,7 +302,7 @@ public class ClientsResource {
             Connection connection = DriverManager.getConnection(url, dbName, password);
             String query = "UPDATE booking SET state = ? WHERE booking_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,String.valueOf(BookingState.CANCELED));
+            preparedStatement.setString(1, valueOf(BookingState.CANCELED));
             preparedStatement.setInt(2,id);
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0){

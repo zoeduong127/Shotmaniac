@@ -7,6 +7,7 @@ const cookies = parseCookie(document.cookie);
 const token = cookies['auth_token'];
 const account_id = cookies['account_id'];
 console.log("account id: " + account_id);
+addUpcomingEvents();
 
 const months = [
     "Jan",
@@ -46,6 +47,7 @@ function toggleStyle(id) {
 }
 
 function toggleOff() {
+    document.cookie = "booking_id=; path=/";
     left.style.opacity = "1";
     left.style.pointerEvents = "auto";
 
@@ -83,7 +85,7 @@ function parseCookie(cookieString) {
 function performQueryAndUpdateBookings(input) {
     let url;
     if (input === " ") {
-        url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+        url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
     } else {
         url = input;
     }
@@ -106,6 +108,7 @@ function performQueryAndUpdateBookings(input) {
             displaySortedBookings(booking_list);
         })
 }
+
 
 function displaySortedBookings(list) {
     let element = "";
@@ -142,7 +145,8 @@ function displaySortedBookings(list) {
 }
 
 function displayInformation(id) {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/booking/${id}`;
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/booking/${id}`;
+    document.cookie = "booking_id=" + id + "; path=/";
 
     fetch(url, {
         headers: {
@@ -189,12 +193,52 @@ function displayInformation(id) {
 
         })
 }
+function acceptBooking(){
+    const state = 'APPROVED'
+    const booking_id = cookies['booking_id'];
+    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
+    fetch(url,{
+        method: 'PUT',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if(response.ok){
+                document.cookie = "booking_id=; path=/";
+                performQueryAndUpdateBookings(" ");
+                toggleOff();
+            }else{
+                alert("Something wrong! Please try again")
+            }
+        })
+}
+function cancelBooking(){
+    const state = 'APPROVED'
+    const booking_id = cookies['booking_id'];
+    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
+    fetch(url,{
+        method: 'PUT',
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => {
+            if(response.ok){
+                document.cookie = "booking_id=; path=/";
+                performQueryAndUpdateBookings(" ");
+                toggleOff();
+            }else{
+                alert("Something wrong! Please try again")
+            }
+        })
+}
 
 
 function addUpcomingEvents() {
-    const url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    const filter = "ongoing";
+    const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/allbookings`;
     let booking_list = [];
-
 
     fetch(url, {
         headers: {
@@ -203,17 +247,16 @@ function addUpcomingEvents() {
     })
         .then(response => response.json())
         .then(data => {
+            console.log(data)
+            data = data.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA - dateB;
+            });
             //TODO FIX THIS BS, its supposed to sort and filter but it does neither
-            data.sort(function (a, b) {
-                return a.timestamp - b.timestamp;
-            });
             console.log(data);
-            data.filter(date => {
-                return date >= new Date()
-            });
-            console.log(data);
-            const earliestEvents = data.slice(0, 5);
-            console.log("Earliest Events:");
+            const earliestEvents = data.slice(0,5);
+            console.log(earliestEvents);
             let output = "<h1>Upcoming Events</h1>";
             earliestEvents.forEach(function (event) {
                 output += `
@@ -468,9 +511,90 @@ function removeAutocompleteDropdown() {
     const listEl = document.querySelector("#autocomplete-list");
     if (listEl) listEl.remove(); //checks if it exists and then removes it
 }
+function graph(){
+    const filter = "DONE";
+    const url = window.location.origin+`/shotmaniacs2/api/admin/bookings/timefilter/${filter}`;
+    fetch(url, {
+        headers: {
+            'Authorization': `${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(booking => {
+            console.log(booking)
+            const bookings = booking.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateA - dateB;
+            });
+            console.log(bookings)
+            var bookingCounts = {};
 
+            bookings.forEach(function (booking) {
+                var timestamp = new Date(parseInt(booking.date));
+
+                if (!isNaN(timestamp)) { // Check if timestamp is valid
+                    var date = new Date(timestamp);// Convert to Date object
+
+                    var monthh = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0');
+
+                    if (bookingCounts[monthh]) {
+                        bookingCounts[monthh]++;
+                    } else {
+                        bookingCounts[monthh] = 1;
+                    }
+                }});
+
+            // Convert the booking counts object to arrays
+            var monthss = Object.keys(bookingCounts);
+            var counts = monthss.map(function(month) {
+                return bookingCounts[month];
+            });
+
+            // Get the canvas element
+            var canvas = document.getElementById('chart');
+            var ctx = canvas.getContext('2d');
+
+            // Chart configuration
+            var chartConfig = {
+                type: 'line',
+                data: {
+                    labels: monthss,
+                    datasets: [{
+                        label: 'Number of Bookings',
+                        data: counts,
+                        borderColor: 'blue',
+                        backgroundColor: 'transparent'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                            },
+                            min: monthss[(monthss.length)-5],  // Specify the minimum value on the x-axis
+                            max: monthss[(monthss.length)-1]
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                            },
+                        }
+                    }
+                }
+            };
+
+            // Create the chart graph
+            var chart = new Chart(ctx, chartConfig);})
+}
 
 
 /*Startup*/
 performQueryAndUpdateBookings(" ")
-addUpcomingEvents();

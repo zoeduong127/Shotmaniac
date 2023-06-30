@@ -9,8 +9,10 @@
 	      rel="stylesheet" type='text/css'>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="./A_Dashboard.js" defer></script>
 </head>
-<body>
+<body onload="graph()">
 <div class="container">
 	<header>
 		<div class="top">
@@ -61,7 +63,9 @@
 					<!--<div class="title">
 						<h3 id="stats">Statistics</h3>
 					</div>-->
-					<div class="graph"></div>
+					<div class="graph" >
+						<canvas id="chart" style="position:relative;width:150%;height:150%"></canvas>
+					</div>
 					<div class="numbers">
 						<p id="1">1st number: 28</p>
 						<p id="2">2nd number: 30</p>
@@ -120,7 +124,7 @@
 				
 				<div class="footer">
 					<p onclick="callCancel()" class="link" id="cancel">Cancel Booking</p>
-					<p class="link" id="accept">Accept booking</p>
+					<p onclick="acceptBooking()" class="link" id="accept">Accept booking</p>
 				</div>
 			</div>
 		</div>
@@ -148,12 +152,11 @@
 			
 			<div class="foot_note">
 				<button onclick="toggleCancel()" id="return">Return</button>
-				<button id="cancel_booking" type="submit">Cancel Booking</button>
+				<button id="cancel_booking" type="submit" onclick="cancelBooking()">Cancel Booking</button>
 			</div>
 		</form>
 	</main>
 </div>
 
-<script src="./A_Dashboard.js" defer></script>
 </body>
 </html>
