@@ -353,7 +353,7 @@ function updateBookings(filterType) {
         case 'future': {
             filter = "ongoing";
             filterButton.textContent = "Filter: Upcoming";
-            url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
+                url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/mybooking/timefilter/${filter}`;
             break;
         }
         case 'past': {

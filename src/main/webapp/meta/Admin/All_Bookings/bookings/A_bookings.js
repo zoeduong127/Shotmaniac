@@ -129,8 +129,6 @@ function fetchBookings(input) {
 }
 
 function allBookings(url) {
-
-
     fetch(url, {
         headers: {
             'Authorization': `${token}`
@@ -385,7 +383,8 @@ function allBookings(url) {
 function back() {
     if (currentPage>1) {
         currentPage--;
-        allBookings();
+        const url = getCurrentURL();
+        allBookings(url);
         const bookingsElement = document.getElementById("bookings");
         bookingsElement.style.animation = 'slide-right 0.5s';
         setTimeout(() => {
@@ -398,13 +397,42 @@ function next() {
     const maxPage = Math.ceil(bookingsArr.length / bookingsPerPage);
     if (currentPage<maxPage) {
         currentPage++;
-        allBookings();
+        const url = getCurrentURL();
+        allBookings(url);
         const bookingsElement = document.getElementById("bookings");
         bookingsElement.style.animation = 'slide-left 0.5s';
         setTimeout(() => {
             bookingsElement.style.animation = '';
         }, 500);
     }
+}
+
+function getCurrentURL() {
+    const filterChoice = document.getElementById("filter-choice").textContent.toLowerCase();
+    let url = "";
+
+    switch (filterChoice) {
+        case 'approved':
+            url = `${window.location.origin}/shotmaniacs2/api/admin/bookings/statefilter/approved`;
+            console.log("Approved: " + url);
+            break;
+        case 'pending':
+            url = `${window.location.origin}/shotmaniacs2/api/admin/bookings/statefilter/pending`;
+            console.log("pending: " + url);
+            break;
+        case 'on-going':
+            url = `${window.location.origin}/shotmaniacs2/api/admin/bookings/timefilter/ongoing`;
+            console.log("ongoing: " + url);
+            break;
+        case 'past':
+            url = `${window.location.origin}/shotmaniacs2/api/admin/bookings/timefilter/past`;
+            console.log("past: " + url);
+            break;
+        default:
+            url = `${window.location.origin}/shotmaniacs2/api/crew/${account_id}/allbookings`;
+            console.log("all: " + url);
+    }
+    return url;
 }
 
 //Add sliding animation to CSS

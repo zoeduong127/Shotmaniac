@@ -376,7 +376,7 @@ body {
 
 .polygon {
     margin-left: 7vw;
-    transform: translate(40px, -28.5px);
+    transform: translate(51px, -31.5px);
 }
 
 .search-for-booking {
@@ -555,7 +555,7 @@ body {
     width: 4.5vw;
     height: 4.5vh;
     font-size: 17px;
-    font-family: "Kiona Semibold", "Times New Roman", serif;
+    font-family: Kiona Semibold;
     border: 2.35px solid #f58024;
     background: rgba(245, 128, 36, 0.5);
     border-radius: 13px;
@@ -652,15 +652,15 @@ body {
 }
 
 .autocomplete-list {
+    z-index: 3;
     list-style: none;
     padding: unset;
     margin: unset;
     position: absolute;
     width: 25.3vw;
     background-color: white;
-    left: 59vh;
-    top: 41vh;
-    z-index: 3;
+    left: 64.5vh;
+    top: 42vh;
 
     -ms-overflow-style: none;  /* hides scrollbar */
     scrollbar-width: none;  /* hides scrollbar */
