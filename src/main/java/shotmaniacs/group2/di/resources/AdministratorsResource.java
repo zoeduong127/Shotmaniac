@@ -51,7 +51,7 @@ public class AdministratorsResource {
     }
 
     @RolesAllowed({"Administrator"})
-    @PUT
+    @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("/accounts")
     public Response addAccount(Account account) {
