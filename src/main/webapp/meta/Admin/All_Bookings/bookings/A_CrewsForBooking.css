@@ -156,7 +156,7 @@ body {
     border-radius: 0 20px 20px 0 ;
     width: 2.5vw;
     cursor: pointer;
-    background-image: url("./../Brand_Identity/images/icons/search_icon_black.png");
+    background-image: url("./../../../Brand_Identity/images/icons/search_icon_black.png");
     background-position: 5px 3px;
     background-repeat: no-repeat;
     background-size: 3vh;
@@ -197,6 +197,14 @@ body {
     font-size: 1.3rem;
 }
 
+.box a {
+    color: white;
+    font-family: Kiona Semibold;
+    font-size: 17px;
+    position: absolute;
+    top: 17.6vh;
+}
+
 .box:hover {
     cursor: pointer;
 }
@@ -211,6 +219,7 @@ body {
     position: relative;
     z-index: 1;
 }
+
 .box p {
     margin: 3.5vh 0;
 }
@@ -244,13 +253,18 @@ body {
 }
 
 .booking-name-title {
-    height: 3.5vh;
+    height: 4.5vh;
     color: #1696d2;
     font: 2em "Kiona SemiBold";
     text-decoration: underline;
     font-weight: bolder;
     cursor: pointer;
     font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 17vw;
+    display: inline-block;
 }
 
 .left-side {
@@ -313,7 +327,7 @@ body {
     border-style: solid;
     border-color: #b19cd8;
     border-width: 2px;
-    width: 12vw;
+    width: 11vw;
     height: 4vh;
     margin-left: 27vw;
     margin-top: -3.5vh;
@@ -324,7 +338,7 @@ body {
     text-align: center;
     font: 17px Kiona, cursive;
     margin-top: 0.4vh;
-    margin-left: -1.8vw;
+    margin-left: -0.1vw;
     font-weight: bold;
 }
 
@@ -440,11 +454,13 @@ body {
 
 #add-crew {
     font: 24px "Kiona SemiBold";
-    margin-left: 8vw;
-    margin-top: -34vh;
     font-weight: bolder;
     text-decoration: underline;
     color: #e70f0f;
+    position: absolute;
+    top: 32.5vh;
+    right: 14vw;
+
 }
 
 .addingCrew {
@@ -454,8 +470,9 @@ body {
     border-width: 1.5px;
     width: 21vw;
     height: 39vh;
-    margin-top: -30vh;
-    margin-left: 72.5vw;
+    position: fixed;
+    top: 44vh;
+    right: 6.7vw;
 }
 
 .title-client-info {
@@ -518,7 +535,7 @@ body {
     color: #1696d2;
     margin-top: 2vh;
     position: absolute;
-    margin-left: 5.45vw;
+    margin-left: 5.2vw;
     text-align: center;
 }
 

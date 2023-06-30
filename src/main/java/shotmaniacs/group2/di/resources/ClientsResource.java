@@ -1,11 +1,13 @@
 package shotmaniacs.group2.di.resources;
 
+import jakarta.mail.MessagingException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dto.Accountdto;
 import shotmaniacs.group2.di.dto.Bookingdto;
 import shotmaniacs.group2.di.dto.Changepass;
 import shotmaniacs.group2.di.dto.LoginInfor;
+import shotmaniacs.group2.di.emails.Mailer;
 import shotmaniacs.group2.di.model.*;
 
 import java.sql.*;
@@ -49,7 +51,12 @@ public class ClientsResource {
     public Response createBooking_noid(Bookingdto booking) {
        boolean response = booking.addBooking(booking);
        if(response){
-            return Response.ok().build();
+           try {
+               Mailer.sendNewBookingNotification(booking);
+               return Response.ok().build();
+           } catch (MessagingException e) {
+               System.out.println("Error while sending new booking email notification: " + e.getMessage());
+           }
        }
         return Response.serverError().build();
     }
@@ -65,7 +72,7 @@ public class ClientsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
-    public Response createBooking_noid(List<Bookingdto> booking) {
+    public Response createBookings_noId(List<Bookingdto> booking) {
         int i = 0;
         for(Bookingdto bookingdto: booking) {
             boolean response = bookingdto.addBooking(bookingdto);
@@ -105,10 +112,10 @@ public class ClientsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
-    public Response createBooking_noid(@PathParam("client_id")int user_id,Bookingdto booking) {
+    public Response createBooking_withid(@PathParam("client_id")int user_id,Bookingdto booking) {
         boolean response = booking.addBooking_id(user_id,booking);
-        if(response){
-            return Response.ok().build();
+        if(response) {
+                return Response.ok().build();
         }
         return Response.serverError().build();
     }
@@ -124,7 +131,7 @@ public class ClientsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
-    public Response createBooking_noid(@PathParam("client_id")int user_id,List<Bookingdto> booking) {
+    public Response createBookings_withId(@PathParam("client_id")int user_id,List<Bookingdto> booking) {
         int i = 0;
         for(Bookingdto bookingdto: booking) {
             boolean response = bookingdto.addBooking_id(user_id,bookingdto);

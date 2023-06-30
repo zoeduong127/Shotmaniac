@@ -11,6 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import shotmaniacs.group2.di.dao.AccountDao;
 import shotmaniacs.group2.di.dao.BookingDao;
+import shotmaniacs.group2.di.dto.Bookingdto;
 import shotmaniacs.group2.di.dto.EnrolmentDto;
 import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.Announcement;
@@ -52,8 +53,8 @@ public class Mailer {
 //            loadHTMLFile(new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email");
 //        } catch (IOException ignored) {
 //        }
-        PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Ensure this path is correct before deployment
-//        PATH = new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\email";
+//        PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Ensure this path is correct before deployment
+        PATH = new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\email";
         // Get system properties
         Properties properties = System.getProperties();
 
@@ -161,13 +162,10 @@ public class Mailer {
         return contentBuilder.toString();
     }
 
-    public static void sendEnrolmentNotification(int enrolmentId) throws MessagingException {
-        EnrolmentDto enrolmentDetails = getEnrolmentDetails(enrolmentId);
-        if (enrolmentDetails == null) {
-            throw new MessagingException();
-        }
-        Booking booking = BookingDao.instance.getABooking(enrolmentDetails.getBookingId());
-        Account account = AccountDao.instance.getAccountById(enrolmentDetails.getCrewMemberId());
+    public static void sendEnrolmentNotification(int bookingId, int crewMemberId) throws MessagingException {
+        System.out.println("Email sent");
+        Booking booking = BookingDao.instance.getABooking(bookingId);
+        Account account = AccountDao.instance.getAccountById(crewMemberId);
 
         if (booking == null || account == null) {
             throw new MessagingException();
@@ -181,6 +179,8 @@ public class Mailer {
             doc.getElementById("description").text("Below you will find details about the enrolled booking.");
             doc.getElementById("booking_description").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Details: </strong><br /> " + booking.getDescription());
             doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + booking.getClientName());
+            doc.getElementById("booking_type").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Booking Type:</strong><br /> " + booking.getBookingType());
+            doc.getElementById("event_type").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Event Type:</strong><br /> " + booking.getEventType());
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
@@ -209,7 +209,13 @@ public class Mailer {
             doc.getElementById("greeting").text("Hi, " + account.getUsername());
             doc.getElementById("description").html("A booking you were enrolled in was cancelled. The reason specified was: <br /> " + reason);
             doc.getElementById("booking_description").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Details: </strong><br /> " + booking.getDescription());
-            doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + booking.getClientName());
+
+            if (booking.getClientName() != null) {
+                doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + booking.getClientName());
+            } else {
+                doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + "unknown");
+            }
+
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
@@ -237,8 +243,11 @@ public class Mailer {
             doc.getElementById("greeting").text("Hi, " + account.getUsername());
             doc.getElementById("description").text("You have been de-enrolled from a booking. Below you will find more details: ");
             doc.getElementById("booking_description").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Details: </strong><br /> " + booking.getDescription());
-            doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + booking.getClientName());
-            doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
+            if (booking.getClientName() != null) {
+                doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + booking.getClientName());
+            } else {
+                doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + "unknown");
+            }            doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
             sendEmail(account.getEmail(), "Booking De-enrolment", doc.html());
@@ -247,22 +256,33 @@ public class Mailer {
         }
     }
 
-    public static void sendNewBookingNotification(int bookingId) throws MessagingException {
-        Booking booking = BookingDao.instance.getABooking(bookingId);
-        if (booking == null) {
-            throw new MessagingException();
-        }
-
+    public static void sendNewBookingNotification(Bookingdto bookingdto) throws MessagingException {
         try {
             Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\newBookingNotification.html"));
 
-            doc.getElementById("title").html(" New Booking Was Submitted: <br> " + booking.getName());
+            doc.getElementById("title").html(" New Booking Was Submitted: <br> " + bookingdto.getName());
             doc.getElementById("description").text("Below you will find details about the new booking.");
-            doc.getElementById("booking_description").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Details: </strong><br /> " + booking.getDescription());
-            doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + booking.getClientName());
-            doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
-            doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
-            doc.getElementById("client_contact").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client contact: </strong><br /> Phone: " + booking.getPhoneNumber() + "<br /> Email: " + booking.getClientEmail());
+            doc.getElementById("booking_description").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Details: </strong><br /> " + bookingdto.getDescription());
+
+            if (bookingdto.getClientName() != null) {
+                doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + bookingdto.getClientName());
+            } else {
+                doc.getElementById("client").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client:</strong><br /> " + "unknown");
+            }
+
+            doc.getElementById("booking_type").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Booking Type:</strong><br /> " + bookingdto.getBookingType());
+            doc.getElementById("event_type").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Event Type:</strong><br /> " + bookingdto.getEventType());
+            doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + bookingdto.getDate());
+            doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + bookingdto.getLocation());
+
+            if (bookingdto.getPhoneNumber() == null) {
+                bookingdto.setPhoneNumber("unknown");
+
+            }
+            if (bookingdto.getClientEmail() == null) {
+                bookingdto.setClientEmail("unknown");
+            }
+            doc.getElementById("client_contact").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Client contact: </strong><br /> Phone: " + bookingdto.getPhoneNumber() + "<br /> Email: " + bookingdto.getClientEmail());
             sendEmail(NEWBOOKINGEMAIL, "New Booking", doc.html());
         } catch (IOException e) {
             System.out.println("Error parsing email HTML file: " + e.getMessage());

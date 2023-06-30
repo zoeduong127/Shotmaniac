@@ -38,11 +38,11 @@
     </div>
 
     <div class="navigation">
-      <div class="box" id="img"></div>
-      <div class="box"><a href="./../news/notifications.html">Announcement</a></div>
-      <div class="box"><a href="./../All_Bookings/bookings/A_bookings.html">Bookings</a></div>
-      <div class="box"><a href="./../crews/A_Crews.html">Crews</a></div>
-      <div class="box"><a href="./../All_Bookings/calendar/A_calendar.html">Calendar</a></div>
+      <div class="box" id="img"><a href="./../../dashboard/A_Dashboard.html"></a></div>
+      <div class="box"><a href="./../news/notifications.html" style="left: 35.3vw">Announcement</a></div>
+      <div class="box"><a href="./../All_Bookings/bookings/A_bookings.html" style="left: 47.2vw">Bookings</a></div>
+      <div class="box"><a href="./../crews/A_Crews.html" style="left: 58.2vw">Crews</a></div>
+      <div class="box"><a href="./../All_Bookings/calendar/A_calendar.html" style="left: 67.5vw">Calendar</a></div>
     </div>
   </header>
 
@@ -115,8 +115,6 @@
   window.addEventListener('beforeunload', function (event) {
     // Cancel the event to prevent the browser from closing immediately
     event.preventDefault();
-    document.cookie ="booking_id =;  Path=/";
-    return;
   });
 
   function parseCookie(cookieString) {
@@ -182,8 +180,8 @@
                               <div class="role-rectangle">
                                 <p class="role-specifying">${crew.role}</p>
                               </div>
-                              <div class="remove-rectangle">
-                                <p class="remove-word" onclick="toggleRemove()">Remove</p>
+                              <div class="work-hours-rectangle">
+                                <p class="hours" onclick="toggleRemove()">Remove</p>
                               </div>
                             </div>
                             `;
@@ -252,6 +250,7 @@
                             </div>
                             `;
                 addingCrewContainer.innerHTML = addedCrew;
+                addedCrew = "";
                 document.getElementById("search-icon-for-name").style.display = "none";
                 document.getElementById("myInput").style.display = "none";
                 document.getElementById("myUL").style.display = "none";
@@ -264,6 +263,7 @@
             });
   }
 
+  //TODO: update in the database
   function addAsNormalRole(username) {
     const url3 = window.location.origin + `/shotmaniacs2/api/admin/accounts/Crew?username=${username}`;
     console.log(url3);
@@ -281,15 +281,14 @@
                               <div class="role-rectangle">
                                 <p class="role-specifying">${crew.role}</p>
                               </div>
-                              <div class="remove-rectangle">
-                                <p class="remove-word" onclick="toggleRemove()">Remove</p>
+                              <div class="work-hours-rectangle">
+                                <p class="hours" onclick="toggleRemove()">Remove</p>
                               </div>
                             </div>
                             `;
                 document.getElementById("crews").innerHTML = crewInfo;
                 addingCrewContainer.innerHTML = "";
                 addingCrewContainer.style.display = "none";
-                console.log(addingCrewContainer.innerHTML)
                 document.getElementById("search-icon-for-name").style.display = "block";
                 document.getElementById("myInput").style.display = "block";
                 document.getElementById("myUL").style.display = "block";
@@ -301,6 +300,7 @@
             });
   }
 
+  //TODO: update in the database
   function toggleRemove() {
 
   }

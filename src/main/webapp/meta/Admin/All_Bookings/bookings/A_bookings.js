@@ -30,7 +30,7 @@ function parseCookie(cookieString) {
 
 //Upcoming approved bookings with 0 assigned crew
 function UnassignedBookings() {
-    let url = `http://localhost:8080/shotmaniacs2/api/crew/${account_id}/allbookings`;
+    let url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/allbookings`;
 
     fetch(url, {
         headers: {

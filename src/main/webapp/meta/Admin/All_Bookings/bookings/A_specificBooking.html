@@ -39,11 +39,11 @@
         </div>
 
         <div class="navigation">
-            <div class="box" id="img"></div>
-            <div class="box"><a href="./../news/notifications.html">Announcement</a></div>
-            <div class="box"><a href="./../All_Bookings/bookings/A_bookings.html">Bookings</a></div>
-            <div class="box"><a href="./../crews/A_Crews.html">Crews</a></div>
-            <div class="box"><a href="./../All_Bookings/calendar/A_calendar.html">Calendar</a></div>
+            <div class="box" id="img"><a href="./../../dashboard/A_Dashboard.html"></a></div>
+            <div class="box"><a href="./../news/notifications.html" style="left: 35.3vw">Announcement</a></div>
+            <div class="box"><a href="./../All_Bookings/bookings/A_bookings.html" style="left: 47.2vw">Bookings</a></div>
+            <div class="box"><a href="./../crews/A_Crews.html" style="left: 58.2vw">Crews</a></div>
+            <div class="box"><a href="./../All_Bookings/calendar/A_calendar.html" style="left: 67.5vw">Calendar</a></div>
         </div>
     </header>
 
@@ -93,81 +93,10 @@
                             }
                         </script>
                     </div>-->
-                    <!--<button class="button-load" id="loading-button" hidden>
-                        <i class="fa fa-spinner fa-spin"></i>Saving Data
-                    </button>-->
                 </div>
             </div>
             <div class="right-side" id="right-side">
                 <div class="crews-setting" id="crews-setting">
-                    <!--<div class="small-rectangle-crews-setting">
-                        <p id="crews-in-box">Number of crews needed</p>
-                    </div>
-                    <div class="input-section">
-                        <label for="photographer">Photographer</label>
-                        <input class="number-type" id="photographer" type="number">
-                    </div>-->
-                    <!--<div class="input-section">
-                        <label for="videographer">Videographer</label>
-                        <input class="number-type" id="videographer" type="number">
-                    </div>
-                    <div class="input-section">
-                        <label for="producer">Producer</label>
-                        <input class="number-type" id="producer" type="number">
-                    </div>
-                    <div class="input-section">
-                        <label for="assistant">Assistant</label>
-                        <input class="number-type" id="assistant" type="number">
-                    </div>
-                    <div class="input-section">
-                        <label for="data-handler">Data Handler</label>
-                        <input class="number-type" id="data-handler" type="number">
-                    </div>
-                    <div class="input-section">
-                        <label for="planner">Planner</label>
-                        <input class="number-type" id="planner" type="number">
-                    </div>
-                    <div class="input-section">
-                        <label for="editor">Editor</label>
-                        <input class="number-type" id="editor" type="number">
-                    </div>-->
-                    <!--<div class="footer" id="footer">
-                        <div class="save-data-and-accept" id="save-data" onclick="saveData()">Save Data And Accept Booking</div>
-                        <script>
-                            function saveData() {
-                                const coffeeAnimation = document.getElementById("coffee-animation"),
-                                    loadingButton = document.getElementById("loading-button"),
-                                    clientInfo = document.getElementById("client-info"),
-                                    refuseButton = document.getElementById("refuse-button"),
-                                    refuseWord = document.getElementById("refuse"),
-                                    saveData = document.getElementById("save-data");
-                                coffeeAnimation.style.display = "block";
-                                loadingButton.style.display = "block";
-                                clientInfo.style.opacity = "0.05";
-                                refuseButton.style.opacity = "0.05";
-                                setTimeout(function() {
-                                    coffeeAnimation.style.display = "none";
-                                    loadingButton.style.display = "none";
-                                    clientInfo.style.opacity = "1";
-                                    refuseButton.style.opacity = "1";
-                                    refuseWord.innerText = "APPROVED";
-                                    refuseWord.style.cursor = "not-allowed";
-                                    refuseWord.onclick = null;
-                                    refuseWord.style.color = "#1696D2";
-                                    refuseWord.style.marginLeft = "2.45vw";
-                                    refuseWord.style.marginTop = "1vh";
-                                    refuseButton.style.borderColor = "#1696D2";
-                                    document.getElementById("footer").style.background = "#ffffff";
-                                    document.getElementById("footer").style.marginTop = "1vh";
-                                    saveData.innerText = "Manage Crew";
-                                    saveData.style.marginLeft = "5vw";
-                                    saveData.style.color = "#e70f0f";
-                                    saveData.style.fontSize = "20px";
-                                    //Change link when clicking "Manage Crew"
-                                }, 8000);
-                            }
-                        </script>
-                    </div>-->
                 </div>
                 <div class="crew-link" hidden>
                     <p id="Crew">Manage Crew</p>
@@ -199,8 +128,6 @@
     window.addEventListener('beforeunload', function (event) {
         // Cancel the event to prevent the browser from closing immediately
         event.preventDefault();
-        document.cookie ="booking_id =;  Path=/";
-        return;
     });
 
     function parseCookie(cookieString) {
@@ -352,11 +279,16 @@
                                 <p id="crews-in-box">Number of crews needed</p>
                             </div>
                             <div class="input-section">
-                                <label for="editor">Numbers</label>
+                                <label for="editor">Number</label>
                                 <input class="number-type" id="editor" type="number">
+                            </div>
+                            <div class="input-section">
+                                <label for="editor">Manager</label>
+                                <input class="number-type" id="prod-manager" type="text">
                             </div>
                             <div class="footer" id="footer">
                                 <div class="save-data-and-accept" id="save-data" onclick="saveData()">Save Data And Accept Booking</div>
+                                <div class="save-data-and-accept" id="changingBtn" hidden>Manage Crew</div>
                             </div>
                             `;
                 document.getElementById("heading").innerHTML = heading;
@@ -369,13 +301,16 @@
             });
     }
 
+    //TODO: needs to update the number of crews needed to database and the product manager ID
+    //TODO: change the state from pending -> approved in database as well
     function saveData() {
         const coffeeAnimation = document.getElementById("coffee-animation"),
             loadingButton = document.getElementById("loading-button"),
             clientInfo = document.getElementById("client-info"),
             refuseButton = document.getElementById("refuse-button"),
             refuseWord = document.getElementById("refuse"),
-            saveData = document.getElementById("save-data");
+            saveData = document.getElementById("save-data"),
+            changingBtn = document.getElementById("changingBtn");
         coffeeAnimation.style.display = "block";
         loadingButton.style.display = "block";
         clientInfo.style.opacity = "0.05";
@@ -394,15 +329,15 @@
             refuseButton.style.borderColor = "#1696D2";
             document.getElementById("footer").style.background = "#ffffff";
             document.getElementById("footer").style.marginTop = "1vh";
-            saveData.innerText = "Manage Crew";
-            saveData.addEventListener("click", function() {
-                console.log(id);
-                document.cookie = "booking_id=" + element.id + "; path=/";
+            saveData.onclick = null;
+            saveData.innerText = "";
+            changingBtn.addEventListener("click", function() {
                 window.location.href = "./A_CrewsForBooking.html";
             })
-            saveData.style.marginLeft = "5vw";
-            saveData.style.color = "#e70f0f";
-            saveData.style.fontSize = "20px";
+            changingBtn.style.display = "block";
+            changingBtn.style.marginLeft = "5vw";
+            changingBtn.style.color = "#e70f0f";
+            changingBtn.style.fontSize = "20px";
         }, 8000);
     }
 
@@ -434,6 +369,7 @@
         cancelForm.style.display = "none";
     }
 
+    //TODO: need to update the reason to database and send to client's email
     function cancellationSubmit() {
 
     }
