@@ -184,7 +184,7 @@ public class Mailer {
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
-            sendEmailWithInvite(new String[]{account.getEmail()}, "New Enrolment", doc.html(), booking, account); //TODO: Change this to send to account's email
+            sendEmailWithInvite(new String[]{account.getEmail()}, "New Enrolment", doc.html(), booking, account);
         } catch (IOException e) {
             System.out.println("Error parsing email HTML file: " + e.getMessage());
         }
