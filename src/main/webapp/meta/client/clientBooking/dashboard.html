@@ -148,7 +148,7 @@
 
 	const cookies = parseCookie(document.cookie);
 	const id = cookies['account_id'];
-	const url = window.location.origin+`/shotmaniacs2/api/client/${id}/mybookings`;
+	const url = window.location.origin+`/shotmaniacs2/api/client/${id}/mybooking/timefilter/ongoing`;
 	performQueryAndUpdateBookings(url);
 
 	function parseCookie(cookieString) {
