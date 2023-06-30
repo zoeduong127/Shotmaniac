@@ -115,7 +115,6 @@ function setLabel(id) {
 }
 
 function toggleStyleAndPage(element) {
-
     currentTheme.setAttribute('href', 'singleEventHomePage.css');
     console.log('new theme changed to: ' + currentTheme.getAttribute('href'));
 
