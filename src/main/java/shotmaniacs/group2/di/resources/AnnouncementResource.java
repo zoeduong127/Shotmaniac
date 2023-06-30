@@ -1,9 +1,7 @@
 package shotmaniacs.group2.di.resources;
 
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import shotmaniacs.group2.di.dao.AnnouncementDao;
 import shotmaniacs.group2.di.model.Announcement;
@@ -59,6 +57,30 @@ public class AnnouncementResource {
                 return Response.ok().build();
             } else {
                 return Response.ok().entity("No announcements with that id were found.").build();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Response.ok().build();
+    }
+
+    @RolesAllowed({"Administrator"})
+    @PUT
+    @Path("/state")
+    public Response setState(@QueryParam("state") String state) {
+        try {
+            Connection connection = DriverManager.getConnection(url, dbName, password);
+            String sql = "FROM announcement a SET a.state = ? WHERE a.announcement_id = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, state);
+            ps.setInt(2, announcementId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return Response.ok().build();
+            } else {
+                return Response.notModified().build();
             }
 
         } catch (SQLException e) {
