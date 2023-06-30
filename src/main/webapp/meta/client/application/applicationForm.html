@@ -127,7 +127,7 @@
 					<p1>STEP 1:</p1>
 					<p2>Please download the given template<br></p2>
 					<div class="step1-instruction">
-						<a href="./Application_Form.xlsx" download>
+						<a href="../clientBooking/Application_Form.xlsx" download>
 							<img src="./../../Brand_Identity/images/icons/excel_Icon.png" alt="Excel Icon">
 							<div class="break"></div>
 							<p3 id="download-form">Application Template</p3>
@@ -302,9 +302,13 @@
 			renameKey(jsonObj, 'BOOKING TYPE', 'bookingType');
 			renameKey(jsonObj, 'DURATION', 'duration');
 			renameKey(jsonObj, 'DESCRIPTION', 'description');
-			renameKey(jsonObj, "CLIENT'S NAME", 'clientName');
-			renameKey(jsonObj, "CLIENT'S EMAIL ADDRESS", 'clientEmail');
-			renameKey(jsonObj, 'TEL. (optional)', 'phoneNumber');
+
+			if (jsonObj['name'] === null || jsonObj['eventType'] == null
+					|| jsonObj['date'] == null || jsonObj['time'] == null
+					|| jsonObj['location'] == null || jsonObj['bookingType'] == null
+					|| jsonObj['duration'] == null || jsonObj['description'] == null) {
+				continue;
+			}
 			promises.push(jsonObj)
 		}
 		console.log(promises)

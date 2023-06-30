@@ -156,7 +156,7 @@ body {
     border-radius: 0 20px 20px 0 ;
     width: 2.5vw;
     cursor: pointer;
-    background-image: url("./../Brand_Identity/images/icons/search_icon_black.png");
+    background-image: url("./../../Brand_Identity/images/icons/search_icon_black.png");
     background-position: 5px 3px;
     background-repeat: no-repeat;
     background-size: 3vh;
@@ -197,6 +197,14 @@ body {
     font-size: 1.3rem;
 }
 
+.box a {
+    color: white;
+    font-family: Kiona Semibold;
+    font-size: 17px;
+    position: absolute;
+    top: 17.6vh;
+}
+
 .box:hover {
     cursor: pointer;
 }
@@ -204,13 +212,14 @@ body {
 #img {
     background-repeat: no-repeat;
     background-position: 5vw 2.5vh;
-    background-image: url("./../Brand_Identity/images/icons/white_house.png");
+    background-image: url("./../../Brand_Identity/images/icons/white_house.png");
     background-size: 5vh;
     border-left: 0;
     cursor: pointer;
     position: relative;
     z-index: 1;
 }
+
 .box p {
     margin: 3.5vh 0;
 }
@@ -235,14 +244,22 @@ body {
     width: 100%;
 }
 
-.crews-title {
+.booking-heading {
     height: 3.5vh;
+    color: #000000;
+    font: 2em Kiona, cursive;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.booking-name-title {
     color: #1696d2;
     font: 2em "Kiona SemiBold";
     text-decoration: underline;
     font-weight: bolder;
     cursor: pointer;
     font-style: italic;
+    margin-left: 20vw;
 }
 
 .left-side {
@@ -305,9 +322,9 @@ body {
     border-style: solid;
     border-color: #b19cd8;
     border-width: 2px;
-    width: 12vw;
+    width: 11vw;
     height: 4vh;
-    margin-left: 25vw;
+    margin-left: 19vw;
     margin-top: -3.5vh;
 }
 
@@ -316,7 +333,7 @@ body {
     text-align: center;
     font: 17px Kiona, cursive;
     margin-top: 0.4vh;
-    margin-left: -1.8vw;
+    margin-left: -0.1vw;
     font-weight: bold;
 }
 
@@ -355,20 +372,45 @@ body {
     border-style: solid;
     border-color: #ff0000;
     border-width: 2px;
+    width: 8vw;
+    height: 9.5vh;
+    margin-top: -10vh;
+    margin-left: 46.9vw;
+}
+
+.real-work-hours-rectangle {
+    background: #ffffff;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: #1696d2;
+    border-width: 2px;
     width: 12vw;
     height: 9.5vh;
     margin-top: -6.715vh;
-    margin-left: 42.9vw;
+    margin-left: 32.9vw;
 }
 
 .hours {
     text-align: center;
-    font: 17px "Kiona SemiBold";
-    margin-left: 0.35vw;
+    font: 18px "Kiona SemiBold";
+    margin-left: -0.01vw;
+    margin-top: 3vh;
     font-weight: bolder;
+    text-decoration: underline;
     font-style: oblique;
     color: #e70f0f;
     cursor: pointer;
+}
+
+.real-hours {
+    text-align: center;
+    font: 18px "Kiona SemiBold";
+    margin-left: -0.01vw;
+    margin-top: 1.4vh;
+    font-weight: bolder;
+    text-decoration: underline;
+    font-style: oblique;
+    color: #1696d2;
 }
 
 .pad {
@@ -430,9 +472,160 @@ body {
 
 #add-crew {
     font: 24px "Kiona SemiBold";
-    margin-left: 8vw;
-    margin-top: -34vh;
     font-weight: bolder;
     text-decoration: underline;
     color: #e70f0f;
+    position: absolute;
+    top: 30.5vh;
+    right: 13.5vw;
+}
+
+.addingCrew {
+    background: rgba(241, 241, 241, 1);
+    border-style: solid;
+    border-color: rgba(82, 82, 82, 0.5);
+    border-width: 1.5px;
+    width: 21vw;
+    height: 39vh;
+    position: fixed;
+    top: 44vh;
+    right: 6.7vw;
+}
+
+.title-client-info {
+    background: #ffffff;
+    border-style: solid;
+    border-color: rgba(82, 82, 82, 0.5);
+    border-width: 1.5px;
+    width: 21vw;
+    height: 7vh;
+    margin-left: -0.04vw;
+    margin-top: -0.04vw;
+}
+
+#client-title {
+    color: #000000;
+    font: 20px "Kiona Semibold";
+    font-weight: bold;
+    margin-top: 1.8vh;
+    padding-left: 3.2vw;
+}
+
+.client-info-title {
+    color: #000000;
+    font: 19px "Kiona SemiBold";
+    margin-top: 1.5vh;
+    margin-bottom: 0;
+    margin-left: 1.1vw;
+    text-decoration: underline;
+}
+
+.info {
+    color: #000000;
+    font: 19px "Kiwi Maru", sans-serif;
+    margin-top: -2.9vh;
+    margin-bottom: 0;
+    margin-left: 5.2vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 15vw;
+}
+
+.info:hover {
+    word-break: break-all;
+    overflow: visible;
+    white-space: normal;
+}
+
+.break-line {
+    background-color: #1fd1f9;
+    background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
+    width: 16vw;
+    height: 1.3px;
+    margin-top: 4vh;
+    margin-left: 2.4vw;
+    margin-bottom: 3vh;
+}
+
+#normal-role {
+    color: #1696d2;
+    margin-top: 2vh;
+    position: absolute;
+    margin-left: 5.2vw;
+    text-align: center;
+}
+
+.adding-as-role {
+    font-family: Kiona Semibold;
+    font-style: oblique;
+    font-size: 17px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.small-rectangle-crews-setting {
+    background: rgba(31, 31, 31, 0.35);
+    width: 23vw;
+    height: 7vh;
+    position: relative;
+    z-index: 1;
+    margin-top: -3vh;
+}
+
+#crews-in-box {
+    color: #160000;
+    font: 20px "Kiona SemiBold";
+    padding-top: 1.7vh;
+    padding-left: 3.45vw;
+}
+
+.input-section {
+    width: 100%;
+    font-family: "Kiona SemiBold";
+    padding: 16px 0 10px 1.3vw;
+}
+
+.number-type {
+    width: 9vw;
+}
+
+#email {
+    margin-left: 5.9vw;
+}
+
+#username {
+    margin-left: 3.45vw;
+}
+
+#passwordForNewCrew {
+    margin-left: 3.6vw;
+}
+
+#accountType {
+    margin-left: 1.3vw;
+}
+
+#role {
+    margin-left: 6.68vw;
+}
+
+.footer {
+    background: rgba(31, 31, 31, 0.35);
+    width: 23vw;
+    height: 7vh;
+    position: relative;
+    z-index: 1;
+    margin-top: 2.1vh;
+}
+
+.save-data-and-accept {
+    color: #160000;
+    font: 18px "Kiona SemiBold";
+    text-decoration: underline;
+    position: relative;
+    padding-top: 1.5vh;
+    padding-left: 4vw;
+    font-style: italic;
+    cursor: pointer;
 }

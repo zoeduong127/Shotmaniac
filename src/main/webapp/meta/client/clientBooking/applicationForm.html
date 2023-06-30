@@ -303,11 +303,9 @@
 		for (let i = 0; i < XL_row_object.length; i++) {
 			const cookies = parseCookie(document.cookie);
 			const id = cookies['account_id'];
-			const client_id = {"user_id": id}
-			promises.push(JSON.stringify(client_id));
 			const jsonObj = JSON.parse(JSON.stringify(XL_row_object[i]));
 			console.log(jsonObj)
-			renameKey(jsonObj, 'NO.', ' ');
+			renameKey(jsonObj, 'NO.', 'user_id');
 			renameKey(jsonObj, 'EVENT NAME', 'name');
 			renameKey(jsonObj, 'EVENT TYPE', 'eventType');
 			renameKey(jsonObj, 'EVENT DATE', 'date');
@@ -316,6 +314,16 @@
 			renameKey(jsonObj, 'BOOKING TYPE', 'bookingType');
 			renameKey(jsonObj, 'DURATION', 'duration');
 			renameKey(jsonObj, 'DESCRIPTION', 'description');
+
+			jsonObj['user_id'] = id;
+
+			if (jsonObj['name'] === null || jsonObj['eventType'] == null
+					|| jsonObj['date'] == null || jsonObj['time'] == null
+					|| jsonObj['location'] == null || jsonObj['bookingType'] == null
+					|| jsonObj['duration'] == null || jsonObj['description'] == null) {
+				continue;
+			}
+
 			promises.push(jsonObj)
 		}
 

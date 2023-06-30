@@ -230,50 +230,103 @@ function addProductManager(id) {
             console.log("product Manager: " + productManager);
         })
 }
+// function acceptBooking(){
+//     const state = 'APPROVED'
+//     const booking_id = cookies['booking_id'];
+//     const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
+//     fetch(url,{
+//         method: 'PUT',
+//         headers: {
+//             'Authorization': `${token}`
+//         }
+//     })
+//         .then(response => {
+//             if(response.ok){
+//                 document.cookie = "booking_id=; path=/";
+//                 performQueryAndUpdateBookings(" ");
+//                 toggleOff();
+//             }else{
+//                 alert("Something wrong! Please try again")
+//             }
+//         })
+// }
+//
+// function cancelBooking(){
+//     const state = 'CANCELED'
+//     const booking_id = cookies['booking_id'];
+//     const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
+//     fetch(url,{
+//         method: 'PUT',
+//         headers: {
+//             'Authorization': `${token}`
+//         }
+//     })
+//         .then(response => {
+//             if(response.ok){
+//                 document.cookie = "booking_id=; path=/";
+//                 performQueryAndUpdateBookings(" ");
+//                 toggleOff();
+//             }else{
+//                 alert("Something wrong! Please try again")
+//             }
+//         })
+// }
 function acceptBooking(){
+    var crewNeededInput = document.getElementById("crew-needed");
+    var productManagerInput = document.getElementById("product-manager");
+
+    if (!crewNeededInput.checkValidity()) {
+        alert("Please enter the number of crew members.");
+        return;
+    }
+
+    if (!productManagerInput.checkValidity()) {
+        alert("Please enter the product manager's name.");
+        return;
+    }
     const state = 'APPROVED'
     const booking_id = cookies['booking_id'];
+    console.log(booking_id)
     const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
-    fetch(url,{
+    const url1 = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/slots?slots=`+crewNeededInput.value;
+    const url2 = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/setproductmanager?username=`+productManagerInput.value;
+    const options = {
         method: 'PUT',
         headers: {
             'Authorization': `${token}`
         }
-    })
+    }
+    fetch(url1,options)
         .then(response => {
+            console.log(response)
             if(response.ok){
-                document.cookie = "booking_id=; path=/";
-                performQueryAndUpdateBookings(" ");
-                toggleOff();
+                fetch(url2,options)
+                    .then(response => {
+                        console.log(response)
+                        if(response.ok){
+                            fetch(url,options)
+                                .then(response => {
+                                    console.log(response)
+                                    if(response.ok){
+                                        document.cookie = "booking_id=; path=/";
+                                        performQueryAndUpdateBookings(" ");
+                                        toggleOff();
+                                    }else{
+                                        alert("Something wrong! Please try again")
+                                    }
+                                })
+                        }else{
+                            alert("Something wrong with manager input! Please try again")
+                        }
+                    })
             }else{
-                alert("Something wrong! Please try again")
-            }
-        })
-}
-function cancelBooking(){
-    const state = 'CANCELED'
-    const booking_id = cookies['booking_id'];
-    const url = window.location.origin+`/shotmaniacs2/api/admin/booking/`+booking_id+`/state?state=`+state;
-    fetch(url,{
-        method: 'PUT',
-        headers: {
-            'Authorization': `${token}`
-        }
-    })
-        .then(response => {
-            if(response.ok){
-                document.cookie = "booking_id=; path=/";
-                performQueryAndUpdateBookings(" ");
-                toggleOff();
-            }else{
-                alert("Something wrong! Please try again")
+                alert("Something wrong with crew input! Please try again")
             }
         })
 }
 
 
 function addUpcomingEvents() {
-    const filter = "ongoing";
     const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/on-goingbookings`;
     let booking_list = [];
 

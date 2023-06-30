@@ -184,20 +184,15 @@ public class Mailer {
             doc.getElementById("when").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">When:</strong><br /> " + booking.getDate());
             doc.getElementById("where").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Where:</strong><br /> " + booking.getLocation());
 
-            sendEmailWithInvite(new String[]{account.getEmail()}, "New Enrolment", doc.html(), booking, account); //TODO: Change this to send to account's email
+            sendEmailWithInvite(new String[]{account.getEmail()}, "New Enrolment", doc.html(), booking, account);
         } catch (IOException e) {
             System.out.println("Error parsing email HTML file: " + e.getMessage());
         }
     }
 
-    public static void sendBookingCancellation(int enrolmentId, String reason) throws MessagingException {
-        EnrolmentDto enrolmentDetails = getEnrolmentDetails(enrolmentId);
-        if (enrolmentDetails == null) {
-            throw new MessagingException();
-        }
-
-        Booking booking = BookingDao.instance.getABooking(enrolmentDetails.getBookingId());
-        Account account = AccountDao.instance.getAccountById(enrolmentDetails.getCrewMemberId());
+    public static void sendBookingCancellation(int booking_id, int account_id, String reason) throws MessagingException {
+        Booking booking = BookingDao.instance.getABooking(booking_id);
+        Account account = AccountDao.instance.getAccountById(account_id);
         if (booking == null || account == null) {
             throw new MessagingException();
         }

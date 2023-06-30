@@ -221,6 +221,15 @@
 		commentBox.style.display = "none";*/
 		document.querySelector(".current_display").className = "description-wrapper";
 		document.getElementById(id).classList.add("current_display");
+		const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/news/${id}/mark_read`;
+		const options = {
+			method: 'PUT',
+			headers: {
+				'Authorization': `${token}`
+			}
+		}
+		fetch(url,options)
+				.then(response=>console.log(response))
 		
 /*
 		changeState(id);
