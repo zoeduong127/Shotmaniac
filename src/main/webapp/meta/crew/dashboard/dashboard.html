@@ -22,11 +22,11 @@
 			
 			<div class="dropdown-content">
 				<div class="item">
-					<a href="./../profile/profile.html">Profile</a>
+					<a href="./../profile/profile.html" style="font-family: 'Kiona Semibold'">Profile</a>
 				</div>
 				
 				<div class="item">
-					<a onclick="logout()">Log Out</a>  <!--missing HREF-->
+					<a onclick="logout()" style="font-family: 'Kiona Semibold'">Log Out</a>  <!--missing HREF-->
 				</div>
 			</div>
 		</div>
@@ -39,32 +39,26 @@
 		<div class="dash-box">
 			<a href="dashboard.html" target="_self">
 				<div class="box" id="dashboard">
-					<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<img id="dashboard-icon" src="../../Brand_Identity/images/icons/note_white_without_background.png" alt="Note-Icon">
 					<label> Dashboard</label>
 				</div>
 			</a>
 			<a href="./../news/notifications.html" target="_self">
-				<div class="box" id="News">
-					<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+				<div class="box" id="News" style="background: rgba(255, 255, 255, 0.75)">
+					<img id="news-icon" src="../../Brand_Identity/images/icons/black-announcements.png" alt="Announcements-Icon">
 					<label>News</label>
 				</div>
 			</a>
 			<a href="./../calendar/calendar.html" target="_self">
 				<div class="box" id="calendar">
-					<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<img id="calendar-icon" src="../../Brand_Identity/images/icons/black-calendar.png" alt="Calendar-Icon">
 					<label> Calendar</label>
 				</div>
 			</a>
 			<a href="./../bookings/Booking.html" target="_self">
 				<div class="box" id="booking">
-					<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<img id="booking-icon" src="../../Brand_Identity/images/icons/myBookingClient_Black.png" alt="Bookings-Icon">
 					<label>Bookings</label>
-				</div>
-			</a>
-			<a href="../../help/help.html" target="_self">
-				<div class="box" id="help">
-					<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-					<label>Help</label>
 				</div>
 			</a>
 		</div>
@@ -81,7 +75,7 @@
 		<div class="navigation">
 			<!-- On main page -->
 			<div class="filter">
-				<button class="filter-btn">
+				<button class="filter-btn" style="margin-top: 2vh; margin-left: 0.5vw">
 					<span id="button-text">
 						<i class="fas fa-filter filter-icon"></i>
 							<span id="filter_button_text">Filter: Upcoming</span>
@@ -121,7 +115,7 @@
 			</div>
 			
 			<form action="" autocomplete="off">
-				<div class="search" id="searchbar">
+				<div class="search" id="searchbar" style="margin-top: 2.05vh">
 					<label for="search-input"></label>
 					<input type="text" class="input" id="search-input" placeholder="Booking name"
 					       onfocus="getAllBookings()">
