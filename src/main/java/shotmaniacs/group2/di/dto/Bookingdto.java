@@ -110,14 +110,14 @@ public class Bookingdto {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,booking.getName());
             preparedStatement.setString(2,booking.getDescription());
-            preparedStatement.setString(3, String.valueOf(booking.getEventType()));
+            preparedStatement.setString(3, String.valueOf(booking.getEventType().toUpperCase()));
             preparedStatement.setTimestamp(4, getTimestamp(booking.getDate()+" "+booking.getTime()));
             preparedStatement.setString(5,booking.getLocation());
             preparedStatement.setInt(6,booking.getDuration());
             preparedStatement.setString(7,booking.getClientName());
             preparedStatement.setString(8,booking.getClientEmail());
             preparedStatement.setString(9,booking.getPhoneNumber());
-            preparedStatement.setString(10, String.valueOf(booking.getBookingType()));
+            preparedStatement.setString(10, String.valueOf(booking.getBookingType().toUpperCase()));
             preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0) {
@@ -144,7 +144,7 @@ public class Bookingdto {
             ResultSet rs = preparedStatement.executeQuery();
             /* Insert a new booking*/
             if(rs.next()) {
-                Bookingdto bookingdto = new Bookingdto(booking.getName(),booking.getEventType(),booking.getDate(),booking.getTime(),booking.getLocation(),booking.getBookingType(),booking.getDuration(),booking.getDescription(),rs.getString("username"), rs.getString("email"),rs.getString("tel"));
+                Bookingdto bookingdto = new Bookingdto(booking.getName(),booking.getEventType().toUpperCase(),booking.getDate(),booking.getTime(),booking.getLocation(),booking.getBookingType().toUpperCase(),booking.getDuration(),booking.getDescription(),rs.getString("username"), rs.getString("email"),rs.getString("tel"));
                 /*get the id of new Booking*/
                 if (addBooking(bookingdto)) {
                     int booking_id = bookingdto.checkexists(bookingdto);
@@ -180,13 +180,13 @@ public class Bookingdto {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, booking.getName());
             preparedStatement.setString(2, booking.getDescription());
-            preparedStatement.setString(3, String.valueOf(booking.getEventType()));
+            preparedStatement.setString(3, String.valueOf(booking.getEventType().toUpperCase()));
             preparedStatement.setTimestamp(4, getTimestamp(booking.getDate() + " " + booking.getTime()));
             preparedStatement.setString(5, booking.getLocation());
             preparedStatement.setInt(6, booking.getDuration());
             preparedStatement.setString(7, booking.getClientName());
             preparedStatement.setString(8, booking.getClientEmail());
-            preparedStatement.setString(9, String.valueOf(booking.getBookingType()));
+            preparedStatement.setString(9, String.valueOf(booking.getBookingType().toUpperCase()));
             ResultSet rs= preparedStatement.executeQuery();
             if (rs.next()) {
                 return rs.getInt("booking_id");
