@@ -16,19 +16,6 @@
         <plugins>
 
             <plugin>
-                <groupId>com.jelastic</groupId>
-                <artifactId>jelastic-maven-plugin</artifactId>
-                <version>1.9.3</version>
-                <configuration>
-                    <apiToken>b11c77512ada4cc7969d7e573e9e24e81df39d10</apiToken> <!--an access token is used instead of a login/password, see note below-->
-                    <artifact>shotmaniacs2</artifact> <!--artifact to be deployed-->
-                    <context>shotmaniacs2</context> <!--preferable context name (ROOT if skipped)-->
-                    <environment>shotmaniacs2</environment> <!--name of a target environment-->
-                    <api_hoster>paas.hosted-by-previder</api_hoster> <!--domain name of your platform-->
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
                 <configuration>
