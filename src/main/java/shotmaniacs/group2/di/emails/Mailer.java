@@ -17,6 +17,7 @@ import shotmaniacs.group2.di.model.Account;
 import shotmaniacs.group2.di.model.Announcement;
 import shotmaniacs.group2.di.model.Booking;
 import shotmaniacs.group2.di.model.Urgency;
+import shotmaniacs.group2.di.security.ServletContextHolder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -54,7 +55,7 @@ public class Mailer {
 //        } catch (IOException ignored) {
 //        }
 //        PATH = new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\email"; // TODO: Ensure this path is correct before deployment
-        PATH = new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\email";
+        PATH = new File(ServletContextHolder.getServletContext().getRealPath("/email")).toString();
         // Get system properties
         Properties properties = System.getProperties();
 
@@ -172,7 +173,7 @@ public class Mailer {
         }
 
         try {
-            Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\enrolmentNotification.html"));
+            Document doc = Jsoup.parse(loadHTMLFile(PATH + "/enrolmentNotification.html"));
 
             doc.getElementById("title").html(" You have been enrolled into: <br> " + booking.getName());
             doc.getElementById("greeting").text("Hi, " + account.getUsername());
@@ -198,7 +199,7 @@ public class Mailer {
         }
 
         try {
-            Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\deenrolmentNotification.html"));
+            Document doc = Jsoup.parse(loadHTMLFile(PATH + "/deenrolmentNotification.html"));
 
             doc.getElementById("title").html(" Cancelled Booking: <br> " + booking.getName());
             doc.getElementById("greeting").text("Hi, " + account.getUsername());
@@ -228,7 +229,7 @@ public class Mailer {
         }
 
         try {
-            Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\deenrolmentNotification.html"));
+            Document doc = Jsoup.parse(loadHTMLFile(PATH + "/deenrolmentNotification.html"));
 
             doc.getElementById("title").html(" You have been de-enrolled from: <br> " + booking.getName());
             doc.getElementById("greeting").text("Hi, " + account.getUsername());
@@ -249,7 +250,7 @@ public class Mailer {
 
     public static void sendNewBookingNotification(Bookingdto bookingdto) throws MessagingException {
         try {
-            Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\newBookingNotification.html"));
+            Document doc = Jsoup.parse(loadHTMLFile(PATH + "/newBookingNotification.html"));
 
             doc.getElementById("title").html(" New Booking Was Submitted: <br> " + bookingdto.getName());
             doc.getElementById("description").text("Below you will find details about the new booking.");
@@ -285,7 +286,7 @@ public class Mailer {
             throw new MessagingException();
         }
         try {
-            Document doc = Jsoup.parse(loadHTMLFile(PATH + "\\announcementNotification.html"));
+            Document doc = Jsoup.parse(loadHTMLFile(PATH + "/announcementNotification.html"));
 
             doc.getElementById("title").html(" New Announcement: <br> " + announcement.getTitle());
             doc.getElementById("announcement_description").html("<strong style=\"font-size: 14px; color: #999; line-height: 18px\">Details: </strong><br /> " + announcement.getBody());

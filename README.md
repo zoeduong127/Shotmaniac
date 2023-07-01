@@ -1,20 +1,22 @@
 # Shotmaniacs 2 Crew Portal
-Welcome to our crew portal. Our url is: \
+Welcome to our crew portal. Our url is: http://shotmaniacs2.paas.hosted-by-previder.com/shotmaniacs2 \
 Below you will find some information to let you try out our web application.
 
 ## Accounts
-Each of the following accounts can logged in through the same page:  (page here)
+Each of the following accounts can logged in through the same page: http://shotmaniacs2.paas.hosted-by-previder.com/shotmaniacs2/meta/login/LogIn.html
+ 
+You can also make a new account in the signup page.
 
 **Crew Account:** \
 Email: johnf@gmail.com\
 Password: yummybanana
 
-**Client Account:**
-Email: johnf@gmail.com\
-Password: yummybanana
+**Client Account:** \
+Email: luca@student.utwente.nl\
+Password: testing
 
 **Administrator Account:** \
-Email: johnf@gmail.com\
+Email: emmayedinak@gmail.com\
 Password: yummybanana
 
 ## Page and Feature Information
