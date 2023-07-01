@@ -64,14 +64,10 @@
 
 
                 <div class="col-1" id="stay-Signed-In">
-                    <input type="checkbox" id="check-Box">
-                    <label for="check-Box" id="check-Box-label"> Stay signed in </label>
-
-
                     <a href="" target="_self">
                         <button  class="ui-button" id="loginButton" type="submit" >LOG IN</button>
                     </a>
-                    <p class="help-note"> <a href="" target="_self">Forgot Password?</a></p>
+                    <p class="help-note" onclick="alert('Please send an email to shotmaniacs2mod04@gmail.com to recover your password.')"> <a href="" target="_self">Forgot Password?</a></p>
                 </div>
             </form>
         </div>
@@ -86,7 +82,7 @@
 
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        const url = 'http://localhost:8080/shotmaniacs2/api/login';
+        const url = window.location.origin + "/shotmaniacs2/api/login";
         const account = {
             email: email,
             password: password,
@@ -96,22 +92,22 @@
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Origin': 'http://localhost:8080/shotmaniacs2/meta/login/LogIn.html'
             },
             body: JSON.stringify(account)
         };
-
-        fetch(url, options)
+        fetch(url, options)  /*TODO, leaving this here in case this 'fix' caused issues*/
             .then(response => {
                 if (response.ok) {
                     alert("Login successful!");
                     response.json()
                         .then(res => {
-                            var account = res.accounts[0];
-                            var token = res.tokens[0];
-
-                            document.cookie = "account_id=" + account.id + "; path=/";
-                            document.cookie = "auth_token=" + token.id + "; path=/";
+	                        const account = res.accounts[0];
+	                        const token = res.tokens[0];
+	                        
+	                        document.cookie = "account_id=" + account.id + "; path=/";
+                            document.cookie = "auth_token=" + token + "; path=/";
+                            document.cookie = "account_username=" + account.username+ "; path=/";
+                            document.cookie = "auth_token=" + token + "; path=/";
                             changesite(account.accountType);
                         })
                     // Perform any further actions or redirect to another page
@@ -131,11 +127,13 @@
     function changesite(data){
         const admin = 'Administrator';
         const crew = 'Crew';
-        const client = 'client';
+        const client = 'Client';
         if(data === crew){
             window.location.href = "./../crew/dashboard/dashboard.html";
         } else if (data === admin) {
-			window.location.href = "./../Admin/dashboard/A_Dashboard.html"
+			window.location.href = "../Admin/dashboard/A_Dashboard.html"
+        }else if(data === client){
+            window.location.href = "./../client/clientBooking/dashboard.html";
         }
     }
 </script>

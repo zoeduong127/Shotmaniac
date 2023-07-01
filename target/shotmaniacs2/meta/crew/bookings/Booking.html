@@ -1,133 +1,144 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="Booking.css">
-  <title>bookings</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="BookingStyle.css">
+	<script defer src='bookings.js'></script>
+	<title>bookings</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div class="container">
-  <header>
-    <div class="dropdown">
-      <button class="dropdownBtn">
-        <img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
-      </button>
-
-      <div class="dropdown-content">
-        <div class="item">
-          <a href="profile.html">Profile</a>
-        </div>
-
-        <div class="item">
-          <a>Log Out</a>  <!--missing HREF-->
-        </div>
-      </div>
-    </div>
-  </header>
-  <nav>
-    <div class="text">
-      <img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
-    </div>
-    <div class="dash-box">
-      <div class="box" id="dashboard">
-        <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-        <label> Dashboard</label>
-      </div>
-      <div class="box" id="apply">
-        <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-        <label> Bookings</label>
-      </div>
-      <div class="box" id="calendar">
-        <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-        <label> Calendar</label>
-      </div>
-      <div class="box" id="booking">
-        <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-        <label>My Bookings</label>
-      </div>
-      <div class="box" id="help">
-        <img id="icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
-        <label>Help</label>
-      </div>
-    </div>
-  </nav>
-  <main>
-    <div class="title-container">
-      <div class="title">
-        <img class="logo-title-page" src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png">
-      </div>
-      <p class="title-letter">BOOKINGS</p>
-    </div>
-    <div class="search-container">
-      <div class="searchbox">
-        <input class="textbox" type="text" placeholder="Booking's name" />
-      </div>
-      <div class="role-filter">
-        <form action="#">
-          <label for="role"></label>
-          <select class="role-option" name="role">
-            <option value="role">Role</option>
-            <option value="photographer">Photographer</option>
-            <option value="videographer">Videographer</option>
-            <option value="producer">Producer</option>
-            <option value="assitant">Assistant</option>
-            <option value="datahandler">Data Handler</option>
-            <option value="planner">Planner</option>
-            <option value="editor">Editor</option>
-          </select>
-        </form>
-      </div>
-      <div class="checkbox">
-        <input type="checkbox"/><a class="fmso">Fits my schedule only</a>
-      </div>
-      <div class="complete-search">
-        <button class="button-search" type="submit"><img class="search-button" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt=""></button>
-      </div>
-    </div>
-
-    <div class="bookings-container">
-      <div class="booking1">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a>
-
-        </div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-      <div class="booking2">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a></div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-      <div class="booking3">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a></div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-      <div class="booking4">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a></div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-      <div class="booking5">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a></div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-      <div class="booking6">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a></div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-      <div class="booking7">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a></div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-      <div class="booking8">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a></div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-      <div class="booking9">
-        <div class="bookings-name"><a href=""><p>Booking's name</p></a></div>
-        <div class="short-descri"><p>Short description</p></div>
-      </div>
-    </div>
-
-  </main>
-
-  </body>
+	<header>
+		<div class="dropdown">
+			<button class="dropdownBtn">
+				<img id="avatar" src="../../Brand_Identity/images/icons/whiteAvatar.png" alt="dropdown">
+			</button>
+			
+			<div class="dropdown-content">
+				<div class="item">
+					<a href="profile.html">Profile</a>
+				</div>
+				
+				<div class="item" onclick="logout()">
+					<a>Log Out</a>
+				</div>
+			</div>
+		</div>
+	</header>
+	
+	<nav>
+		<div class="text">
+			<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Text_Black.png" alt="SHOTMANIACS">
+		</div>
+		<div class="dash-box">
+			<a href="./../dashboard/dashboard.html" target="_self">
+				<div class="box" id="dashboard">
+					<img id="dashboard-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label> Dashboard</label>
+				</div>
+			</a>
+			<a href="./../news/notifications.html" target="_self">
+				<div class="box" id="News">
+					<img id="news-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>News</label>
+				</div>
+			</a>
+			<a href="./../calendar/calendar.html" target="_self">
+				<div class="box" id="calendar">
+					<img id="calendar-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label> Calendar</label>
+				</div>
+			</a>
+			<a href="./Booking.html" target="_self">
+				<div class="box" id="booking">
+					<img id="booking-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Bookings</label>
+				</div>
+			</a>
+			<a href="../../help/help.html" target="_self">
+				<div class="box" id="help">
+					<img id="help-icon" src="../../Brand_Identity/images/icons/crossed_Eye_Black.png" alt="">
+					<label>Help</label>
+				</div>
+			</a>
+		</div>
+	</nav>
+	
+	
+	<main>
+		<div class="main-container" id="main-container">
+			<div class="page-title">
+				<div class="image">
+					<img src="./../../Brand_Identity/images/Logo/Shotmaniacs_Logo_Black_ZT.png" alt="Shotmaniacs">
+				</div>
+				<div class="text">Bookings</div>
+			</div>
+			
+			<form action="" autocomplete="off">
+				<div class="search" id="searchbar">
+					<label for="search-input"></label>
+					<input type="text" class="input" id="search-input" placeholder="Booking name"
+					       onfocus="getAllBookings()">
+					
+					<button class="search-icon-btn" id="search-button">
+						<img class="magnifying-glass" src="./../../Brand_Identity/images/icons/Magnifying-glass.png" alt="search">
+					</button>
+				</div>
+			</form>
+					
+					
+					
+					<!-- <div class="role-filter">
+					<form action="#">
+						<label for="role"></label>
+						<select class="role-option" id="role" name="role">
+							<option value="role">Role</option>
+							<option value="photographer">Photographer</option>
+							<option value="videographer">Videographer</option>
+							<option value="producer">Producer</option>
+							<option value="assitant">Assistant</option>
+							<option value="datahandler">Data Handler</option>
+							<option value="planner">Planner</option>
+							<option value="editor">Editor</option>
+						</select>
+					</form>
+				</div>
+				
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"/>
+						Fits my schedule only
+					</label>
+				</div> -->
+			
+			<div class="bookings-container" id="booking_container"></div>
+		</div>
+		
+		<div class="hiddenpop" id="hiddenpop">
+			<div class="hiddenbg">
+				<div class="bookinginfo">
+					<div class="closetab" id="top-tab">
+						<span id="back">
+							<img src="./../../Brand_Identity/images/icons/X-icon.png" alt="close" id="back-img"
+							     onclick="closeInfo()">
+						</span>
+					</div>
+					<div class="main-content" id="popup-main">
+						<img class="icon" src="">
+						<p>Sunday, 21 May 2023, 23:59</p>
+						<img class="icon" src="">
+						<p>1/5 available slots</p>
+						<img class="icon" src="">
+						<p>Description</p>
+					</div>
+					<div class="enrolevent">
+						<button class="enrol" id="closeBtn" onclick="enroll()">Enrol</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+</body>
 </html>
