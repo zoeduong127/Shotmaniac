@@ -3,9 +3,6 @@
 <head>
 	<title>Announcement Scroll</title>
 	<link rel="stylesheet" type="text/css" href="notifyStyles.css">
-	<!--
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	-->
 </head>
 <body onload="readAllAnnouncements(' ')">
 <div class="container">
@@ -38,10 +35,24 @@
 		</div>
 		
 		<div class="navigation">
-			<div class="box" id="img"><a href="./../dashboard/A_Dashboard.html"></a></div>
-			<div class="box"><a href="./notifications.html" style="left: 35.3vw">Announcement</a></div>
-			<div class="box"><a href="./../All_Bookings/bookings/A_bookings.html" style="left: 47.2vw">Bookings</a></div>
-			<div class="box"><a href="./../crews/A_Crews.html" style="left: 58.2vw">Crews</a></div>
+			<a href="./../dashboard/A_Dashboard.html">
+				<div class="box" id="img"></div>
+			</a>
+			<a href="./../news/notifications.html">
+				<div class="box">
+					<p>Announcement</p>
+				</div>
+			</a>
+			<a href="./../All_Bookings/bookings/A_bookings.html">
+				<div class="box">
+					<p>Bookings</p>
+				</div>
+			</a>
+			<a href="./../crews/A_Crews.html">
+				<div class="box">
+					<p>Crews</p>
+				</div>
+			</a>
 		</div>
 	</header>
 	
@@ -52,8 +63,6 @@
 		</div>
 		
 		<div class="announcement-container">
-			
-			
 			<div class="announcement-list">
 				<div class="filter-container">
 					<div class="filter-dropdown">
@@ -80,11 +89,15 @@
 		<div class="create-announcement">
 			<div class="title-section-name"><h3>Create Announcement</h3></div>
 			<div class="main-body">
-				<div class="rectangle"></div>
+				<div class="rectangle">
 					<label for="urgency">Urgency: </label>
 					<input id="urgency" type="text" placeholder="CRITICAL, MAJOR, MEDIUM, MINOR">
+				</div>
+				<div class="rectangle">
 					<label for="title">Title: </label>
 					<input id="title" type="text" placeholder="Title...">
+				</div>
+				<div class="rectangle">
 					<label for="body"></label>
 					<textarea id="body" placeholder="Body..."></textarea>
 				</div>
@@ -93,7 +106,9 @@
 				<button onclick="createAnnouncement()">Send Announcement</button>
 			</div>
 		</div>
-	</main>
+
+</div>
+</main>
 </div>
 
 <script defer>
@@ -136,7 +151,7 @@
 		} else {
 			url = input;
 		}
-
+		
 		console.log(url);
 		fetch(url, {
 			headers: {
@@ -161,7 +176,7 @@
 							description += `
 							<div class="description-wrapper current_display" id="${a.id}">
 			                    <div class="urgency">URGENCY: ${a.urgency}</div>
-			                    <div class="publisher" id="publisher"></div>
+			                    <div class="publisher" id="publisher,${a.id}"></div>
 			                    <h3 class="announcement-title">${a.title}</h3>
 			
 			                    <div class="announcement-description" id="announcement-description">${a.body}</div>
@@ -180,52 +195,35 @@
 							check = false;
 						} else {
 							description += `
-							<div class="description-wrapper" id="${a.id}">
-			                    <h3 class="announcement-title">${a.title}</h3>
-			
-			                    <div id="announcement-description">${a.body}</div>
-			
-		                    </div>
+								<div class="description-wrapper" id="${a.id}">
+				                    <div class="urgency">URGENCY: ${a.urgency}</div>
+				                    <div class="publisher" id="publisher,${a.id}"></div>
+				                    <h3 class="announcement-title">${a.title}</h3>
+				
+				                    <div class="announcement-description" id="announcement-description">${a.body}</div>
+				                    <div class="announcement-date">
+										Date:
+										${BackDay}
+								        ${months[BackMonth]}
+								        ${BackYear},
+								        ${BackHours}:
+								        ${BackMins}:
+								        ${BackSecs}
+									</div>
+			                    </div>
                             `;
-							getAccount(a.publisher);
 						}
+						getAccount(a.publisher, a.id);
 					})
-					/*
-					const submit = document.createElement("div");
-					const label = document.createElement("label");
-					const textarea = document.createElement("textarea");
-					const button = document.createElement("button");
-					const stupidWrapper = document.createElement("div");
-					
-					submit.className = "comment-box";
-					submit.id = "comment-box";
-					
-					label.setAttribute("for", "comment-input");
-					
-					textarea.id = "comment-input";
-					textarea.placeholder = "Type your comment here";
-					
-					button.id = "comment-submit";
-					button.type = "submit";
-					button.innerText = "Submit";
-					button.addEventListener('click', closeComment);
-					
-					submit.appendChild(label)
-					submit.appendChild(textarea)
-					submit.appendChild(button);
-					stupidWrapper.appendChild(submit);
-					description += `<div class="add-comment" id="add-comment" onclick="showComment()">Add a comment</div>`
-					+ stupidWrapper.innerHTML;
-					*/
 					
 					console.log(container + ", " + description)
 					document.getElementById("announcement-wrapper").innerHTML = container;
 					document.getElementById("description").innerHTML = description;
 				})
 	}
-
-	function getAccount(id) {
-		const url = window.location.origin + `/shotmaniacs2/api/admin/account/${id}`;
+	
+	function getAccount(publisher_id, announcement_id) {
+		const url = window.location.origin + `/shotmaniacs2/api/admin/account/${publisher_id}`;
 		fetch(url, {
 			headers: {
 				'Authorization': `${token}`
@@ -233,9 +231,11 @@
 		})
 				.then(response => response.json())
 				.then(data => {
-					document.getElementById("publisher").innerText = "Publisher: " + data.username;
+					document.getElementById(`publisher,${announcement_id}`).innerText = "Publisher: " + data.username;
+					console.log(document.getElementById(`publisher,${announcement_id}`));
 				})
 	}
+	
 	/*function showComment() {
 		const comment = document.getElementById("add-comment");
 		if (comment.innerHTML === "Add a comment") {
@@ -278,21 +278,20 @@
 		commentBox.style.display = "none";*/
 		document.querySelector(".current_display").className = "description-wrapper";
 		document.getElementById(id).classList.add("current_display");
-		const url = window.location.origin+`/shotmaniacs2/api/crew/${account_id}/news/${id}/mark_read`;
+		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/${id}/mark_read`;
 		const options = {
 			method: 'PUT',
 			headers: {
 				'Authorization': `${token}`
 			}
 		}
-		fetch(url,options)
-				.then(response=>console.log(response))
+		fetch(url, options)
+				.then(response => console.log(response))
 		
-/*
-		changeState(id);
-*/
+		/*
+				changeState(id);
+		*/
 	}
-	
 	
 	
 	/*Filter*/
@@ -303,7 +302,7 @@
 		if (Number(state) === 0) {
 			url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/filter?status=${state}`;
 			state = "UNREAD";
-		} else if (Number(state) === 1){
+		} else if (Number(state) === 1) {
 			url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news/filter?status=${state}`;
 			state = "READ";
 		} else {
@@ -321,6 +320,7 @@
 	let inputElement = document.getElementById("search");
 	
 	inputElement.addEventListener("input", onInputChange);
+	
 	function getAllAnnouncements() {
 		const url = window.location.origin + `/shotmaniacs2/api/crew/${account_id}/news`
 		
@@ -337,7 +337,7 @@
 				})
 	}
 	
-	function  onInputChange() {
+	function onInputChange() {
 		removeAutocompleteDropdown();
 		
 		const value = inputElement.value.toLowerCase();
@@ -358,7 +358,7 @@
 	function createAutocompleteDropdown(list) {
 		const listEl = document.createElement("ul");
 		listEl.className = "autocomplete-list";
-		listEl.id =  "autocomplete-list";
+		listEl.id = "autocomplete-list";
 		list.forEach((booking) => {
 			const listItem = document.createElement("li");
 			
@@ -403,33 +403,33 @@
 	}
 	
 	
-	function logout(){
+	function logout() {
 		const token = cookies['auth_token'];
-		const url = window.location.origin+`/shotmaniacs2/api/login`
+		const url = window.location.origin + `/shotmaniacs2/api/login`
 		fetch(url, {
 			method: 'DELETE',
 			headers: {
 				'Authorization': `${token}`
 			}
 		})
-			.then(response => {
-				if (response.ok) {
-					document.cookie = "account_id =;  Path=/";
-					document.cookie = "account_username =;  Path=/";
-					document.cookie = "auth_token =;  Path=/";
-					window.location.href= window.location.origin+"/shotmaniacs2/";
-				} else if (response.status === 304) {
-					throw new Error('The given account was not logged in.');
-				} else {
-					throw new Error('Failed to log out. Status: ' + response.status);
-				}
-			})
-			.then(data => {
-				console.log(data); // Logged out successfully
-			})
-			.catch(error => {
-				console.error(error);
-			});
+				.then(response => {
+					if (response.ok) {
+						document.cookie = "account_id =;  Path=/";
+						document.cookie = "account_username =;  Path=/";
+						document.cookie = "auth_token =;  Path=/";
+						window.location.href = window.location.origin + "/shotmaniacs2/";
+					} else if (response.status === 304) {
+						throw new Error('The given account was not logged in.');
+					} else {
+						throw new Error('Failed to log out. Status: ' + response.status);
+					}
+				})
+				.then(data => {
+					console.log(data); // Logged out successfully
+				})
+				.catch(error => {
+					console.error(error);
+				});
 	}
 	
 	
@@ -441,7 +441,7 @@
 		let publisher = account_id;
 		let urgency = document.getElementById("urgency").value.toUpperCase();
 		let date = new Date().getTime();
-		if (!(urgency === "CRITICAL" || urgency === "MAJOR"|| urgency === "MEDIUM"|| urgency === "MINOR")) {
+		if (!(urgency === "CRITICAL" || urgency === "MAJOR" || urgency === "MEDIUM" || urgency === "MINOR")) {
 			alert("Entered wrong urgency, check your spelling!")
 		}
 		console.log(url);
@@ -455,13 +455,13 @@
 			alert("You are unable to send an empty announcement!")
 		}
 		
-		let JSONObject =  {
-			"id" : `${announcement_id}`,
-			"title" : `${title}`,
-			"body" : `${body}`,
-			"publisher" : `${publisher}`,
-			"urgency" : `${urgency}`,
-			"date" : `${date}`
+		let JSONObject = {
+			"id": `${announcement_id}`,
+			"title": `${title}`,
+			"body": `${body}`,
+			"publisher": `${publisher}`,
+			"urgency": `${urgency}`,
+			"date": `${date}`
 		}
 		
 		fetch(url, {
@@ -472,12 +472,14 @@
 			},
 			body: JSON.stringify(JSONObject)
 		})
-		.catch(error => {
-			console.error(error);
-		});
+				.catch(error => {
+					console.error(error);
+				});
+		
+		readAllAnnouncements(" ");
 	}
-	
-	
+
+
 </script>
 </body>
 </html>

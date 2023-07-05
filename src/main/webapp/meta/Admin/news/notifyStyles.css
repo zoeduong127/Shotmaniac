@@ -5,7 +5,6 @@
     grid-template-areas:
         "header"
         "content";
-
     min-height: 100vh;
     max-height: 100vh;
     overflow-y: hidden;
@@ -23,11 +22,11 @@ main {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Kiona', 'Quicksand', sans-serif;
+    font-family: 'Kiona SemiBold', 'Quicksand', sans-serif;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-content: center;
+    align-content: flex-start;
     justify-content: center;
 }
 
@@ -163,31 +162,34 @@ body {
     align-content: center;
     align-items: center;
     justify-content: center;
+    font-family: "Kiona SemiBold", "Times New Roman", serif;
 }
 
 .box {
-    width: 10vw;
-    height: auto;
+    width: 11vw;
+    height: 5vh;
     text-align: center;
     border-left: 1px solid white;
-    font-size: 1.3rem;
 }
 
 #img {
     background-repeat: no-repeat;
-    background-position: 5vw 2.5vh;
-    background-image: url("./../../Brand_Identity/images/icons/white_house.png");
-    background-size: 5vh;
+    background-position: 7vw 0.3vh;
+    background-image: url(./../../Brand_Identity/images/icons/white_house.png);
+    background-size: 4.7vh;
     border-left: 0;
-    height: 10vh;
+    height: 5vh;
 }
 
-.box a {
-    margin: 3.5vh 0;
+.navigation a {
     text-decoration: none;
     color: white;
 }
 
+.box p {
+    margin: 0;
+    padding: 1vh 1vw;
+}
 .navigation img {
     scale: 0.27;
 }
@@ -219,56 +221,53 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    border: 1.75px solid dimgrey;
+    border: 2px solid dimgrey;
     margin: 2% 5% 5% 4%;
     width: 58%;
     height: 66%;
     border-radius: 4px;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    max-height: 50%;
 }
 
 .announcement-list {
-    /*
-    margin-top: 30px;
-    width: 200px;
-    max-height: 300px;
-     */
-
     width: 25%;
     height: 100%;
     border-right: 1px solid #ccc;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -ms-overflow-style: none;  /* hides scrollbar */
-    scrollbar-width: none;  /* hides scrollbar */
+    overflow: hidden;
 }
 
-/*hides scrollbar*/
-.announcement-list::-webkit-scrollbar {
-    display: none;
-}
+
 
 .announcement-wrapper {
-    height: 80%;
+    height: 79%;
     padding: 4vh 1vw;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
+    white-space: nowrap;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
-
+/*hides scrollbar*/
+.announcement-wrapper::-webkit-scrollbar {
+    display: none;
+}
 
 .announcement-list-item {
     cursor: pointer;
     width: 100%;
-    height: 5vh;
+    max-height: 5vh;
+    min-height: 5vh;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: clip;
     text-align: center;
     padding: 0 0 0.5vh;
-    font-family: Kiona Semibold;
+    font-family: "Kiona Semibold";
     font-style: oblique;
 }
 
@@ -280,6 +279,8 @@ body {
     flex-grow: 1;
     padding: 0 10px;
     height: 90%;
+    max-width: 70%;
+    position: relative;
 }
 
 .filter-container {
@@ -385,8 +386,12 @@ body {
     font-size: 1.5rem;
     text-decoration: underline;
     color: #e70f0f;
-    padding-left: 7vw;
-    padding-top: 2vh;
+    min-width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+    text-align: center;
 }
 
 .urgency {
@@ -405,23 +410,29 @@ body {
     font-size: 18px;
     color: mediumblue;
     font-style: oblique;
-    position: fixed;
-    padding-left: 22.75vw;
-    top: 37vh;
+    position: relative;
+    left: 22vw;
+    top: -3vh;
 }
 
 .announcement-date {
     font-family: Kiona Semibold;
     font-size: 17px;
-    margin-top: 28vh;
-    margin-left: 27vw;
+    position: relative;
+    left: 25vw;
+    top: 23vh;
 }
 
 .announcement-description {
     font-family: initial;
     font-size: 17px;
     padding-left: 1vw;
-    padding-top: 0vh;
+    padding-top: 0;
+    max-height: 36vh;
+    max-width: 41vw;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: normal;
 }
 
 .title-section-name {
@@ -434,12 +445,17 @@ body {
 }
 
 .rectangle {
-
+    margin: 2vh 0;
 }
 
 .description-wrapper {
     visibility: hidden;
     display: none;
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 91%;
 }
 
 .current_display {
@@ -488,5 +504,45 @@ body {
 .create-announcement {
     width: 30%;
     margin-top: 1vh;
-    margin-left: 0vw;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+.main-body {
+    width: 100%;
+}
+
+.rectangle {
+    width: 100%;
+}
+
+.rectangle label {
+    width: 20%;
+    text-align: center;
+    display: inline-block;}
+
+.rectangle input {
+    max-width: 70%;
+    min-width: 70%;
+}
+
+.post {
+    margin: 0 32%;
+}
+
+.post button {
+    height: 4vh;
+    width: 11vw;
+}
+
+#body {
+    width: 86%;
+    min-height: 21vh;
+    margin: 0 2vw;
 }

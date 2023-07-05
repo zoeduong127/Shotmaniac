@@ -15,7 +15,6 @@
   <header>
     <div class="top">
       <i class="fas fa-user user-icon"></i>
-      <p id="Username">Admin Shotmaniacs Group 2</p>
       <img id="LogOutIcon" src="./../../../Brand_Identity/images/icons/white_Logout.png" alt="LogOut-Icon">
       <p id="LogOut" onclick="logout()">Log out</p>
     </div>
@@ -38,10 +37,24 @@
     </div>
 	  
 	  <div class="navigation">
-		  <div class="box" id="img"><a href="./../../dashboard/A_Dashboard.html"></a></div>
-		  <div class="box"><a href="./../../news/notifications.html" style="left: 35.3vw">Announcement</a></div>
-		  <div class="box"><a href="./A_bookings.html" style="left: 47.2vw">Bookings</a></div>
-		  <div class="box"><a href="./../../crews/A_Crews.html" style="left: 58.2vw">Crews</a></div>
+		  <a href="./../../dashboard/A_Dashboard.html">
+			  <div class="box" id="img"></div>
+		  </a>
+		  <a href="./../../news/notifications.html">
+			  <div class="box">
+				  <p>Announcement</p>
+			  </div>
+		  </a>
+		  <a href="./../../All_Bookings/bookings/A_bookings.html">
+			  <div class="box">
+				  <p>Bookings</p>
+			  </div>
+		  </a>
+		  <a href="./../../crews/A_Crews.html">
+			  <div class="box">
+				  <p>Crews</p>
+			  </div>
+		  </a>
 	  </div>
   </header>
 
@@ -72,7 +85,9 @@
             bar.style.height = scrolled + "%";
           }
         </script>
-        <div class="crews" id="crews" style="margin-left: 2vw; margin-top: 3vh">
+	      
+        <div class="crews" id="crews"
+             style="margin-left: 2vw; margin-top: 3vh">
         </div>
       </div>
       <div class="right-side">
@@ -86,6 +101,7 @@
           </ul>
           <div class="addingCrew" id="addingCrew" hidden>
           </div>
+	        
           <script>
             function searchName() {
               var input, filter, ul, li, a, i, txtValue;
@@ -110,6 +126,7 @@
     </div>
   </main>
 </div>
+
 <script>
   window.addEventListener('beforeunload', function (event) {
     // Cancel the event to prevent the browser from closing immediately
