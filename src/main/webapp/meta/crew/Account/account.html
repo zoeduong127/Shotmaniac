@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   -->
 </head>
-<body onload="readAllAnnouncements()">  <!-- here's it bunch of announcements, each with a title
+<body>  <!-- here's it bunch of announcements, each with a title
  that needs to be edited regarding the actual announcements-->
 <div class="container">
 
@@ -75,7 +75,7 @@
         <img src="../../Brand_Identity/images/icons/black_user_icon.png" alt="">
         <div id="navigate">
           <label id = "user-name">User's name</label>
-          <div class ="navigate"><a href="account.html"><span>Account  </span></a>  / Edit Profile</div>
+          <div class ="navigate"><a href="account.html"><span>Account </span></a>  / Edit Profile</div>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
   </main>
 </div>
 
-<script>
+<script defer>
 
   const cookies = parseCookie(document.cookie);
   const id = cookies['account_id'];
@@ -108,7 +108,6 @@
   fetch(url)
           .then(response => response.json())
           .then(data => {
-            document.getElementById("client-name").textContent = cookies['account_username']
             document.getElementById("user-name").innerHTML = `${data.username}`;
             document.getElementById("name").innerHTML = `${data.username}`;
             document.getElementById("email").innerHTML = `${data.email}`;
