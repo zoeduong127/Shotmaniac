@@ -256,9 +256,9 @@ public class ClientsResource {
         List<Account> listadmins = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, admin_enroll e WHERE e.booking_id = ? AND a.account_id = e.admin_id";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a WHERE a.account_type = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setString(1,String.valueOf(AccountType.Administrator));
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()) {
                 Account account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),"",null,null,rs.getString(4),null);
@@ -274,13 +274,14 @@ public class ClientsResource {
     @Path("{booking_id}/crews")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Account> getCrews() {
+    public List<Account> getCrews(@PathParam("booking_id")int booking_id) {
         List<Account> listcrews = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(url, dbName, password);
-            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a WHERE account_type = ?";
+            String query = "SELECT a.account_id, a.username,a.email, a.tel FROM account a, enrolment WHERE account_type = ? AND enrolment.booking_id = ? ";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,String.valueOf(AccountType.Administrator));
+            preparedStatement.setString(1,String.valueOf(AccountType.Crew));
+            preparedStatement.setInt(2,booking_id);
             ResultSet rs = preparedStatement.executeQuery();
 
             while(rs.next()) {
