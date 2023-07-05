@@ -110,6 +110,7 @@
   let crewInfo = "";
 
   function getAllCrews() {
+    var uname;
     fetch(url1, {
       headers: {
         'Authorization': `${token}`
@@ -118,6 +119,7 @@
             .then(response => response.json())
             .then(data => {
               data.forEach(crew => {
+                console.log(crew)
                 const url2 = window.location.origin + `/shotmaniacs2/api/crew/${crew.id}/mybooking/statistics/hoursworked`;
                 fetch(url2,{
                   headers: {
@@ -125,10 +127,11 @@
                   }
                 })
                         .then(async response1 => {
+                          uname = crew.username;
                           const json = JSON.parse(await response1.text())
                           console.log(json)
                           crewInfo += `
-                            <div class="crew-rectangle pad" id="${crew.id}">
+                            <div class="crew-rectangle pad" id= ${crew.id}>
                               <div class="crew-name">${crew.username}</div>
                               <div class="role-rectangle">
                                 <p class="role-specifying">${crew.role}</p>
@@ -136,8 +139,8 @@
                               <div class="real-work-hours-rectangle">
                                 <p class="real-hours">Working Hours:<br><br>${json}</p>
                               </div>
-                              <div class="work-hours-rectangle">
-                                <p class="hours" onclick="toggleRemove()">Remove</p>
+                              <div class="work-hours-rectangle" id = ${crew.username} onclick=toggleRemove(this)>
+                                <p class="hours">Remove</p>
                               </div>
                             </div>
                             `;
@@ -172,7 +175,7 @@
                             <div class="input-section">
                                 <label for="editor">Account Type</label>
 
-                                <select class="number-type" id="accountType" type="text">
+                                <select class="number-type" id="accountType">
                                   <option value="Administrator">Administrator</option>
                                   <option value="Crew">Crew</option>
                                   <option value="Client">Client</option>
@@ -183,7 +186,7 @@
                             <div class="input-section">
                                 <label for="editor">Role</label>
 
-                                <select class="number-type" id="role" type="text">
+                                <select class="number-type" id="role">
                                   <option value=" PHOTOGRAPHER"> PHOTOGRAPHER</option>
                                   <option value="PRODUCER">PRODUCER</option>
                                   <option value=" FILMMAKER">FILMMAKER</option>
@@ -203,12 +206,12 @@
   //TODO: make it appear in the left side
   //REMEMBER to make innerHTML of crewInfo empty so that it can clear data, otherwise, a new form will appear right below the previous form
   function saveData() {
-    const url = window.location.origin + `/shotmaniacs2/api/admin/accounts`;
-    const username = document.getElementById("username").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("passwordForNewCrew").value;
-    const accountType = document.getElementById("accountType").value;
-    const role = document.getElementById("role").value;
+    var url = window.location.origin + `/shotmaniacs2/api/admin/accounts`;
+    var username = document.getElementById("username").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("passwordForNewCrew").value;
+    var accountType = document.getElementById("accountType").value;
+    var role = document.getElementById("role").value;
 
     // Create JSON object
     const jsonObject = {
@@ -237,8 +240,9 @@
             .then(response =>{
               console.log(response)
               if(response.ok){
+
                 crewInfo += `
-                  <div class="crew-rectangle pad" id="${response.text()}">
+                  <div class="crew-rectangle pad">
                     <div class="crew-name">${username}</div>
                     <div class="role-rectangle">
                       <p class="role-specifying">${role}</p>
@@ -246,8 +250,8 @@
                     <div class="real-work-hours-rectangle">
                       <p class="real-hours">Working Hours:  </p>
                     </div>
-                    <div class="work-hours-rectangle">
-                      <p class="hours" onclick="toggleRemove()">Remove</p>
+                    <div class="work-hours-rectangle" id = ${username} onclick="toggleRemove(username)">
+                      <p class="hours" >Remove</p>
                     </div>
                   </div>
                   `;
@@ -257,7 +261,7 @@
                 document.getElementById('accountType').value = '';
                 document.getElementById('role').value = '';
               }else{
-                alert(response.text());
+                alert("Something wrong!Please try again");
               }
             })
 
@@ -277,7 +281,7 @@
 					  document.cookie = "account_id =;  Path=/";
 					  document.cookie = "account_username =;  Path=/";
 					  document.cookie = "auth_token =;  Path=/";
-					  window.location.href="http://localhost:8080/shotmaniacs2/";
+					  window.location.href=window.location.origin+"/shotmaniacs2/";
 				  } else if (response.status === 304) {
 					  throw new Error('The given account was not logged in.');
 				  } else {
@@ -293,8 +297,8 @@
 	  
   }
   //TODO: update in the database
-  function toggleRemove(accountID) {
-    const url = window.location.origin + `/shotmaniacs2/api/admin/booking/${id}/crew/${accountID}/enrolment`;
+  function toggleRemove(element) {
+    const url = window.location.origin +"/shotmaniacs2/api/admin/accounts?username="+element.id;
     fetch(url, {
       method: 'DELETE',
       headers: {
@@ -304,8 +308,7 @@
       // Handle any errors
       console.error(error);
     });
-
-    getCrews();
+    location.reload();
   }
 
 </script>
