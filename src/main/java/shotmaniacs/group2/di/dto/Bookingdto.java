@@ -59,7 +59,7 @@ public class Bookingdto {
         setClientName(clientName);
         setClientEmail(clientEmail);
         setPhoneNumber(phoneNumber);
-        setBookingType(bookingType.toUpperCase());
+        setBookingType(bookingType.replace(" ","_").toUpperCase());
         setDate(date);
         setTime(time);
     }
@@ -80,7 +80,7 @@ public class Bookingdto {
     public Bookingdto(int user_id, String name, String eventType, String date, String time, String location, String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber, int slots) {
         this.user_id = user_id;
         this.name = name;
-        this.eventType = eventType;
+        this.eventType = eventType.replace(" ", " ").toUpperCase();
         this.date = date;
         this.time = time;
         this.location = location;
@@ -92,7 +92,6 @@ public class Bookingdto {
         this.phoneNumber = phoneNumber;
         this.slots = slots;
     }
-
 
     public int getUser_id(){
         return this.user_id;
@@ -156,11 +155,6 @@ public class Bookingdto {
                         int rowsInserted1 = preparedStatement3.executeUpdate();
                         if(rowsInserted1 == 1){
                             System.out.println("Successfully");
-                            try {
-                                Mailer.sendNewBookingNotification(bookingdto);
-                            } catch (MessagingException e) {
-                                System.out.println("Error sending email notification for new booking: " + e.getMessage());
-                            }
                             return true;
                         }
                     }
@@ -244,7 +238,7 @@ public class Bookingdto {
     }
 
     public void setEventType(String eventType) {
-        this.eventType = eventType;
+        this.eventType = eventType.replace(" ", "_").toUpperCase();
     }
 
     public String getDate() {
@@ -284,7 +278,7 @@ public class Bookingdto {
     }
 
     public void setBookingType(String bookingType) {
-        this.bookingType = bookingType;
+        this.bookingType = bookingType.toUpperCase();
     }
 
     public String getPhoneNumber() {
