@@ -94,7 +94,9 @@
 
 			<div class="announcement-content" id="description"></div>
 		</div>
-
+	</main>
+	
+	<aside>
 		<div class="animation-container" id="coffee-animation">
 			<div class="coffee-header">
 				<div class="coffee-header__buttons coffee-header__button-one"></div>
@@ -114,7 +116,7 @@
 			</div>
 			<div class="coffee-footer"></div>
 		</div>
-	</main>
+	</aside>
 </div>
 
 <script defer>
@@ -354,7 +356,7 @@
 							description += `
 							<div class="description-wrapper current_display" id="${a.id}">
 			                    <div class="urgency">URGENCY: ${a.urgency}</div>
-			                    <div class="publisher" id="publisher"></div>
+			                    <div class="publisher" id="publisher,${a.id}"></div>
 			                    <h3 class="announcement-title">${a.title}</h3>
 			
 			                    <div class="announcement-description" id="announcement-description">${a.body}</div>
@@ -375,7 +377,7 @@
 							description += `
 							<div class="description-wrapper" id="${a.id}">
 			                    <div class="urgency">URGENCY: ${a.urgency}</div>
-			                    <div class="publisher" id="publisher"></div>
+			                    <div class="publisher" id="publisher,${a.id}"></div>
 			                    <h3 class="announcement-title">${a.title}</h3>
 			
 			                    <div class="announcement-description" id="announcement-description">${a.body}</div>
@@ -391,7 +393,7 @@
 							</div>
                             `;
 						}
-						getAccount(a.publisher);
+						getAccount(a.publisher, a.id);
 					})
 					/*
 					const submit = document.createElement("div");
@@ -427,8 +429,8 @@
 				})
 	}
 	
-	function getAccount(id) {
-		const url = window.location.origin + `/shotmaniacs2/api/admin/account/${id}`;
+	function getAccount(publisher_id, announcement_id) {
+		const url = window.location.origin + `/shotmaniacs2/api/admin/account/${publisher_id}`;
 		fetch(url, {
 			headers: {
 				'Authorization': `${token}`
@@ -436,7 +438,8 @@
 		})
 				.then(response => response.json())
 				.then(data => {
-					document.getElementById("publisher").innerText = "Publisher: " + data.username;
+					document.getElementById(`publisher,${announcement_id}`).innerText = "Publisher: " + data.username;
+					console.log(document.getElementById(`publisher,${announcement_id}`));
 				})
 	}
 	/*function showComment() {

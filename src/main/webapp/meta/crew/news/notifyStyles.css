@@ -118,7 +118,7 @@ body {
     border: 1px solid #1696D2;
     color: white;
     padding-left: 2.8vw;
-    font-family: Kiona Semibold;
+    font-family: "Kiona Semibold";
     font-weight: bolder;
     font-size: 19px;
     padding-top: 2.2vh;
@@ -136,7 +136,7 @@ body {
     border: 1px solid rgba(82, 82, 82, 0.2);
     color: black;
     padding-left: 3.6vw;
-    font-family: Kiona Semibold;
+    font-family: "Kiona Semibold";
     font-weight: bolder;
     font-size: 19px;
     padding-top: 2.3vh;
@@ -154,7 +154,7 @@ body {
     border: 1px solid rgba(82, 82, 82, 0.2);
     color: black;
     padding-left: 3.95vw;
-    font-family: Kiona Semibold;
+    font-family: "Kiona Semibold";
     font-weight: bolder;
     font-size: 19px;
     padding-top: 2.3vh;
@@ -207,7 +207,7 @@ body {
     border: 1px solid rgba(82, 82, 82, 0.2);
     color: black;
     padding-left: 2.8vw;
-    font-family: Kiona Semibold;
+    font-family: "Kiona Semibold";
     font-weight: bolder;
     font-size: 19px;
     padding-top: 2.2vh;
@@ -351,104 +351,257 @@ body {
     font-size: 2.5rem;
     text-align: center;
     padding-top: 5vh;
-    font-family: Kiona Semibold;
+    font-family: "Kiona Semibold";
     text-decoration: underline;
 }
 
 /*End of Navigational Dashboard*/
+
 .announcement-container {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     align-items: center;
-    border: 1px solid dimgrey;
-    margin: 3% 4% 5% 4%;
+    border: 2px solid dimgrey;
+    margin: 2% 5% 5% 4%;
     width: 91%;
-    height: 61%;
+    height: 66%;
+    border-radius: 4px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    max-height: 40%;
 }
 
 .announcement-list {
-    /*
-    margin-top: 30px;
-    width: 200px;
-    max-height: 300px;
-     */
-
-    /*width: 20%;
+    width: 25%;
     height: 100%;
     border-right: 1px solid #ccc;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -ms-overflow-style: none;  !* hides scrollbar *!
-    scrollbar-width: none;  !* hides scrollbar *!*/
-    width: 20%;
-    height: 100%;
-    border-right: 1px solid #ccc;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    margin-left: -30vh;
-    width: 38vh;
-    margin-right: 19vw;
+    overflow: hidden;
 }
 
-/*hides scrollbar*/
-.announcement-list::-webkit-scrollbar {
-    display: none;
-}
+
 
 .announcement-wrapper {
-    height: 80%;
+    height: 79%;
     padding: 4vh 1vw;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
+    white-space: nowrap;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+/*hides scrollbar*/
+.announcement-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .announcement-list-item {
-    padding: 0;
     cursor: pointer;
     width: 100%;
-    height: 5vh;
+    max-height: 5vh;
+    min-height: 5vh;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: clip;
     text-align: center;
-    font-family: Kiona Semibold;
-    padding-bottom: 1vh;
+    padding: 0 0 0.5vh;
+    font-family: "Kiona Semibold";
+    font-style: oblique;
 }
 
 .announcement-list-item:hover {
     background-color: #f0f0f0;
 }
 
-.announcement-title {
-    font-weight: 800;
-    font-family: Kiona Semibold;
-    font-size: 1.5rem;
-    text-decoration: underline;
-    color: #e70f0f;
-    padding-left: 10%;
-}
-
 .announcement-content {
     flex-grow: 1;
     padding: 0 10px;
     height: 90%;
-    margin-top: -55vh;
-    margin-left: 19.8vw;
+    max-width: 70%;
+    position: relative;
+}
+
+.filter-container {
+    height: 10%;
+    width: 100%;
+}
+
+.filter-dropdown {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.filter-button {
+    background-color: #f0f0f0;
+    border: 1px solid rgba(31, 31, 31, 1);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 2.4vh 2vw 0;
+    cursor: pointer;
+    width: 48%;
+}
+
+#filter_img {
+    width: 1vw;
+    float: left;
+}
+
+.filter-options {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    min-width: 70%;
+    margin-left: 14%;
+    text-align: center;
+    font-family: "Kiona Semibold";
+    font-weight: bolder;
+    font-style: oblique;
+}
+
+.filter-options a {
+    color: #000;
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+}
+
+.filter-options a:hover {
+    background-color: #f0f0f0;
+}
+
+.filter-dropdown:hover .filter-options {
+    display: block;
+}
+
+
+
+.filter-dropdown:hover .announcement-container {
+    opacity: 0.2;
+}
+
+.add-comment {
+    position: relative;
+    float: right;
+    color: #007bff;
+    cursor: pointer;
+    top: 70%;
+    right: 5%;
+}
+
+.pre-announcement {
+    text-align: center;
+    margin-top: 20%;
+}
+
+.comment-box {
+    visibility: hidden;
+    display: none;
+    flex-direction: column;
+}
+
+.comment-box textarea {
+    width: 80%;
+    max-width: 90%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.comment-box button {
+    background-color: #007bff;
+    color: #fff;
+    width: 100px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+.announcement-title {
+    margin-top: 1vh;
+    font-weight: 800;
+    font-family: "Kiona Semibold";
+    font-size: 1.5rem;
+    text-decoration: underline;
+    color: #e70f0f;
+    min-width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.urgency {
+    font-family: "Kiona Semibold";
+    font-weight: bolder;
+    font-size: 18px;
+    color: mediumblue;
+    font-style: oblique;
+    padding-top: 1.9vh;
+    padding-left: 0.75vw;
+}
+
+.publisher {
+    font-family: "Kiona Semibold";
+    font-weight: bolder;
+    font-size: 18px;
+    color: mediumblue;
+    font-style: oblique;
+    position: relative;
+}
+
+.announcement-date {
+    font-family: "Kiona Semibold";
+    font-size: 17px;
+    position: fixed;
+    left: 59vw;
+    top: 84vh;
+}
+
+.announcement-description {
+    font-family: initial;
+    font-size: 17px;
+    padding-left: 1vw;
+    padding-top: 0;
+    max-height: 36vh;
+    max-width: 41vw;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: normal;
+}
+
+.title-section-name {
+    font-family: "Kiona Semibold";
+    font-weight: bolder;
+    font-size: 24px;
+    margin-top: 6vh;
+    margin-left: 4vw;
+    text-decoration: underline;
+}
+
+.rectangle {
+    margin: 2vh 0;
+}
+
+.description-wrapper {
+    visibility: hidden;
+    display: none;
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 91%;
 }
 
 .animation-container {
-    width: 17vw;
-    height: 37vh;
-    position: absolute;
-    top: calc(50% - 7.5vh);
-    left: calc(50% - -29vw);
+    position: relative;
+    height: 35vh;
+    margin: 50vh 10px 0 0;
 }
 
 .coffee-header {
@@ -728,170 +881,6 @@ body {
     background-color: #000;
 }
 
-.filter-container {
-    height: 10%;
-    width: 100%;
-}
-
-.filter-dropdown {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-}
-
-.filter-button {
-    background-color: #f0f0f0;
-    border: 1px solid rgba(31, 31, 31, 1);
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    width: 40%;
-    margin: 2.4vh 2vw 0px 2vh;
-    font-size: 16px;
-}
-
-#filter_img {
-    width: 1vw;
-    float: left;
-}
-
-.filter-options {
-    display: none;
-    position: absolute;
-    z-index: 1;
-    background-color: #fff;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    min-width: 52%;
-    margin-left: 14%;
-    text-align: center;
-    font-family: Kiona Semibold;
-    font-style: oblique;
-    font-weight: bolder;
-    margin-left: 1vw;
-}
-
-.filter-options a {
-    color: #000;
-    padding: 12px 16px;
-    display: block;
-    text-decoration: none;
-}
-
-.filter-options a:hover {
-    background-color: #f0f0f0;
-}
-
-.filter-dropdown:hover .filter-options {
-    display: block;
-}
-
-
-
-.filter-dropdown:hover .announcement-container {
-    opacity: 0.2;
-}
-
-.add-comment {
-    position: relative;
-    float: right;
-    color: #007bff;
-    cursor: pointer;
-    top: 70%;
-    right: 5%;
-}
-
-.pre-announcement {
-    text-align: center;
-    margin-top: 20%;
-}
-.comment-box {
-    visibility: hidden;
-    display: none;
-    flex-direction: column;
-}
-
-.comment-box textarea {
-    width: 80%;
-    max-width: 90%;
-    height: 100px;
-    margin-bottom: 10px;
-}
-
-.comment-box button {
-    background-color: #007bff;
-    color: #fff;
-    width: 100px;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-}
-.announcement-title {
-    margin-top: 1vh;
-    font-weight: 800;
-    font-family: Kiona Semibold;
-    font-size: 1.5rem;
-    text-decoration: underline;
-    color: #e70f0f;
-    padding-left: 7vw;
-    padding-top: 2vh;
-}
-
-.urgency {
-    font-family: Kiona Semibold;
-    font-weight: bolder;
-    font-size: 18px;
-    color: mediumblue;
-    font-style: oblique;
-    /* padding-top: 1.9vh; */
-    /* padding-left: 0.75vw; */
-    width: 100%;
-    margin: 0;
-}
-
-.publisher {
-    font-family: Kiona Semibold;
-    font-weight: bolder;
-    font-size: 18px;
-    color: mediumblue;
-    font-style: oblique;
-    /* position: fixed; */
-    padding: 1vh 0vw;
-}
-
-.announcement-date {
-    font-family: Kiona Semibold;
-    font-size: 17px;
-    /* margin-top: 28vh; */
-    /* margin-left: 27vw; */
-    position: relative;
-    bottom: -25vh;
-    right: -15vw;
-}
-
-.announcement-description {
-    font-family: initial;
-    font-size: 17px;
-    padding-left: 1vw;
-    padding-top: 0;
-}
-
-.title-section-name {
-    font-family: Kiona Semibold;
-    font-weight: bolder;
-    font-size: 24px;
-    margin-top: 6vh;
-    margin-left: 4vw;
-    text-decoration: underline;
-}
-
-.rectangle {
-
-}
-
-.description-wrapper {
-    visibility: hidden;
-    display: none;
-}
 
 .current_display {
     visibility: visible;
@@ -943,5 +932,5 @@ body {
 .create-announcement {
     width: 30%;
     margin-top: 1vh;
-    margin-left: 0vw;
+    margin-left: 0;
 }
