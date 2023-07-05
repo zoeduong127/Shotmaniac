@@ -39,10 +39,24 @@
         </div>
 	    
 	    <div class="navigation">
-		    <div class="box" id="img"><a href="./../../dashboard/A_Dashboard.html"></a></div>
-		    <div class="box"><a href="./../../news/notifications.html" style="left: 35.3vw">Announcement</a></div>
-		    <div class="box"><a href="./A_bookings.html" style="left: 47.2vw">Bookings</a></div>
-		    <div class="box"><a href="./../../crews/A_Crews.html" style="left: 58.2vw">Crews</a></div>
+		    <a href="./../../dashboard/A_Dashboard.html">
+			    <div class="box" id="img"></div>
+		    </a>
+		    <a href="./../../news/notifications.html">
+			    <div class="box">
+				    <p>Announcement</p>
+			    </div>
+		    </a>
+		    <a href="./../../All_Bookings/bookings/A_bookings.html">
+			    <div class="box">
+				    <p>Bookings</p>
+			    </div>
+		    </a>
+		    <a href="./../../crews/A_Crews.html">
+			    <div class="box">
+				    <p>Crews</p>
+			    </div>
+		    </a>
 	    </div>
     </header>
 
@@ -398,7 +412,7 @@
     
     function getAllCrew(item) {
 	    console.log("get all crew called")
-	    const url =  window.location.origin+`0/shotmaniacs2/api/admin/allcrew`;
+	    const url =  window.location.origin+`/shotmaniacs2/api/admin/allcrew`;
 	    
 	    fetch(url, {
 		    headers: {

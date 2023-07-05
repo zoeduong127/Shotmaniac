@@ -159,35 +159,38 @@ body {
     align-content: center;
     align-items: center;
     justify-content: center;
+    font-family: "Kiona SemiBold", "Times New Roman", serif;
 }
 
 .box {
-    width: 10vw;
-    height: auto;
+    width: 11vw;
+    height: 5vh;
     text-align: center;
     border-left: 1px solid white;
-    font-size: 1.3rem;
 }
 
 #img {
     background-repeat: no-repeat;
-    background-position: 5vw 2.5vh;
-    background-image: url("./../../Brand_Identity/images/icons/white_house.png");
-    background-size: 5vh;
+    background-position: 7vw 0.3vh;
+    background-image: url(./../../Brand_Identity/images/icons/white_house.png);
+    background-size: 4.7vh;
     border-left: 0;
-    height: 10vh;
+    height: 5vh;
 }
 
-.box a {
-    margin: 3.5vh 0;
+.navigation a {
     text-decoration: none;
     color: white;
 }
 
+.box p {
+    margin: 0;
+    padding: 1vh 1vw;
+}
 .navigation img {
     scale: 0.27;
-
 }
+
 
 .main-container {
     height: 80vh;
@@ -437,7 +440,10 @@ body {
 
 
 .announcement-container {
-    height: 25vh
+    max-height: 25vh;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
 }
 
 .information h1 {

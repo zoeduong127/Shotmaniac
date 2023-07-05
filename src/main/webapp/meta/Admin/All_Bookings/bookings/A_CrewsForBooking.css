@@ -39,7 +39,7 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -49,14 +49,13 @@ body {
 
 .user-icon {
     color: white;
-    scale: 1.7;
-    float: left;
-    transform: translateX(20px);
-    margin-left: 0.9vw;
     margin-top: 0.25vh;
     cursor: pointer;
     position: relative;
     z-index: 1;
+    width: 65vw;
+    scale: 1.7;
+
 }
 
 #Username {
@@ -71,7 +70,6 @@ body {
 #LogOutIcon {
     width: 34px;
     height: 32px;
-    margin-right: -65vw;
     cursor: pointer;
 }
 
@@ -80,7 +78,7 @@ body {
     float: right;
     padding-right: 48px;
     text-decoration: underline;
-    font-family: "Kiona SemiBold";
+    font-family: "Kiona SemiBold", serif;
     cursor: pointer;
 }
 
@@ -141,6 +139,7 @@ body {
     width: 17.5vw;
     padding: 0 0 0 1vw;
     font-family: 'Quicksand', sans-serif;
+    pointer-events: none;
 }
 
 #search::placeholder {
@@ -179,7 +178,7 @@ body {
 
 .navigation {
     background-color: rgba(22, 150, 210, 0.75);
-    height: 7vh;
+    height: 5vh;
     color: white;
     display: flex;
     flex-direction: row;
@@ -187,47 +186,38 @@ body {
     align-content: center;
     align-items: center;
     justify-content: center;
+    font-family: "Kiona SemiBold", "Times New Roman", serif;
 }
 
 .box {
-    width: 10vw;
-    height: 10vh;
+    width: 11vw;
+    height: 5vh;
     text-align: center;
-    border-left: 2.2px solid white;
-    font-size: 1.3rem;
-}
-
-.box a {
-    color: white;
-    font-family: Kiona Semibold;
-    font-size: 17px;
-    position: absolute;
-    top: 17.6vh;
-}
-
-.box:hover {
-    cursor: pointer;
+    border-left: 1px solid white;
 }
 
 #img {
     background-repeat: no-repeat;
-    background-position: 5vw 2.5vh;
-    background-image: url("./../../../Brand_Identity/images/icons/white_house.png");
-    background-size: 5vh;
+    background-position: 7vw 0.3vh;
+    background-image: url(./../../../Brand_Identity/images/icons/white_house.png);
+    background-size: 4.7vh;
     border-left: 0;
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
+    height: 5vh;
+}
+
+.navigation a {
+    text-decoration: none;
+    color: white;
 }
 
 .box p {
-    margin: 3.5vh 0;
+    margin: 0;
+    padding: 1vh 1vw;
 }
-
 .navigation img {
     scale: 0.27;
-
 }
+
 
 .main-container {
     height: 80vh;
@@ -310,16 +300,25 @@ body {
     width: 55vw;
     height: 9.5vh;
     margin-left: 3.5vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
 .crew-name {
     color: #1f1f1f;
     text-align: left;
-    font: 18px Kiona Semibold;
+    font: 18px "Kiona Semibold";
     text-decoration: underline;
     margin-left: 1vw;
-    margin-top: 2.4vh;
+    width: 35vh;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
 }
 
 .role-rectangle {
@@ -329,16 +328,13 @@ body {
     border-width: 2px;
     width: 11vw;
     height: 4vh;
-    margin-left: 27vw;
-    margin-top: -3.5vh;
 }
 
 .role-specifying {
     color: #1f1f1f;
     text-align: center;
     font: 17px Kiona, cursive;
-    margin-top: 0.4vh;
-    margin-left: -0.1vw;
+    margin: 0;
     font-weight: bold;
 }
 
@@ -374,13 +370,9 @@ body {
 .work-hours-rectangle {
     background: #ffffff;
     border-radius: 4px;
-    border-style: solid;
-    border-color: #ff0000;
-    border-width: 2px;
+    border-left: 2px solid #ff0000;
     width: 8vw;
     height: 9.5vh;
-    margin-top: -6.715vh;
-    margin-left: 46.9vw;
 }
 
 .hours {
@@ -424,8 +416,8 @@ body {
     list-style-type: none;
     padding: 0;
     position: fixed;
-    top: 48.5vh;
-    right: 10.55vw;
+    top: 47.5vh;
+    right: 9vw;
     overflow-y: hidden;
     transition: max-height 0.2s;
     max-height: 100%;

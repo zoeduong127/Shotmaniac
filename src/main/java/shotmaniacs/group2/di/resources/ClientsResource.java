@@ -81,7 +81,6 @@ public class ClientsResource {
         return Response.serverError().build();
     }
 
-
     /*For clienst who already has their own account*/
     @Path("{client_id}/profile")
     @GET
@@ -98,7 +97,7 @@ public class ClientsResource {
                 return new Account(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4),AccountType.valueOf(rs.getString(5)),null,rs.getString(7),null);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error getting profile: " + e.getMessage());
         }
         return null;
     }
@@ -140,7 +139,6 @@ public class ClientsResource {
         return Response.serverError().build();
     }
     /*Filter*/
-
 
     @Path("{clientid}/mybooking/timefilter/{filtertime}")
     @GET

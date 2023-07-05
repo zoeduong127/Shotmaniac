@@ -1,7 +1,7 @@
 .container {
     display: grid;
     grid-template-columns: 100vw;
-    grid-template-rows: 24vh 1fr;
+    grid-template-rows: 20vh 1fr;
     grid-template-areas:
         "header"
         "content";
@@ -22,7 +22,7 @@ main {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Kiona', 'Quicksand', sans-serif;
+    font-family: 'Kiona SemiBold', 'Quicksand', sans-serif;
 }
 
 body {
@@ -86,7 +86,7 @@ body {
 
 .search-area {
     background-color: white;
-    height: 10.8vh;
+    height: 10vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -121,7 +121,6 @@ body {
     font-weight: bold;
 }
 
-/*TODO figure out a way to change the button colour*/
 .search {
     float: right;
     margin: 0 7vw 0 0;
@@ -141,6 +140,7 @@ body {
     width: 17.5vw;
     padding: 0 0 0 1vw;
     font-family: 'Quicksand', sans-serif;
+    pointer-events: none;
 }
 
 #search::placeholder {
@@ -179,7 +179,7 @@ body {
 
 .navigation {
     background-color: rgba(22, 150, 210, 0.75);
-    height: 7vh;
+    height: 5vh;
     color: white;
     display: flex;
     flex-direction: row;
@@ -187,45 +187,36 @@ body {
     align-content: center;
     align-items: center;
     justify-content: center;
+    font-family: "Kiona SemiBold", "Times New Roman", serif;
 }
 
 .box {
-    width: 10vw;
-    height: 10vh;
+    width: 11vw;
+    height: 5vh;
     text-align: center;
-    border-left: 2.2px solid white;
-    font-size: 1.3rem;
-}
-
-.box:hover {
-    cursor: pointer;
-}
-
-.box a {
-    color: white;
-    font-family: Kiona Semibold;
-    font-size: 17px;
-    position: absolute;
-    top: 17.6vh;
+    border-left: 1px solid white;
 }
 
 #img {
     background-repeat: no-repeat;
-    background-position: 5vw 2.5vh;
-    background-image: url("./../../../Brand_Identity/images/icons/white_house.png");
-    background-size: 5vh;
+    background-position: 7vw 0.3vh;
+    background-image: url(./../../../Brand_Identity/images/icons/white_house.png);
+    background-size: 4.7vh;
     border-left: 0;
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
-}
-.box p {
-    margin: 3.5vh 0;
+    height: 5vh;
 }
 
+.navigation a {
+    text-decoration: none;
+    color: white;
+}
+
+.box p {
+    margin: 0;
+    padding: 1vh 1vw;
+}
 .navigation img {
     scale: 0.27;
-
 }
 
 .main-container {
@@ -450,6 +441,11 @@ body {
     height: 9.5vh;
     margin-left: 3.5vw;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .past-booking {
@@ -462,6 +458,11 @@ body {
     height: 9.5vh;
     margin-left: 3.5vw;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .booking-name {
@@ -470,7 +471,6 @@ body {
     font: 18px Kiona Semibold;
     text-decoration: underline;
     margin-left: 1vw;
-    margin-top: 2.4vh;
     cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -485,8 +485,6 @@ body {
     border-width: 2px;
     width: 10vw;
     height: 5vh;
-    margin-left: 27vw;
-    margin-top: -3.5vh;
     position: relative;
     z-index: 2;
 }
@@ -498,8 +496,6 @@ body {
     border-width: 2px;
     width: 10vw;
     height: 5vh;
-    margin-left: 27vw;
-    margin-top: -3.5vh;
     position: relative;
     z-index: 2;
 }
@@ -507,7 +503,7 @@ body {
 .status {
     color: #1f1f1f;
     text-align: center;
-    font: 17px Kiona, cursive;
+    font: 17px "Kiona SemiBold", cursive;
     margin-top: 0.6vh;
     margin-left: 0.2vw;
     font-weight: bold;
@@ -516,25 +512,17 @@ body {
 .date-info-rectangle-ongoing-booking {
     background: #ffffff;
     border-radius: 4px;
-    border-style: solid;
-    border-color: #1696d2;
-    border-width: 2px;
+    border-left: 2px solid #1696d2;
     width: 8vw;
     height: 9.5vh;
-    margin-top: -7.7vh;
-    margin-left: 46.9vw;
 }
 
 .date-info-rectangle-past-booking {
     background: #ffffff;
     border-radius: 4px;
-    border-style: solid;
-    border-color: #525252;
-    border-width: 2px;
+    border-left: 2px solid #525252;
     width: 8vw;
     height: 9.5vh;
-    margin-top: -7.7vh;
-    margin-left: 46.9vw;
 }
 
 .date {
@@ -659,10 +647,10 @@ body {
     position: absolute;
     width: 25.3vw;
     background-color: white;
-    left: 64.5vh;
-    top: 42vh;
+    left: 59vh;
+    top: 37vh;
 
-    -ms-overflow-style: none;  /* hides scrollbar */
+   -ms-overflow-style: none;  /* hides scrollbar */
     scrollbar-width: none;  /* hides scrollbar */
 }
 
