@@ -59,7 +59,7 @@ public class Bookingdto {
         setClientName(clientName);
         setClientEmail(clientEmail);
         setPhoneNumber(phoneNumber);
-        setBookingType(bookingType.toUpperCase());
+        setBookingType(bookingType.replace(" ","_").toUpperCase());
         setDate(date);
         setTime(time);
     }
@@ -80,7 +80,7 @@ public class Bookingdto {
     public Bookingdto(int user_id, String name, String eventType, String date, String time, String location, String bookingType, int duration, String description, String clientName, String clientEmail, String phoneNumber, int slots) {
         this.user_id = user_id;
         this.name = name;
-        this.eventType = eventType;
+        this.eventType = eventType.replace(" ", " ").toUpperCase();
         this.date = date;
         this.time = time;
         this.location = location;
@@ -92,7 +92,6 @@ public class Bookingdto {
         this.phoneNumber = phoneNumber;
         this.slots = slots;
     }
-
 
     public int getUser_id(){
         return this.user_id;
@@ -110,14 +109,14 @@ public class Bookingdto {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,booking.getName());
             preparedStatement.setString(2,booking.getDescription());
-            preparedStatement.setString(3, String.valueOf(booking.getEventType()));
+            preparedStatement.setString(3, String.valueOf(booking.getEventType().toUpperCase()));
             preparedStatement.setTimestamp(4, getTimestamp(booking.getDate()+" "+booking.getTime()));
             preparedStatement.setString(5,booking.getLocation());
             preparedStatement.setInt(6,booking.getDuration());
             preparedStatement.setString(7,booking.getClientName());
             preparedStatement.setString(8,booking.getClientEmail());
             preparedStatement.setString(9,booking.getPhoneNumber());
-            preparedStatement.setString(10, String.valueOf(booking.getBookingType()));
+            preparedStatement.setString(10, String.valueOf(booking.getBookingType().toUpperCase()));
             preparedStatement.setString(11, String.valueOf(BookingState.PENDING));
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0) {
@@ -144,7 +143,7 @@ public class Bookingdto {
             ResultSet rs = preparedStatement.executeQuery();
             /* Insert a new booking*/
             if(rs.next()) {
-                Bookingdto bookingdto = new Bookingdto(booking.getName(),booking.getEventType(),booking.getDate(),booking.getTime(),booking.getLocation(),booking.getBookingType(),booking.getDuration(),booking.getDescription(),rs.getString("username"), rs.getString("email"),rs.getString("tel"));
+                Bookingdto bookingdto = new Bookingdto(booking.getName(),booking.getEventType().toUpperCase(),booking.getDate(),booking.getTime(),booking.getLocation(),booking.getBookingType().toUpperCase(),booking.getDuration(),booking.getDescription(),rs.getString("username"), rs.getString("email"),rs.getString("tel"));
                 /*get the id of new Booking*/
                 if (addBooking(bookingdto)) {
                     int booking_id = bookingdto.checkexists(bookingdto);
@@ -156,11 +155,6 @@ public class Bookingdto {
                         int rowsInserted1 = preparedStatement3.executeUpdate();
                         if(rowsInserted1 == 1){
                             System.out.println("Successfully");
-                            try {
-                                Mailer.sendNewBookingNotification(bookingdto);
-                            } catch (MessagingException e) {
-                                System.out.println("Error sending email notification for new booking: " + e.getMessage());
-                            }
                             return true;
                         }
                     }
@@ -180,13 +174,13 @@ public class Bookingdto {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, booking.getName());
             preparedStatement.setString(2, booking.getDescription());
-            preparedStatement.setString(3, String.valueOf(booking.getEventType()));
+            preparedStatement.setString(3, String.valueOf(booking.getEventType().toUpperCase()));
             preparedStatement.setTimestamp(4, getTimestamp(booking.getDate() + " " + booking.getTime()));
             preparedStatement.setString(5, booking.getLocation());
             preparedStatement.setInt(6, booking.getDuration());
             preparedStatement.setString(7, booking.getClientName());
             preparedStatement.setString(8, booking.getClientEmail());
-            preparedStatement.setString(9, String.valueOf(booking.getBookingType()));
+            preparedStatement.setString(9, String.valueOf(booking.getBookingType().toUpperCase()));
             ResultSet rs= preparedStatement.executeQuery();
             if (rs.next()) {
                 return rs.getInt("booking_id");
@@ -244,7 +238,7 @@ public class Bookingdto {
     }
 
     public void setEventType(String eventType) {
-        this.eventType = eventType;
+        this.eventType = eventType.replace(" ", "_").toUpperCase();
     }
 
     public String getDate() {
@@ -284,7 +278,7 @@ public class Bookingdto {
     }
 
     public void setBookingType(String bookingType) {
-        this.bookingType = bookingType;
+        this.bookingType = bookingType.toUpperCase();
     }
 
     public String getPhoneNumber() {

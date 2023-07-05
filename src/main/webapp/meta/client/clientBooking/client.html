@@ -212,12 +212,6 @@
 </div>
 <div id="overlay" class="hidden"></div>
 <script defer>
-  window.addEventListener('beforeunload', function (event) {
-    // Cancel the event to prevent the browser from closing immediately
-    event.preventDefault();
-    document.cookie ="booking_id =;  Path=/";
-    return;
-  });
   function parseCookie(cookieString) {
     const cookies = {};
     cookieString.split(';').forEach(cookie => {
@@ -232,9 +226,9 @@
   const cookies = parseCookie(document.cookie);
 
   const id = cookies['booking_id'];
-  const url = window.location.origin+"/shotmaniacs2/api/client/"+id;
-  const url1 = window.location.origin+"/shotmaniacs2/api/client/"+id+"/admins";
-  const url2 =  window.location.origin+"/shotmaniacs2/api/client/"+id+"/crews"
+  const url = window.location.origin+`/shotmaniacs2/api/client/`+id;
+  const url1 = window.location.origin+`/shotmaniacs2/api/client/${id}/admins`;
+  const url2 =  window.location.origin+`/shotmaniacs2/api/client/${id}/crews`;
   fetch(url)
           .then(response => response.json())
           .then(data =>

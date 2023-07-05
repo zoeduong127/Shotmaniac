@@ -3,6 +3,7 @@ package shotmaniacs.group2.di.security;
 import io.jsonwebtoken.*;
 import shotmaniacs.group2.di.model.AccountType;
 import java.io.File;
+import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.crypto.SecretKey;
@@ -13,17 +14,21 @@ import java.sql.Timestamp;
 import static java.lang.String.valueOf;
 
 public class TokenManager {
+
     private static SecretKey tokenKey;
 
     static {
         try {
-            tokenKey = loadKeyFromFile(new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\security\\tokenKey.key");
-        } catch (IOException ignored) {
+//            tokenKey = loadKeyFromFile(new File(System.getProperty("user.dir")).getParent() + "\\webapps\\shotmaniacs2\\security\\tokenKey.key");
+            tokenKey = loadKeyFromFile(ServletContextHolder.getServletContext().getRealPath("/security/tokenKey.key"));
+//            System.out.println(new File(context.getRealPath("/security/tokenKey.key")));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        try {
-            tokenKey = loadKeyFromFile(new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\security\\tokenKey.key");
-        } catch (IOException ignored) {
-        }
+//        try {
+//            tokenKey = loadKeyFromFile(new File(System.getProperty("user.dir")) + "\\src\\main\\webapp\\security\\tokenKey.key");
+//        } catch (IOException ignored) {
+//        }
     }
 
     // Private constructor to prevent instantiation
@@ -31,6 +36,8 @@ public class TokenManager {
     }
 
     private static SecretKey loadKeyFromFile(String filePath) throws IOException {
+
+
         String realPath =  filePath;
         byte[] keyBytes = Files.readAllBytes(Paths.get(realPath));
         return new SecretKeySpec(keyBytes, "HmacSHA256");

@@ -13,4 +13,8 @@
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
+    <listener>
+        <listener-class>shotmaniacs.group2.di.security.ServletContextInitializer</listener-class>
+    </listener>
+
 </web-app>
