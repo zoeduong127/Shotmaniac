@@ -1,3 +1,7 @@
+* {
+    font-family: "Kiona SemiBold", "Times New Roman", sans-serif;
+}
+
 .container {
     display: grid;
     grid-template-columns: 20vw 50vw 30vw;
