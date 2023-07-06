@@ -38,6 +38,9 @@ body {
     max-height: 100vh;
     max-width: 100vw;
 }*/
+* {
+    font-family: "Kiona SemiBold", "Times New Roman", sans-serif;
+}
 
 .container {
     display: grid;
@@ -369,7 +372,7 @@ body {
     height: 66%;
     border-radius: 4px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-    max-height: 40%;
+    max-height: 63%;
 }
 
 .announcement-list {

@@ -1,4 +1,6 @@
-/*TODO: ICONS, Interactive Calendar*/
+* {
+    font-family: "Kiona SemiBold", "Times New Roman", sans-serif;
+}
 
 .container {
     display: grid;
