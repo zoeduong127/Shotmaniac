@@ -1,3 +1,6 @@
+* {
+    font-family: "Kiona SemiBold", "Times New Roman", sans-serif;
+}
 .container {
     display: grid;
     grid-template-columns: 100vw;
@@ -71,7 +74,7 @@ body {
 #LogOutIcon {
     width: 34px;
     height: 32px;
-    margin-right: -65vw;
+    margin-right: -87vw;
     cursor: pointer;
 }
 

@@ -1,4 +1,6 @@
-/*TODO: ICONS, Interactive Calendar*/
+* {
+    font-family: "Kiona SemiBold", "Times New Roman", sans-serif;
+}
 
 .container {
     display: grid;
@@ -369,9 +371,9 @@ button {
 
 .days div {
     font-size: 1rem;
-    width: calc(49.2vw / 7);
-    height: calc(38vh / 4.5);
-    max-height: 7.45vh;
+    width: 6.9vw;
+    max-height: 10vh;
+    min-height: 8vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -519,7 +521,12 @@ button {
 .event-info {
     padding: 10px 30px;
     text-align: justify;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: normal;
+    max-width: 50%;
 }
+
 
 .event-info p {
     font-weight: bold;

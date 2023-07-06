@@ -166,6 +166,9 @@ button {
     border: 1px solid #1696D2;
     color: white;
 }*/
+* {
+    font-family: "Kiona SemiBold", "Times New Roman", sans-serif;
+}
 
 .container {
     display: grid;

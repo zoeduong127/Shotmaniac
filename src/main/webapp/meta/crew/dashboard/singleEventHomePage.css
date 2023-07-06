@@ -1,3 +1,7 @@
+* {
+    font-family: "Kiona SemiBold", "Times New Roman", sans-serif;
+}
+
 .container {
     display: grid;
     grid-template-columns: 20vw 57vw 23vw;
@@ -9,6 +13,122 @@
     max-height: 100vh;
     overflow: hidden;
 
+}
+
+#dashboard-icon {
+    width: 2.2vw;
+    height: 6vh;
+    position: absolute;
+    top: 39.4vh;
+    left: 4.8vw;
+}
+
+#news-icon {
+    width: 3vw;
+    height: 6vh;
+    position: absolute;
+    top: 48.25vh;
+    left: 4.6vw;
+}
+
+#News {
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    color: black;
+    padding-left: 2.8vw;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    font-size: 19px;
+    padding-top: 2.2vh;
+}
+
+#calendar-icon {
+    width: 3vw;
+    height: 6vh;
+    position: absolute;
+    top: 57.5vh;
+    left: 4.7vw;
+}
+
+#calendar {
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    color: black;
+    padding-left: 3.6vw;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    font-size: 19px;
+    padding-top: 2.3vh;
+}
+
+#booking-icon {
+    width: 3vw;
+    height: 6.5vh;
+    position: absolute;
+    top: 66.4vh;
+    left: 4.7vw;
+}
+
+#booking {
+    border: 1px solid rgba(82, 82, 82, 0.2);
+    color: black;
+    padding-left: 3.95vw;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    font-size: 19px;
+    padding-top: 2.3vh;
+}
+
+/*Navigational Dashboard*/
+
+.dash-box img {
+    width: 0;
+    height: 0;
+}
+/*Widths adjusted for a nav pane of 20vw*/
+
+.text img{
+    width: 95%;
+    margin: 10vh 2.5% 0 2.5%;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.dash-box {
+    background-color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(82,82,82,0.75);
+    width: 15vw;
+    height: 52vh;
+    margin: 10vh 2.5vw 20vh 2.5vw;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    font-family: 'Kiona', 'Franklin Gothic Demi Cond', monospace;
+}
+
+.box {
+    border-bottom: 1px solid rgba(82,82,82,0.75);
+    text-align: center;
+    padding: 5% 0 5% 0;
+    height: 5vh;
+    cursor: pointer;
+}
+
+.box:hover {
+    cursor: pointer;
+    color: rgba(82,82,82,0.75);
+}
+
+.dash-box a {
+    text-decoration: none;
+    color: black;
+}
+/*Currently active page, change depending on the CSS file used*/
+#dashboard {
+    background-color: rgba(22,150,210,0.8);
+    border: 1px solid #1696D2;
+    color: white;
+    padding-left: 2.8vw;
+    font-family: Kiona Semibold;
+    font-weight: bolder;
+    font-size: 19px;
+    padding-top: 2.2vh;
 }
 
 header {
@@ -170,6 +290,7 @@ body {
     padding-bottom: 3vh;
     position: sticky;
     top: 15vh;
+    margin-top: 3vh;
 }
 
 /*Title page thing*/
@@ -178,10 +299,13 @@ body {
     margin: 1vh 3vw 0 3vw;
 }
 .text {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     text-align: center;
-    padding-top: 5vh;
+    padding-top: 4vh;
+    margin-left: -0.5vw;
+    font-family: Kiona Semibold;
+    text-decoration: underline;
 }
 
 
@@ -269,6 +393,17 @@ body {
     height: 3.5vh;
     width: 70%;
     padding-top: 0.8vh;
+    font-weight: bolder;
+}
+
+#backToBooking {
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+#link {
+    font-weight: bolder;
+    text-decoration: underline;
 }
 
 .label-arrow {
@@ -300,7 +435,8 @@ body {
     display: block;
     text-align: center;
     text-decoration: none;
-    font-weight: 555;
+    /*font-weight: 555;*/
+    font-weight: bolder;
 }
 
 .label-content .item {
@@ -372,13 +508,14 @@ body {
 
 .main_area {
     display: flex;
+    margin-top: 4vh;
 }
 /*Event box total possible height 65vh*/
 
 .event-container {
     margin: 0 3vw;
     width: 50%;
-    height: 55vh;
+    height: 47vh;
 
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(82, 82, 82, 0.5);
@@ -479,6 +616,7 @@ body {
     background-color: rgba(31, 31, 31, 0.35);
     text-align: center;
     padding-top: 20px;
+    font-weight: bolder;
 }
 
 
@@ -511,6 +649,7 @@ body {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
+    font-weight: bolder;
 }
 
 .users .user-icon {
