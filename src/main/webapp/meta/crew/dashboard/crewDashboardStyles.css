@@ -539,7 +539,6 @@ Change depending on what the actual content is to be able to filter
     text-overflow: ellipsis;
     overflow: hidden;
     min-width: 0;
-    max-width: 80%;
 }
 
 .booking-large-text p:hover {
@@ -633,7 +632,7 @@ Change depending on what the actual content is to be able to filter
     width: 18vw;
     height: 25vh;
 
-    margin: 10vh 3.5vw 0 2.5vw;
+    margin: 18vh 3.5vw 0 2.5vw;
     border: 2px solid rgba(82, 82, 82, 0.5);
 }
 
@@ -680,9 +679,9 @@ Change depending on what the actual content is to be able to filter
 
 .stats {
     width: 18vw;
-    height: 43vh;
+    height: 30vh;
 
-    margin: 8vh 3.5vw 0 2.5vw;
+    margin: 10vh 3.5vw 0 2.5vw;
     border: 2px solid rgba(82, 82, 82, 0.5);;
 }
 
