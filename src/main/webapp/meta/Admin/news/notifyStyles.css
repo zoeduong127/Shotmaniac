@@ -1,3 +1,7 @@
+* {
+    font-family: "Kiona SemiBold", "Times New Roman", sans-serif;
+}
+
 .container {
     display: grid;
     grid-template-columns: 100vw;
@@ -227,7 +231,7 @@ body {
     height: 66%;
     border-radius: 4px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-    max-height: 50%;
+    max-height: 63%;
 }
 
 .announcement-list {
